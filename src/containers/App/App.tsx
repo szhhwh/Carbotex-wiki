@@ -16,6 +16,7 @@ import {
   RouteContentReady,
   RouteScrollManager,
 } from "../../components/routing/RouteScrollManager";
+import { RouteLoadingScreen } from "../../components/routing/RouteLoadingScreen";
 import type { PageLayout } from "../../pages";
 
 interface PageRouteProps {
@@ -84,6 +85,7 @@ const App = () => {
       <RouteScrollManager enabled={!isFullscreen} />
       {/* Navigation */}
       <Navbar />
+      <RouteLoadingScreen title={title ?? ""} />
 
       {/* Header and PageContent */}
       <Routes>
