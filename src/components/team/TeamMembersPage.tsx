@@ -246,13 +246,15 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
               onError={() => setPhotoFailed(true)}
             />
           )}
+          <figcaption className={styles.heroTitle}>
+            <span className={styles.heroKicker}>OUC-HAIDE / TEAM 2026</span>
+            <h1 id="members-heading" className={styles.heroWordmark}>
+              MEMBER
+            </h1>
+          </figcaption>
         </figure>
 
         <div className={styles.introContent}>
-          <h1 id="members-heading" className={styles.introHeading}>
-            THE PEOPLE BEHIND CARBOTEX
-          </h1>
-
           <div className={styles.introCopy}>
             <p>
               <strong>

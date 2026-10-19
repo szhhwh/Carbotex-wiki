@@ -22,7 +22,8 @@
 }
 
 .intro {
-  padding: clamp(1rem, 2.5vw, 2.5rem) 0 clamp(3.5rem, 7vw, 7rem);
+  --hero-display-size: clamp(3.75rem, 21vw, 24rem);
+  padding: 0 0 clamp(3.5rem, 7vw, 7rem);
   background:
     radial-gradient(circle at 86% 4%, #e3edcf 0 12rem, transparent 34rem),
     var(--team-paper);
@@ -37,54 +38,111 @@
 }
 
 .groupPhotoFrame {
-  width: min(calc(100% - 2rem), 86rem);
-  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  overflow: visible;
+  background: var(--team-ink);
+  isolation: isolate;
+}
+
+.groupPhotoFrame::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: min(36%, 19rem);
+  background: linear-gradient(
+    to top,
+    #022f2df2 0%,
+    #032f2dd6 52%,
+    transparent 100%
+  );
+  clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+  content: "";
+  pointer-events: none;
 }
 
 .groupPhoto,
 .photoFallback {
   display: block;
   width: 100%;
-  border-radius: 1.15rem;
 }
 
 .groupPhoto {
   height: auto;
   aspect-ratio: 1792 / 1008;
   object-fit: cover;
-  box-shadow: 0 1.3rem 3rem #063d3b1f;
 }
 
 .photoFallback {
   display: grid;
-  min-height: 22rem;
+  aspect-ratio: 1792 / 1008;
   place-items: center;
   background: var(--team-cream);
   color: color-mix(in srgb, var(--team-ink) 70%, transparent);
   font-size: 0.9rem;
 }
 
-.introContent {
-  display: grid;
-  width: min(calc(100% - 2rem), 86rem);
-  margin: clamp(2.5rem, 5vw, 5rem) auto 0;
-  grid-template-columns: minmax(16rem, 0.82fr) minmax(0, 1.18fr);
-  gap: clamp(2.5rem, 7vw, 7rem);
-  align-items: start;
+.heroTitle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+  color: #fffdf3;
+  text-align: center;
+  transform: translate(-50%, 50%);
 }
 
-.introHeading {
+.heroKicker {
+  position: absolute;
+  bottom: calc(100% + clamp(0.8rem, 1.6vw, 1.35rem));
+  left: 50%;
+  padding: clamp(0.42rem, 0.65vw, 0.58rem) clamp(0.75rem, 1.2vw, 1rem);
+  background: var(--team-ink);
+  box-shadow: 0.32rem 0.32rem 0 var(--team-gold);
+  color: #ffe8b3;
+  font: 800 clamp(0.55rem, 0.82vw, 0.76rem) / 1 var(--team-sans);
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.heroWordmark {
+  width: 100%;
   margin: 0;
-  color: var(--team-ink);
-  font-family: var(--team-serif);
-  font-size: clamp(2.8rem, 5vw, 5.2rem);
-  font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 0.93;
+  padding-inline: clamp(0.4rem, 2vw, 2rem);
+  background: linear-gradient(
+    to bottom,
+    #fffdf3 0 49.5%,
+    #f0c66c 49.5% 50.2%,
+    var(--team-ink) 50.2% 100%
+  );
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0.025em 0.035em 0 var(--team-gold));
+  font-family: var(--team-sans);
+  font-size: var(--hero-display-size);
+  font-weight: 900;
+  letter-spacing: -0.09em;
+  line-height: 0.72;
+  text-indent: -0.045em;
+  white-space: nowrap;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.introContent {
+  width: min(calc(100% - 2rem), 48rem);
+  margin: calc(var(--hero-display-size) * 0.46 + clamp(2.25rem, 4vw, 4rem)) auto
+    0;
 }
 
 .introCopy {
-  max-width: 46rem;
   color: color-mix(in srgb, var(--team-ink) 91%, transparent);
   font: 400 clamp(1rem, 1.25vw, 1.12rem) / 1.78 var(--team-sans);
 }
@@ -682,25 +740,9 @@
     padding-bottom: 3.5rem;
   }
 
-  .groupPhotoFrame {
-    width: calc(100% - 1.25rem);
-  }
-
-  .groupPhoto,
-  .photoFallback {
-    border-radius: 0.8rem;
-  }
-
-  .introContent {
-    width: calc(100% - 2rem);
-    margin-top: 2rem;
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-  }
-
-  .introHeading {
-    max-width: 12ch;
-    font-size: clamp(2.6rem, 13vw, 4.4rem);
+  .heroKicker {
+    letter-spacing: 0.2em;
+    text-indent: 0.2em;
   }
 
   .staticGrid {
@@ -769,5 +811,15 @@
   .profileButton,
   .closeButton {
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .heroWordmark,
+  .heroWordmark::before {
+    background: none;
+    color: CanvasText;
+    filter: none;
+    -webkit-text-fill-color: CanvasText;
   }
 }
