@@ -1,9 +1,7 @@
 import {
-  Accessibility,
   BookOpen,
   ChartNoAxesCombined,
   ClipboardCheck,
-  Code2,
   Cpu,
   Dna,
   FlaskConical,
@@ -12,7 +10,6 @@ import {
   Handshake,
   Lightbulb,
   ListChecks,
-  MessagesSquare,
   RefreshCw,
   ShieldCheck,
   Sigma,
@@ -92,11 +89,6 @@ const invitations: Record<string, Invitation> = {
     copy: "Discover the physical systems connecting ideas to applications.",
     icon: Cpu,
   },
-  "/software": {
-    title: "Open the digital toolbox.",
-    copy: "See where code meets the challenges of biology.",
-    icon: Code2,
-  },
   "/human-practices": {
     title: "Listen. Then rethink.",
     copy: "Meet the perspectives that helped reshape Carbotex.",
@@ -106,16 +98,6 @@ const invitations: Record<string, Invitation> = {
     title: "Spark someone's curiosity.",
     copy: "Explore science through learning, play and participation.",
     icon: GraduationCap,
-  },
-  "/inclusivity": {
-    title: "Make room for everyone.",
-    copy: "Discover how more people can take part in science.",
-    icon: Accessibility,
-  },
-  "/collaboration": {
-    title: "Go further, together.",
-    copy: "Follow the conversations connecting teams and communities.",
-    icon: MessagesSquare,
   },
   "/members": {
     title: "Meet the curious minds.",

@@ -58,11 +58,6 @@ const Hardware = lazy(() =>
     default: Hardware,
   })),
 );
-const Software = lazy(() =>
-  import("./contents/software.tsx").then(({ Software }) => ({
-    default: Software,
-  })),
-);
 const HumanPractices = lazy(() =>
   import("./contents/human-practices.tsx").then(({ HumanPractices }) => ({
     default: HumanPractices,
@@ -71,16 +66,6 @@ const HumanPractices = lazy(() =>
 const Education = lazy(() =>
   import("./contents/education.tsx").then(({ Education }) => ({
     default: Education,
-  })),
-);
-const Inclusivity = lazy(() =>
-  import("./contents/inclusivity.tsx").then(({ Inclusivity }) => ({
-    default: Inclusivity,
-  })),
-);
-const Collaboration = lazy(() =>
-  import("./contents/collaboration.tsx").then(({ Collaboration }) => ({
-    default: Collaboration,
   })),
 );
 const Members = lazy(() =>
@@ -158,7 +143,8 @@ const Pages: (Page | Folder)[] = [
         title: "Design",
         path: "/design",
         component: Design,
-        lead: "Document the rationale of your biological system: which chassis, parts, and architecture you chose, and why each decision serves your project's goals.",
+        lead: "From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale behind our chassis, genetic constructs, and four connected wet-lab modules.",
+        layout: "article",
       },
       {
         name: "Experiments",
@@ -194,7 +180,8 @@ const Pages: (Page | Folder)[] = [
         title: "Safety and Security",
         path: "/safety-and-security",
         component: SafetyAndSecurity,
-        lead: "Detail the safety and security considerations of your project, adressing potential risks and outlining the measures taken to mitigate them.",
+        lead: "A responsible approach to microbial, project, laboratory, and environmental safety throughout the Carbotex project.",
+        layout: "article",
       },
     ],
   },
@@ -217,13 +204,6 @@ const Pages: (Page | Folder)[] = [
         lead: "A modular platform for automated ammonia-nitrogen removal and real-time fermentation monitoring.",
         layout: "article",
       },
-      {
-        name: "Software",
-        title: "Software",
-        path: "/software",
-        component: Software,
-        lead: "Software in iGEM should make synthetic biology based on standard parts easier, faster, better or more accessible to our community.",
-      },
     ],
   },
   {
@@ -244,20 +224,6 @@ const Pages: (Page | Folder)[] = [
         component: Education,
         lead: "Innovative educational tools and outreach activities have the ability to establish a two-way dialogue with new communities by discussing public values and the science behind synthetic biology.",
         layout: "article",
-      },
-      {
-        name: "Inclusivity",
-        title: "Diversity and Inclusion",
-        path: "/inclusivity",
-        component: Inclusivity,
-        lead: "Every individual, regardless of background or experience, should have an equal opportunity to engage with scientific knowledge and technological development.",
-      },
-      {
-        name: "Collaboration & Communication",
-        title: "Collaboration & Communication",
-        path: "/collaboration",
-        component: Collaboration,
-        lead: "Describe how you engaged with other iGEM teams and the wider community through collaboration and communication, and how these interactions shaped your project.",
       },
     ],
   },

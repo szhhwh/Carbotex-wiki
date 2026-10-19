@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
-  Accessibility,
   BookOpenCheck,
   ChartNoAxesCombined,
   ChevronDown,
   CircleDot,
   ClipboardCheck,
-  Code2,
   Cog,
   Cpu,
   FileText,
@@ -17,7 +15,6 @@ import {
   Handshake,
   ListChecks,
   Menu,
-  MessagesSquare,
   PencilRuler,
   ShieldCheck,
   Sigma,
@@ -78,10 +75,6 @@ const navigationDetails: Record<string, NavigationDetail> = {
     description: "Building the physical system",
     icon: Cpu,
   },
-  "/software": {
-    description: "Digital tools for biology",
-    icon: Code2,
-  },
   "/human-practices": {
     description: "Shaped together with society",
     icon: Handshake,
@@ -89,14 +82,6 @@ const navigationDetails: Record<string, NavigationDetail> = {
   "/education": {
     description: "Learning through participation",
     icon: GraduationCap,
-  },
-  "/inclusivity": {
-    description: "Science designed for everyone",
-    icon: Accessibility,
-  },
-  "/collaboration": {
-    description: "Growing with teams and communities",
-    icon: MessagesSquare,
   },
   "/members": {
     description: "The people behind the project",
