@@ -1,9 +1,8 @@
 // Parses src/data/references.bib into src/data/references.generated.ts.
 //
-// Run automatically:
-//   - by the Vite plugin in vite.config.ts (on `yarn dev` and `yarn build`),
-//     re-running whenever the .bib file changes during development;
-//   - or manually: `node scripts/generate-references.mjs`.
+// Run:
+//   - by `yarn codegen` before type checking and production builds;
+//   - by the Vite dev server when it starts or the .bib file changes.
 //
 // The generated module is the only thing the browser bundle sees — citation-js
 // itself stays on the Node side, so nothing external is loaded at runtime
@@ -19,51 +18,97 @@ const BIB_PATH = join(ROOT, "src", "data", "references.bib");
 const OUT_PATH = join(ROOT, "src", "data", "references.generated.ts");
 const CONTENTS_DIR = join(ROOT, "src", "contents");
 
-/** Collects every citation key used via <Cite k="..." /> in src/contents/*.tsx. */
+/** Collects every citation key used via <Cite k="..." /> under src/contents. */
 function collectCiteKeys() {
   const keys = new Set();
-  for (const file of readdirSync(CONTENTS_DIR)) {
-    if (!file.endsWith(".tsx")) continue;
-    const source = readFileSync(join(CONTENTS_DIR, file), "utf8");
-    for (const tag of source.matchAll(/<Cite\b[^>]*>/g)) {
-      for (const attr of tag[0].matchAll(/\bk\s*=\s*(?:"([^"]+)"|\{([^}]*)\})/g)) {
-        for (const key of attr[0].matchAll(/"([^"]+)"/g)) {
-          keys.add(key[1]);
+
+  const visit = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) {
+        visit(path);
+        continue;
+      }
+      if (!entry.name.endsWith(".tsx")) continue;
+
+      const source = readFileSync(path, "utf8");
+      for (const tag of source.matchAll(/<Cite\b[^>]*>/g)) {
+        for (const attr of tag[0].matchAll(
+          /\bk\s*=\s*(?:"([^"]+)"|\{([^}]*)\})/g,
+        )) {
+          for (const key of attr[0].matchAll(/"([^"]+)"/g)) {
+            keys.add(key[1]);
+          }
         }
       }
     }
-  }
+  };
+
+  visit(CONTENTS_DIR);
   return keys;
 }
 
 /** Formats one CSL entry as APA-7-style HTML, without wrapper markup. */
 function formatEntry(entry) {
-  const html = new Cite(entry).format("bibliography", {
+  const formattedEntry = { ...entry };
+  const author =
+    entry.author?.length === 1
+      ? (entry.author[0].literal ?? entry.author[0].family)
+      : undefined;
+
+  // APA omits a publisher that is also the sole author.
+  if (entry.type === "report" && author && author === entry.publisher) {
+    delete formattedEntry.publisher;
+  }
+
+  const html = new Cite(formattedEntry).format("bibliography", {
     format: "html",
     template: "apa",
     lang: "en-US",
   });
+  return autolinkUrls(html.replace(/<\/?div[^>]*>/g, "")).trim();
+}
+
+/** Makes URLs in plain-text HTML nodes clickable without nesting <a> tags. */
+function autolinkUrls(html) {
+  let insideAnchor = false;
+
   return html
-    .replace(/<\/?div[^>]*>/g, "")
-    // Make the plain-text APA DOI URL clickable.
-    .replace(
-      /(https:\/\/doi\.org\/[^\s<]+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>',
-    )
-    .trim();
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (part.startsWith("<")) {
+        if (/^<a(?:\s|>)/i.test(part)) insideAnchor = true;
+        if (/^<\/a\s*>/i.test(part)) insideAnchor = false;
+        return part;
+      }
+
+      if (insideAnchor) return part;
+      return part.replace(/https?:\/\/[^\s<]+/g, (url) => {
+        // Keep sentence punctuation outside the anchor, or the href carries it.
+        const href = url.replace(/[.,;]+$/, "");
+        const trailing = url.slice(href.length);
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${href}</a>${trailing}`;
+      });
+    })
+    .join("");
 }
 
 /**
- * @param {{ strict?: boolean }} [options]
+ * @param {{ strict?: boolean, check?: boolean }} [options]
  *   strict (default): a <Cite /> key missing from the .bib file fails the
  *   run — used for production builds, where a dropped citation must never go
  *   unnoticed. Non-strict only logs, so `yarn dev` keeps running while a page
  *   is being written (the <References /> list shows the gap in red).
+ *   check: fail instead of writing when the generated file is stale.
  */
-export function generateReferences({ strict = true } = {}) {
+export function generateReferences({ strict = true, check = false } = {}) {
   if (!existsSync(BIB_PATH)) {
-    console.warn(`[references] ${BIB_PATH} not found — writing an empty list.`);
-    writeGenerated([], []);
+    console.warn(
+      `[references] ${BIB_PATH} not found — ${
+        check ? "generated output is missing" : "writing an empty list"
+      }.`,
+    );
+    writeGenerated([], [], check);
     return;
   }
 
@@ -100,7 +145,7 @@ export function generateReferences({ strict = true } = {}) {
   }
 
   const unused = entries.filter(({ key }) => !usedKeys.has(key));
-  if (unused.length > 0) {
+  if (unused.length > 0 && !check) {
     console.info(
       `[references] present in .bib but not cited anywhere yet: ${unused
         .map(({ key }) => key)
@@ -108,12 +153,13 @@ export function generateReferences({ strict = true } = {}) {
     );
   }
 
-  writeGenerated(entries, [...usedKeys]);
+  writeGenerated(entries, [...usedKeys], check);
 }
 
-function writeGenerated(entries, usedKeys) {
+function writeGenerated(entries, usedKeys, check) {
   const lines = entries.map(
-    ({ key, html }) => `  { key: ${JSON.stringify(key)}, html: ${JSON.stringify(html)} },`,
+    ({ key, html }) =>
+      `  { key: ${JSON.stringify(key)}, html: ${JSON.stringify(html)} },`,
   );
   const source = `// AUTO-GENERATED from src/data/references.bib by scripts/generate-references.mjs.
 // Do not edit this file — edit the .bib file instead.
@@ -135,9 +181,15 @@ export const referenceByKey: Record<string, ReferenceEntry> = Object.fromEntries
 `;
   // Skip the write when nothing changed: an unconditional rewrite touches
   // the mtime on every `yarn dev` start and makes Vite restart the server.
-  if (existsSync(OUT_PATH) && readFileSync(OUT_PATH, "utf8") === source) {
-    console.info(`[references] ${OUT_PATH} is already up to date`);
+  const current = existsSync(OUT_PATH) ? readFileSync(OUT_PATH, "utf8") : null;
+  if (current === source) {
+    if (!check) console.info(`[references] ${OUT_PATH} is already up to date`);
     return;
+  }
+  if (check) {
+    throw new Error(
+      `[references] ${OUT_PATH} is missing or stale; run \`yarn codegen\``,
+    );
   }
   writeFileSync(OUT_PATH, source, "utf8");
 
@@ -150,5 +202,10 @@ export const referenceByKey: Record<string, ReferenceEntry> = Object.fromEntries
 
 // Allow `node scripts/generate-references.mjs` as well as import from Vite.
 if (resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url)) {
-  generateReferences();
+  try {
+    generateReferences({ check: process.argv.includes("--check") });
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  }
 }

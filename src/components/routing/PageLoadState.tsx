@@ -15,18 +15,9 @@ interface BoundaryState {
   hasError: boolean;
 }
 
-export function PageLoading({ title, layout = "default" }: PageStateProps) {
+export function PageLoading({ layout = "default" }: PageStateProps) {
   return (
-    <main
-      className={styles.panel}
-      data-layout={layout}
-      role="status"
-      aria-live="polite"
-    >
-      <span className={styles.eyebrow}>OUC-HAIDE / WIKI</span>
-      <p className={styles.message}>Opening {title}…</p>
-      <span className={styles.progress} aria-hidden="true" />
-    </main>
+    <main className={styles.panel} data-layout={layout} aria-busy="true" />
   );
 }
 
@@ -42,7 +33,12 @@ export class PageLoadBoundary extends Component<BoundaryProps, BoundaryState> {
       const { title, layout = "default" } = this.props;
       const Heading = layout === "default" ? "h2" : "h1";
       return (
-        <main className={styles.panel} data-layout={layout} role="alert">
+        <main
+          className={styles.panel}
+          data-layout={layout}
+          data-route-error
+          role="alert"
+        >
           <span className={styles.eyebrow}>OUC-HAIDE / WIKI</span>
           <Heading className={styles.errorTitle}>Couldn’t open {title}</Heading>
           <p className={styles.message}>

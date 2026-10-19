@@ -47,22 +47,6 @@
   letter-spacing: -0.04em;
 }
 
-.progress {
-  width: min(12rem, 55vw);
-  height: 2px;
-  overflow: hidden;
-  background: #c6d5bd;
-}
-
-.progress::after {
-  display: block;
-  width: 40%;
-  height: 100%;
-  background: #246b50;
-  content: "";
-  animation: travel 1.4s ease-in-out infinite alternate;
-}
-
 .retry {
   min-height: 2.75rem;
   padding: 0.65rem 1.2rem;
@@ -80,19 +64,4 @@
 .retry:focus-visible {
   outline: 2px solid #245b46;
   outline-offset: 3px;
-}
-
-@keyframes travel {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(250%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress::after {
-    animation: none;
-  }
 }

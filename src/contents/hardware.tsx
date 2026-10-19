@@ -1026,7 +1026,6 @@ const sections: ArticleSection[] = [
 export function Hardware() {
   return (
     <ArticlePage
-      chapter="Dry Lab / Hardware"
       title="Hardware"
       lead="A modular platform for automated ammonia-nitrogen removal and real-time fermentation monitoring."
       sections={sections}

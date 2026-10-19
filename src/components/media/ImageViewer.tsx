@@ -187,6 +187,27 @@ export function ImageViewer({
       }}
       onKeyDown={(event) => {
         if (closing || event.ctrlKey || event.metaKey || event.altKey) return;
+        if (event.key === "Tab") {
+          const focusable = Array.from(
+            event.currentTarget.querySelectorAll<HTMLElement>(
+              'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            ),
+          ).filter((element) => element.getClientRects().length > 0);
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (!first || !last) return;
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          } else if (!event.currentTarget.contains(document.activeElement)) {
+            event.preventDefault();
+            first.focus();
+          }
+          return;
+        }
         if (event.key === "+" || event.key === "=") zoom(1.25);
         else if (event.key === "-") zoom(0.8);
         else if (event.key === "0") updateView(initialView);

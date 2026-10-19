@@ -50,9 +50,18 @@ test.describe("team members page", () => {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/ouc-haide/members");
 
-    await expect(page.locator("#members-heading")).toHaveText(
-      "THE PEOPLE BEHIND CARBOTEX",
-    );
+    await expect(page.locator("#members-heading")).toHaveText("MEMBER");
+    const titleAlignment = await page.evaluate(() => {
+      const heading = document
+        .querySelector<HTMLElement>("#members-heading")
+        ?.getBoundingClientRect();
+      const banner = document
+        .querySelector<HTMLElement>("figure")
+        ?.getBoundingClientRect();
+      if (!heading || !banner) return Number.POSITIVE_INFINITY;
+      return Math.abs((heading.top + heading.bottom) / 2 - banner.bottom);
+    });
+    expect(titleAlignment).toBeLessThan(1);
     await expect(page.locator("figure img")).toHaveAttribute(
       "alt",
       /OUC-Haide team/,

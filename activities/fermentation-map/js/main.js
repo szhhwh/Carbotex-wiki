@@ -7,7 +7,6 @@ import {
   t,
 } from "./i18n.js";
 import { initActivityI18n } from "../../shared/js/i18n.js";
-import { createAtlasMap, prepareMapGeometry } from "./atlas-map.js";
 import chinaGeoJsonUrl from "../data/china.json?url";
 import { FOOD_DATA, CRAFT_TYPES } from "../data/foods.js";
 import { storage } from "../../shared/js/storage.js";
@@ -21,6 +20,7 @@ mountActivityLegalFooter();
 // ===== 全局变量 =====
 let exploreMap = null;
 let mapGeometry = null;
+let atlasMapModule = null;
 let visitedProvinces = {}; // { provinceName: { date, foods: [] } }
 let isRolling = false;
 let diceTimer = null;
@@ -76,10 +76,14 @@ initActivityI18n({
 // ===== 初始化 =====
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    // Keep MapLibre and the map implementation out of the entry chunk until
+    // the activity is ready to initialize its interactive map.
+    atlasMapModule = await import("./atlas-map.js");
+
     // Keep geometry out of the JavaScript bundle and load it as a local asset.
     const response = await fetch(chinaGeoJsonUrl);
     if (!response.ok) throw new Error(`Map data: HTTP ${response.status}`);
-    mapGeometry = prepareMapGeometry(await response.json());
+    mapGeometry = atlasMapModule.prepareMapGeometry(await response.json());
 
     // 先载入本地足迹，让地图初始状态就带访问标记
     loadVisitedProvinces();
@@ -112,14 +116,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function initExploreMap() {
-  exploreMap = createAtlasMap(document.getElementById("china-map"), {
-    geometry: mapGeometry,
-    getVisits: () => visitedProvinces,
-    onSelect: (name) => showProvinceDetail(name),
-    onMapClick: () => {
-      dismissOpenPanels();
+  exploreMap = atlasMapModule.createAtlasMap(
+    document.getElementById("china-map"),
+    {
+      geometry: mapGeometry,
+      getVisits: () => visitedProvinces,
+      onSelect: (name) => showProvinceDetail(name),
+      onMapClick: () => {
+        dismissOpenPanels();
+      },
     },
-  });
+  );
 }
 
 function updateAtlasStats() {

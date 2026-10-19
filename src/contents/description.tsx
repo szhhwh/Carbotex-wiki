@@ -108,7 +108,6 @@ const sections: ArticleSection[] = [
 export function Description() {
   return (
     <ArticlePage
-      chapter="Project / Description"
       title="Description"
       lead="A clear route through the question, the motivation and the evidence behind a project."
       sections={sections}

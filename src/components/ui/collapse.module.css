@@ -33,8 +33,12 @@
 }
 
 .heading {
-  margin: 0;
   font: inherit; /* heading level for semantics, not default UA styling */
+}
+
+/* Beat page-level `h1-h6` margins so the header row stays centered. */
+.collapse .heading {
+  margin: 0;
 }
 
 .trigger {

@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   { ignores: ["dist", ".yarn"] },
   {
-    files: ["activities/**/*.js"],
+    files: ["activities/**/*.js", "src/components/routing/opening-screen/*.js"],
     extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2022,
