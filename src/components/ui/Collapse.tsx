@@ -32,6 +32,9 @@ import { ChevronDown } from "lucide-react";
 import clsx from "clsx";
 import styles from "./collapse.module.css";
 
+// Keep both directions on the same temporal curve so toggling reads smoothly.
+const COLLAPSE_EASE = "power2.inOut";
+
 export type CollapseVariant = "card" | "plain";
 
 export interface CollapseProps {
@@ -124,7 +127,7 @@ export function Collapse({
       gsap.to(indicatorRef.current, {
         rotate: isOpen ? 180 : 0,
         duration: dur,
-        ease: "power2.out",
+        ease: COLLAPSE_EASE,
         overwrite: true,
       });
     }
@@ -137,7 +140,7 @@ export function Collapse({
         gsap.to(el, {
           height: "auto",
           duration: dur,
-          ease: "power2.out",
+          ease: COLLAPSE_EASE,
           overwrite: true,
         });
       }
@@ -149,7 +152,7 @@ export function Collapse({
         gsap.to(el, {
           height: 0,
           duration: dur,
-          ease: "power2.inOut",
+          ease: COLLAPSE_EASE,
           overwrite: true,
           onComplete: () => {
             releaseFocus();
