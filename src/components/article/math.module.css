@@ -1,0 +1,47 @@
+/*
+ * Math formula skeleton — layout only, visual tokens land with the design pass.
+ * KaTeX injects its own font sizing; containers here only manage flow.
+ */
+
+.block {
+  margin-block: 1rem;
+}
+
+.label {
+  font-size: 0.85em;
+  color: var(--text-muted, #5b6470);
+  margin-block-end: 0.4em;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.eq {
+  flex: 1 1 auto;
+  min-width: 0; /* allows the flex child to shrink below content size */
+
+  /* KaTeX display math is centred by default */
+  .katex-display {
+    margin: 0;
+  }
+
+  .katex-display > .katex {
+    white-space: normal; /* wrap very long derivations instead of clipping */
+  }
+}
+
+.scrollable {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+}
+
+.tag {
+  flex: 0 0 auto;
+  align-self: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #5b6470);
+}

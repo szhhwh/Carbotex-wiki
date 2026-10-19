@@ -1,0 +1,43 @@
+.scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(0.9rem, 2.4vh, 1.6rem);
+  padding: clamp(1.5rem, 5vw, 4rem);
+  overflow: clip;
+  background: #e2f1e6;
+  color: #064b49;
+  text-align: center;
+}
+
+.kicker {
+  margin: 0;
+  font:
+    700 0.7rem/1 Arial,
+    Helvetica,
+    sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+.title {
+  margin: 0;
+  font-family:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2.1rem, 5vw, 4.2rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.note {
+  max-width: min(86vw, 34rem);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  line-height: 1.6;
+  opacity: 0.74;
+}

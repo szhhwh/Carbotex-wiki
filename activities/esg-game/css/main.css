@@ -1,0 +1,1541 @@
+:root {
+  /* 浅色系配色 */
+  --bg-primary: #f7f7ee;
+  --bg-secondary: #edf2e5;
+  --bg-card: #fffef9;
+  --text-primary: #233f35;
+  --text-secondary: #58685d;
+  --text-muted: #647368;
+  --line: #dce2d3;
+  --accent: #27644b;
+
+  /* 阵营颜色 */
+  --faction-ind: #55518b;
+  --faction-eco: #28704f;
+  --faction-isl: #236e8a;
+  --faction-res: #92601a;
+  --faction-dev: #a24968;
+
+  /* 阴影 */
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* 字体 */
+  --font-heading: "Songti SC", "STSong", "SimSun", serif;
+  --font-body: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at 100% 0, #dce8d78a, transparent 55%),
+    var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+/* 游戏卡片 */
+.game-card {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px #233f3506;
+  border: 1px solid var(--line);
+}
+
+/* 健康条样式 */
+.health-bar-container {
+  position: relative;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 12px;
+}
+
+.health-bar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Threshold marks at 5 and 10 of 15 keep the wide bar readable. */
+.health-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fffef9b3;
+  pointer-events: none;
+}
+
+.health-bar.safe {
+  background: linear-gradient(90deg, #34d399, #10b981);
+}
+
+.health-bar.warning {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+.health-bar.danger {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+}
+
+/* 按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  box-shadow: none;
+}
+
+.btn-primary:hover {
+  background: #1d523d;
+}
+
+.btn-secondary {
+  background: white;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+/* Disabled trade-button states from the supplied source. */
+.btn-muted {
+  background: #9ca3af;
+  color: white;
+  cursor: not-allowed;
+}
+
+.btn-muted:hover {
+  transform: none;
+}
+
+/* Floating confirmation shown after a successful trade. */
+.trade-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 40;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: #10b981;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transform: translate(-50%, -50%);
+  animation: tradeToastBounce 1s infinite;
+}
+
+/* Keeps the toast centred while it bounces. */
+@keyframes tradeToastBounce {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 12px));
+  }
+}
+
+.btn-action {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.btn-expand {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.btn-expand:hover {
+  background: #bfdbfe;
+}
+
+.btn-expand.active {
+  background: #285fbc;
+  color: white;
+}
+
+.btn-maintain {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.btn-maintain:hover {
+  background: #fde68a;
+}
+
+.btn-maintain.active {
+  background: #946010;
+  color: white;
+}
+
+.btn-reduce {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.btn-reduce:hover {
+  background: #a7f3d0;
+}
+
+.btn-reduce.active {
+  background: #28704f;
+  color: white;
+}
+
+/* 阵营颜色 */
+.border-faction-ind {
+  border-color: var(--faction-ind);
+}
+.border-faction-eco {
+  border-color: var(--faction-eco);
+}
+.border-faction-isl {
+  border-color: var(--faction-isl);
+}
+.border-faction-res {
+  border-color: var(--faction-res);
+}
+.border-faction-dev {
+  border-color: var(--faction-dev);
+}
+
+/* 模态框 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: #17362acc;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: calc(100% - 32px);
+  max-width: 42rem;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+/* 自定义滚动条 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* 投票选项 */
+.vote-option {
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.vote-option:hover {
+  border-color: currentColor;
+}
+
+.vote-option.selected {
+  border-color: currentColor;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* 震动动画 */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* 滑动进入动画 */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.text-faction-ind {
+  color: var(--faction-ind);
+}
+.text-faction-eco {
+  color: var(--faction-eco);
+}
+.text-faction-isl {
+  color: var(--faction-isl);
+}
+.text-faction-res {
+  color: var(--faction-res);
+}
+.text-faction-dev {
+  color: var(--faction-dev);
+}
+
+/* English is the default locale, so keep the base stacks Latin-first. */
+html[lang="en"],
+html[data-locale="en"] {
+  --font-heading:
+    "Palatino Linotype", "Book Antiqua", "Noto Serif", Georgia, serif;
+  --font-body: "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+html[lang="ja"],
+html[data-locale="ja"] {
+  --font-heading:
+    "Noto Serif CJK JP", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", serif;
+  --font-body:
+    "Noto Sans CJK JP", "Hiragino Sans", "Yu Gothic", "PingFang SC", sans-serif;
+}
+
+/* Visibility must win over layout utilities such as .flex. */
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-gray-400,
+.text-gray-500 {
+  color: var(--text-muted);
+}
+
+.text-gray-600,
+.text-gray-700 {
+  color: var(--text-secondary);
+}
+
+.text-gray-800 {
+  color: var(--text-primary);
+}
+
+.text-emerald-600 {
+  color: var(--accent);
+}
+
+.text-red-600,
+#pasture-health-value[data-health="danger"] {
+  color: #b33131;
+}
+
+.text-amber-600,
+#pasture-health-value[data-health="warning"] {
+  color: #8c5d12;
+}
+
+/* ==========================================================================
+   Shell
+   ========================================================================== */
+
+.game-header,
+.game-board,
+.game-rules {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+.game-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: 16px 12px;
+}
+
+/* Identity on the left, language and guide tools on the right. */
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.game-heading {
+  min-width: 0;
+}
+
+.game-title {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: clamp(19px, 1.7vw, 25px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.game-title > span:last-child {
+  display: inline-block;
+}
+
+.game-title-suffix {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Language and tools share the identity row; live state lives in the console. */
+.game-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.lang-slot {
+  display: flex;
+  align-items: center;
+}
+
+.lang-slot:empty {
+  display: none;
+}
+
+.lang-slot .activity-lang {
+  --lang-ink: var(--text-secondary);
+  --lang-active-ink: #065f46;
+  --lang-active-bg: #d1fae5;
+  --lang-border: #d1d5db80;
+  --lang-surface: #ffffffcc;
+  --lang-hover: #00000010;
+}
+
+.game-meta .activity-lang {
+  white-space: nowrap;
+}
+
+.game-meta .activity-lang button {
+  min-height: 30px;
+}
+
+.game-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 10px;
+  border-left: 1px solid var(--line);
+}
+
+.game-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.game-tool:hover {
+  background: var(--bg-secondary);
+}
+
+/* Everything that changes with the round lives in this one band. */
+.round-console {
+  overflow: hidden;
+}
+
+.round-console-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.15fr) minmax(0, 1.1fr) minmax(0, 0.62fr)
+    minmax(0, 0.83fr);
+}
+
+.console-round-cell,
+.console-metric {
+  min-width: 0;
+  padding: 14px 20px;
+}
+
+.console-round-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #edf4e6, #fffef9 72%);
+}
+
+.console-metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid var(--line);
+}
+
+.console-round-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+}
+
+.console-label {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.round-current {
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.round-total {
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.round-unit {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.round-status {
+  min-height: 1.45em;
+  margin: 5px 0 0;
+  color: #31573f;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.round-status[data-state="initial"],
+.round-status[data-state="progress"] {
+  color: #31573f;
+}
+
+.round-status[data-state="ready"] {
+  color: #1d4ed8;
+}
+
+.round-status[data-state="resolving"],
+.round-status[data-state="ended"] {
+  color: var(--text-secondary);
+}
+
+.round-status[data-state="warning"],
+.round-status[data-state="danger"] {
+  color: #9a3b22;
+}
+
+.round-step-meter {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  max-width: 190px;
+  margin-top: 8px;
+}
+
+.round-step-meter span {
+  height: 3px;
+  border-radius: 9999px;
+  background: #d9e1d1;
+  transition: background 0.2s ease;
+}
+
+.round-step-meter span.is-complete {
+  background: var(--accent);
+}
+
+.console-metric-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.console-state {
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.console-state[data-health="safe"] {
+  background: #e3f0e4;
+  color: #27644b;
+}
+
+.console-state[data-health="warning"] {
+  background: #fdf1d8;
+  color: #86520b;
+}
+
+.console-state[data-health="danger"] {
+  background: #f9e2dd;
+  color: #9a2f25;
+}
+
+.console-health-value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin: 5px 0 7px;
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.console-health-value #pasture-health-value[data-health="warning"] {
+  color: #8c5d12;
+}
+
+.console-health-value #pasture-health-value[data-health="danger"] {
+  color: #b33131;
+}
+
+.console-health .health-bar-container {
+  height: 8px;
+  background: #e4e9df;
+}
+
+.pasture-max {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.console-stat-value {
+  margin: 5px 0 2px;
+  color: var(--accent);
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.console-context {
+  color: var(--text-muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.console-leader-name {
+  margin: 6px 0 2px;
+  overflow-wrap: anywhere;
+  color: #31573f;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.console-leader-points {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Advisories belong to the console instead of floating around the page. */
+.round-advisory {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding: 8px 20px;
+  border-top: 1px solid #ead9b7;
+  background: #fff7e5;
+  color: #7a500d;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.round-advisory:empty {
+  display: none;
+}
+
+.round-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.round-alert[data-tone="danger"] {
+  color: #9a2f25;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Board
+   ========================================================================== */
+
+.game-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 25vw, 400px);
+  grid-template-areas:
+    "briefing control"
+    "play sidebar";
+  gap: 20px;
+  align-items: stretch;
+}
+
+.round-briefing {
+  grid-area: briefing;
+}
+
+.control-panel {
+  grid-area: control;
+}
+
+.play-area {
+  grid-area: play;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.game-sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.health-bar.safe {
+  background: linear-gradient(90deg, #7ba966, #307453);
+}
+
+.health-bar.warning {
+  background: linear-gradient(90deg, #e3b341, #b07a17);
+}
+
+.health-bar.danger {
+  background: linear-gradient(90deg, #d05a4a, #a32b2b);
+}
+
+/* One decision surface keeps the five factions grouped as a single card. */
+#factions-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.factions-grid {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: 0;
+  row-gap: 1px;
+  align-content: stretch;
+  background: var(--line);
+}
+
+.faction-card {
+  grid-column: span 2;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  align-content: stretch;
+  padding: 16px 18px 14px;
+  background: var(--bg-card);
+  border-left-width: 4px;
+}
+
+.factions-grid > .faction-card:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+/* Middle widths: two pairs, then one wide section for the fifth faction. */
+@container (min-width: 640px) and (max-width: 899px) {
+  .factions-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .factions-grid > .faction-card,
+  .factions-grid > .faction-card:nth-child(n + 4) {
+    grid-column: span 2;
+  }
+
+  .factions-grid > .faction-card:nth-child(n + 5) {
+    grid-column: 1 / -1;
+  }
+
+  .factions-grid > .faction-card:last-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    grid-template-rows: auto 1fr auto;
+    align-content: start;
+    column-gap: 28px;
+    row-gap: 0;
+    justify-content: stretch;
+  }
+
+  .factions-grid > .faction-card:last-child .faction-heading {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .factions-grid > .faction-card:last-child .faction-ability {
+    grid-column: 1;
+    grid-row: 2;
+    margin-bottom: 0;
+  }
+
+  .factions-grid > .faction-card:last-child > .faction-flock {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    margin-bottom: 10px;
+  }
+
+  .factions-grid > .faction-card:last-child > .grid {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+  }
+
+  .factions-grid > .faction-card:last-child > .text-xs {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 8px;
+  }
+}
+
+/* Phone widths: stack the five sections inside the same outer card. */
+@container (max-width: 639px) {
+  .factions-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .factions-grid > .faction-card,
+  .factions-grid > .faction-card:nth-child(n + 4) {
+    grid-column: 1;
+  }
+}
+
+.faction-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.faction-heading h3 {
+  font-size: 17px;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.faction-heading > div {
+  max-width: 11ch;
+}
+
+.faction-heading .text-xs {
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.faction-ability {
+  display: block;
+  margin-block: 9px 10px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.faction-flock {
+  margin-bottom: 10px;
+}
+
+.btn-action {
+  min-height: 40px;
+  padding: 7px 4px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  transition: background 0.2s;
+}
+
+.action-btn.active:disabled {
+  opacity: 1;
+  box-shadow: inset 0 0 0 2px #233f3533;
+}
+
+/* ==========================================================================
+   Sidebar panels
+   ========================================================================== */
+
+.event-panel,
+.control-panel,
+.log-panel {
+  padding: 16px 20px;
+  min-width: 0;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.round-briefing {
+  padding: 16px 20px 18px;
+}
+
+.briefing-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 10px;
+}
+
+.briefing-heading .panel-title {
+  margin-bottom: 3px;
+}
+
+.briefing-lead {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.event-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 140px;
+  padding: 14px;
+  border: 1px solid #c7d6e8;
+  border-radius: 12px;
+  background: #f2f5f9;
+}
+
+.round-briefing .event-display {
+  justify-content: center;
+  min-height: 0;
+  padding: 16px 18px;
+}
+
+.event-display.event-positive {
+  border-color: #a9d8c1;
+  background: #eef7f0;
+}
+
+.event-display.event-negative {
+  border-color: #ecc5bf;
+  background: #fbf1ee;
+}
+
+.event-display.event-neutral {
+  border-color: #c7d6e8;
+  background: #f2f5f9;
+}
+
+.event-placeholder-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 10px;
+  border-radius: 9999px;
+  background: #fdf1d2;
+  color: #b07a17;
+  font-size: 24px;
+}
+
+#event-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 12px;
+}
+
+.round-briefing #event-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.3fr);
+  align-items: start;
+  gap: 24px;
+}
+
+#event-title {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+#event-description {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+#event-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.round-briefing #event-effects {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 20px;
+  border-top: 0;
+  border-left: 1px solid var(--line);
+}
+
+#event-effects:empty {
+  display: none;
+}
+
+/* The log takes whatever height the column has left. */
+.log-panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.log-scroll {
+  flex: 1 1 auto;
+  min-height: 52px;
+  max-height: min(20vh, 190px);
+  overflow-y: auto;
+  padding-right: 4px;
+  overscroll-behavior: auto;
+}
+
+.log-scroll.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 112px;
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+  overscroll-behavior: auto;
+}
+
+.log-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 16px 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.log-empty-icon {
+  width: 34px;
+  height: 34px;
+  color: #8ca07f;
+}
+
+.log-empty-text {
+  margin: 0;
+}
+
+.log-entry {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f5f7ee;
+  border-left: 3px solid #98ac86;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+.log-entry:last-child {
+  margin-bottom: 0;
+}
+
+.log-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.log-action {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.log-faction {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-action > span:last-child {
+  flex-shrink: 0;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.control-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Rules and modals
+   ========================================================================== */
+
+.game-rules {
+  margin-block: 16px 20px;
+}
+
+.game-rules summary::-webkit-details-marker {
+  display: none;
+}
+
+.game-rules summary {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+html {
+  interpolate-size: allow-keywords;
+}
+
+.game-rules details::details-content {
+  block-size: 0;
+  overflow: clip;
+}
+
+.game-rules details[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .game-rules details::details-content {
+    transition:
+      block-size 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 280ms allow-discrete;
+  }
+}
+
+/* Re-render guard: the details panel keeps its own scrolling. */
+.modal-content.max-w-md {
+  max-width: 28rem;
+}
+
+.modal-content.max-w-3xl {
+  max-width: 48rem;
+}
+
+#summary-players > .game-card,
+#final-scores > .game-card {
+  gap: 12px;
+}
+
+#summary-players > .game-card > :last-child {
+  text-align: right;
+}
+
+.vote-option[data-vote="exploit"] {
+  color: #b33131;
+  background: #fff4ef;
+  border-color: #ebc4be;
+}
+
+.vote-option[data-vote="repair"] {
+  color: var(--accent);
+  background: #eff5e8;
+  border-color: #ceddc3;
+}
+
+.vote-option:hover,
+.vote-option.selected {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+/* ==========================================================================
+   Narrow screens
+   ========================================================================== */
+
+.mobile-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .game-topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .game-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .round-console-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .console-round-cell {
+    grid-column: 1 / -1;
+  }
+
+  .console-health {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .console-global-sp {
+    border-top: 1px solid var(--line);
+  }
+
+  .console-leader {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  /* Keep the briefing/actions pair together, then let cards and log breathe. */
+  .game-board {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
+    grid-template-areas:
+      "briefing control"
+      "play play"
+      "sidebar sidebar";
+    gap: 16px;
+  }
+
+  .round-briefing #event-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .round-briefing #event-effects {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding-top: 10px;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .log-scroll {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    align-content: start;
+    gap: 10px;
+    max-height: 260px;
+  }
+
+  .log-entry {
+    margin-bottom: 0;
+  }
+}
+
+/* Phone: briefing, actions, cards, history; commit stays in the fixed bar. */
+@media (max-width: 760px) {
+  .game-header,
+  .game-board,
+  .game-rules {
+    width: calc(100% - 24px);
+  }
+
+  .game-header {
+    padding-block: 10px 8px;
+  }
+
+  .game-board {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .play-area,
+  .game-sidebar {
+    display: contents;
+  }
+
+  .round-briefing {
+    order: 1;
+  }
+
+  .control-panel {
+    order: 2;
+  }
+
+  #factions-container {
+    order: 3;
+    flex: none;
+  }
+
+  .log-panel {
+    order: 4;
+    flex: none;
+  }
+
+  .log-scroll {
+    display: block;
+    max-height: none;
+  }
+
+  .console-round-cell,
+  .console-metric {
+    padding: 12px 16px;
+  }
+
+  .faction-card {
+    padding: 14px 16px 12px;
+  }
+
+  .btn-action {
+    min-height: 44px;
+  }
+
+  /* The fixed bar carries the commit action; the panel keeps trade. */
+  #end-round-btn {
+    display: none;
+  }
+
+  .mobile-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: #fffef9f2;
+    box-shadow: 0 -6px 18px #233f3514;
+    backdrop-filter: blur(8px);
+  }
+
+  .mobile-bar-context {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-width: 0;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .mobile-bar-summary {
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-bar-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-compact {
+    padding: 9px 12px;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+
+  body {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .modal-content {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .vote-option {
+    padding: 16px;
+  }
+
+  #summary-players > .game-card,
+  #final-scores > .game-card {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #summary-players > .game-card > :last-child,
+  #final-scores .text-right {
+    text-align: left;
+  }
+}
+
+/* Embedded in the wiki: the wrapper prints the title, so drop the duplicate. */
+html[data-embed="true"] .game-title {
+  display: none;
+}
+
+html[data-embed="true"] .game-header {
+  padding-block: 6px 8px;
+}
+
+html[data-embed="true"] .game-header,
+html[data-embed="true"] .game-board,
+html[data-embed="true"] .game-rules {
+  width: min(100% - 20px, 1480px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .game-topbar,
+  .round-console,
+  .faction-card {
+    animation: fadeIn 0.4s ease both;
+  }
+}

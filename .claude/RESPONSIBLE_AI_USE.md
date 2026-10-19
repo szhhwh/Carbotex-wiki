@@ -7,12 +7,14 @@ assistant, not an author of your science and not a substitute for understanding
 your own work. Read this before you start.
 
 ## 1. You are accountable
+
 - Judges evaluate **your team's** work. Be able to explain and defend every line
   of code and every claim on your wiki.
 - Follow the official iGEM competition rules and policies at
   [competition.igem.org](https://competition.igem.org).
 
 ## 2. Never fabricate
+
 - Do **not** let an AI invent experimental results, data, measurements,
   citations, references, statistics, or attributions.
 - All scientific claims must come from your actual work and be verifiable.
@@ -20,6 +22,7 @@ your own work. Read this before you start.
   fake science or pad your pages with content you cannot back up.
 
 ## 3. Honesty & attribution
+
 - Keep a human in the loop: review and understand AI-generated text and code
   before committing it.
 - Do not present AI-generated text as a real person's quote or as peer-reviewed
@@ -28,6 +31,7 @@ your own work. Read this before you start.
   is a judging requirement, not a formality.
 
 ## 4. Security & Privacy
+
 - Review AI-suggested code and dependencies before using them. Do not run
   commands you do not understand.
 - Never commit secrets or API keys to the repository.

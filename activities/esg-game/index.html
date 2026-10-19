@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="color-scheme" content="light" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="esg.title">Tragedy of the Commons · ESG Game</title>
+    <!-- iGEM team logo, mirroring the wiki <head> (static.igem.wiki assets). -->
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="32x32"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-32x32.avif"
+    />
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="16x16"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-16x16.avif"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/apple-touch-icon.avif"
+    />
+
+    <link rel="stylesheet" href="css/utilities.css" />
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <script>
+      // The wiki embeds this entry in an iframe that already prints the title.
+      if (new URLSearchParams(location.search).get("embed") === "1") {
+        document.documentElement.dataset.embed = "true";
+      }
+    </script>
+  </head>
+  <body class="min-h-screen">
+    <!-- 顶部标题栏 -->
+    <header class="game-header">
+      <div class="game-topbar">
+        <div class="game-heading">
+          <h1 class="game-title">
+            <span data-i18n="esg.heading.main">Tragedy of the Commons</span
+            ><span class="game-title-suffix" data-i18n="esg.heading.suffix">
+              · ESG Game</span
+            >
+          </h1>
+        </div>
+        <div class="game-meta">
+          <div class="lang-slot" data-lang-switcher-host></div>
+        </div>
+      </div>
+
+      <!-- One authoritative console for everything that changes each round. -->
+      <section
+        class="game-card round-console"
+        aria-labelledby="round-console-title"
+      >
+        <h2
+          id="round-console-title"
+          class="sr-only"
+          data-i18n="esg.console.title"
+        >
+          Round status
+        </h2>
+        <div class="round-console-grid">
+          <div class="console-round-cell">
+            <p class="console-round-line">
+              <span class="console-label" data-i18n="esg.round">Round</span>
+              <span id="round-display" class="round-current">1</span>
+              <span class="round-total">/ <span id="round-total">4</span></span>
+              <span class="round-unit" data-i18n="esg.roundUnit"></span>
+            </p>
+            <p
+              id="round-status"
+              class="round-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              Choose an action for the 5 factions
+            </p>
+            <div
+              id="round-step-meter"
+              class="round-step-meter"
+              aria-hidden="true"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div id="pasture-meter" class="console-metric console-health">
+            <div class="console-metric-head">
+              <span class="console-label" data-i18n="esg.pasture.title"
+                >Pasture health</span
+              >
+              <span
+                id="pasture-health-state"
+                class="console-state"
+                data-health="safe"
+                >Stable</span
+              >
+            </div>
+            <p class="console-health-value">
+              <span id="pasture-health-value" data-health="safe">15</span
+              ><span id="pasture-health-max" class="pasture-max">/15</span>
+            </p>
+            <div
+              id="pasture-health-meter"
+              class="health-bar-container"
+              role="meter"
+              aria-valuemin="0"
+              aria-valuemax="15"
+              aria-valuenow="15"
+              data-i18n-attr="aria-label:esg.pasture.title"
+            >
+              <div
+                id="pasture-health-bar"
+                class="health-bar safe"
+                style="width: 100%"
+              ></div>
+              <span class="health-tick" style="left: 33.333%"></span>
+              <span class="health-tick" style="left: 66.667%"></span>
+            </div>
+          </div>
+
+          <div class="console-metric console-global-sp">
+            <span class="console-label" data-i18n="esg.globalSp"
+              >Global SP</span
+            >
+            <p id="global-sp" class="console-stat-value">0</p>
+            <span class="console-context" data-i18n="esg.globalSpContext"
+              >All factions combined</span
+            >
+          </div>
+
+          <div id="win-criteria" class="console-metric console-leader">
+            <span class="console-label" data-i18n="esg.win.leading"
+              >Leading</span
+            >
+            <p id="leader-name" class="console-leader-name">-</p>
+            <p class="console-leader-points">
+              <span id="leader-score">0</span
+              ><span data-i18n="esg.win.scoreSuffix"> points</span>
+            </p>
+          </div>
+        </div>
+        <div
+          id="round-advisory"
+          class="round-advisory"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+      </section>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="game-board">
+      <!-- The round's narrative is read once, before the decision cards. -->
+      <section class="game-card event-panel round-briefing">
+        <div class="briefing-heading">
+          <div>
+            <h3 class="panel-title">
+              <span>⚡</span>
+              <span data-i18n="esg.briefing.title">Round briefing</span>
+            </h3>
+            <p class="briefing-lead" data-i18n="esg.briefing.lead">
+              Read this round's event before choosing actions.
+            </p>
+          </div>
+        </div>
+
+        <div class="event-display" id="event-display">
+          <div class="text-center text-gray-400" id="event-placeholder">
+            <span class="event-placeholder-mark">?</span>
+            <p class="font-medium" data-i18n="esg.event.waiting">
+              Waiting for an event…
+            </p>
+          </div>
+          <div id="event-content" class="hidden">
+            <div>
+              <span
+                class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded"
+                id="event-type-badge"
+                >Event type</span
+              >
+              <h4
+                class="text-xl font-heading text-gray-800 mt-3 mb-2"
+                id="event-title"
+              >
+                Event title
+              </h4>
+              <p
+                class="text-sm text-gray-600 leading-relaxed"
+                id="event-description"
+              >
+                Event description
+              </p>
+            </div>
+            <div
+              class="flex flex-wrap items-center gap-3 text-sm mt-4 pt-4 border-t border-gray-200"
+              id="event-effects"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions sit beside the briefing they refer to. -->
+      <section class="game-card control-panel">
+        <h3 class="panel-title">
+          <span aria-hidden="true">⚙️</span>
+          <span data-i18n="esg.controls.title">Control Center</span>
+        </h3>
+        <div class="control-body">
+          <button
+            id="trade-btn"
+            class="btn btn-secondary w-full"
+            style="display: none"
+          >
+            <span>🤝</span>
+            <span data-i18n="esg.controls.trade">Secret trade</span>
+          </button>
+          <button
+            id="end-round-btn"
+            class="btn btn-primary w-full"
+            data-i18n="esg.controls.endRound"
+            aria-describedby="round-status"
+          >
+            End round
+          </button>
+        </div>
+      </section>
+
+      <!-- Decision cards -->
+      <section class="play-area">
+        <!-- One decision surface containing the five faction sections. -->
+        <section
+          id="factions-container"
+          class="game-card"
+          aria-label="Faction decisions"
+          data-i18n-attr="aria-label:esg.factions.title"
+        >
+          <div id="factions-grid" class="factions-grid">
+            <!-- 阵营区域将由JS动态生成 -->
+          </div>
+        </section>
+      </section>
+
+      <!-- Actions and history -->
+      <aside class="game-sidebar">
+        <!-- 游戏日志 -->
+        <section class="game-card log-panel">
+          <h3 class="panel-title">
+            <span>📜</span>
+            <span data-i18n="esg.log.title">Game log</span>
+          </h3>
+          <div
+            id="game-log-container"
+            class="log-scroll custom-scrollbar"
+            tabindex="0"
+            role="region"
+            aria-label="Game log"
+            data-i18n-attr="aria-label:esg.log.title"
+          ></div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- 游戏规则 -->
+    <section class="game-rules">
+      <details class="game-card p-4 group">
+        <summary
+          class="text-lg font-heading text-gray-700 flex justify-between items-center list-none cursor-pointer"
+        >
+          <span data-i18n="esg.rules.summary">Game rules</span>
+          <span
+            class="text-gray-400 group-open:rotate-180 transition-transform duration-300"
+            >▼</span
+          >
+        </summary>
+        <div
+          class="mt-4 pt-4 border-t border-gray-200 text-gray-600 text-sm space-y-4 leading-relaxed"
+        >
+          <div>
+            <strong
+              class="text-emerald-600 block mb-1"
+              data-i18n="esg.rules.goalTitle"
+              >Goal</strong
+            >
+            <span data-i18n="esg.rules.goal"
+              >Balance economic growth (flock size) against social reputation
+              (sustainability points) while keeping the ecosystem from
+              collapsing. If pasture health reaches 0, a crisis vote is
+              triggered.</span
+            >
+          </div>
+          <div>
+            <strong
+              class="text-slate-700 block mb-1"
+              data-i18n="esg.rules.flowTitle"
+              >Beginner flow (play it this way)</strong
+            >
+            <span data-i18n="esg.rules.flow"
+              >Each round has three steps: read the current random event, choose
+              an action for each of the 5 factions (every card needs one), and
+              let the system resolve the round and move on (or select “End
+              round” yourself). If the Industrial Syndicate wants to trade,
+              trade first and then choose its action.</span
+            >
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <strong
+                class="text-blue-600 block mb-1"
+                data-i18n="esg.rules.actionsTitle"
+                >Available actions</strong
+              >
+              <ul
+                class="list-disc pl-4 space-y-1"
+                data-i18n-html="esg.rules.actions"
+              >
+                <li>
+                  <span class="font-medium">Expand:</span> +1 sheep, −2 health
+                  (−1 for the first expansion by the Development community)
+                </li>
+                <li>
+                  <span class="font-medium">Maintain:</span> no change to the
+                  flock, −1 health
+                </li>
+                <li>
+                  <span class="font-medium">Restore:</span> −1 sheep, +1
+                  sustainability point, +2 health (+3 for the Eco-pioneer)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <strong
+                class="text-amber-600 block mb-1"
+                data-i18n="esg.rules.natureTitle"
+                >Natural dynamics</strong
+              >
+              <ul
+                class="list-disc pl-4 space-y-1"
+                data-i18n-html="esg.rules.nature"
+              >
+                <li>Baseline natural decline: −1 health per round</li>
+                <li>
+                  Overload penalty: an extra −1 when total sheep ≥ health × 1.5
+                </li>
+                <li>
+                  Severe overload: an extra −2 when total sheep ≥ health × 2
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <strong
+              class="text-red-600 block mb-1"
+              data-i18n="esg.rules.collapseTitle"
+              >Collapse and endings</strong
+            >
+            <span data-i18n="esg.rules.collapse"
+              >The game runs 4 normal rounds (up to round 6 if a collapse
+              happens in between). When health reaches 0, a vote is triggered:
+              choosing "Take what is left" immediately grants 3 sheep, resets SP
+              to 0 and scores the flock at half value; choosing "Scientific
+              restoration" restores health and scores normally. Normal and
+              restoration scoring: sheep + SP×2.</span
+            >
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 交易模态框 -->
+    <div id="trade-modal" class="modal-overlay">
+      <div class="modal-content max-w-md">
+        <h2
+          class="text-2xl font-heading text-indigo-600 mb-6 flex items-center gap-2"
+        >
+          <span>🤝</span> <span data-i18n="esg.trade.title">Secret trade</span>
+        </h2>
+
+        <div class="space-y-4">
+          <div>
+            <label
+              class="block text-sm text-gray-600 mb-2"
+              for="trade-target"
+              data-i18n="esg.trade.target"
+              >Choose a trade partner</label
+            >
+            <select
+              id="trade-target"
+              class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:border-indigo-400"
+            >
+              <option value="" data-i18n="esg.trade.selectPlaceholder">
+                Choose a faction…
+              </option>
+            </select>
+          </div>
+
+          <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-600" data-i18n="esg.trade.amount"
+                >Amount transferred</span
+              >
+              <span
+                class="text-xl font-bold text-gray-800"
+                data-i18n="esg.trade.amountValue"
+                >1 sheep 🐑</span
+              >
+            </div>
+          </div>
+
+          <div class="flex gap-4 pt-4 border-t border-gray-200">
+            <button
+              id="trade-cancel"
+              class="btn btn-secondary flex-1"
+              data-i18n="esg.trade.cancel"
+            >
+              Cancel
+            </button>
+            <button
+              id="trade-confirm"
+              class="btn btn-primary flex-1"
+              data-i18n="esg.trade.confirm"
+            >
+              Confirm trade
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 崩溃投票模态框 -->
+    <div id="collapse-modal" class="modal-overlay">
+      <div class="modal-content max-w-3xl">
+        <div class="text-center mb-8">
+          <h2
+            class="text-3xl font-heading text-red-600 font-bold mb-4"
+            data-i18n="esg.collapse.title"
+          >
+            ⚠️ Ecosystem collapse ⚠️
+          </h2>
+          <p class="text-gray-600 text-lg" data-i18n="esg.collapse.lead">
+            The global commons can no longer sustain the current level of
+            development. Every faction must vote on an emergency response.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <!-- 竭泽而渔选项 -->
+          <div
+            class="vote-option rounded-xl p-6 border-2 border-red-200"
+            data-vote="exploit"
+          >
+            <h3
+              class="text-xl font-heading text-red-600 mb-3"
+              data-i18n="esg.collapse.exploitTitle"
+            >
+              A) Take what is left
+            </h3>
+            <p class="text-gray-600 mb-4" data-i18n="esg.collapse.exploitLead">
+              Extract the remaining value before the system fails
+            </p>
+            <ul class="text-sm text-red-600 space-y-2">
+              <li data-i18n="esg.collapse.exploit1">
+                • Pasture health drops permanently to 0
+              </li>
+              <li data-i18n="esg.collapse.exploit2">
+                • Every faction immediately gains 3 sheep
+              </li>
+              <li data-i18n="esg.collapse.exploit3">
+                • All sustainability points are reset to 0
+              </li>
+            </ul>
+          </div>
+
+          <!-- 科学修复选项 -->
+          <div
+            class="vote-option rounded-xl p-6 border-2 border-emerald-200"
+            data-vote="repair"
+          >
+            <h3
+              class="text-xl font-heading text-emerald-600 mb-3"
+              data-i18n="esg.collapse.repairTitle"
+            >
+              B) Scientific restoration
+            </h3>
+            <p class="text-gray-600 mb-4" data-i18n="esg.collapse.repairLead">
+              Take decisive action to protect and rebuild
+            </p>
+            <ul class="text-sm text-emerald-600 space-y-2">
+              <li data-i18n="esg.collapse.repair1">
+                • Pasture health is restored to 5
+              </li>
+              <li data-i18n="esg.collapse.repair2">
+                • Every faction's flock is halved
+              </li>
+              <li data-i18n="esg.collapse.repair3">
+                • Every faction gains +3 sustainability points
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6">
+          <h4
+            class="text-center text-gray-600 uppercase tracking-wider text-sm mb-4"
+            data-i18n="esg.collapse.voting"
+          >
+            Voting status
+          </h4>
+          <div class="flex flex-wrap justify-center gap-3" id="voting-status">
+            <!-- 投票状态将由JS填充 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 游戏结束画面 -->
+    <div id="end-game-modal" class="modal-overlay">
+      <div class="modal-content max-w-2xl text-center">
+        <h1
+          class="text-4xl font-heading text-emerald-600 mb-4"
+          data-i18n="esg.end.title"
+        >
+          Game over
+        </h1>
+        <p class="text-gray-600 mb-2">
+          <span data-i18n="esg.end.finalHealth">Final pasture health:</span>
+          <span id="final-health" class="font-bold"></span>
+        </p>
+        <p class="text-gray-600 mb-6">
+          <span data-i18n="esg.end.finalSp">Global sustainability points:</span>
+          <span id="final-sp" class="font-bold"></span>
+        </p>
+
+        <div class="grid grid-cols-1 gap-4 text-left mb-6" id="final-scores">
+          <!-- 最终得分将由JS填充 -->
+        </div>
+
+        <button
+          id="restart-btn"
+          class="btn btn-primary"
+          data-i18n="esg.end.restart"
+        >
+          Start again
+        </button>
+      </div>
+    </div>
+
+    <div id="round-summary-modal" class="modal-overlay">
+      <div class="modal-content max-w-2xl">
+        <h2
+          class="text-2xl font-heading text-gray-800 mb-3"
+          data-i18n="esg.summary.title"
+        >
+          Round summary
+        </h2>
+        <p id="round-summary-title" class="text-sm text-gray-600 mb-4"></p>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="game-card p-3">
+            <div class="text-xs text-gray-500" data-i18n="esg.summary.health">
+              Pasture health
+            </div>
+            <div
+              id="summary-health"
+              class="text-lg font-bold text-emerald-600"
+            ></div>
+          </div>
+          <div class="game-card p-3">
+            <div class="text-xs text-gray-500" data-i18n="esg.summary.sp">
+              Global sustainability points
+            </div>
+            <div
+              id="summary-sp"
+              class="text-lg font-bold text-emerald-600"
+            ></div>
+          </div>
+        </div>
+        <div
+          id="summary-players"
+          class="space-y-2"
+          tabindex="0"
+          role="region"
+          aria-label="Round summary"
+          data-i18n-attr="aria-label:esg.summary.title"
+        ></div>
+        <div class="mt-5 flex justify-end">
+          <button
+            id="summary-continue-btn"
+            class="btn btn-primary"
+            data-i18n="esg.summary.continue"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 音效控制按钮 -->
+    <button
+      id="audio-btn"
+      class="game-tool"
+      title="Toggle sound"
+      aria-label="Toggle sound"
+      data-i18n-attr="title:esg.audio.toggle,aria-label:esg.audio.toggle"
+    >
+      🔊
+    </button>
+
+    <!-- 帮助按钮 -->
+    <button
+      id="help-btn"
+      class="game-tool"
+      title="Beginner guide"
+      aria-label="Beginner guide"
+      data-i18n-attr="title:esg.help.toggle,aria-label:esg.help.toggle"
+    >
+      ?
+    </button>
+
+    <!-- 窄屏常驻操作条：同一份回合状态摘要 + 结算入口 -->
+    <div class="mobile-bar" id="mobile-bar">
+      <div class="mobile-bar-context">
+        <span class="mobile-bar-summary" id="mobile-summary"
+          >Round 1 · 15 health · 0/5 chosen</span
+        >
+      </div>
+      <div class="mobile-bar-actions">
+        <button
+          id="mobile-end-round-btn"
+          class="btn btn-primary btn-compact"
+          type="button"
+          data-i18n="esg.controls.endRound"
+        >
+          End round
+        </button>
+      </div>
+    </div>
+
+    <!-- 游戏脚本 -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

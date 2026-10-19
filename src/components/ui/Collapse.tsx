@@ -1,0 +1,295 @@
+/**
+ * Collapse — single expandable panel (header + hidden content).
+ * Accordion  — group of <Collapse> panels sharing open-state.
+ *
+ * Motion policy (project convention): all animation goes through GSAP; when
+ * `prefers-reduced-motion: reduce` is set every toggle lands instantly on its
+ * end state. `duration: 0` disables animation per-instance as well.
+ *
+ * Accessibility: the trigger is a real <button aria-expanded> inside a heading
+ * element, and the panel is a labelled region. Closed panels are
+ * `display: none`, so collapsed content is fully removed from the a11y tree
+ * and tab order.
+ *
+ * Accordion note: children must be direct <Collapse> elements — the group
+ * injects `open` / `onToggle` into them via cloneElement.
+ */
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import gsap from "gsap";
+import { ChevronDown } from "lucide-react";
+import clsx from "clsx";
+import styles from "./collapse.module.css";
+
+export type CollapseVariant = "card" | "plain";
+
+export interface CollapseProps {
+  /** Header row content: plain text or arbitrary ReactNode. */
+  header: ReactNode;
+  /** Collapsible body. */
+  children: ReactNode;
+  /** Controlled open state (leave undefined for uncontrolled usage). */
+  open?: boolean;
+  /** Initial state for uncontrolled usage (default false). */
+  defaultOpen?: boolean;
+  /** Fired on user toggle with the *next* state; switch to controlled by also passing `open`. */
+  onToggle?: (nextOpen: boolean) => void;
+  disabled?: boolean;
+  /** Heading level that wraps the trigger button (default "h3"). */
+  headerAs?: ElementType;
+  /** Custom indicator node (the wrapper rotates with the panel); `false` hides it. Default: chevron. */
+  indicator?: ReactNode | false;
+  indicatorPosition?: "end" | "start";
+  /** Tween duration in seconds; `0` = instant. Default 0.35. */
+  duration?: number;
+  /** Anchor / aria id; auto-generated when omitted. */
+  id?: string;
+  /** Theming variant; literal union keeps values backed by collapse.module.css. */
+  variant?: CollapseVariant;
+  className?: string;
+  headerClassName?: string;
+  contentClassName?: string;
+  style?: CSSProperties;
+}
+
+export function Collapse({
+  header,
+  children,
+  open,
+  defaultOpen = false,
+  onToggle,
+  disabled = false,
+  headerAs,
+  indicator,
+  indicatorPosition = "end",
+  duration = 0.35,
+  id,
+  variant,
+  className,
+  headerClassName,
+  contentClassName,
+  style,
+}: CollapseProps) {
+  const generatedId = useId();
+  const panelId = id ?? `collapse-${generatedId}`;
+  const triggerId = `${panelId}-trigger`;
+  // aria-controls must reference the element that actually hides — the
+  // collapsible region — not the always-visible root wrapper.
+  const contentId = `${panelId}-content`;
+
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const isOpen = open ?? internalOpen;
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const mountedRef = useRef(false);
+
+  // Dep on definedness, not node identity: a custom indicator element gets a
+  // fresh object every parent render and would restart tweens mid-flight (and
+  // postpone the closing display:none, keeping closed content tab-focusable).
+  const hasIndicator = indicator !== false;
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    const firstRun = !mountedRef.current;
+    mountedRef.current = true;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const dur = firstRun || reducedMotion || duration <= 0 ? 0 : duration;
+
+    // Focus rescue: closing a panel that contains focus would silently drop
+    // it to <body> once display:none lands — hand it back to the trigger.
+    const releaseFocus = () => {
+      if (el.contains(document.activeElement)) triggerRef.current?.focus();
+    };
+
+    // Indicator rotation rides the same timeline policy as the height tween.
+    if (indicatorRef.current && hasIndicator) {
+      gsap.to(indicatorRef.current, {
+        rotate: isOpen ? 180 : 0,
+        duration: dur,
+        ease: "power2.out",
+        overwrite: true,
+      });
+    }
+
+    if (isOpen) {
+      if (dur === 0) {
+        gsap.set(el, { height: "auto", display: "block" });
+      } else {
+        gsap.set(el, { display: "block" });
+        gsap.to(el, {
+          height: "auto",
+          duration: dur,
+          ease: "power2.out",
+          overwrite: true,
+        });
+      }
+    } else {
+      if (dur === 0) {
+        releaseFocus();
+        gsap.set(el, { height: 0, display: "none" });
+      } else {
+        gsap.to(el, {
+          height: 0,
+          duration: dur,
+          ease: "power2.inOut",
+          overwrite: true,
+          onComplete: () => {
+            releaseFocus();
+            gsap.set(el, { display: "none" });
+          },
+        });
+      }
+    }
+
+    return () => {
+      gsap.killTweensOf(el);
+    };
+  }, [isOpen, duration, hasIndicator]);
+
+  const requestToggle = () => {
+    if (disabled) return;
+    const next = !isOpen;
+    if (open === undefined) setInternalOpen(next);
+    onToggle?.(next);
+  };
+
+  const Heading = headerAs ?? "h3";
+  const indicatorNode = indicator !== false && (
+    <span className={styles.indicator} ref={indicatorRef} aria-hidden="true">
+      {indicator === undefined ? <ChevronDown size={18} /> : indicator}
+    </span>
+  );
+
+  return (
+    <div
+      id={panelId}
+      className={clsx(styles.collapse, variant && styles[variant], className)}
+      style={style}
+    >
+      <Heading className={clsx(styles.heading, headerClassName)}>
+        <button
+          type="button"
+          id={triggerId}
+          ref={triggerRef}
+          className={styles.trigger}
+          aria-expanded={isOpen}
+          aria-controls={contentId}
+          disabled={disabled}
+          onClick={requestToggle}
+        >
+          {indicatorPosition === "start" && indicatorNode}
+          <span className={styles.headerText}>{header}</span>
+          {indicatorPosition === "end" && indicatorNode}
+        </button>
+      </Heading>
+      <div
+        ref={contentRef}
+        id={contentId}
+        role="region"
+        aria-labelledby={triggerId}
+        className={clsx(styles.content, contentClassName)}
+      >
+        <div className={styles.contentInner}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
+export interface AccordionProps {
+  /**
+   * Direct <Collapse> children only — typed so anything else fails to
+   * compile. The group injects `open` / `onToggle` into them via cloneElement
+   * (per-child `defaultOpen` is ignored inside a group).
+   */
+  children: ReactElement<CollapseProps> | ReactElement<CollapseProps>[];
+  /** Only one panel open at a time (default false). */
+  exclusive?: boolean;
+  /** Initially open panel index(es); uncontrolled after first render. */
+  defaultOpen?: number | number[];
+  /** Fired whenever the set of open indices changes. */
+  onChange?: (openIndices: number[]) => void;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export function Accordion({
+  children,
+  exclusive = false,
+  defaultOpen = [],
+  onChange,
+  className,
+  style,
+}: AccordionProps) {
+  const [openIndices, setOpenIndices] = useState<number[]>(() => {
+    const initial = Array.isArray(defaultOpen) ? defaultOpen : [defaultOpen];
+    // Exclusive groups can only start with one panel open.
+    return exclusive ? initial.slice(0, 1) : initial;
+  });
+
+  // Mirror the latest set so batched toggles ("close all", programmatic
+  // composition) never read a stale closure — and onChange stays out of the
+  // state updater (updaters must stay pure for StrictMode double-invoke).
+  const openRef = useRef(openIndices);
+
+  const toggle = (index: number, next: boolean) => {
+    const prev = openRef.current;
+    const nextSet =
+      exclusive && next
+        ? [index]
+        : next
+          ? [...new Set([...prev, index])]
+          : prev.filter((i) => i !== index);
+    openRef.current = nextSet;
+    setOpenIndices(nextSet);
+    onChange?.(nextSet);
+  };
+
+  const collapses = Children.toArray(children).filter(isValidElement);
+
+  // Runtime backstop for the imperfect compile-time narrowing (JSX.Element
+  // props are `any`, so a stray <div>/<Fragment> can still slip through).
+  if (import.meta.env.DEV) {
+    for (const child of collapses) {
+      if (child.type !== Collapse) {
+        console.warn(
+          "<Accordion>: children must be direct <Collapse> elements; this child will not be group-driven:",
+          child.type,
+        );
+      }
+    }
+  }
+
+  return (
+    <div className={clsx(styles.accordion, className)} style={style}>
+      {collapses.map((child, index) => {
+        const collapse = child as ReactElement<CollapseProps>;
+        return cloneElement(collapse, {
+          key: child.key ?? index,
+          open: openIndices.includes(index),
+          onToggle: (next: boolean) => {
+            collapse.props.onToggle?.(next);
+            toggle(index, next);
+          },
+        });
+      })}
+    </div>
+  );
+}

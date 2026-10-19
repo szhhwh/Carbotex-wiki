@@ -1,0 +1,646 @@
+:root {
+  --ink: #18324a;
+  --muted: #536e7f;
+  --line: #8eafbd57;
+  --base-a: #7bc96f;
+  --base-t: #f28c6b;
+  --base-g: #f2c94c;
+  --base-c: #5dade2;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background: #eaf2f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse at top left, #d2e6f6b3, transparent 60%),
+    linear-gradient(140deg, #eef5f9, #f5f2e9);
+}
+
+.dna-app {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  position: relative;
+  flex: 0 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  gap: 12px;
+  padding: clamp(10px, 1.5vw, 22px);
+}
+
+.app-header,
+.view-controls,
+.stage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.control-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.app-header {
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.lang-slot:empty {
+  display: none;
+}
+
+.activity-lang {
+  --lang-ink: var(--muted);
+  --lang-active-ink: var(--ink);
+}
+
+.app-title h1 {
+  margin: 0;
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+button {
+  /* State colours live in variables so the hover rule can reuse them; a
+     toggled-on button then keeps its highlight instead of flashing white. */
+  --btn-bg: #ffffffba;
+  --btn-bg-hover: #fff;
+  --btn-border: #688a9e66;
+  --btn-border-hover: #688a9e99;
+  --btn-shadow: none;
+  --btn-shadow-hover: 0 7px 14px -9px rgba(24, 50, 74, 0.6);
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--btn-border);
+  border-radius: 10px;
+  color: inherit;
+  background: var(--btn-bg);
+  box-shadow: var(--btn-shadow);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-border-hover);
+  box-shadow: var(--btn-shadow-hover);
+  transform: translateY(-1px);
+}
+button:active:not(:disabled) {
+  box-shadow: var(--btn-shadow);
+  transform: translateY(0) scale(0.96);
+  transition-duration: 0.07s;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+button[aria-pressed="true"] {
+  --btn-bg: #d5e7ed;
+  --btn-bg-hover: #c7e1ea;
+  --btn-border: #397a9c;
+  --btn-border-hover: #2f6a8b;
+  --btn-shadow: inset 0 1px 3px rgba(24, 50, 74, 0.14);
+  --btn-shadow-hover: inset 0 1px 3px rgba(24, 50, 74, 0.2);
+}
+.view-controls {
+  justify-content: end;
+  gap: 6px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  min-width: 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* The 3D controls sit at the left of the caption bar, below the model. */
+.three-d-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.rotation-controls {
+  display: flex;
+  gap: 6px;
+}
+.rotation-controls button {
+  min-width: 0;
+  padding-inline: 12px;
+}
+.camera-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.assembly-wrapper,
+.stage,
+.board-viewport,
+.viewer-surface,
+#helix-viewport {
+  min-width: 0;
+  min-height: 0;
+}
+
+.assembly-wrapper {
+  display: grid;
+  grid-template-areas: "stage";
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.stage {
+  display: grid;
+  grid-area: stage;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgba(142, 175, 189, 0.35);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 75% 25%, #ffffff, transparent 75%),
+    linear-gradient(135deg, #eef4f7, #f7f5ed);
+  box-shadow: 0 4px 24px rgba(24, 50, 74, 0.05);
+  transition:
+    opacity 0.3s cubic-bezier(0.2, 0.7, 0.3, 1) 0.05s,
+    visibility 0s linear 0s;
+}
+/* The two stages share one grid cell, so switching views is a cross-fade
+   rather than a hard cut. */
+.dna-app[data-scene="helix3d"] #board-stage,
+.dna-app[data-scene="board2d"] #helix-stage {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0s linear 0.2s;
+}
+#board-stage {
+  /* The 2D bench is only the canvas: no heading band above it. */
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.stage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(142, 175, 189, 0.25);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+}
+.stage-heading h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin: 0;
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.stage-heading h2::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #48bb78;
+  box-shadow: 0 0 6px rgba(72, 187, 120, 0.7);
+}
+.board-viewport {
+  position: relative;
+}
+#assembly-board,
+#helix-viewport,
+#helix-viewport canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+#assembly-board {
+  position: absolute;
+  inset: 0;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+#helix-stage {
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+}
+.viewer-surface {
+  position: relative;
+}
+#helix-viewport {
+  position: absolute;
+  inset: 0;
+}
+#helix-viewport canvas {
+  cursor: grab;
+}
+#helix-viewport canvas.is-dragging {
+  cursor: grabbing;
+}
+#helix-viewport canvas:focus-visible {
+  outline: 3px solid #397a9c;
+  outline-offset: -5px;
+}
+
+#viewer-notice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(86%, 400px);
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f8faf5ed;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  text-align: center;
+}
+
+.viewer-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  padding: 8px 12px;
+  border-top: 1px solid #8eafbd40;
+  background: #ffffff73;
+  font-size: 11px;
+}
+.viewer-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.viewer-legend i {
+  width: 8px;
+  height: 8px;
+  border: 1px solid #18324a33;
+  border-radius: 50%;
+}
+.base-a {
+  background: var(--base-a);
+}
+.base-t {
+  background: var(--base-t);
+}
+.base-g {
+  background: var(--base-g);
+}
+.base-c {
+  background: var(--base-c);
+}
+.sugar {
+  background: #c5dfed;
+}
+.phosphate {
+  background: #df9d7c;
+}
+.viewer-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 18px;
+  padding: 6px 14px 8px;
+  border-top: 1px solid rgba(142, 175, 189, 0.22);
+  background: #ffffff73;
+  font-size: 11px;
+}
+/* Controls stay left, the model's own status text stays right. */
+.viewer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  margin-left: auto;
+  text-align: right;
+}
+#viewer-help {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* Motion handed to freshly built SVG nodes by the vector drawing layer. */
+.dna-slot-breathe {
+  animation: dna-slot-breathe 3.4s ease-in-out infinite;
+}
+.dna-snap-pulse {
+  animation: dna-snap-pulse 1.15s ease-in-out infinite;
+}
+@keyframes dna-slot-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.42;
+  }
+}
+@keyframes dna-snap-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Entrance choreography: the sheet, the header, the switcher and the 3D
+   canvas arrive in a short stagger instead of all at once. */
+.app-title,
+.header-actions > * {
+  animation: dna-rise-in 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.header-actions > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.header-actions > *:nth-child(3) {
+  animation-delay: 0.12s;
+}
+#assembly-board {
+  animation: dna-fade-in 0.6s ease both;
+}
+#helix-viewport canvas {
+  animation: dna-fade-in 0.5s ease both;
+}
+#viewer-notice:not([hidden]) {
+  animation: dna-notice-in 0.26s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+@keyframes dna-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes dna-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dna-notice-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Language switcher: the active pill glides, the buttons respond to touch. */
+.dna-app .activity-lang button {
+  --btn-shadow: none;
+  --btn-shadow-hover: none;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+/* Keep the shared switcher flat like the ESG game while retaining the
+   page's gentle touch response. */
+.dna-app .activity-lang button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.dna-app .activity-lang button:active:not(:disabled) {
+  transform: translateY(0) scale(0.94);
+}
+
+@media (max-width: 760px) {
+  .dna-app {
+    gap: 8px;
+    padding: 8px;
+  }
+  .workspace {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .three-d-controls {
+    gap: 8px;
+  }
+  .control-label {
+    display: none;
+  }
+  .rotation-controls button,
+  .camera-controls button {
+    font-size: 12px;
+  }
+  .stage {
+    border-radius: 12px;
+  }
+  .stage-heading {
+    padding: 8px 12px;
+  }
+  .stage-heading h2 {
+    font-size: 16px;
+  }
+  .viewer-legend {
+    gap: 5px 12px;
+    padding: 6px 10px;
+  }
+  .viewer-caption {
+    padding: 6px 12px 7px;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-title h1 {
+    font-size: 19px;
+  }
+  .app-header {
+    gap: 6px;
+  }
+  .header-actions {
+    flex-basis: 100%;
+    justify-content: space-between;
+  }
+  .view-controls button {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+  .rotation-controls {
+    flex: 1 1 150px;
+  }
+  .camera-controls {
+    flex: 1 1 160px;
+  }
+  .three-d-controls button {
+    min-height: 36px;
+    min-width: 36px;
+    padding: 5px 6px;
+  }
+  #viewer-help {
+    display: none;
+  }
+  .viewer-caption {
+    gap: 5px 12px;
+    padding-bottom: 6px;
+  }
+}
+
+@media (max-height: 600px) and (max-width: 760px) {
+  .rotation-controls {
+    flex-basis: 114px;
+  }
+
+  .camera-controls {
+    flex-basis: 138px;
+  }
+
+  .three-d-controls button {
+    min-height: 36px;
+    min-width: 0;
+    padding: 5px 4px;
+    font-size: 11px;
+  }
+
+  .app-title h1 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .app-header button {
+    min-height: 36px;
+  }
+
+  .stage-heading {
+    padding-block: 5px;
+  }
+
+  .viewer-legend {
+    gap: 4px 6px;
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+
+  /* Short viewports keep the controls but drop the longer help text. */
+  #viewer-help {
+    display: none;
+  }
+}
+
+@media (max-height: 500px) and (min-width: 521px) {
+  .dna-app {
+    gap: 6px;
+    padding: 6px;
+  }
+  .three-d-controls {
+    gap: 6px 10px;
+  }
+  .three-d-controls button {
+    min-height: 36px;
+    font-size: 11px;
+    padding-inline: 8px;
+  }
+  .app-title h1 {
+    font-size: 20px;
+  }
+  #viewer-help,
+  .control-label {
+    display: none;
+  }
+  .stage-heading {
+    padding-block: 6px;
+  }
+
+  .app-header button {
+    min-height: 36px;
+  }
+
+  .viewer-caption {
+    padding-block: 5px;
+  }
+}
+
+@media (max-height: 360px) and (min-width: 521px) {
+  #helix-stage {
+    position: relative;
+    grid-template-rows: minmax(0, 1fr) auto auto;
+  }
+
+  #helix-stage .stage-heading {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    padding: 5px 10px;
+    border: 0;
+    pointer-events: none;
+  }
+}

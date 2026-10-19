@@ -1,0 +1,907 @@
+/* ===== 全局样式 - 中国风·古韵·历史气息 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2d5a3d; /* 墨绿 */
+  --primary-dark: #1e3d28; /* 深墨绿 */
+  --primary-light: #3d7a52; /* 浅墨绿 */
+  --accent: #8a7a3a; /* 暗金 */
+  --accent-light: #a8944a; /* 亮金 */
+  --ink: #1a2e1f; /* 墨色 */
+  --ink-soft: #3a4a3d; /* 淡墨 */
+  --paper: #f0ead8; /* 宣纸米黄 */
+  --paper-light: #faf6ea; /* 浅宣纸 */
+  --text-dark: #2e3a2e; /* 深绿褐文字 */
+  --text-muted: #6a7a6a; /* 灰绿褐文字 */
+  --border: #a8b08a; /* 古铜绿边框 */
+  --shadow: 0 8px 24px rgba(30, 61, 40, 0.25);
+  --font-ui:
+    "Noto Sans CJK SC", "Noto Sans SC", "Noto Sans", "Source Han Sans SC",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-display:
+    "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-body-sm: 14px;
+  --text-base: 15px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+  --text-display-sm: 28px;
+  --text-display: 34px;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(
+      ellipse at 15% 8%,
+      rgba(138, 122, 58, 0.08) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 85% 85%,
+      rgba(45, 90, 61, 0.06) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(30, 61, 40, 0.03) 0%,
+      transparent 60%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* 水墨晕染背景装饰 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse at 10% 20%,
+      rgba(26, 46, 31, 0.04) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 90% 70%,
+      rgba(26, 46, 31, 0.05) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 60% 30%,
+      rgba(138, 122, 58, 0.04) 0%,
+      transparent 30%
+    );
+}
+
+/* ===== 顶部导航 - 古风 ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(30, 61, 40, 0.97),
+    rgba(45, 90, 61, 0.95)
+  );
+  border-bottom: 3px solid var(--accent);
+  box-shadow: 0 2px 16px rgba(30, 61, 40, 0.4);
+}
+
+.navbar::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 20px,
+    transparent 20px 26px
+  );
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  font-size: 28px;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--paper-light);
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-display);
+  position: relative;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  padding: 8px 20px;
+  border: 1px solid rgba(245, 236, 215, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(245, 236, 215, 0.8);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+}
+
+.nav-btn:hover {
+  background: rgba(245, 236, 215, 0.15);
+  color: var(--paper-light);
+  border-color: var(--accent-light);
+}
+
+.nav-btn.active {
+  background: linear-gradient(180deg, var(--accent-light), var(--accent));
+  color: #fff;
+  border-color: var(--accent-light);
+  box-shadow: 0 4px 12px rgba(138, 122, 58, 0.5);
+}
+
+/* ===== 页面切换 ===== */
+.page {
+  display: none;
+  padding-top: var(--activity-nav-height, 60px);
+  min-height: 100vh;
+}
+
+.page.active {
+  display: block;
+}
+
+/* ===== 地图页面 ===== */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: calc(100svh - var(--activity-nav-height, 60px));
+}
+
+#china-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== 3D骰子 - 古风 ===== */
+.dice-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 243, 227, 0.95),
+    rgba(232, 220, 192, 0.95)
+  );
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+/* 回纹装饰角 */
+.dice-container::before,
+.dice-container::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent);
+  opacity: 0.6;
+}
+
+.dice-container::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+.dice-container::after {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.dice-scene {
+  width: 120px;
+  height: 120px;
+  perspective: 600px;
+}
+
+.dice {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.dice.rolling {
+  animation: diceRoll 1.5s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.dice-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  background: linear-gradient(135deg, var(--accent-light), var(--primary));
+  border: 2px solid rgba(245, 236, 215, 0.5);
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.25);
+  backface-visibility: hidden;
+}
+
+.dice-front {
+  transform: translateZ(60px);
+}
+.dice-back {
+  transform: rotateY(180deg) translateZ(60px);
+}
+.dice-right {
+  transform: rotateY(90deg) translateZ(60px);
+}
+.dice-left {
+  transform: rotateY(-90deg) translateZ(60px);
+}
+.dice-top {
+  transform: rotateX(90deg) translateZ(60px);
+}
+.dice-bottom {
+  transform: rotateX(-90deg) translateZ(60px);
+}
+
+@keyframes diceRoll {
+  0% {
+    transform: rotateX(0) rotateY(0) rotateZ(0);
+  }
+  25% {
+    transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg);
+  }
+  50% {
+    transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg);
+  }
+  75% {
+    transform: rotateX(540deg) rotateY(270deg) rotateZ(135deg);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg);
+  }
+}
+
+.dice-btn {
+  padding: 12px 24px;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--primary-light), var(--primary));
+  color: var(--paper-light);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.4);
+  letter-spacing: 2px;
+}
+
+.dice-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(45, 90, 61, 0.5);
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+}
+
+.dice-btn:active {
+  transform: translateY(0);
+}
+
+.dice-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dice-result {
+  min-height: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.dice-result .province-name {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* ===== 详情面板 - 古风 ===== */
+.detail-panel {
+  overflow-y: auto;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 243, 227, 0.97),
+    rgba(245, 236, 215, 0.97)
+  );
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid var(--border);
+  background: linear-gradient(
+    135deg,
+    rgba(45, 90, 61, 0.15),
+    rgba(138, 122, 58, 0.12)
+  );
+}
+
+.detail-header h2 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+  font-family: var(--font-display);
+}
+
+.detail-content {
+  padding: 16px 18px 22px;
+}
+
+.food-list {
+  display: grid;
+}
+
+.food-entry {
+  position: relative;
+  min-width: 0;
+}
+
+.food-entry + .food-entry {
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.food-entry + .food-entry::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(138, 122, 58, 0.18) 10%,
+    rgba(138, 122, 58, 0.55) 50%,
+    rgba(138, 122, 58, 0.18) 90%,
+    transparent
+  );
+}
+
+.food-entry + .food-entry::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(138, 122, 58, 0.58);
+  background: var(--atlas-card-bg, var(--paper-light));
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.food-entry-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.food-entry h3 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.craft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--craft-color, var(--border));
+  border-radius: 999px;
+  background: rgba(250, 246, 234, 0.62);
+  color: var(--craft-color, var(--primary));
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.food-desc {
+  margin: 0 0 14px;
+  font-size: var(--text-base);
+  line-height: 1.68;
+  color: var(--ink-soft);
+}
+
+.process-box {
+  padding: 1px 0 1px 12px;
+  border: 0;
+  border-left: 2px solid rgba(168, 176, 138, 0.7);
+  background: transparent;
+  font-size: var(--text-body-sm);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.process-box .process-label {
+  margin-bottom: 3px;
+  color: var(--accent);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.process-box p {
+  margin: 0;
+}
+
+.craft-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  margin-top: 14px;
+  padding: 6px 11px;
+  border: 1px solid rgba(168, 176, 138, 0.75);
+  border-radius: 7px;
+  background: rgba(250, 246, 234, 0.55);
+  color: var(--primary-dark);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.craft-search-btn:hover {
+  border-color: var(--primary);
+  background: #e1e6d3;
+}
+
+.craft-search-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.craft-search-arrow {
+  color: var(--accent);
+  transition: transform 180ms ease;
+}
+
+.craft-search-btn:hover .craft-search-arrow {
+  transform: translateX(2px);
+}
+
+.craft-context {
+  margin: 3px 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+}
+
+.craft-summary {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 0 0 18px;
+  border: 0;
+  border-bottom: 1px solid rgba(168, 176, 138, 0.45);
+  border-radius: 0;
+  background: transparent;
+}
+
+.craft-summary-copy {
+  color: #7a6a50;
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+
+.craft-summary .craft-badge {
+  justify-self: start;
+}
+
+.craft-list {
+  display: grid;
+  gap: 0;
+}
+
+.craft-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 10px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(168, 176, 138, 0.38);
+  border-radius: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.craft-item:first-child {
+  border-top: 0;
+}
+
+.craft-item:hover {
+  background: rgba(225, 230, 211, 0.58);
+}
+
+.craft-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.craft-item-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.craft-item .item-province {
+  font-size: var(--text-xs);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.craft-item .item-food {
+  font-size: var(--text-base);
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.craft-item .item-arrow {
+  flex: none;
+  color: var(--accent);
+  font-size: var(--text-lg);
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.craft-item:hover .item-arrow {
+  transform: translateX(2px);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* Language switcher in the activity navigation. */
+.lang-slot {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.lang-slot:empty {
+  display: none;
+}
+
+.lang-slot .activity-lang {
+  --lang-ink: rgba(245, 236, 215, 0.85);
+  --lang-active-ink: #1e3d28;
+  --lang-active-bg: var(--paper-light, #f5ecd7);
+  --lang-border: rgba(245, 236, 215, 0.35);
+  --lang-surface: rgba(250, 243, 227, 0.12);
+  --lang-hover: rgba(250, 243, 227, 0.2);
+}
+
+.lang-slot .activity-lang button {
+  font-size: 12px;
+}
+
+body .activity-legal {
+  font-size: 13px;
+}
+
+/* ===== 加载提示 - 古风 ===== */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(245, 236, 215, 0.97);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loading-overlay.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(45, 90, 61, 0.15);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.loading-overlay p {
+  color: var(--text-muted);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ===== 历史气息增强 ===== */
+
+/* 骰子容器 - 卷轴宣纸质感 */
+.dice-container {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250, 243, 227, 0.96),
+      rgba(232, 220, 192, 0.96)
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+  border: 2px solid var(--border);
+  box-shadow:
+    var(--shadow),
+    inset 0 0 30px rgba(138, 122, 58, 0.08);
+}
+
+/* 骰子容器顶部 - 祥云装饰 */
+.dice-container .dice-scene::before {
+  content: "☁";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: rgba(138, 122, 58, 0.4);
+  opacity: 0.5;
+}
+
+/* 详情面板 - 卷轴质感 */
+.detail-panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(250, 243, 227, 0.98),
+      rgba(245, 236, 215, 0.98)
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E");
+  box-shadow:
+    var(--shadow),
+    inset 0 0 40px rgba(138, 122, 58, 0.06);
+}
+
+/* 地图容器 - 边框装饰 */
+.map-container::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(138, 122, 58, 0.15);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 加载提示 - 水墨风格 */
+.loading-overlay {
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(250, 243, 227, 0.98) 0%,
+      rgba(245, 236, 215, 0.98) 100%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* 加载提示文字 - 古风 */
+.loading-overlay p {
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--primary);
+}
+
+/* 加载旋转 - 太极风格 */
+.loading-spinner {
+  border: 4px solid rgba(45, 90, 61, 0.15);
+  border-top-color: var(--primary);
+  border-right-color: var(--accent);
+  border-bottom-color: rgba(45, 90, 61, 0.15);
+  border-left-color: var(--accent);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 16px;
+  }
+
+  .brand-title {
+    font-size: var(--text-lg);
+    letter-spacing: 1px;
+  }
+
+  .nav-btn {
+    padding: 6px 14px;
+    font-size: var(--text-body-sm);
+  }
+
+  .dice-container {
+    top: 10px;
+    right: 10px;
+    padding: 12px;
+  }
+
+  .dice-scene {
+    width: 80px;
+    height: 80px;
+  }
+
+  .dice-face {
+    font-size: 32px;
+  }
+
+  .dice-front {
+    transform: translateZ(40px);
+  }
+  .dice-back {
+    transform: rotateY(180deg) translateZ(40px);
+  }
+  .dice-right {
+    transform: rotateY(90deg) translateZ(40px);
+  }
+  .dice-left {
+    transform: rotateY(-90deg) translateZ(40px);
+  }
+  .dice-top {
+    transform: rotateX(90deg) translateZ(40px);
+  }
+  .dice-bottom {
+    transform: rotateX(-90deg) translateZ(40px);
+  }
+}
+
+/* Fit the activity navigation and panels inside the wiki's mobile frame. */
+@media (max-width: 640px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 8px;
+  }
+
+  .nav-links {
+    width: 100%;
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    min-height: 40px;
+    padding: 6px 8px;
+    letter-spacing: 0;
+  }
+
+  .page {
+    padding-top: var(--activity-nav-height, 150px);
+  }
+
+  .dice-container {
+    padding: 8px;
+  }
+
+  .dice-btn {
+    padding: 8px;
+    font-size: 12px;
+  }
+}

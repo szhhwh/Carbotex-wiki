@@ -1,12 +1,14 @@
-import pages from "../pages.ts";
+import pages, { type PageLayout } from "../pages.ts";
+import type { ComponentType } from "react";
 
 export const getPathMapping = () => {
   return pages.reduce<{
     [key: string]: {
       name: string | undefined;
       title: string | undefined;
-      component: React.FC;
+      component: ComponentType;
       lead: string | undefined;
+      layout?: PageLayout;
     };
   }>((map, item) => {
     if ("path" in item && item.path && item.component) {
@@ -15,6 +17,7 @@ export const getPathMapping = () => {
         title: item.title,
         component: item.component,
         lead: item.lead,
+        layout: item.layout,
       };
     } else if ("folder" in item && item.folder) {
       item.folder.forEach((page) => {
@@ -24,6 +27,7 @@ export const getPathMapping = () => {
             title: page.title,
             component: page.component,
             lead: page.lead,
+            layout: page.layout,
           };
         }
       });

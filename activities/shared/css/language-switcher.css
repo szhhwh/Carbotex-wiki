@@ -1,0 +1,42 @@
+/* Compact language switcher shared by the standalone activities. */
+.activity-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--lang-border, #8eafbd66);
+  border-radius: 999px;
+  background: var(--lang-surface, #ffffffb8);
+}
+
+.activity-lang button {
+  min-width: 34px;
+  min-height: 26px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lang-ink, inherit);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.activity-lang button:hover {
+  background: var(--lang-hover, #00000012);
+}
+
+.activity-lang button.is-active,
+.activity-lang button[aria-pressed="true"] {
+  background: var(--lang-active-bg, #d5e7ed);
+  color: var(--lang-active-ink, inherit);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.activity-lang button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}

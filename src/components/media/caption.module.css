@@ -1,0 +1,18 @@
+/*
+ * Caption skeleton — the single source of caption typography for all media
+ * components (Figure, VideoEmbed). Visual tokens land with the design pass.
+ */
+
+.caption {
+  margin-block-start: 0.6rem;
+  font-size: 0.9em;
+  line-height: 1.55;
+  color: var(--text-muted, #5b6470);
+  text-align: start;
+}
+
+.captionPrefix {
+  font-weight: 600;
+  margin-inline-end: 0.5ch;
+  color: var(--text-strong, inherit);
+}

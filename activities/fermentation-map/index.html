@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="color-scheme" content="light" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="map.title">Atlas of Chinese Fermented Foods</title>
+    <!-- iGEM team logo, mirroring the wiki <head> (static.igem.wiki assets). -->
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="32x32"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-32x32.avif"
+    />
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="16x16"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-16x16.avif"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/apple-touch-icon.avif"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/atlas.css" />
+    <link rel="stylesheet" href="css/lab.css" />
+  </head>
+  <body>
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="brand-title" data-i18n="map.brand"
+          >Atlas of Chinese Fermented Foods</span
+        >
+      </div>
+      <div class="nav-links">
+        <button
+          class="nav-btn active"
+          data-page="map"
+          aria-current="page"
+          data-i18n="map.nav.map"
+        >
+          Explore the map
+        </button>
+        <button class="nav-btn" data-page="lab" data-i18n="map.nav.lab">
+          Virtual lab
+        </button>
+        <div class="lang-slot" data-lang-switcher-host></div>
+      </div>
+    </nav>
+
+    <!-- 地图页面 -->
+    <div id="page-map" class="page active">
+      <div
+        class="map-container"
+        id="atlasRoot"
+        data-panel-open="true"
+        data-detail-reopen="false"
+      >
+        <div class="atlas-layout">
+          <div id="china-map"></div>
+          <div class="atlas-hud">
+            <aside class="atlas-sidebar" aria-labelledby="atlasPanelTitle">
+              <button
+                class="atlas-panel-toggle"
+                id="atlasPanelToggle"
+                type="button"
+                aria-expanded="true"
+                aria-controls="atlasSidebarBody"
+                data-i18n-attr="aria-label:map.atlas.toggle"
+              >
+                <span class="atlas-panel-toggle-copy">
+                  <span
+                    class="atlas-panel-toggle-title"
+                    id="atlasPanelTitle"
+                    data-i18n="map.atlas.regions"
+                    >Choose a region</span
+                  >
+                  <span
+                    class="atlas-panel-toggle-label"
+                    data-i18n="map.atlas.progress"
+                    >Your discoveries</span
+                  >
+                  <span class="atlas-panel-toggle-meta"
+                    ><strong id="atlasVisitedCompact">0</strong
+                    ><span>/ 34</span></span
+                  >
+                </span>
+                <span class="atlas-panel-toggle-icon" aria-hidden="true"></span>
+              </button>
+              <div class="atlas-sidebar-body" id="atlasSidebarBody">
+                <div class="atlas-progress">
+                  <p data-i18n="map.atlas.progress">Your discoveries</p>
+                  <div
+                    class="atlas-progress-count"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    <strong id="atlasVisited">0</strong>
+                    <span class="atlas-progress-total">/ 34</span>
+                    <span id="atlasVisitedUnit" data-i18n="map.atlas.regionUnit"
+                      >regions</span
+                    >
+                  </div>
+                  <div class="atlas-progress-track">
+                    <span id="atlasProgress"></span>
+                  </div>
+                </div>
+                <div class="atlas-region-heading">
+                  <h2 data-i18n="map.atlas.regions">Choose a region</h2>
+                </div>
+                <label class="atlas-search" for="provinceSearch">
+                  <input
+                    id="provinceSearch"
+                    type="search"
+                    autocomplete="off"
+                    aria-controls="provinceResults"
+                    data-i18n-attr="placeholder:map.atlas.searchPlaceholder,aria-label:map.atlas.search"
+                  />
+                </label>
+                <div id="provinceResults" class="atlas-region-list"></div>
+                <div class="atlas-draw">
+                  <button
+                    class="atlas-draw-button"
+                    id="rollDiceBtn"
+                    type="button"
+                  >
+                    <span class="atlas-draw-seal" aria-hidden="true">
+                      <svg
+                        class="atlas-draw-die"
+                        id="dice"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <rect
+                          x="3"
+                          y="3"
+                          width="18"
+                          height="18"
+                          rx="4.5"
+                          stroke="currentColor"
+                          stroke-width="1.4"
+                        />
+                        <circle
+                          cx="8.2"
+                          cy="8.2"
+                          r="1.25"
+                          fill="currentColor"
+                        />
+                        <circle
+                          cx="15.8"
+                          cy="8.2"
+                          r="1.25"
+                          fill="currentColor"
+                        />
+                        <circle cx="12" cy="12" r="1.25" fill="currentColor" />
+                        <circle
+                          cx="8.2"
+                          cy="15.8"
+                          r="1.25"
+                          fill="currentColor"
+                        />
+                        <circle
+                          cx="15.8"
+                          cy="15.8"
+                          r="1.25"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </span>
+                    <span class="atlas-draw-copy">
+                      <span class="atlas-draw-title" data-i18n="map.dice.roll"
+                        >Roll for a fermented food</span
+                      >
+                    </span>
+                    <span class="atlas-draw-arrow" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none">
+                        <path
+                          d="M3 8h9.5M9 4.5 12.5 8 9 11.5"
+                          stroke="currentColor"
+                          stroke-width="1.4"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <div
+                    class="atlas-draw-result"
+                    id="diceResult"
+                    role="status"
+                  ></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="detail-expand-btn"
+        id="expandDetail"
+        type="button"
+        aria-controls="detailPanel"
+        aria-expanded="false"
+        aria-hidden="true"
+        tabindex="-1"
+        data-i18n-attr="aria-label:map.panel.expand"
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+
+      <!-- 省份美食详情面板 -->
+      <dialog
+        class="detail-panel"
+        id="detailPanel"
+        aria-labelledby="provinceName"
+      >
+        <div class="detail-panel-scroll">
+          <div class="detail-header">
+            <button
+              class="back-btn"
+              id="backPanel"
+              type="button"
+              hidden
+              data-i18n-attr="aria-label:map.panel.back"
+            >
+              ←
+            </button>
+            <div class="detail-header-copy">
+              <h2 id="provinceName" tabindex="-1"></h2>
+              <p class="craft-context" id="panelContext" hidden></p>
+            </div>
+          </div>
+          <div class="detail-content" id="detailContent"></div>
+        </div>
+      </dialog>
+    </div>
+
+    <!-- 虚拟实验页面：实验说明 / 对照条件 / 结果 / 记录 -->
+    <div id="page-lab" class="page">
+      <div class="lab-container">
+        <header class="lab-hero">
+          <div class="lab-hero-copy">
+            <h1 class="lab-title" data-i18n="map.lab.title">
+              Virtual science lab
+            </h1>
+            <p class="lab-question" data-i18n="map.lab.question">
+              Does sugar make yeast produce gas?
+            </p>
+            <p class="lab-intro" data-i18n-html="map.lab.intro">
+              Yeast respires anaerobically, converting sugar into alcohol and
+              CO₂. Bottle A starts with sugar; Bottle B is the sugar-free
+              control. A balloon over each bottle captures the gas.
+            </p>
+          </div>
+
+          <figure class="lab-setup">
+            <svg
+              class="lab-setup-art"
+              viewBox="0 0 560 340"
+              role="img"
+              aria-labelledby="labSetupTitle"
+            >
+              <title id="labSetupTitle" data-i18n="map.lab.setupAlt">
+                Bottle A has a full balloon and bubbles; bottle B is the
+                sugar-free control with a deflated balloon.
+              </title>
+              <rect
+                class="lab-setup-bench"
+                x="36"
+                y="300"
+                width="488"
+                height="8"
+                rx="4"
+              />
+
+              <g class="lab-setup-bottle">
+                <ellipse
+                  class="lab-setup-balloon a"
+                  cx="140"
+                  cy="86"
+                  rx="54"
+                  ry="60"
+                />
+                <ellipse
+                  class="lab-setup-shine"
+                  cx="121"
+                  cy="62"
+                  rx="10"
+                  ry="20"
+                />
+                <path class="lab-setup-knot a" d="M140 146l-8 12h16l-8-12Z" />
+                <path class="lab-setup-string" d="M140 158v6" />
+                <rect
+                  class="lab-setup-mouth"
+                  x="118"
+                  y="164"
+                  width="44"
+                  height="12"
+                  rx="3"
+                />
+                <rect
+                  class="lab-setup-neck"
+                  x="124"
+                  y="174"
+                  width="32"
+                  height="26"
+                />
+                <path
+                  class="lab-setup-jar"
+                  d="M104 198h72v76c0 13-10 24-23 24h-26c-13 0-23-11-23-24v-76Z"
+                />
+                <path
+                  class="lab-setup-liquid a"
+                  d="M109 240h62v34c0 11-8 19-19 19h-24c-11 0-19-8-19-19v-34Z"
+                />
+                <circle class="lab-setup-bubble" cx="127" cy="254" r="4" />
+                <circle class="lab-setup-bubble" cx="147" cy="264" r="3" />
+                <circle class="lab-setup-bubble" cx="136" cy="278" r="2.5" />
+                <text class="lab-setup-label" x="140" y="330">A</text>
+              </g>
+
+              <g class="lab-setup-bottle">
+                <ellipse
+                  class="lab-setup-balloon b"
+                  cx="400"
+                  cy="118"
+                  rx="36"
+                  ry="28"
+                />
+                <ellipse
+                  class="lab-setup-shine b"
+                  cx="389"
+                  cy="108"
+                  rx="7"
+                  ry="11"
+                />
+                <path class="lab-setup-knot b" d="M400 146l-8 12h16l-8-12Z" />
+                <path class="lab-setup-string" d="M400 158v6" />
+                <rect
+                  class="lab-setup-mouth"
+                  x="378"
+                  y="164"
+                  width="44"
+                  height="12"
+                  rx="3"
+                />
+                <rect
+                  class="lab-setup-neck"
+                  x="384"
+                  y="174"
+                  width="32"
+                  height="26"
+                />
+                <path
+                  class="lab-setup-jar"
+                  d="M364 198h72v76c0 13-10 24-23 24h-26c-13 0-23-11-23-24v-76Z"
+                />
+                <path
+                  class="lab-setup-liquid b"
+                  d="M369 240h62v34c0 11-8 19-19 19h-24c-11 0-19-8-19-19v-34Z"
+                />
+                <text class="lab-setup-label" x="400" y="330">B</text>
+              </g>
+            </svg>
+          </figure>
+        </header>
+
+        <dl class="lab-design">
+          <div>
+            <dt data-i18n="map.lab.designTest">Test bottle</dt>
+            <dd data-i18n="map.lab.designTestValue">
+              Bottle A · sugar, yeast and warm water
+            </dd>
+          </div>
+          <div>
+            <dt data-i18n="map.lab.designControl">Control bottle</dt>
+            <dd data-i18n="map.lab.designControlValue">
+              Bottle B · yeast and warm water
+            </dd>
+          </div>
+          <div>
+            <dt data-i18n="map.lab.designReadout">Readout</dt>
+            <dd data-i18n="map.lab.designReadoutValue">
+              Balloon inflation and relative gas score
+            </dd>
+          </div>
+        </dl>
+
+        <section class="lab-bench" aria-labelledby="labBenchTitle">
+          <header class="lab-bench-head">
+            <h2 id="labBenchTitle" data-i18n="map.lab.benchTitle">
+              Experiment bench
+            </h2>
+          </header>
+
+          <table class="lab-compare">
+            <caption class="lab-sr-only" data-i18n="map.lab.tableCaption">
+              Conditions for bottle A and bottle B
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="map.lab.condition">Condition</th>
+                <th scope="col" id="labColA">
+                  <span class="lab-col-head">
+                    <span class="lab-col-tag a" aria-hidden="true">A</span>
+                    <span class="lab-col-copy">
+                      <span class="lab-col-title" data-i18n="map.lab.bottleA"
+                        >Bottle A</span
+                      >
+                      <span class="lab-col-role" data-i18n="map.lab.testGroup"
+                        >Test group</span
+                      >
+                    </span>
+                  </span>
+                </th>
+                <th scope="col" id="labColB">
+                  <span class="lab-col-head">
+                    <span class="lab-col-tag b" aria-hidden="true">B</span>
+                    <span class="lab-col-copy">
+                      <span class="lab-col-title" data-i18n="map.lab.bottleB"
+                        >Bottle B</span
+                      >
+                      <span
+                        class="lab-col-role"
+                        data-i18n="map.lab.controlGroup"
+                        >Control group</span
+                      >
+                    </span>
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" id="labRowSugar">
+                  <span class="lab-row-label" data-i18n="map.lab.sugar"
+                    >Sugar</span
+                  >
+                  <span class="lab-row-hint" data-i18n="map.lab.sugarHint"
+                    >Substrate for gas production</span
+                  >
+                </th>
+                <td>
+                  <select
+                    id="sugarSelectA"
+                    class="lab-select"
+                    aria-labelledby="labColA labRowSugar"
+                  >
+                    <option value="0" data-i18n="map.lab.noSugar">
+                      No sugar
+                    </option>
+                    <option value="10">10 g</option>
+                    <option value="20">20 g</option>
+                    <option value="30" selected>30 g</option>
+                    <option value="40">40 g</option>
+                    <option value="50">50 g</option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    id="sugarSelectB"
+                    class="lab-select"
+                    aria-labelledby="labColB labRowSugar"
+                  >
+                    <option value="0" selected data-i18n="map.lab.noSugar">
+                      No sugar
+                    </option>
+                    <option value="10">10 g</option>
+                    <option value="20">20 g</option>
+                    <option value="30">30 g</option>
+                    <option value="40">40 g</option>
+                    <option value="50">50 g</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" id="labRowYeast">
+                  <span class="lab-row-label" data-i18n="map.lab.yeast"
+                    >Yeast added</span
+                  >
+                  <span class="lab-row-hint" data-i18n="map.lab.yeastHint"
+                    >The microbe that ferments the sugar</span
+                  >
+                </th>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="yeastRangeA"
+                      min="0"
+                      max="10"
+                      value="5"
+                      step="0.5"
+                      class="lab-range"
+                      aria-labelledby="labColA labRowYeast"
+                    />
+                    <output class="lab-value" id="yeastValueA" for="yeastRangeA"
+                      >5 g</output
+                    >
+                  </div>
+                </td>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="yeastRangeB"
+                      min="0"
+                      max="10"
+                      value="5"
+                      step="0.5"
+                      class="lab-range"
+                      aria-labelledby="labColB labRowYeast"
+                    />
+                    <output class="lab-value" id="yeastValueB" for="yeastRangeB"
+                      >5 g</output
+                    >
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" id="labRowTemp">
+                  <span class="lab-row-label" data-i18n="map.lab.temp"
+                    >Water temperature</span
+                  >
+                  <span class="lab-row-hint" data-i18n="map.lab.tempHint"
+                    >Best between 25 and 38 °C</span
+                  >
+                </th>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="tempRangeA"
+                      min="0"
+                      max="70"
+                      value="30"
+                      step="1"
+                      class="lab-range"
+                      aria-labelledby="labColA labRowTemp"
+                    />
+                    <output class="lab-value" id="tempValueA" for="tempRangeA"
+                      >30 °C</output
+                    >
+                  </div>
+                </td>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="tempRangeB"
+                      min="0"
+                      max="70"
+                      value="30"
+                      step="1"
+                      class="lab-range"
+                      aria-labelledby="labColB labRowTemp"
+                    />
+                    <output class="lab-value" id="tempValueB" for="tempRangeB"
+                      >30 °C</output
+                    >
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" id="labRowTime">
+                  <span class="lab-row-label" data-i18n="map.lab.time"
+                    >Reaction time</span
+                  >
+                  <span class="lab-row-hint" data-i18n="map.lab.timeHint"
+                    >How long fermentation runs</span
+                  >
+                </th>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="timeRangeA"
+                      min="0"
+                      max="30"
+                      value="15"
+                      step="1"
+                      class="lab-range"
+                      aria-labelledby="labColA labRowTime"
+                    />
+                    <output class="lab-value" id="timeValueA" for="timeRangeA"
+                      >15 min</output
+                    >
+                  </div>
+                </td>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="timeRangeB"
+                      min="0"
+                      max="30"
+                      value="15"
+                      step="1"
+                      class="lab-range"
+                      aria-labelledby="labColB labRowTime"
+                    />
+                    <output class="lab-value" id="timeValueB" for="timeRangeB"
+                      >15 min</output
+                    >
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" id="labRowOxygen">
+                  <span class="lab-row-label" data-i18n="map.lab.oxygen"
+                    >Oxygen</span
+                  >
+                  <span class="lab-row-hint" data-i18n="map.lab.oxygenHint"
+                    >Sealed conditions favour fermentation</span
+                  >
+                </th>
+                <td>
+                  <select
+                    id="oxygenSelectA"
+                    class="lab-select"
+                    aria-labelledby="labColA labRowOxygen"
+                  >
+                    <option
+                      value="anaerobic"
+                      selected
+                      data-i18n="map.lab.anaerobic"
+                    >
+                      Sealed, no oxygen
+                    </option>
+                    <option value="aerobic" data-i18n="map.lab.aerobic">
+                      Open, with oxygen
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    id="oxygenSelectB"
+                    class="lab-select"
+                    aria-labelledby="labColB labRowOxygen"
+                  >
+                    <option
+                      value="anaerobic"
+                      selected
+                      data-i18n="map.lab.anaerobic"
+                    >
+                      Sealed, no oxygen
+                    </option>
+                    <option value="aerobic" data-i18n="map.lab.aerobic">
+                      Open, with oxygen
+                    </option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row" id="labRowPh">
+                  <span class="lab-row-label" data-i18n="map.lab.ph">pH</span>
+                  <span class="lab-row-hint" data-i18n="map.lab.phHint"
+                    >Best between pH 4 and 6</span
+                  >
+                </th>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="phRangeA"
+                      min="1"
+                      max="14"
+                      value="7"
+                      step="0.5"
+                      class="lab-range"
+                      aria-labelledby="labColA labRowPh"
+                    />
+                    <output class="lab-value" id="phValueA" for="phRangeA"
+                      >7.0</output
+                    >
+                  </div>
+                </td>
+                <td>
+                  <div class="lab-control-line">
+                    <input
+                      type="range"
+                      id="phRangeB"
+                      min="1"
+                      max="14"
+                      value="7"
+                      step="0.5"
+                      class="lab-range"
+                      aria-labelledby="labColB labRowPh"
+                    />
+                    <output class="lab-value" id="phValueB" for="phRangeB"
+                      >7.0</output
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="lab-bench-actions">
+            <button
+              class="lab-reset-btn"
+              id="resetExperimentBtn"
+              type="button"
+              data-i18n="map.lab.restore"
+            >
+              Restore defaults
+            </button>
+            <button
+              class="lab-run-btn"
+              id="runExperimentBtn"
+              type="button"
+              data-i18n="map.lab.run"
+            >
+              Run experiment
+            </button>
+          </div>
+        </section>
+
+        <section
+          class="lab-results"
+          id="labResults"
+          aria-labelledby="labResultsTitle"
+        >
+          <header class="lab-section-head">
+            <div>
+              <h2 id="labResultsTitle" data-i18n="map.lab.results">
+                Predicted result
+              </h2>
+              <p data-i18n="map.lab.resultsNote">
+                The bigger the balloon and the livelier the bubbles, the higher
+                the gas score.
+              </p>
+            </div>
+          </header>
+          <div
+            class="lab-results-body"
+            id="labResultsBody"
+            aria-live="polite"
+          ></div>
+        </section>
+
+        <section class="lab-log" aria-labelledby="labLogTitle">
+          <header class="lab-section-head">
+            <div>
+              <h2 id="labLogTitle" data-i18n="map.lab.logTitle">
+                Experiment log
+              </h2>
+              <p data-i18n="map.lab.logNote">
+                The latest runs are stored in this browser.
+              </p>
+            </div>
+          </header>
+          <div id="labHistory" class="lab-history-list">
+            <p class="lab-history-empty" data-i18n="map.lab.logEmpty">
+              No experiments recorded yet.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 加载提示 -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <p data-i18n="map.loading">Unrolling the fermented food scroll…</p>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

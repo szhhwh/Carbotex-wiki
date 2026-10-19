@@ -1,0 +1,153 @@
+.navigator {
+  container-type: inline-size;
+}
+
+.navigator > section + section {
+  margin-top: 3.5rem;
+}
+
+.groupHeading {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.groupHeading h4 {
+  margin-top: 0;
+}
+
+.groupHeading p {
+  margin-bottom: 0.5rem;
+}
+
+.number {
+  color: #927332;
+  font:
+    italic 1.2rem Georgia,
+    serif;
+}
+
+.flow {
+  color: #426d52;
+  font-size: 0.83rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #cad6bf;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #fffff8, #eff4e7);
+  color: #284a39;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.portrait {
+  display: grid;
+  aspect-ratio: 4 / 3;
+  padding: 0.8rem;
+  place-items: center;
+  background: #e3ecd9;
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.fallback {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  color: #587066;
+  text-align: center;
+}
+
+.summary {
+  padding: 1rem 1rem 0;
+}
+
+.card h5 {
+  margin: 0 0 0.5rem;
+  color: #174c38;
+  font:
+    700 1.1rem/1.35 Georgia,
+    serif;
+}
+
+.card .identity {
+  color: #587066;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.card dl {
+  margin: 0;
+}
+
+.card dt {
+  margin-bottom: 0.2rem;
+  color: #476541;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.card dd {
+  margin: 0 0 1rem;
+}
+
+.impact {
+  font-weight: 600;
+}
+
+.details {
+  margin: 0 1rem;
+}
+
+.details .trigger {
+  border-top: 1px solid #cad6bf;
+  color: #225842;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.card .story {
+  display: inline-block;
+  padding: 0.6rem 0;
+  color: #225842;
+  font-weight: 700;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@container (max-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 460px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,9 +1,96 @@
-body {
-  padding-top: 56px;
+/* Animate only the gutter color; keep this value out of descendant styles. */
+@property --image-viewer-gutter-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fbfaf4;
 }
 
-.left-aligned {
-  margin-left: auto;
+:root {
+  /* Text on the wiki's light paper backgrounds; decorative gold stays separate. */
+  --text-accent: #78602e;
+  --scrollbar-track: #f2f2f2;
+  --scrollbar-thumb: #767676;
+  --scrollbar-thumb-hover: #4a4a4a;
+  --page-paper: #fbfaf4;
+  --image-viewer-gutter-color: var(--page-paper);
+  background-color: var(--image-viewer-gutter-color);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  transition: --image-viewer-gutter-color 200ms ease;
+}
+
+/* Keep layout width fixed while a native modal prevents page scrolling.
+ * The root paints the reserved gutter, so it fades with the neutral backdrop. */
+:root:has(dialog[data-image-viewer][open]) {
+  overflow: hidden;
+  --image-viewer-gutter-color: color-mix(in srgb, var(--page-paper) 60%, black);
+}
+
+:root:has(dialog[data-image-viewer][data-closing]) {
+  --image-viewer-gutter-color: var(--page-paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    transition: none;
+  }
+}
+
+/* Standard styling also covers Firefox and scrollable panels inside dialogs. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Chromium/Safari allow a rounded thumb with a little space around it. */
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    min-height: 40px;
+    border: 3px solid var(--scrollbar-track);
+    border-radius: 999px;
+    background: var(--scrollbar-thumb);
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+@media (forced-colors: active) {
+  * {
+    scrollbar-color: auto;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: Canvas;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-color: Canvas;
+    background: ButtonText;
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background: Highlight;
+  }
 }
 
 .bg-dark {
@@ -52,14 +139,17 @@ body {
   border-left-color: #d9534f;
 }
 
-/* footer */
-footer a {
-  color: white;
-  font-weight: bold;
+/* CITATIONS (<Cite /> and <References />) */
+sup.cite-ref {
+  margin-left: 2px;
+  white-space: nowrap;
+}
+
+sup.cite-ref a {
   text-decoration: none;
 }
 
-footer a:hover {
-  color: white;
-  text-decoration: underline;
+.references-list li {
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+  margin-bottom: 0.5rem;
 }

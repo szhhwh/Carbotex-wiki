@@ -1,4 +1,7 @@
-import { Inspirations, InspirationLink } from "../components/Inspirations";
+import {
+  Inspirations,
+  InspirationLink,
+} from "../components/article/Inspirations";
 
 export function SafetyAndSecurity() {
   const links: InspirationLink[] = [
