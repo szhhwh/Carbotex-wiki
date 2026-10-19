@@ -1,45 +1,61 @@
-import { Inspirations, InspirationLink } from "../components/Inspirations";
+import { useEffect } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ActivityViewer } from "../components/activities/ActivityViewer";
+import { ACTIVITIES } from "./activityCatalog";
+import styles from "./education.module.css";
+
+function ActivityIndex() {
+  return (
+    <main className={styles.page}>
+      <h1 className={styles.srOnly}>Education activities</h1>
+      <section className={styles.deck} aria-label="Interactive activities">
+        <ul className={styles.deckList}>
+          {ACTIVITIES.map((activity, index) => (
+            <li
+              className={styles.deckItem}
+              key={activity.id}
+              style={{ animationDelay: `${index * 90}ms` }}
+            >
+              <Link
+                aria-label={`Open ${activity.title}. ${activity.summary}`}
+                className={styles.card}
+                data-activity={activity.id}
+                to={`/education?activity=${activity.id}`}
+              >
+                <div className={styles.cardBody}>
+                  <h2>{activity.title}</h2>
+                  <div className={styles.cardDetails}>
+                    <p className={styles.cardSummary}>{activity.summary}</p>
+                    <span className={styles.cardMeta}>{activity.detail}</span>
+                    <span className={styles.cardAction}>
+                      Open activity
+                      <ArrowUpRight aria-hidden="true" strokeWidth={1.8} />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
+  );
+}
 
 export function Education() {
-  const links: InspirationLink[] = [
-    { year: 2025, teamName: "Heidelberg", pageName: "education" },
-    { year: 2025, teamName: "Queens-Canada", pageName: "education" },
-    { year: 2025, teamName: "GreatBay-SCIE", pageName: "education" },
-    { year: 2025, teamName: "BNU-China", pageName: "education" },
-    { year: 2025, teamName: "Leiden", pageName: "education" },
-    { year: 2025, teamName: "JLU-CP", pageName: "education" },
-  ];
-
-  return (
-    <>
-      <div className="row mt-4">
-        <div className="col">
-          <div className="bd-callout bd-callout-info">
-            <h4>Best Education</h4>
-            <p>
-              Innovative educational and outreach activities open a two-way
-              dialogue with new communities about the science and public values
-              behind synthetic biology. Activities do not have to relate
-              directly to your project; they can address wider issues in iGEM or
-              synthetic biology. The only requirement is that they promote
-              scientific learning rather than market iGEM or synthetic biology.
-              Document your approach and what everyone involved learned.
-            </p>
-            <hr />
-            <p>
-              Visit the{" "}
-              <a href="https://competition.igem.org/judging/awards/special">
-                Special Awards page
-              </a>{" "}
-              for more information.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="row mt-4">
-        <Inspirations inspirationLinkList={links} />
-      </div>
-    </>
+  const [searchParams] = useSearchParams();
+  const selected = ACTIVITIES.find(
+    (activity) => activity.id === searchParams.get("activity"),
   );
+
+  useEffect(() => {
+    if (selected) window.scrollTo(0, 0);
+  }, [selected]);
+
+  if (selected) {
+    return <ActivityViewer activity={selected} key={selected.id} />;
+  }
+
+  return <ActivityIndex />;
 }

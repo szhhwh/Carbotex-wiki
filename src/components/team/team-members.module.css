@@ -1,0 +1,773 @@
+.theme {
+  --team-ink: #063d3b;
+  --team-paper: #fbfaf4;
+  --team-cream: #f4f7e8;
+  --team-gold: #d2a249;
+  --team-serif:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --team-sans: Arial, Helvetica, sans-serif;
+  --team-control-transition: background-color 180ms ease, transform 180ms ease;
+  font-family: var(--team-sans);
+}
+
+.page {
+  position: relative;
+  overflow: clip;
+  background: var(--team-paper);
+  color: var(--team-ink);
+}
+
+.theme :is(h1, h2, h3, p) {
+  text-wrap: balance;
+}
+
+.intro {
+  padding: clamp(1rem, 2.5vw, 2.5rem) 0 clamp(3.5rem, 7vw, 7rem);
+  background:
+    radial-gradient(circle at 86% 4%, #e3edcf 0 12rem, transparent 34rem),
+    var(--team-paper);
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  color: color-mix(in srgb, var(--team-ink) 68%, transparent);
+  font: 700 0.65rem/1.2 var(--team-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.groupPhotoFrame {
+  width: min(calc(100% - 2rem), 86rem);
+  margin: 0 auto;
+}
+
+.groupPhoto,
+.photoFallback {
+  display: block;
+  width: 100%;
+  border-radius: 1.15rem;
+}
+
+.groupPhoto {
+  height: auto;
+  aspect-ratio: 1792 / 1008;
+  object-fit: cover;
+  box-shadow: 0 1.3rem 3rem #063d3b1f;
+}
+
+.photoFallback {
+  display: grid;
+  min-height: 22rem;
+  place-items: center;
+  background: var(--team-cream);
+  color: color-mix(in srgb, var(--team-ink) 70%, transparent);
+  font-size: 0.9rem;
+}
+
+.introContent {
+  display: grid;
+  width: min(calc(100% - 2rem), 86rem);
+  margin: clamp(2.5rem, 5vw, 5rem) auto 0;
+  grid-template-columns: minmax(16rem, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.introHeading {
+  margin: 0;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: clamp(2.8rem, 5vw, 5.2rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.93;
+}
+
+.introCopy {
+  max-width: 46rem;
+  color: color-mix(in srgb, var(--team-ink) 91%, transparent);
+  font: 400 clamp(1rem, 1.25vw, 1.12rem) / 1.78 var(--team-sans);
+}
+
+.introCopy p {
+  margin: 0;
+}
+
+.introCopy p + p {
+  margin-top: 1.05rem;
+}
+
+.introCopy strong {
+  color: var(--team-ink);
+  font-weight: 700;
+}
+
+/* Desktop member constellation */
+
+.network {
+  position: relative;
+  width: 100%;
+  height: var(--network-height, 470vh);
+  min-height: 40rem;
+  isolation: isolate;
+}
+
+.networkHeading {
+  position: absolute;
+  top: clamp(2rem, 4.5vh, 4rem);
+  left: 50%;
+  z-index: 10;
+  margin: 0;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: clamp(2.7rem, 5.5vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  text-align: center;
+  text-wrap: nowrap;
+  transform: translateX(-50%);
+}
+
+.networkLines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.backgroundLines path {
+  fill: none;
+  stroke: #d4dcd3;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.mainLines path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 16;
+}
+
+.backgroundDots {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.backgroundDot {
+  position: absolute;
+  display: block;
+  width: 1.875rem;
+  height: 1.875rem;
+  transform: translate(-50%, -50%);
+}
+
+.backgroundDot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.backgroundDot circle {
+  fill: #d7dfd6;
+}
+
+.nodeAnchor {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+}
+
+.nodeAnchor:has(.memberDotActive) {
+  z-index: 20;
+}
+
+.memberDot {
+  position: relative;
+  display: block;
+  width: 1.875rem;
+  height: 1.875rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.memberDot:hover:not(.memberDotActive) {
+  transform: scale(1.22);
+}
+
+.memberDot:focus-visible {
+  outline: 3px solid var(--team-paper);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 7px var(--team-ink);
+}
+
+.memberDotActive {
+  transform: scale(12);
+}
+
+.memberDot > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dotImageSlot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: none;
+  width: 90%;
+  height: 90%;
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.memberDotActive .dotImageSlot {
+  display: block;
+}
+
+.dotImageSlot img,
+.dotInitials {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.dotImageSlot img {
+  z-index: 1;
+  object-fit: cover;
+}
+
+.dotInitials {
+  color: #fffdf3;
+  font: 800 0.66rem/1 var(--team-sans);
+  letter-spacing: 0.04em;
+}
+
+/* Static roster: tablet, mobile, and reduced-motion fallback. */
+
+.staticRoster {
+  display: none;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1rem, 4vw, 4rem) 5rem;
+}
+
+.staticRosterHeader {
+  width: min(100%, 78rem);
+  margin: 0 auto 2rem;
+}
+
+.staticRosterHeader h2 {
+  margin: 0;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: clamp(2.5rem, 7vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.staticGrid {
+  display: grid;
+  width: min(100%, 78rem);
+  margin-inline: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.staticCard {
+  display: flex;
+  min-width: 0;
+  padding: clamp(1.1rem, 2.2vw, 1.6rem);
+  flex-direction: column;
+  border: 1px solid color-mix(in srgb, var(--team-ink) 18%, transparent);
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, white 90%, var(--team-cream)),
+    white
+  );
+  box-shadow: 0 0.8rem 2rem #063d3b0c;
+}
+
+.staticCardHeader {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cardPortrait,
+.profilePortrait {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--team-cream);
+}
+
+.cardPortrait {
+  width: clamp(5.7rem, 9vw, 7.3rem);
+  aspect-ratio: 1;
+  border: 5px solid var(--team-gold);
+}
+
+.cardPortrait img,
+.profilePortrait img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+}
+
+.staticIdentity {
+  min-width: 0;
+}
+
+.staticIdentity h3 {
+  margin: 0;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.staticIdentity > p {
+  margin: 0.42rem 0 0.7rem;
+  color: color-mix(in srgb, var(--team-ink) 72%, transparent);
+  font: 400 0.78rem/1.4 var(--team-sans);
+}
+
+.roleChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+}
+
+.roleChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.34rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--team-ink) 15%, transparent);
+  border-radius: 999px;
+  background: #ffffff78;
+  color: var(--team-ink);
+  font: 700 0.62rem/1 var(--team-sans);
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+}
+
+.roleChip svg {
+  width: 0.82rem;
+  height: 0.82rem;
+}
+
+.roleChip[data-role="leader"] {
+  background: #dcebd4;
+}
+
+.roleChip[data-role="wetlab"] {
+  background: #f9e3d6;
+}
+
+.roleChip[data-role="drylab"] {
+  background: #f5e8c7;
+}
+
+.roleChip[data-role="design"] {
+  background: #dcefeb;
+}
+
+.roleChip[data-role="education"] {
+  background: #e8f0d1;
+}
+
+.roleChip[data-role="model"] {
+  background: #f0e4d7;
+}
+
+.cardFacts,
+.profileFacts {
+  margin: 1.1rem 0 0;
+}
+
+.cardFacts {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cardFacts > div {
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--team-ink) 12%, transparent);
+}
+
+.cardFacts dt,
+.profileFact dt {
+  color: color-mix(in srgb, var(--team-ink) 66%, transparent);
+  font: 700 0.67rem/1.35 var(--team-sans);
+  letter-spacing: 0.01em;
+}
+
+.cardFacts dd {
+  display: -webkit-box;
+  margin: 0.38rem 0 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--team-ink) 88%, transparent);
+  font: 400 0.82rem/1.55 var(--team-sans);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.profileButton {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 1.2rem;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--team-ink) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--team-ink);
+  font: 700 0.7rem/1 var(--team-sans);
+  cursor: pointer;
+  transition: var(--team-control-transition);
+}
+
+.profileButton svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.profileButton:hover {
+  background: var(--team-cream);
+  transform: translateY(-2px);
+}
+
+.profileButton:focus-visible {
+  outline: 3px solid var(--team-ink);
+  outline-offset: 3px;
+}
+
+/* Profile dialog */
+
+/* The dialog is only the fixed shell; the panel owns all scrolling so its
+ * opening transform cannot create transient overflow on the dialog. */
+.profileDialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: clamp(0.75rem, 2vw, 2rem);
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--team-ink);
+  overscroll-behavior: contain;
+}
+
+.profileDialog[open] {
+  display: grid;
+  place-items: center;
+}
+
+.profileDialog::backdrop {
+  /* An animated backdrop-filter is visibly expensive over the long page. */
+  background: radial-gradient(circle at 50% 42%, #063d3b75, #063d3b9e);
+  animation: backdropIn 0.28s ease-out both;
+}
+
+.profileDialog[data-closing]::backdrop {
+  animation: backdropOut 0.2s ease-in both;
+}
+
+.profilePanel {
+  position: relative;
+  display: flex;
+  width: min(50vw, 52rem);
+  max-width: 100%;
+  max-height: 85svh;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #ffffffa8;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 0% 0%, #e8f1d8 0, transparent 36%),
+    radial-gradient(circle at 100% 100%, #f8e7d1 0, transparent 34%), #fffdf7;
+  box-shadow: 0 1.8rem 5rem #063d3b29;
+  animation: profilePanelIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.profileDialog[data-closing] .profilePanel {
+  animation: profilePanelOut 0.2s ease-in both;
+}
+
+.profileScroller {
+  min-height: 0;
+  padding: clamp(1.25rem, 3vw, 2.4rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: grid;
+  width: 2.55rem;
+  height: 2.55rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--team-ink) 20%, transparent);
+  border-radius: 50%;
+  background: #fffdf7d9;
+  color: var(--team-ink);
+  cursor: pointer;
+  transition: var(--team-control-transition);
+}
+
+.closeButton:hover {
+  background: white;
+  transform: rotate(4deg) scale(1.05);
+}
+
+.closeButton:focus-visible {
+  outline: 3px solid var(--team-ink);
+  outline-offset: 3px;
+}
+
+.closeButton svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2rem, 3vw, 2.2rem);
+  padding-right: 2.7rem;
+}
+
+.profilePortrait {
+  width: clamp(7rem, 13vw, 11.25rem);
+  aspect-ratio: 1;
+  border: 7px solid var(--team-gold);
+}
+
+.profileIdentity {
+  min-width: 0;
+}
+
+.profileIdentity h2 {
+  margin: 0 0 0.4rem;
+  color: var(--team-ink);
+  font-family: var(--team-serif);
+  font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.profileMajor {
+  margin: 0 0 0.85rem;
+  color: color-mix(in srgb, var(--team-ink) 67%, transparent);
+  font: 400 1rem/1.45 var(--team-sans);
+}
+
+.profilePanel .roleChip {
+  font-size: 0.72rem;
+}
+
+.profileFacts {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.profileFact {
+  padding: 0.9rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--team-ink) 11%, transparent);
+  border-radius: 0.9rem;
+  background: #f4f6ecc7;
+}
+
+.profileFact dt {
+  font-size: 1.02rem;
+  line-height: 1.3;
+}
+
+.profileFact dd {
+  margin: 0.48rem 0 0;
+  color: #4d5b58;
+  font: 400 0.94rem/1.65 var(--team-sans);
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes backdropOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes profilePanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+}
+
+@keyframes profilePanelOut {
+  to {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.985);
+  }
+}
+
+@media (max-width: 1024px) {
+  .network {
+    display: none;
+  }
+
+  .staticRoster {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro {
+    padding-bottom: 3.5rem;
+  }
+
+  .groupPhotoFrame {
+    width: calc(100% - 1.25rem);
+  }
+
+  .groupPhoto,
+  .photoFallback {
+    border-radius: 0.8rem;
+  }
+
+  .introContent {
+    width: calc(100% - 2rem);
+    margin-top: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .introHeading {
+    max-width: 12ch;
+    font-size: clamp(2.6rem, 13vw, 4.4rem);
+  }
+
+  .staticGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .staticCardHeader {
+    gap: 0.9rem;
+  }
+
+  .profileDialog {
+    padding: 0.5rem;
+  }
+
+  .profilePanel {
+    width: 100%;
+    max-width: none;
+    max-height: 92svh;
+  }
+
+  .profileScroller {
+    padding: 1.15rem;
+  }
+
+  .profileHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  .profilePortrait {
+    width: 7rem;
+    border-width: 5px;
+  }
+
+  .profileIdentity h2 {
+    font-size: 2.15rem;
+  }
+
+  .profileFact {
+    padding: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network {
+    display: none;
+  }
+
+  .staticRoster {
+    display: block;
+  }
+
+  .profileDialog::backdrop,
+  .profileDialog[data-closing]::backdrop {
+    animation: none !important;
+  }
+
+  .profilePanel,
+  .profileDialog[data-closing] .profilePanel {
+    animation: none !important;
+  }
+
+  .memberDot,
+  .profileButton,
+  .closeButton {
+    transition: none;
+  }
+}

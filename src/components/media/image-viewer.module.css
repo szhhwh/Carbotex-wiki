@@ -1,0 +1,249 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: clamp(0.75rem, 2vw, 2rem);
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: #173d32;
+  font-family: Arial, Helvetica, sans-serif;
+  overscroll-behavior: contain;
+  opacity: 1;
+  transition: opacity 200ms ease;
+
+  &[data-closing] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &::backdrop {
+    width: 100vw;
+    background-color: rgb(0 0 0 / 40%);
+    transition: background-color 200ms ease;
+  }
+
+  &[data-closing]::backdrop {
+    background-color: transparent;
+  }
+}
+
+.panel {
+  display: flex;
+  width: min(100%, 100rem);
+  height: 100%;
+  margin-inline: auto;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #d7dfce;
+  border-radius: 1.5rem;
+  background: #fbfaf4;
+  box-shadow: 0 2rem 6rem #041d2740;
+  transform: none;
+  transition: transform 200ms ease;
+
+  .dialog[data-closing] & {
+    pointer-events: none;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 0.8rem;
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-inline: 0.8rem;
+  overflow: hidden;
+  border: 1px solid #d7dfce;
+  border-radius: 0.9rem;
+  background: #edf2e6;
+  cursor: zoom-in;
+  touch-action: none;
+  user-select: none;
+
+  &[data-zoomed] {
+    cursor: grab;
+  }
+  &[data-zoomed][data-interacting] {
+    cursor: grabbing;
+  }
+}
+
+.image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  flex-shrink: 0;
+  object-fit: contain;
+  transition: transform 160ms ease-out;
+
+  &[hidden] {
+    display: none;
+  }
+  .stage[data-interacting] & {
+    transition: none;
+  }
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem 1.5rem;
+  padding: 1rem 1.4rem;
+}
+
+.caption {
+  max-height: 4.5rem;
+  overflow: auto;
+  color: #31584b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+  a {
+    color: #21694d;
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border: 1px solid #d7dfce;
+  border-radius: 999px;
+  background: #f4f7e8;
+}
+
+.control {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: #21694d;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:hover:not(:disabled) {
+    background: #dce9cb;
+    color: #173d32;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+  &:focus-visible {
+    outline: 2px solid #21694d;
+    outline-offset: 2px;
+  }
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+.scale {
+  min-width: 3.7rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.divider {
+  width: 1px;
+  height: 1.3rem;
+  margin-inline: 0.2rem;
+  background: #d7dfce;
+}
+.hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #527066;
+  font-size: 0.75rem;
+}
+.error {
+  max-width: 26rem;
+  margin: 1.5rem;
+  text-align: center;
+  color: #527066;
+}
+
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+  }
+
+  .dialog[open]::backdrop {
+    background-color: transparent;
+  }
+
+  .dialog[open] .panel {
+    transform: translateY(14px) scale(0.98);
+  }
+}
+
+@media (max-width: 640px) {
+  .dialog {
+    padding: 0.5rem;
+  }
+  .panel {
+    border-radius: 1rem;
+  }
+  .header {
+    padding: 0.7rem 0.9rem;
+  }
+  .stage {
+    margin-inline: 0.5rem;
+  }
+  .footer {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem;
+  }
+  .caption {
+    width: 100%;
+    max-height: 3rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .hint {
+    text-align: center;
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog,
+  .dialog::backdrop,
+  .panel,
+  .image,
+  .control {
+    transition: none;
+  }
+}

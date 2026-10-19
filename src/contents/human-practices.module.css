@@ -1,0 +1,63 @@
+.page {
+  min-width: 0;
+}
+
+.page section[id] {
+  scroll-margin-top: 8rem;
+}
+
+.page :global(.references-list) {
+  overflow-wrap: anywhere;
+}
+
+.traceStage {
+  margin: 2rem 0 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #b49751;
+  background: #edf2e6;
+  color: #225742;
+  font:
+    600 1rem/1.5 Georgia,
+    serif;
+}
+
+.storyAnchor {
+  display: block;
+  scroll-margin-top: 7rem;
+}
+
+.decisions {
+  display: grid;
+  gap: 1rem;
+  padding: 0 !important;
+  list-style: none;
+}
+
+.decisions li {
+  padding: 1.1rem 1.3rem !important;
+  border: 1px solid #cdddc9;
+  border-left: 3px solid #b49751;
+  border-radius: 0 0.8rem 0.8rem 0;
+  background: linear-gradient(120deg, #f5f4e8, #edf3e9);
+}
+
+.document {
+  padding: 1rem 1.25rem;
+  border: 1px solid #cdddc9;
+  border-radius: 0.8rem;
+  background: #edf3e9;
+}
+
+.document span {
+  display: block;
+  color: #587066;
+  font-size: 0.85rem;
+}
+
+.missingEvidence {
+  margin-block: 1rem;
+  padding: 1.25rem;
+  border: 1px dashed #cdddc9;
+  border-radius: 0.8rem;
+  color: #587066;
+}

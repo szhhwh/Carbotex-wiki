@@ -1,94 +1,118 @@
-import { Inspirations, InspirationLink } from "../components/Inspirations";
+import {
+  ArticleNote,
+  ArticlePage,
+  type ArticleSection,
+} from "../components/article/ArticlePage";
+import { Cite } from "../components/article/References";
+
+// This page demonstrates the article template with editorial prompts. Replace
+// the prompts with verified team content before the wiki is published.
+const sections: ArticleSection[] = [
+  {
+    id: "overview",
+    title: "The story at a glance",
+    eyebrow: "Start with the question",
+    content: (
+      <>
+        <p>
+          A strong project description lets a reader understand the problem, why
+          it matters, and what the team set out to do before introducing
+          technical detail. Open with the real context that motivated the work.
+        </p>
+        <ArticleNote label="Writing cue">
+          <p>
+            State the problem in one clear paragraph, then connect it to the
+            people or systems it affects. Use your team’s own evidence and
+            sources.
+          </p>
+        </ArticleNote>
+        <p>
+          The sections below show how long-form text, supporting material and
+          citations can share a consistent reading rhythm. They are editorial
+          prompts for this template, not claims about the OUC-Haide project.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "motivation",
+    title: "Why this direction",
+    eyebrow: "Context & motivation",
+    content: (
+      <>
+        <p>
+          Explain the inspiration behind the project and the reasons for
+          choosing this particular approach. Introduce relevant scientific
+          background in the order a new reader needs it.
+        </p>
+        <h3>Questions worth answering</h3>
+        <ul>
+          <li>
+            What problem did the team observe, and where did that information
+            come from?
+          </li>
+          <li>
+            Which alternatives were considered, and what shaped the choice?
+          </li>
+          <li>
+            How does the proposed work connect to existing research or practice?
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "approach",
+    title: "From idea to approach",
+    eyebrow: "Make the logic visible",
+    content: (
+      <>
+        <p>
+          Give readers a concise summary of the project’s goals and objectives.
+          A diagram, process image or short table can sit alongside the text
+          when it makes the reasoning easier to follow. Use the shared Figure
+          component for images, with a descriptive alternative text and caption.
+        </p>
+        <ArticleNote label="Reading principle">
+          <p>
+            Let headings carry the main argument. Use figures for relationships
+            that are difficult to explain in prose, and put source details close
+            to the claim they support.
+          </p>
+        </ArticleNote>
+      </>
+    ),
+  },
+  {
+    id: "documentation",
+    title: "Document the evidence",
+    eyebrow: "Traceable sources",
+    content: (
+      <>
+        <p>
+          Cite relevant research and distinguish the team’s own results from
+          published work. The following paragraph only previews citation
+          formatting and is unrelated to this project.
+        </p>
+        <p>
+          In a published example, Cas9 was programmed with a guide RNA to cut a
+          chosen DNA sequence <Cite k="jinek2012" />. Later work demonstrated
+          genome engineering in human cells <Cite k="mali2013" />. The sources
+          are collected automatically at the end of the article.
+        </p>
+      </>
+    ),
+  },
+];
 
 export function Description() {
-  const links: InspirationLink[] = [
-    { year: 2025, teamName: "Heidelberg", pageName: "description" },
-    { year: 2025, teamName: "McGill", pageName: "description" },
-    { year: 2025, teamName: "IZJU-China", pageName: "description" },
-    { year: 2025, teamName: "GreatBay-SCIE", pageName: "description" },
-    { year: 2024, teamName: "Marburg", pageName: "description" },
-    { year: 2024, teamName: "EPFL", pageName: "description" },
-  ];
-
   return (
-    <>
-      <div className="row mt-4">
-        <div className="col">
-          <div className="bd-callout bd-callout-info">
-            <h4>Bronze Medal Criterion #1: Wiki</h4>
-            <p>Describe how and why you chose your iGEM project.</p>
-            <hr />
-            <p>
-              Visit the{" "}
-              <a href="https://competition.igem.org/judging/awards/medals">
-                Medals page
-              </a>{" "}
-              for more information.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="row mt-4">
-        <div className="col-lg-8">
-          <h2>What Should this Page Contain?</h2>
-          <hr />
-          <ul>
-            <li>
-              Explain the problem your project addresses and its potential
-              impact.
-            </li>
-            <li>
-              Provide a clear and concise summary of your project's goals and
-              objectives.
-            </li>
-            <li>
-              Detail the specific reasons why your team chose this project.
-            </li>
-            <li>
-              Explain the inspiration behind your project, including any prior
-              research or real-world problems that motivated your team.
-            </li>
-            <li>
-              Use illustrations, diagrams, and other visual aids to enhance
-              understanding.
-            </li>
-            <li>
-              Include relevant scientific background, technical details, and
-              experimental approaches.
-            </li>
-          </ul>
-        </div>
-        <Inspirations inspirationLinkList={links} />
-      </div>
-
-      <div className="row mt-4">
-        <div className="col-lg-8">
-          <h2>Tips for Success</h2>
-          <hr />
-          <ul>
-            <li>
-              While providing detailed information, strive for clarity and
-              conciseness.
-            </li>
-            <li>Use summaries and subheadings to organize your content.</li>
-            <li>Utilize visuals to enhance understanding and engagement.</li>
-            <li>Document your research process and sources thoroughly.</li>
-          </ul>
-        </div>
-        <div className="col-lg-4">
-          <h2>References</h2>
-          <hr />
-          <p>
-            Cite all relevant research papers, scientific articles, and other
-            sources that informed your project.
-          </p>
-          <p>
-            Create a dedicated "References" section at the end of the page, and
-            use a consistent citation style.
-          </p>
-        </div>
-      </div>
-    </>
+    <ArticlePage
+      chapter="Project / Description"
+      title="Description"
+      lead="A clear route through the question, the motivation and the evidence behind a project."
+      sections={sections}
+      references
+    />
   );
 }

@@ -1,0 +1,110 @@
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.tutorial-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #17362a99;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tutorial-backdrop.active {
+  opacity: 1;
+}
+.tutorial-overlay:has(.tutorial-spotlight) .tutorial-backdrop {
+  background: transparent;
+}
+.tutorial-tooltip {
+  position: absolute;
+  background: var(--bg-card);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: min(360px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  z-index: 10000;
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  pointer-events: auto;
+}
+.tutorial-tooltip.active {
+  opacity: 1;
+  transform: scale(1);
+}
+.tutorial-tooltip h3 {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.tutorial-tooltip p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.tutorial-progress {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+.tutorial-progress-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #e5e7eb;
+  transition: background 0.3s;
+}
+.tutorial-progress-dot.active {
+  background: #10b981;
+}
+.tutorial-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.tutorial-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.tutorial-btn-secondary {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.tutorial-btn-secondary:hover {
+  background: #e5e7eb;
+}
+.tutorial-btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.tutorial-btn-primary:hover {
+  background: #1d523d;
+}
+.tutorial-spotlight {
+  position: absolute;
+  border-radius: 0.5rem;
+  background: transparent;
+  box-shadow:
+    0 0 0 3px #86ac70,
+    0 0 0 9999px #17362a99;
+  pointer-events: none;
+  z-index: 9998;
+}

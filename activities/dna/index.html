@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title data-i18n="dna.title">DNA Structure Builder</title>
+    <!-- iGEM team logo, mirroring the wiki <head> (static.igem.wiki assets). -->
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="32x32"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-32x32.avif"
+    />
+    <link
+      rel="icon"
+      type="image/avif"
+      sizes="16x16"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon-16x16.avif"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://static.igem.wiki/teams/6147/wiki/misc/apple-touch-icon.avif"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <main class="dna-app" data-scene="board2d">
+      <header class="app-header">
+        <div class="app-title">
+          <h1 data-i18n="dna.heading">DNA Structure Builder</h1>
+        </div>
+        <div class="header-actions">
+          <div class="lang-slot" data-lang-switcher-host></div>
+          <div
+            class="view-controls"
+            role="group"
+            aria-label="Change view"
+            data-i18n-attr="aria-label:dna.viewGroup"
+          >
+            <button
+              data-action="toggleView"
+              aria-pressed="false"
+              data-i18n="dna.view.structure"
+            >
+              Structure
+            </button>
+            <button data-action="toggle3d" aria-pressed="false" disabled>
+              <span data-i18n="dna.view.enter3d">Enter 3D</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <div class="workspace">
+        <div class="assembly-wrapper">
+          <section
+            id="board-stage"
+            class="stage"
+            aria-label="DNA 2D assembly"
+            data-i18n-attr="aria-label:dna.board2dLabel"
+          >
+            <p
+              id="instructions"
+              class="visually-hidden"
+              data-i18n="dna.instructions.wide"
+            >
+              Drag a deoxyribonucleotide from the supply tray into a highlighted
+              slot, or click a tray card to fill the next free slot.
+            </p>
+            <div class="board-viewport">
+              <svg
+                id="assembly-board"
+                role="img"
+                aria-label="DNA assembly board. Drag a nucleotide from the supply tray into a highlighted slot."
+                data-i18n-attr="aria-label:dna.boardLabel"
+                aria-describedby="instructions"
+                viewBox="0 0 752 552"
+                preserveAspectRatio="xMidYMid meet"
+              ></svg>
+            </div>
+          </section>
+          <section
+            id="helix-stage"
+            class="stage"
+            aria-label="DNA 3D view"
+            data-i18n-attr="aria-label:dna.helixLabel"
+          >
+            <header class="stage-heading">
+              <h2 data-i18n="dna.helixHeading">Double helix</h2>
+            </header>
+            <div class="viewer-surface">
+              <div id="helix-viewport"></div>
+              <div id="viewer-notice" role="status" hidden></div>
+            </div>
+            <aside
+              class="viewer-legend"
+              aria-label="Model legend"
+              data-i18n-attr="aria-label:dna.legendLabel"
+            >
+              <span><i class="base-a"></i>A</span>
+              <span><i class="base-t"></i>T</span>
+              <span><i class="base-g"></i>G</span>
+              <span><i class="base-c"></i>C</span>
+              <span
+                ><i class="sugar"></i
+                ><span data-i18n="dna.legend.deoxyribose"
+                  >Deoxyribose</span
+                ></span
+              >
+              <span
+                ><i class="phosphate"></i
+                ><span data-i18n="dna.legend.phosphate">Phosphate</span></span
+              >
+              <span data-i18n="dna.legend.bond"
+                >Dashed line: hydrogen bond</span
+              >
+            </aside>
+            <div class="viewer-caption">
+              <div class="three-d-controls" hidden>
+                <p class="control-label" data-i18n="dna.controlLabel">
+                  Model controls
+                </p>
+                <div class="rotation-controls">
+                  <button
+                    data-action="toggleAutoRotate"
+                    aria-pressed="false"
+                    disabled
+                    data-i18n="dna.autoRotate"
+                  >
+                    Auto-rotate
+                  </button>
+                  <button
+                    data-action="toggleAutoExtend"
+                    aria-pressed="false"
+                    disabled
+                    data-i18n="dna.autoExtend"
+                  >
+                    Auto-extend
+                  </button>
+                </div>
+                <div class="camera-controls">
+                  <button
+                    data-zoom="1"
+                    aria-label="Zoom in on the 3D model"
+                    data-i18n-attr="aria-label:dna.zoomIn"
+                    disabled
+                  >
+                    +
+                  </button>
+                  <button
+                    data-zoom="-1"
+                    aria-label="Zoom out of the 3D model"
+                    data-i18n-attr="aria-label:dna.zoomOut"
+                    disabled
+                  >
+                    −
+                  </button>
+                  <button
+                    data-action="resetCamera"
+                    disabled
+                    data-i18n="dna.resetView"
+                  >
+                    Reset view
+                  </button>
+                </div>
+              </div>
+              <div class="viewer-info">
+                <p id="selection" role="status" aria-live="polite">
+                  <span data-i18n="dna.selection.empty"
+                    >Click a nucleotide to see its details.</span
+                  >
+                </p>
+                <p id="viewer-help" data-i18n="dna.viewerHelp">
+                  Drag to rotate · scroll / pinch to zoom · + / − to zoom · Home
+                  to reset
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <p
+        id="status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </main>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

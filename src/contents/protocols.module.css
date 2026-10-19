@@ -1,0 +1,466 @@
+.page {
+  --ink: #173d32;
+  --green: #21694d;
+  --paper: #fbfaf4;
+  --line: #d7dfce;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: #e6f0df;
+  isolation: isolate;
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    110deg,
+    transparent 0 33px,
+    #fff6 34px 35px
+  );
+  content: "";
+  opacity: 0.26;
+}
+
+.heroInner,
+.heroFoot,
+.library {
+  width: min(100% - 5rem, 88rem);
+  margin-inline: auto;
+}
+
+.heroInner {
+  position: relative;
+  display: flex;
+  min-height: clamp(28rem, 60svh, 40rem);
+  align-items: center;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  max-width: 47rem;
+  padding-block: 5rem;
+}
+
+.eyebrow,
+.heroFoot,
+.cardIndex,
+.visualLabel,
+.cardKicker,
+.fileType {
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: var(--green);
+}
+
+.hero h1,
+.library h2,
+.card h3 {
+  font-family:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-weight: 400;
+}
+
+.hero h1 {
+  margin: 1.4rem 0;
+  color: #0e4d3e;
+  font-size: clamp(4.6rem, 10vw, 9rem);
+  font-style: italic;
+  letter-spacing: -0.07em;
+  line-height: 0.95;
+}
+
+.heroCopy > p {
+  max-width: 36rem;
+  margin: 0;
+  color: #31584b;
+  font-size: clamp(1.05rem, 1.45vw, 1.28rem);
+  line-height: 1.7;
+}
+
+.heroJump {
+  display: inline-flex;
+  min-height: 3.2rem;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2.3rem;
+  padding: 0.8rem 1.1rem 0.8rem 1.3rem;
+  border: 1px solid #225d48;
+  border-radius: 999px;
+  color: #174936;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition:
+    background-color 240ms ease,
+    color 240ms ease,
+    transform 240ms ease;
+}
+
+.heroJump:hover {
+  background: #174936;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.heroArtwork {
+  position: absolute;
+  right: 2%;
+  bottom: 0;
+  width: min(36vw, 29rem);
+  height: 92%;
+  pointer-events: none;
+}
+
+.artworkOrbit {
+  position: absolute;
+  top: 7%;
+  right: 2%;
+  width: 85%;
+  aspect-ratio: 1;
+  border: 1px solid #b8a56b;
+  border-radius: 50%;
+  background: #e9d7a080;
+  box-shadow:
+    0 0 0 1.8rem #e9d7a02b,
+    0 0 0 3.8rem #e9d7a01c;
+}
+
+.artworkSheetBack,
+.artworkSheetFront {
+  position: absolute;
+  width: 62%;
+  height: 65%;
+  border: 1px solid #8aad91;
+  border-radius: 1.2rem;
+  box-shadow: 0 1.5rem 2.5rem #285d3d1c;
+}
+
+.artworkSheetBack {
+  right: 5%;
+  bottom: 5%;
+  background: #9fc79e;
+  transform: rotate(13deg);
+}
+
+.artworkSheetFront {
+  right: 18%;
+  bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+  background: #f9fbf2;
+  transform: rotate(-9deg);
+}
+
+.artworkMark {
+  width: fit-content;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid #b6c9a9;
+  border-radius: 0.3rem;
+  color: #2b6f55;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.artworkLine {
+  display: block;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #d3e2cf;
+}
+
+.artworkLine:nth-last-child(2) {
+  width: 72%;
+}
+.artworkLine:last-child {
+  width: 84%;
+}
+
+.heroFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0 1.15rem;
+  border-top: 1px solid #7fa18480;
+  color: #3c6c54;
+}
+
+.library {
+  padding-block: clamp(4rem, 7vw, 7rem) 8rem;
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
+.libraryHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2.4rem;
+}
+
+.library h2 {
+  margin: 0.8rem 0 0;
+  color: #164936;
+  font-size: clamp(2.7rem, 5vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.libraryHeading p {
+  max-width: 21rem;
+  margin: 0 0 0.25rem;
+  color: #527066;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  background: #fffefa;
+  box-shadow: 0 0.55rem 1.8rem #24553a0b;
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+
+.card:hover {
+  box-shadow: 0 1.2rem 2.5rem #24553a19;
+  transform: translateY(-4px);
+}
+
+.cardVisual {
+  position: relative;
+  display: grid;
+  min-height: 15rem;
+  overflow: hidden;
+  background: #e8efdf;
+  place-items: center;
+}
+
+.card:nth-child(3n + 2) .cardVisual {
+  background: #e5eee9;
+}
+.card:nth-child(3n + 3) .cardVisual {
+  background: #eeeada;
+}
+
+.cardVisual::before,
+.cardVisual::after {
+  position: absolute;
+  width: 14rem;
+  aspect-ratio: 1;
+  border: 1px solid #a8bca34d;
+  border-radius: 50%;
+  content: "";
+}
+
+.cardVisual::after {
+  width: 20rem;
+}
+
+.cardIndex,
+.visualLabel {
+  position: absolute;
+  z-index: 1;
+  color: #527066;
+}
+
+.cardIndex {
+  top: 1.2rem;
+  left: 1.3rem;
+}
+.visualLabel {
+  right: 1.3rem;
+  bottom: 1.2rem;
+  font-size: 0.62rem;
+}
+
+.documentPreview {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 8.5rem;
+  height: 11rem;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.25rem;
+  border: 1px solid #c3d1bb;
+  border-radius: 0.55rem;
+  background: #fffef9;
+  box-shadow:
+    0.65rem 0.7rem 0 #c4d6bc,
+    0 1rem 2rem #315a3c22;
+  color: #247052;
+  transform: rotate(-5deg);
+}
+
+.documentPreview span {
+  height: 0.3rem;
+  border-radius: 999px;
+  background: #d8e3d3;
+}
+
+.documentPreview span:last-child {
+  width: 64%;
+}
+
+.cardBody {
+  display: flex;
+  min-height: 13rem;
+  flex-direction: column;
+  padding: 1.55rem;
+}
+
+.cardKicker {
+  color: var(--text-accent);
+}
+
+.card h3 {
+  margin: 0.55rem 0 0.5rem;
+  color: #164936;
+  font-size: clamp(1.7rem, 2.5vw, 2.2rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.cardBody > p {
+  margin: 0 0 1.5rem;
+  color: #527066;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.cardLink,
+.pending {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.cardLink {
+  color: #17664b;
+  text-decoration: none;
+}
+.cardLink:hover {
+  color: #0e4d3e;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.pending {
+  color: #64786c;
+}
+.fileType {
+  color: var(--text-accent);
+  font-size: 0.65rem;
+}
+
+.page a:focus-visible {
+  outline: 2px solid #206f50;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1000px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .heroCopy {
+    /* Shield the copy where the artwork moves underneath it. */
+    background: linear-gradient(
+      to bottom,
+      #e6f0df 0 calc(100% - 4rem),
+      #e6f0df00 100%
+    );
+  }
+  .heroArtwork {
+    right: -5%;
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 680px) {
+  .heroInner,
+  .heroFoot,
+  .library {
+    width: calc(100% - 2rem);
+  }
+  .heroInner {
+    min-height: 31rem;
+    align-items: start;
+  }
+  .heroCopy {
+    padding-block: 5rem 9rem;
+    background: linear-gradient(
+      to bottom,
+      #e6f0df 0 calc(100% - 8rem),
+      #e6f0df00 100%
+    );
+  }
+  .hero h1 {
+    font-size: clamp(4.1rem, 16vw, 6rem);
+  }
+  .heroArtwork {
+    right: -10%;
+    bottom: -10%;
+    width: 18rem;
+    height: 18rem;
+    opacity: 0.45;
+  }
+  .heroFoot span:last-child {
+    display: none;
+  }
+  .libraryHeading {
+    display: block;
+  }
+  .libraryHeading p {
+    margin-top: 1rem;
+  }
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .heroJump {
+    transition: none;
+  }
+}

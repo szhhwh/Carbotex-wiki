@@ -1,0 +1,30 @@
+/*
+ * VideoEmbed skeleton — layout only, visual tokens land with the design pass.
+ */
+
+.embed {
+  margin-block: 1.5rem;
+  max-width: 100%;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--border-color, transparent);
+}
+
+.iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/*
+ * Caption typography lives in caption.module.css (shared with Figure).
+ * The transparent border fallback is intentional: the frame stays borderless
+ * until the design pass defines the real token.
+ */
