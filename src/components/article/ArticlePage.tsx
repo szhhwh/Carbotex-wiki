@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ArrowUp, ChevronDown, Sprout } from "lucide-react";
+import { ArrowUp, ChevronDown } from "lucide-react";
 import { References } from "./References";
 import { Collapse } from "../ui/Collapse";
 import styles from "./article-page.module.css";
@@ -27,12 +27,13 @@ export interface ArticleSubsection {
 }
 
 interface ArticlePageProps {
-  chapter: string;
   title: string;
   lead: string;
   sections: ArticleSection[];
   /** Render the page's cited sources after every article section. */
   references?: boolean;
+  /** Keep the compact table of contents available while reading on mobile. */
+  stickyMobileOutline?: boolean;
 }
 
 function FieldIllustration() {
@@ -94,12 +95,34 @@ function FieldIllustration() {
   );
 }
 
+export function ArticleHero({
+  title,
+  lead,
+  headingId,
+}: {
+  title: string;
+  lead: string;
+  headingId?: string;
+}) {
+  return (
+    <header className={styles.hero}>
+      <div className={styles.heroInner}>
+        <div className={styles.heroCopy}>
+          <h1 id={headingId}>{title}</h1>
+          <p>{lead}</p>
+        </div>
+        <FieldIllustration />
+      </div>
+    </header>
+  );
+}
+
 export function ArticlePage({
-  chapter,
   title,
   lead,
   sections,
   references = false,
+  stickyMobileOutline = false,
 }: ArticlePageProps) {
   const items = useMemo(
     () => [
@@ -127,6 +150,7 @@ export function ArticlePage({
   const [outlineOpen, setOutlineOpen] = useState(false);
   const [marker, setMarker] = useState({ top: 0, height: 0 });
   const listRef = useRef<HTMLOListElement>(null);
+  const manualSelectionUntil = useRef(0);
 
   useEffect(() => {
     const elements = targets
@@ -136,11 +160,12 @@ export function ArticlePage({
     let frame = 0;
     const update = () => {
       frame = 0;
+      if (performance.now() < manualSelectionUntil.current) return;
       const offset =
         parseFloat(getComputedStyle(elements[0]).scrollMarginTop) || 120;
       let current = elements[0];
       for (const element of elements) {
-        if (element.getBoundingClientRect().top <= offset + 8)
+        if (element.getBoundingClientRect().top <= offset + 96)
           current = element;
         else break;
       }
@@ -169,6 +194,15 @@ export function ArticlePage({
       window.removeEventListener("resize", schedule);
     };
   }, [targets]);
+
+  useEffect(() => {
+    const refreshAfterScroll = () => {
+      manualSelectionUntil.current = 0;
+      window.dispatchEvent(new Event("scroll"));
+    };
+    window.addEventListener("scrollend", refreshAfterScroll);
+    return () => window.removeEventListener("scrollend", refreshAfterScroll);
+  }, []);
 
   useLayoutEffect(() => {
     const list = listRef.current;
@@ -199,26 +233,18 @@ export function ArticlePage({
     return () => resizeObserver.disconnect();
   }, [activeId, outlineOpen]);
 
+  const selectOutlineTarget = (id: string) => {
+    manualSelectionUntil.current = performance.now() + 1000;
+    setActiveId(id);
+    setOutlineOpen(false);
+  };
+
   return (
-    <main className={styles.page}>
-      <header className={styles.hero}>
-        <div className={styles.heroInner}>
-          <div className={styles.heroCopy}>
-            <span className={styles.chapter}>
-              <Sprout size={17} strokeWidth={1.8} /> {chapter}
-            </span>
-            <h1>{title}</h1>
-            <p>{lead}</p>
-          </div>
-          <FieldIllustration />
-        </div>
-        <div className={styles.heroFoot} aria-hidden="true">
-          <span>OUC-HAIDE / 2026</span>
-          <span>
-            FIELD NOTES · {String(sections.length).padStart(2, "0")} CHAPTERS
-          </span>
-        </div>
-      </header>
+    <main
+      className={styles.page}
+      data-sticky-outline={stickyMobileOutline ? "true" : undefined}
+    >
+      <ArticleHero title={title} lead={lead} />
 
       <div className={styles.readingArea} id="article-body">
         <aside className={styles.sidebar}>
@@ -256,10 +282,7 @@ export function ArticlePage({
                         href={`#${id}`}
                         data-section={id}
                         aria-current={activeId === id ? "location" : undefined}
-                        onClick={() => {
-                          setActiveId(id);
-                          setOutlineOpen(false);
-                        }}
+                        onClick={() => selectOutlineTarget(id)}
                       >
                         <span className={styles.outlineNumber}>
                           {String(index + 1).padStart(2, "0")}
@@ -276,10 +299,7 @@ export function ArticlePage({
                                 aria-current={
                                   activeId === child.id ? "location" : undefined
                                 }
-                                onClick={() => {
-                                  setActiveId(child.id);
-                                  setOutlineOpen(false);
-                                }}
+                                onClick={() => selectOutlineTarget(child.id)}
                               >
                                 {child.label}
                               </a>
@@ -353,9 +373,6 @@ export function ArticlePage({
           )}
           {references && (
             <section className={styles.referencesSection} id="references">
-              <span className={styles.sectionEyebrow}>
-                Sources &amp; further reading
-              </span>
               <References mode="article" />
             </section>
           )}
@@ -374,8 +391,8 @@ export function ArticleNote({
 }) {
   return (
     <aside className={styles.note}>
-      <span>{label}</span>
-      <div>{children}</div>
+      <span className={styles.noteLabel}>{label}</span>
+      <div className={styles.noteBody}>{children}</div>
     </aside>
   );
 }

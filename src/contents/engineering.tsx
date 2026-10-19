@@ -779,7 +779,6 @@ const sections: ArticleSection[] = [
 export function Engineering() {
   return (
     <ArticlePage
-      chapter="Project / Engineering"
       title="Engineering"
       lead="Four cycles of DBTL-driven development of an automated ammonia-nitrogen removal system for anaerobic fermentation effluent."
       sections={sections}

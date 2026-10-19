@@ -110,7 +110,6 @@ const sections: ArticleSection[] = [
 export function Model() {
   return (
     <ArticlePage
-      chapter="Dry Lab / Model"
       title="Model"
       lead="A reading space for assumptions, evidence and the models that connect them."
       sections={sections}

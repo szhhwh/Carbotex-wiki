@@ -2,22 +2,78 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
+import clsx from "clsx";
+import { useLocation } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import { referenceByKey } from "../../data/references.generated.ts";
+import { Collapse } from "../ui/Collapse";
+import styles from "./references.module.css";
 
 interface PageReferencesContextValue {
   /** Citation keys in order of first appearance on the current page. */
   keys: string[];
   register: (key: string) => void;
+  referencesOpen: boolean;
+  setReferencesOpen: (open: boolean) => void;
+  revealReference: (targetId: string) => void;
 }
 
 const PageReferencesContext = createContext<PageReferencesContextValue | null>(
   null,
 );
+
+function focusReference(targetId: string) {
+  let finished = false;
+  let frame = 0;
+
+  const cleanup = () => {
+    finished = true;
+    cancelAnimationFrame(frame);
+    clearTimeout(timeout);
+    document.removeEventListener("wiki:opening-complete", focusWhenVisible);
+  };
+
+  const focusWhenVisible = () => {
+    if (finished) return;
+    cancelAnimationFrame(frame);
+    const target = document.getElementById(targetId);
+
+    // The opening screen keeps the route inert until its completion event.
+    if (target?.closest("[inert]")) return;
+
+    // The lazy route and Collapse can reveal the target after this request.
+    if (!target || target.getClientRects().length === 0) {
+      frame = requestAnimationFrame(focusWhenVisible);
+      return;
+    }
+
+    target.focus({ preventScroll: true });
+    if (document.activeElement !== target) {
+      frame = requestAnimationFrame(focusWhenVisible);
+      return;
+    }
+
+    target.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "center",
+    });
+    cleanup();
+  };
+
+  const timeout = window.setTimeout(cleanup, 8000);
+  document.addEventListener("wiki:opening-complete", focusWhenVisible);
+  frame = requestAnimationFrame(focusWhenVisible);
+  return cleanup;
+}
 
 /**
  * Wraps every routed page (done in App.tsx). `<Cite />` registers its keys
@@ -25,13 +81,91 @@ const PageReferencesContext = createContext<PageReferencesContextValue | null>(
  * page's numbered reference list.
  */
 export function ReferencesProvider({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  const cancelFocus = useRef<(() => void) | null>(null);
   const [keys, setKeys] = useState<string[]>([]);
+  const [referencesOpen, setReferencesOpen] = useState(false);
   const register = useCallback((key: string) => {
     setKeys((previous) =>
       previous.includes(key) ? previous : [...previous, key],
     );
   }, []);
-  const value = useMemo(() => ({ keys, register }), [keys, register]);
+  const revealReference = useCallback((targetId: string, updateHash = true) => {
+    setReferencesOpen(true);
+    if (updateHash && window.location.hash !== `#${targetId}`) {
+      window.history.pushState({ ...window.history.state }, "", `#${targetId}`);
+    }
+    cancelFocus.current?.();
+    cancelFocus.current = focusReference(targetId);
+  }, []);
+
+  useEffect(() => () => cancelFocus.current?.(), [location.pathname]);
+
+  const openFromHash = useCallback(
+    (hash: string) => {
+      if (hash === "#references") {
+        setReferencesOpen(true);
+        return;
+      }
+      const match = hash.match(/^#(ref-\d+)$/);
+      if (match) revealReference(match[1], false);
+    },
+    [revealReference],
+  );
+
+  // Router fragment navigation does not emit a native hashchange event.
+  useEffect(() => {
+    openFromHash(location.hash);
+  }, [location.hash, openFromHash]);
+
+  // A citation link opened in a new tab, or a browser edit to the fragment,
+  // still lands on a visible entry.
+  useEffect(() => {
+    const onHashChange = () => openFromHash(window.location.hash);
+    const onClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      const anchor =
+        event.target instanceof Element
+          ? event.target.closest<HTMLAnchorElement>("a[href]")
+          : null;
+      if (!anchor || anchor.hasAttribute("download") || anchor.target) return;
+      const url = new URL(anchor.href);
+      if (
+        url.origin === window.location.origin &&
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search &&
+        url.hash === "#references"
+      ) {
+        // Reopening from the same fragment does not change Router location.
+        setReferencesOpen(true);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    document.addEventListener("click", onClick, true);
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+      document.removeEventListener("click", onClick, true);
+    };
+  }, [openFromHash]);
+
+  const value = useMemo(
+    () => ({
+      keys,
+      register,
+      referencesOpen,
+      setReferencesOpen,
+      revealReference,
+    }),
+    [keys, register, referencesOpen, revealReference],
+  );
   return (
     <PageReferencesContext.Provider value={value}>
       {children}
@@ -94,7 +228,25 @@ export function Cite({ k }: { k: string | string[] }) {
         groups.map((group, index) => (
           <span key={group.from}>
             {index > 0 && ","}
-            <a href={`#ref-${group.from}`}>
+            <a
+              href={`#ref-${group.from}`}
+              onClick={(event) => {
+                if (
+                  !context ||
+                  event.button !== 0 ||
+                  event.metaKey ||
+                  event.ctrlKey ||
+                  event.shiftKey ||
+                  event.altKey
+                ) {
+                  return;
+                }
+
+                event.preventDefault();
+                const targetId = `ref-${group.from}`;
+                context.revealReference(targetId);
+              }}
+            >
               {group.from === group.to
                 ? group.from
                 : `${group.from}-${group.to}`}
@@ -111,7 +263,8 @@ export function Cite({ k }: { k: string | string[] }) {
  * The current page's reference list. Place once at the bottom of a page
  * component in src/contents/. It shows only the sources cited on that page,
  * numbered by order of first citation, and renders nothing until the page
- * cites at least one source.
+ * cites at least one source. The list is collapsed by default; following an
+ * in-text citation opens it and focuses the matching entry.
  */
 export function References({
   mode = "default",
@@ -119,32 +272,67 @@ export function References({
   mode?: "default" | "article";
 }) {
   const context = useContext(PageReferencesContext);
+  const [localOpen, setLocalOpen] = useState(false);
   const keys = context?.keys ?? [];
 
   if (keys.length === 0) return null;
 
+  const isOpen = context?.referencesOpen ?? localOpen;
+  const setOpen = context?.setReferencesOpen ?? setLocalOpen;
+  const sourceLabel = keys.length === 1 ? "source" : "sources";
+
   const content = (
-    <>
-      <h2>References</h2>
-      {mode === "default" && <hr />}
-      <ol className="references-list">
+    <Collapse
+      header={
+        <span className={styles.header}>
+          <span className={styles.title}>References</span>
+          <span className={styles.meta}>
+            {keys.length} {sourceLabel} cited
+          </span>
+        </span>
+      }
+      open={isOpen}
+      onToggle={setOpen}
+      headerAs="h2"
+      variant="plain"
+      className={clsx(
+        styles.panel,
+        isOpen && styles.open,
+        mode === "default" && styles.default,
+      )}
+      headerClassName={styles.heading}
+      contentClassName={styles.content}
+      indicator={
+        <span className={styles.indicatorFace}>
+          <ChevronDown size={19} strokeWidth={2} />
+        </span>
+      }
+    >
+      <ol className={clsx("references-list", styles.list)}>
         {keys.map((key, index) => {
           const entry = referenceByKey[key];
           return entry ? (
             <li
               key={key}
               id={`ref-${index + 1}`}
+              tabIndex={-1}
+              className={styles.entry}
               dangerouslySetInnerHTML={{ __html: entry.html }}
             />
           ) : (
-            <li key={key} id={`ref-${index + 1}`} className="text-danger">
+            <li
+              key={key}
+              id={`ref-${index + 1}`}
+              tabIndex={-1}
+              className={clsx(styles.entry, "text-danger")}
+            >
               Missing entry &ldquo;{key}&rdquo; — add it to
               src/data/references.bib.
             </li>
           );
         })}
       </ol>
-    </>
+    </Collapse>
   );
 
   if (mode === "article") return content;

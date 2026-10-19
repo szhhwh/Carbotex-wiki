@@ -4140,7 +4140,6 @@ export function HumanPractices() {
   return (
     <div className={styles.page}>
       <ArticlePage
-        chapter="Human Practices"
         title="Integrated Human Practices"
         lead="We did not use Human Practices to justify Carbotex. We used it to modify Carbotex."
         sections={sections}
