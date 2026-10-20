@@ -36,6 +36,7 @@ function MemberNode({
 }) {
   const [failed, setFailed] = useState(false);
   const role = primaryRole(member);
+  const isAdvisorGroup = member.roles[0] === "advisor";
 
   return (
     <div
@@ -47,15 +48,30 @@ function MemberNode({
     >
       <button
         type="button"
-        className={styles.memberDot}
+        className={`${styles.memberDot} ${
+          isAdvisorGroup ? styles.advisorDot : ""
+        }`}
         data-member-dot
-        aria-label={`Open ${member.name}'s profile (${role.label})`}
+        aria-label={
+          isAdvisorGroup
+            ? `Open the ${member.name}' message`
+            : `Open ${member.name}'s profile (${role.label})`
+        }
         aria-haspopup="dialog"
         onClick={() => onOpen(member)}
       >
-        <svg viewBox="0 0 30 30" aria-hidden="true">
-          <circle cx="15" cy="15" r="15" fill={role.color} />
-        </svg>
+        {isAdvisorGroup ? (
+          <span
+            className={styles.advisorNode}
+            style={{ backgroundColor: role.color }}
+          >
+            Advisors
+          </span>
+        ) : (
+          <svg viewBox="0 0 30 30" aria-hidden="true">
+            <circle cx="15" cy="15" r="15" fill={role.color} />
+          </svg>
+        )}
         <span className={styles.dotImageSlot} aria-hidden="true">
           <span
             className={styles.dotInitials}
@@ -86,6 +102,7 @@ function StaticMemberCard({
   onOpen: (member: TeamMember) => void;
 }) {
   const role = primaryRole(member);
+  const isAdvisorGroup = member.roles[0] === "advisor";
 
   return (
     <article className={styles.staticCard}>
@@ -115,10 +132,17 @@ function StaticMemberCard({
       <button
         type="button"
         className={styles.profileButton}
-        aria-label={`Read ${member.name}'s profile (${role.label})`}
+        aria-label={
+          isAdvisorGroup
+            ? `Read the ${member.name}' message`
+            : `Read ${member.name}'s profile (${role.label})`
+        }
         onClick={() => onOpen(member)}
       >
-        Read {member.name.split(" ")[0]}'s profile
+        Read{" "}
+        {isAdvisorGroup
+          ? "Advisors' message"
+          : `${member.name.split(" ")[0]}'s profile`}
         <ArrowUpRight aria-hidden="true" />
       </button>
     </article>

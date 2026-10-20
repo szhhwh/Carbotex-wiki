@@ -261,6 +261,12 @@
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+.advisorDot {
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+}
+
 .memberDot:hover:not(.memberDotActive) {
   transform: scale(1.22);
 }
@@ -273,6 +279,25 @@
 
 .memberDotActive {
   transform: scale(12);
+}
+
+.advisorNode {
+  display: grid;
+  min-width: 5.25rem;
+  height: 2rem;
+  padding-inline: 0.7rem;
+  place-items: center;
+  border: 2px solid #fffdf3;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px var(--team-ink);
+  color: #fffdf3;
+  font: 700 0.62rem/1 var(--team-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.memberDotActive .advisorNode {
+  display: none;
 }
 
 .memberDot > svg {
@@ -476,6 +501,10 @@
 
 .roleChip[data-role="model"] {
   background: #f0e4d7;
+}
+
+.roleChip[data-role="advisor"] {
+  background: #f9e3d6;
 }
 
 .cardFacts,

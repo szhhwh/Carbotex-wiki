@@ -2,6 +2,7 @@ import {
   Cpu,
   FlaskConical,
   GraduationCap,
+  HeartHandshake,
   Palette,
   Sigma,
   Users,
@@ -19,6 +20,11 @@ export const roleMeta: Record<
   design: { label: "Design", icon: Palette, color: "#238d87" },
   education: { label: "Education", icon: GraduationCap, color: "#78a842" },
   model: { label: "Model", icon: Sigma, color: "#a9723f" },
+  advisor: {
+    label: "Advisors",
+    icon: HeartHandshake,
+    color: "#2f52a1",
+  },
 };
 
 export function primaryRole(member: TeamMember) {

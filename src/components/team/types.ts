@@ -4,7 +4,8 @@ export type MemberRole =
   | "drylab"
   | "design"
   | "education"
-  | "model";
+  | "model"
+  | "advisor";
 
 export interface MemberFact {
   question: string;

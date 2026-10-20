@@ -268,4 +268,18 @@ export const teamMembers: TeamMember[] = [
       },
     ],
   },
+  {
+    id: "advisors",
+    name: "Advisors",
+    major: "Special Thanks To",
+    roles: ["advisor"],
+    image: "https://static.igem.wiki/teams/6147/wiki/team/advisors.avif",
+    facts: [
+      {
+        question: "A message for our advisors",
+        answer:
+          "We would like to express our heartfelt gratitude to every member of the OUC-Haide team for their generous and thoughtful support. From sharing valuable experience and resources to patiently guiding us through countless details, they have always been there to help us find our way forward. Their kindness and willingness to share have been our greatest source of strength and reassurance throughout this journey. Thank you for being such an incredible support system for our team!",
+      },
+    ],
+  },
 ];
