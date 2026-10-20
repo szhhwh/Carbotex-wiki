@@ -216,12 +216,13 @@
   align-self: stretch;
 }
 
-/* Outline palette: warm caramel on butter. The accent fills the active pill;
-   inactive text uses a deeper brown of the same hue so it stays readable
-   (#bf8036 on #fae6b9 is only ~2.7:1, below the WCAG AA text threshold). */
+/* Outline palette: warm caramel on butter. Inactive text and the active fill
+   use deeper browns so both pairs stay readable (#bf8036 on #fae6b9 is only
+   ~2.7:1, and white on #bf8036 is only ~3.3:1). */
 .outline {
   --outline-surface: #fae6b9;
   --outline-accent: #bf8036;
+  --outline-active: #85531a;
   --outline-ink: #85531a;
   --outline-ink-soft: #8c5a20;
   --outline-guide: color-mix(in srgb, var(--outline-accent) 32%, transparent);
@@ -307,7 +308,7 @@
   z-index: 0;
   border: 0;
   border-radius: 0.75rem;
-  background: var(--outline-accent);
+  background: var(--outline-active);
   pointer-events: none;
   transition:
     transform 580ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -351,7 +352,7 @@
 }
 
 .outlineNav a[aria-current="location"] {
-  background: var(--outline-accent);
+  background: var(--outline-active);
   color: #fff;
   font-weight: 700;
   transform: none;
