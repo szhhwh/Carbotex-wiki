@@ -15,20 +15,14 @@ export function ComparisonMatrix({
   rows: ComparisonRow[];
 }) {
   const captionId = useId();
-  const hintId = useId();
 
   return (
     <div className={`${styles.widget} ${styles.matrix}`}>
-      <p id={hintId}>
-        Swipe horizontally to view the full comparison. The first column stays
-        visible.
-      </p>
       <div
         className={styles.matrixScroller}
         role="region"
         tabIndex={0}
         aria-labelledby={captionId}
-        aria-describedby={hintId}
       >
         <table className={styles.matrixTable}>
           <caption id={captionId}>{caption}</caption>

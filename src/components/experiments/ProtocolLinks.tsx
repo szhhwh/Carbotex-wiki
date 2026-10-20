@@ -22,14 +22,9 @@ export function ProtocolLinks({
       className={`${styles.widget} ${styles.protocols}`}
       aria-labelledby={headingId}
     >
-      <div className={styles.protocolHeader}>
-        <h4 className={styles.widgetTitle} id={headingId}>
-          {label}
-        </h4>
-        <span>
-          {links.length} {links.length === 1 ? "document" : "documents"} · PDF
-        </span>
-      </div>
+      <h4 className={styles.widgetTitle} id={headingId}>
+        {label}
+      </h4>
       <ul className={styles.protocolList}>
         {links.map((link) => (
           <li key={`${link.number}-${link.href}`}>
