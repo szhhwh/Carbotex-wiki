@@ -1,5 +1,6 @@
 import { useId, type ReactNode } from "react";
-import styles from "./experiment-widgets.module.css";
+import tableStyles from "../article/article-table.module.css";
+import { Caption } from "../media/Caption";
 
 export interface ComparisonRow {
   comparison: ReactNode;
@@ -8,24 +9,30 @@ export interface ComparisonRow {
 }
 
 export function ComparisonMatrix({
+  captionPrefix,
   caption,
   rows,
 }: {
+  captionPrefix: string;
   caption: string;
   rows: ComparisonRow[];
 }) {
   const captionId = useId();
+  const hintId = useId();
 
   return (
-    <div className={`${styles.widget} ${styles.matrix}`}>
+    <figure className={tableStyles.tableFigure} aria-labelledby={captionId}>
+      <p id={hintId} className={tableStyles.tableHint}>
+        Swipe horizontally to view all columns. The first column stays visible.
+      </p>
       <div
-        className={styles.matrixScroller}
+        className={tableStyles.tableScroller}
         role="region"
         tabIndex={0}
         aria-labelledby={captionId}
+        aria-describedby={hintId}
       >
-        <table className={styles.matrixTable}>
-          <caption id={captionId}>{caption}</caption>
+        <table aria-labelledby={captionId}>
           <thead>
             <tr>
               <th scope="col">Comparison</th>
@@ -44,6 +51,9 @@ export function ComparisonMatrix({
           </tbody>
         </table>
       </div>
-    </div>
+      <Caption id={captionId} prefix={captionPrefix}>
+        {caption}
+      </Caption>
+    </figure>
   );
 }

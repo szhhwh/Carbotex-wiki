@@ -1,6 +1,11 @@
 /*
  * Shared caption typography for every media surface. Component styles may
  * control layout, but caption color and type belong here.
+ *
+ * Size is anchored to `--caption-size` rather than inherited (`1em`) so a
+ * caption keeps the article body scale even when it sits inside a component
+ * that shrinks its own prose (for example the Human Practices stage cards).
+ * Surfaces outside the article frame fall back to the local size.
  */
 
 .caption {
@@ -9,7 +14,7 @@
     --caption-body,
     var(--hardware-body, "Trebuchet MS", sans-serif)
   );
-  font-size: 1em;
+  font-size: var(--caption-size, 1em);
   line-height: 1.55;
   color: var(--caption-ink, var(--hardware-ink, #003f34));
   text-align: start;

@@ -44,6 +44,7 @@ export function ImageGallery({
 }: ImageGalleryProps) {
   const generatedId = useId();
   const trackId = `${id ?? generatedId}-track`;
+  const scrollHintId = `${id ?? generatedId}-scroll-hint`;
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({
     overflow: false,
@@ -131,6 +132,7 @@ export function ImageGallery({
         tabIndex={scrollable ? 0 : undefined}
         role={scrollable ? "group" : undefined}
         aria-label={scrollable ? `${label}: scrollable images` : undefined}
+        aria-describedby={scrollState.overflow ? scrollHintId : undefined}
         onScroll={updateScroll}
         onKeyDown={onKeyDown}
       >
@@ -150,7 +152,7 @@ export function ImageGallery({
       </div>
       {scrollState.overflow && (
         <div className={styles.controls}>
-          <span>Scroll to explore</span>
+          <span id={scrollHintId}>Scroll to explore</span>
           <button
             type="button"
             aria-label={`Scroll ${label} backward`}

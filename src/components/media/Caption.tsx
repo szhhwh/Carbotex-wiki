@@ -16,6 +16,8 @@ export interface CaptionProps {
   prefix?: ReactNode;
   /** Use a div when the caption is outside a semantic figure element. */
   as?: "figcaption" | "div";
+  /** Optional anchor or accessible-name target for the caption element. */
+  id?: string;
   className?: string;
 }
 
@@ -28,11 +30,16 @@ export function Caption({
   children,
   prefix,
   as: Element = "figcaption",
+  id,
   className,
 }: CaptionProps) {
   if (isSlotEmpty(children) && isSlotEmpty(prefix)) return null;
   return (
-    <Element className={clsx(styles.caption, className)}>
+    <Element
+      id={id}
+      className={clsx(styles.caption, className)}
+      data-caption=""
+    >
       {!isSlotEmpty(prefix) && (
         <>
           <span className={styles.captionPrefix} data-caption-prefix>

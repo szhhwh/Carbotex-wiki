@@ -155,14 +155,6 @@
   text-wrap: balance;
 }
 
-.figurePair :global(figcaption),
-.figureWithText :global(figcaption) {
-  max-width: 46rem;
-  margin-inline: auto;
-  padding-top: 0.65rem;
-  border-top: 2px solid var(--hardware-mint);
-}
-
 @media (max-width: 640px) {
   .tableCard {
     margin-block: 1.35rem 1.9rem;
@@ -243,11 +235,6 @@
   .figureWithText {
     gap: 1.15rem;
     margin-block: 1.6rem;
-  }
-
-  .figurePair :global(figcaption),
-  .figureWithText :global(figcaption) {
-    padding-top: 0.55rem;
   }
 }
 

@@ -2,7 +2,9 @@ import {
   ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
+import tableStyles from "../components/article/article-table.module.css";
 import { Cite } from "../components/article/References";
+import { Caption } from "../components/media/Caption";
 import { Figure, type FigureProps } from "../components/media/Figure";
 import styles from "./design.module.css";
 
@@ -405,19 +407,19 @@ const sections: ArticleSection[] = [
               corresponding constructs—supported by a shared expression backbone
               and a knockout backbone.
             </p>
-            <div className={styles.tableCard}>
+            <figure
+              className={tableStyles.tableFigure}
+              aria-labelledby="design-table-components-caption"
+            >
               <p
-                id="design-table-components-caption"
-                className={styles.tableCaption}
+                id="design-table-components-hint"
+                className={tableStyles.tableHint}
               >
-                Table. Components of the A08 Pentose-Regulation Part Collection.
-              </p>
-              <p id="design-table-components-hint" className={styles.tableHint}>
                 Swipe horizontally to view all columns. The first column stays
                 visible.
               </p>
               <div
-                className={styles.tableScroller}
+                className={tableStyles.tableScroller}
                 role="region"
                 aria-labelledby="design-table-components-caption"
                 aria-describedby="design-table-components-hint"
@@ -503,7 +505,10 @@ const sections: ArticleSection[] = [
                   </tbody>
                 </table>
               </div>
-            </div>
+              <Caption id="design-table-components-caption" prefix="Table D1.">
+                Components of the A08 Pentose-Regulation Part Collection.
+              </Caption>
+            </figure>
             <p>
               The components support complementary genetic comparisons. The
               knockout backbone, combined with a separate pair of homology arms
@@ -1304,20 +1309,19 @@ const sections: ArticleSection[] = [
           and material tests examine the function of the broth-derived
           formulation.
         </p>
-        <div className={styles.tableCard}>
+        <figure
+          className={tableStyles.tableFigure}
+          aria-labelledby="design-table-evaluation-caption"
+        >
           <p
-            id="design-table-evaluation-caption"
-            className={styles.tableCaption}
+            id="design-table-evaluation-hint"
+            className={tableStyles.tableHint}
           >
-            Table D1. Design questions, evaluation readouts, and subsequent
-            decisions for the four modules.
-          </p>
-          <p id="design-table-evaluation-hint" className={styles.tableHint}>
             Swipe horizontally to view all columns. The first column stays
             visible.
           </p>
           <div
-            className={styles.tableScroller}
+            className={tableStyles.tableScroller}
             role="region"
             aria-labelledby="design-table-evaluation-caption"
             aria-describedby="design-table-evaluation-hint"
@@ -1392,7 +1396,11 @@ const sections: ArticleSection[] = [
               </tbody>
             </table>
           </div>
-        </div>
+          <Caption id="design-table-evaluation-caption" prefix="Table D2.">
+            Design questions, evaluation readouts, and subsequent decisions for
+            the four modules.
+          </Caption>
+        </figure>
       </>
     ),
   },
@@ -1402,7 +1410,6 @@ export function Design() {
   return (
     <ArticlePage
       title="Design"
-      lead="From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale for our chassis choice, genetic constructs, and four connected wet-lab modules."
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-design.avif",
         alt: "Illustration of genetic design, cell engineering, and molecular building blocks.",
