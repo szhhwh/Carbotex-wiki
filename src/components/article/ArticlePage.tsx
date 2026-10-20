@@ -58,6 +58,10 @@ interface ArticlePageProps {
   referenceOrder?: string[];
   /** Keep the compact table of contents available while reading on mobile. */
   stickyMobileOutline?: boolean;
+  /** Optional page-specific controls placed above the outline and article. */
+  contentControls?: ReactNode;
+  /** Change this key to remount and animate the outline/article region. */
+  contentKey?: string;
   /** Shared article theme; Hardware is the canonical visual system. */
   theme?: ArticleTheme;
 }
@@ -178,6 +182,8 @@ export function ArticlePage({
   referencesIntro,
   referenceOrder,
   stickyMobileOutline = true,
+  contentControls,
+  contentKey,
   theme = DEFAULT_ARTICLE_THEME,
 }: ArticlePageProps) {
   const pageStyles = styles;
@@ -226,6 +232,12 @@ export function ArticlePage({
   const listRef = useRef<HTMLOListElement>(null);
   const manualSelectionUntil = useRef(0);
   const lastScrollTop = useRef(0);
+
+  useLayoutEffect(() => {
+    if (contentKey === undefined) return;
+    setActiveId(items[0]?.id ?? "");
+    setOutlineOpen(false);
+  }, [contentKey, items]);
 
   useEffect(() => {
     if (!stickyMobileOutline) return;
@@ -381,7 +393,16 @@ export function ArticlePage({
         theme={theme}
       />
 
-      <div className={pageStyles.readingArea} id="article-body">
+      {contentControls ? (
+        <div className={pageStyles.contentControls}>{contentControls}</div>
+      ) : null}
+
+      <div
+        className={pageStyles.readingArea}
+        id="article-body"
+        key={contentKey}
+        data-content-transition={contentKey === undefined ? undefined : "true"}
+      >
         <aside className={pageStyles.sidebar}>
           <div
             className={pageStyles.outline}

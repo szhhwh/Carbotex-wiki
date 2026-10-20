@@ -1,7 +1,9 @@
+import { useState } from "react";
 import {
   ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
+import { Cite } from "../components/article/References";
 import {
   BuildManifest,
   CycleJourney,
@@ -14,6 +16,15 @@ import {
   SubsystemGrid,
   type CycleSummaryItem,
 } from "../components/hardware/EngineeringSections";
+import {
+  EngineeringModeSwitch,
+  type EngineeringMode,
+} from "../components/hardware/EngineeringModeSwitch";
+import {
+  WetEngineeringCycle,
+  type WetEngineeringCycleData,
+} from "../components/hardware/WetEngineeringCycle";
+import engineeringStyles from "../components/hardware/engineering.module.css";
 import { Figure } from "../components/media/Figure";
 
 const cycleSummaries: CycleSummaryItem[] = [
@@ -47,7 +58,273 @@ const cycleSummaries: CycleSummaryItem[] = [
   },
 ];
 
-const sections: ArticleSection[] = [
+const wetEngineeringReferenceOrder = [
+  "liu2023cornbioconversion",
+  "zhao2026amxlnr",
+  "battaglia2011pentose",
+  "ouc2025pnat",
+  "feng2018pycmodel",
+  "Tang2020PMLADA",
+  "livak2001relative",
+];
+
+const wetEngineeringCycles: WetEngineeringCycleData[] = [
+  {
+    id: "wet-engineering-regulator",
+    title: "Regulator Engineering — Select a Production Background",
+    phases: {
+      Design: (
+        <p>
+          We compared complementary interventions: single and combined deletion
+          to examine growth phenotypes, and single and combined overexpression
+          to evaluate production. The overexpression panel retained WT, OE-XlnR,
+          OE-AraR and OE-XlnR+AraR so that the combination could be evaluated
+          alongside each individual intervention.
+        </p>
+      ),
+      Build: (
+        <p>
+          Expression constructs used pNAT-LoxP-rDNA, documented by OUC-China
+          2025; knockout donors used fl4a-hpt-loxp with target-specific homology
+          arms. <Cite k="ouc2025pnat" /> PCR, DNA purification, assembly and
+          DH5α cloning supplied constructs for A08 protoplast transformation.
+          Antibiotic rescreening and target-specific molecular checks supported
+          candidate selection.
+        </p>
+      ),
+      Test: (
+        <>
+          <p>
+            The knockouts showed clear sugar-dependent phenotypes. Deleting{" "}
+            <em>xlnR</em> hurt xylose growth the most, while deleting{" "}
+            <em>araR</em> had a bigger impact on arabinose. The double knockout
+            struggled to grow on both pentoses.
+          </p>
+          <p>
+            For the overexpression panel, OE-XlnR+AraR clearly performed the
+            best in xylose-containing formulations. When we tested it in the
+            actual corn-stover hydrolysate, it reached 18.63 ± 0.14 g/L,
+            compared to 15.87 ± 0.38 g/L for WT—a 17.4% increase. This proved
+            our strategy worked outside of defined sugars. RT-qPCR also showed
+            that <em>XYR</em>, <em>XDH</em>, <em>XKI</em>, <em>XI</em>, and{" "}
+            <em>PMA</em> were all upregulated to about 1.59–1.76 times WT
+            levels.
+          </p>
+        </>
+      ),
+      Learn: (
+        <p>
+          This production data gave us a clear winner: we kept OE-XlnR+AraR as
+          our base strain for the next steps. The knockout data showed us the
+          distinct roles each regulator plays, and the qPCR gave us a glimpse
+          into the transcriptional changes. We were careful not to treat growth,
+          mRNA levels, and PMA titer as interchangeable—they each tell a
+          different part of the story.
+        </p>
+      ),
+    },
+    methods: (
+      <p>
+        Methods:{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/p10-protoplast-transformation.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          protoplast transformation
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/18-xylose-related-gene-expression-en.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          RT-qPCR
+        </a>
+        .
+      </p>
+    ),
+  },
+  {
+    id: "wet-engineering-pyc",
+    title: "PYC Engineering — Establish and Compare Candidate Combinations",
+    phases: {
+      Design: (
+        <p>
+          Pyruvate carboxylase (PYC) converts pyruvate to oxaloacetate, making
+          it a great candidate for boosting precursor supply. Previous work in{" "}
+          <em>Aureobasidium pullulans</em> gave us a solid precedent.{" "}
+          <Cite k="feng2018pycmodel" /> We assembled a panel of PYC
+          candidates—native A08 pyc, along with heterologous ones from{" "}
+          <em>A. thailandense</em> ZW03-4 (ZW), <em>Y. lipolytica</em> (YL), and{" "}
+          <em>S. cerevisiae</em> (SC, specifically <em>PYC1</em>)—all built into
+          the OE-XlnR+AraR background.
+        </p>
+      ),
+      Build: (
+        <p>
+          We tried to overexpress the native A08 pyc using both electroporation
+          and protoplast transformation, but unfortunately, neither method
+          yielded a verified strain. We suspect endogenous multi-copy expression
+          might be toxic or require specific chromatin contexts. This forced us
+          to pivot, and we successfully introduced the heterologous ZW, YL, and
+          SC constructs into the dual-regulator background instead.
+        </p>
+      ),
+      Test: (
+        <>
+          <p>
+            We compared WT against the three heterologous combinations. SC had
+            the highest production value in this panel and provided sample for
+            our HPLC analysis.
+          </p>
+          <p>
+            <em>Just to be transparent here</em>: we didn't have a same-batch
+            parental control (OE-XlnR+AraR without PYC) in this exact run. We
+            had data from an earlier separate experiment, so we didn't pool them
+            together to avoid batch effects.
+          </p>
+        </>
+      ),
+      Learn: (
+        <p>
+          The native <em>pyc</em> failure was frustrating but taught us a real
+          lesson about host constraints, shifting our focus to the heterologous
+          panel. The successful outcome of this phase was simply establishing
+          and testing this combination panel. To actually isolate how much PYC
+          contributed, we know we need a strictly matched, no-PYC parent in the
+          exact same batch next time. That, along with enzyme activity data, is
+          our next logical step
+        </p>
+      ),
+    },
+    methods: (
+      <p>
+        Methods:{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/11electroporation-protocol-en.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          electroporation
+        </a>
+        ,{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/p10-protoplast-transformation.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          protoplast transformation
+        </a>
+        , and{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/19-new-a-pma-acid-hydrolysis-and-hplc-three-standards-new.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          acid hydrolysis and HPLC
+        </a>
+        .
+      </p>
+    ),
+  },
+  {
+    id: "wet-engineering-materials",
+    title: "Materials Engineering — One DBTL Cycle for Formulation Selection",
+    phases: {
+      Design: (
+        <p>
+          Following discussions with instructor Ya Liu, we chose to develop an
+          adhesive. Published PMA–dopamine research gave us the EDC/NHS coupling
+          protocol. <Cite k="Tang2020PMLADA" /> We decided to vary two inputs:
+          the material concentration and the dopamine:COOH molar feed ratio.
+          Note that these percentage labels are just our synthesis inputs, not
+          the measured grafting degrees.
+        </p>
+      ),
+      Build: (
+        <>
+          <p>
+            We skipped the PMA isolation step entirely and used the cell-removed
+            broth directly. We activated for 1 hour, reacted with dopamine for
+            24 hours in the dark, dialyzed for 48 hours, and then freeze-dried
+            it. This gave us a solid we could weigh, dissolve in water, and
+            test.
+          </p>
+          <p>
+            We tested the DA:COOH = 100% material at 100, 300, 500, 700, and
+            1000 mg/mL. We also compared 25%, 50%, and 100% DA:COOH formulations
+            on glass, stainless steel, and ex vivo porcine skin, using a 0.5 cm²
+            bonded area.
+          </p>
+        </>
+      ),
+      Test: (
+        <>
+          <p>
+            At 100% dopamine feed, 700 mg/mL was the sweet spot: 640.57 kPa on
+            glass, 56 kPa on steel, and 102 kPa on porcine skin. When we pushed
+            it to 1000 mg/mL, the strength dropped—likely because the material
+            became too viscous to spread and wet the surface properly.
+          </p>
+          <p>
+            The feed-ratio comparison gave us an interesting surprise. For steel
+            at 1000 mg/mL, the 50% feed group actually beat the 100% group
+            (103.6 kPa vs 50 kPa). On pig skin at 700 mg/mL, the 100% group
+            reached 102 kPa, while the 25% and 50% groups only got 14.0 and 4.4
+            kPa. So, dumping more dopamine in doesn't always make it stick
+            better.
+          </p>
+          <p>
+            We also soaked preformed joints in water for 24 hours and tested
+            L929 cell viability over 24, 48, and 72 hours. The cells stayed at
+            roughly 85%–110% viability, meaning the material isn't cytotoxic.
+          </p>
+        </>
+      ),
+      Learn: (
+        <>
+          <p>
+            There is no single "best" recipe here. 700 mg/mL with 100% dopamine
+            is great for glass and skin, but steel actually prefers the 50% feed
+            at 1000 mg/mL.
+          </p>
+          <p>
+            We successfully made a broth-derived adhesive that actually holds
+            things together, and we have the data to explain why. However, these
+            mechanical tests treat the material as a whole—we still need to
+            verify the specific chemical coupling in the future. The next step
+            is to test independently prepared batches to ensure this is
+            reproducible.
+          </p>
+        </>
+      ),
+    },
+    methods: (
+      <p>
+        Methods:{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/21-pma-dopamine-adhesive-preparation-en.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          adhesive preparation
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/22-l929-cck8-cytotoxicity-material-extracts-en.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          L929 extract assay
+        </a>
+        .
+      </p>
+    ),
+  },
+];
+
+const hardwareSections: ArticleSection[] = [
   {
     id: "engineering-overview",
     title: "Overview",
@@ -789,12 +1066,135 @@ const sections: ArticleSection[] = [
   },
 ];
 
+const wetEngineeringSections: ArticleSection[] = [
+  {
+    id: "wet-engineering",
+    title: "Engineering from Agricultural Sugars to a Broth-Derived Adhesive",
+    content: (
+      <div className={engineeringStyles.source}>
+        <p>
+          Carbotex links A08 strain engineering with the use of corn-stover
+          sugars and the development of an adhesive formulation. Over this
+          project, we built a dual-regulator background that boosted PMA
+          production, obtained a panel of heterologous PYC combinations, and
+          mapped out how adhesive concentration and dopamine input affect
+          different substrates.
+        </p>
+        <p>
+          Below, we break down the Design, Build, Test, and Learn phases of our
+          work.
+        </p>
+
+        <h3 className={engineeringStyles.sourceHeading}>
+          Design Basis — Define the Production Challenge
+        </h3>
+        <p>
+          We obtained the PMA-producing strain Aureobasidium melanogenum A08
+          from our lab's strain collection and established its cultivation and
+          identification protocols. The raw corn-stover hydrolysate from Yajun
+          Liu's lab connected our chassis to real agricultural waste. Because
+          this crude hydrolysate contains inhibitors that would stop
+          fermentation in its tracks, we couldn't just use it directly. We
+          engineered a downstream conditioning process—using activated carbon
+          adsorption, ion exchange, and vacuum concentration—to standardize the
+          sugar load to 140 g/L. This gave us a clean, reproducible feedstock
+          for A08. <Cite k="liu2023cornbioconversion" />
+        </p>
+        <p>
+          A08 grew fine on glucose, xylose, and arabinose, but we quickly
+          realized that good growth didn't mean good production. Our
+          xylose-loading and mixed-sugar experiments revealed a clear
+          sugar-dependent bottleneck. Based on this, and inspired by published
+          work on AmXlnR and AraR/XlnR, we decided to test the endogenous xlnR
+          and araR genes as engineering targets. We saw regulatory intervention
+          as a practical strategy to test, rather than assuming it was the only
+          explanation for the substrate issue.{" "}
+          <Cite k={["zhao2026amxlnr", "battaglia2011pentose"]} />
+        </p>
+        <p>
+          Methods:{" "}
+          <a
+            href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/17-a08-carbon-source-and-strain-fermentation-en-corrected.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            carbon-source fermentation
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/15-corn-stover-hydrolysate-conditioning-en.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            hydrolysate conditioning
+          </a>
+          .
+        </p>
+
+        <WetEngineeringCycle cycles={wetEngineeringCycles} />
+      </div>
+    ),
+  },
+  {
+    id: "wet-engineering-outcomes",
+    title: "Engineering Outcomes",
+    content: (
+      <p>
+        We delivered three connected outputs: a selected dual-regulator strain,
+        a tested panel of heterologous PYC combinations, and a formulation study
+        that connects preparation variables to substrate-specific adhesion.
+        These outputs give us a very concrete roadmap for our next experiments,
+        while keeping what we actually finished strictly separate from what we
+        plan to redesign.
+      </p>
+    ),
+  },
+];
+
+const wetEngineeringIds = new Set(
+  wetEngineeringSections.map((section) => section.id),
+);
+
+const hardwareLead =
+  "Four cycles of DBTL-driven development of an automated ammonia-nitrogen removal system for anaerobic fermentation effluent.";
+const wetLabLead =
+  "Carbotex links A08 strain engineering with the use of corn-stover sugars and the development of an adhesive formulation.";
+
+function initialEngineeringMode(): EngineeringMode {
+  const hash = window.location.hash.slice(1);
+  return wetEngineeringIds.has(hash) ||
+    hash === "references" ||
+    /^ref-\d+$/.test(hash)
+    ? "wetlab"
+    : "hardware";
+}
+
 export function Engineering() {
+  const [mode, setMode] = useState<EngineeringMode>(initialEngineeringMode);
+  const isWetLab = mode === "wetlab";
+  const selectMode = (nextMode: EngineeringMode) => {
+    if (nextMode === mode) return;
+    setMode(nextMode);
+    const sectionId =
+      nextMode === "wetlab" ? "wet-engineering" : "engineering-overview";
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${window.location.pathname}${window.location.search}#${sectionId}`,
+    );
+  };
+
   return (
     <ArticlePage
       title="Engineering Success"
-      lead="Four cycles of DBTL-driven development of an automated ammonia-nitrogen removal system for anaerobic fermentation effluent."
-      sections={sections}
+      lead={isWetLab ? wetLabLead : hardwareLead}
+      sections={isWetLab ? wetEngineeringSections : hardwareSections}
+      contentControls={
+        <EngineeringModeSwitch value={mode} onChange={selectMode} />
+      }
+      contentKey={mode}
+      references={isWetLab}
+      referenceOrder={isWetLab ? wetEngineeringReferenceOrder : undefined}
       stickyMobileOutline
     />
   );
