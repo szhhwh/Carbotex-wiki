@@ -193,7 +193,23 @@ export function ArticlePage({
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   const [outlineOpen, setOutlineOpen] = useState(false);
   const [outlineHidden, setOutlineHidden] = useState(false);
-  const [marker, setMarker] = useState({ top: 0, height: 0 });
+  const [marker, setMarker] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
+  // The top-level section that owns the active subsection, so the current
+  // chapter stays visible as context while a child entry is highlighted.
+  const activeParentId = useMemo(
+    () =>
+      items.find(
+        (item) =>
+          "children" in item &&
+          item.children?.some((child) => child.id === activeId),
+      )?.id,
+    [items, activeId],
+  );
   const listRef = useRef<HTMLOListElement>(null);
   const manualSelectionUntil = useRef(0);
   const lastScrollTop = useRef(0);
@@ -306,11 +322,17 @@ export function ArticlePage({
       ).find((element) => element.dataset.section === activeId);
       if (link) {
         const nav = list.parentElement!;
-        const top =
-          link.getBoundingClientRect().top -
-          nav.getBoundingClientRect().top +
-          nav.scrollTop;
-        setMarker({ top, height: link.offsetHeight });
+        const linkRect = link.getBoundingClientRect();
+        const navRect = nav.getBoundingClientRect();
+        const top = linkRect.top - navRect.top + nav.scrollTop;
+        // Track the link's own inset so nested entries keep their indent.
+        const left = linkRect.left - navRect.left + nav.scrollLeft;
+        setMarker({
+          top,
+          left,
+          width: link.offsetWidth,
+          height: link.offsetHeight,
+        });
         if (
           nav.clientHeight &&
           (top < nav.scrollTop ||
@@ -383,7 +405,8 @@ export function ArticlePage({
               <span
                 className={pageStyles.activeMarker}
                 style={{
-                  transform: `translateY(${marker.top}px)`,
+                  transform: `translate(${marker.left}px, ${marker.top}px)`,
+                  width: marker.width,
                   height: marker.height,
                 }}
                 aria-hidden="true"
@@ -397,6 +420,9 @@ export function ArticlePage({
                         href={`#${id}`}
                         data-section={id}
                         aria-current={activeId === id ? "location" : undefined}
+                        data-active-parent={
+                          activeParentId === id ? "true" : undefined
+                        }
                         onClick={() => selectOutlineTarget(id)}
                       >
                         <span>{label}</span>
