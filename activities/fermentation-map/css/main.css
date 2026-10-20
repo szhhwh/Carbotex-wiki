@@ -8,7 +8,6 @@
 :root {
   --primary: #2d5a3d; /* 墨绿 */
   --primary-dark: #1e3d28; /* 深墨绿 */
-  --primary-light: #3d7a52; /* 浅墨绿 */
   --accent: #8a7a3a; /* 暗金 */
   --accent-light: #a8944a; /* 亮金 */
   --ink: #1a2e1f; /* 墨色 */
@@ -33,8 +32,6 @@
   --text-lg: 18px;
   --text-xl: 20px;
   --text-2xl: 24px;
-  --text-3xl: 32px;
-  --text-display-sm: 28px;
   --text-display: 34px;
 }
 
@@ -140,12 +137,6 @@ body::before {
   gap: 10px;
 }
 
-.brand-icon {
-  font-size: 28px;
-  animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
 .brand-title {
   font-size: 22px;
   font-weight: 700;
@@ -207,163 +198,6 @@ body::before {
 #china-map {
   width: 100%;
   height: 100%;
-}
-
-/* ===== 3D骰子 - 古风 ===== */
-.dice-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(250, 243, 227, 0.95),
-    rgba(232, 220, 192, 0.95)
-  );
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-}
-
-/* 回纹装饰角 */
-.dice-container::before,
-.dice-container::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--accent);
-  opacity: 0.6;
-}
-
-.dice-container::before {
-  top: -2px;
-  left: -2px;
-  border-right: none;
-  border-bottom: none;
-}
-.dice-container::after {
-  top: -2px;
-  right: -2px;
-  border-left: none;
-  border-bottom: none;
-}
-
-.dice-scene {
-  width: 120px;
-  height: 120px;
-  perspective: 600px;
-}
-
-.dice {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.3, 1);
-}
-
-.dice.rolling {
-  animation: diceRoll 1.5s cubic-bezier(0.2, 0.8, 0.3, 1);
-}
-
-.dice-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  background: linear-gradient(135deg, var(--accent-light), var(--primary));
-  border: 2px solid rgba(245, 236, 215, 0.5);
-  border-radius: 8px;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.25);
-  backface-visibility: hidden;
-}
-
-.dice-front {
-  transform: translateZ(60px);
-}
-.dice-back {
-  transform: rotateY(180deg) translateZ(60px);
-}
-.dice-right {
-  transform: rotateY(90deg) translateZ(60px);
-}
-.dice-left {
-  transform: rotateY(-90deg) translateZ(60px);
-}
-.dice-top {
-  transform: rotateX(90deg) translateZ(60px);
-}
-.dice-bottom {
-  transform: rotateX(-90deg) translateZ(60px);
-}
-
-@keyframes diceRoll {
-  0% {
-    transform: rotateX(0) rotateY(0) rotateZ(0);
-  }
-  25% {
-    transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg);
-  }
-  50% {
-    transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg);
-  }
-  75% {
-    transform: rotateX(540deg) rotateY(270deg) rotateZ(135deg);
-  }
-  100% {
-    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg);
-  }
-}
-
-.dice-btn {
-  padding: 12px 24px;
-  border: 2px solid var(--primary);
-  border-radius: 4px;
-  background: linear-gradient(180deg, var(--primary-light), var(--primary));
-  color: var(--paper-light);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.4);
-  letter-spacing: 2px;
-}
-
-.dice-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(45, 90, 61, 0.5);
-  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-}
-
-.dice-btn:active {
-  transform: translateY(0);
-}
-
-.dice-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.dice-result {
-  min-height: 24px;
-  font-size: 14px;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-.dice-result .province-name {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 16px;
 }
 
 /* ===== 详情面板 - 古风 ===== */
@@ -726,44 +560,7 @@ body .activity-legal {
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
 /* ===== 历史气息增强 ===== */
-
-/* 骰子容器 - 卷轴宣纸质感 */
-.dice-container {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(250, 243, 227, 0.96),
-      rgba(232, 220, 192, 0.96)
-    ),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
-  border: 2px solid var(--border);
-  box-shadow:
-    var(--shadow),
-    inset 0 0 30px rgba(138, 122, 58, 0.08);
-}
-
-/* 骰子容器顶部 - 祥云装饰 */
-.dice-container .dice-scene::before {
-  content: "☁";
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 20px;
-  color: rgba(138, 122, 58, 0.4);
-  opacity: 0.5;
-}
 
 /* 详情面板 - 卷轴质感 */
 .detail-panel {
@@ -835,40 +632,6 @@ body .activity-legal {
     padding: 6px 14px;
     font-size: var(--text-body-sm);
   }
-
-  .dice-container {
-    top: 10px;
-    right: 10px;
-    padding: 12px;
-  }
-
-  .dice-scene {
-    width: 80px;
-    height: 80px;
-  }
-
-  .dice-face {
-    font-size: 32px;
-  }
-
-  .dice-front {
-    transform: translateZ(40px);
-  }
-  .dice-back {
-    transform: rotateY(180deg) translateZ(40px);
-  }
-  .dice-right {
-    transform: rotateY(90deg) translateZ(40px);
-  }
-  .dice-left {
-    transform: rotateY(-90deg) translateZ(40px);
-  }
-  .dice-top {
-    transform: rotateX(90deg) translateZ(40px);
-  }
-  .dice-bottom {
-    transform: rotateX(-90deg) translateZ(40px);
-  }
 }
 
 /* Fit the activity navigation and panels inside the wiki's mobile frame. */
@@ -894,14 +657,5 @@ body .activity-legal {
 
   .page {
     padding-top: var(--activity-nav-height, 150px);
-  }
-
-  .dice-container {
-    padding: 8px;
-  }
-
-  .dice-btn {
-    padding: 8px;
-    font-size: 12px;
   }
 }

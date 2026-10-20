@@ -335,18 +335,6 @@ h4 {
   }
 }
 
-/* 滑动进入动画 */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 .text-faction-ind {
   color: var(--faction-ind);
 }
