@@ -1,0 +1,59 @@
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.35rem;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: var(--ihp-radius, 1rem);
+  background: var(--hardware-yellow, #ffc647);
+}
+
+.group {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.group svg {
+  flex: 0 0 auto;
+  color: var(--hardware-green, #007c60);
+}
+
+.step {
+  display: inline-block;
+  padding: 0.42rem 0.65rem;
+  border: 0;
+  border-radius: var(--ihp-radius-sm, 0.75rem);
+  background: var(--hardware-white, #fff);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: var(--ihp-text-meta, 0.84rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.group:nth-child(even) .step {
+  background: var(--hardware-card-mint, #b8e3da);
+}
+
+@media (max-width: 620px) {
+  .chain {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .group {
+    width: 100%;
+  }
+
+  .group svg {
+    flex: 0 0 auto;
+    transform: rotate(90deg);
+  }
+
+  .step {
+    flex: 1;
+  }
+}

@@ -1,32 +1,39 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
 import { UserRound } from "lucide-react";
-import { Collapse } from "../ui/Collapse";
+import type { IhpStakeholder, IhpStakeholderGroup } from "./ihp-types";
+import { stakeholderGroupId } from "./ihp-links";
 import styles from "./stakeholder-navigator.module.css";
 
-export interface Stakeholder {
-  name: string;
-  portrait: string;
-  identity: string;
-  question: string;
-  impact: string;
-  why: string;
-  heard: string;
-  changed: string;
-  led: string;
-  storyHref: string;
+export type Stakeholder = IhpStakeholder;
+export type StakeholderGroup = IhpStakeholderGroup & { flow?: string };
+
+const GROUP_ACCENTS = [
+  ["var(--hardware-green)", "var(--hardware-card-mint)"],
+  ["var(--hardware-royal)", "var(--hardware-pale-yellow)"],
+  ["var(--hardware-navy)", "var(--hardware-mint)"],
+  ["var(--hardware-green)", "var(--hardware-pale-yellow)"],
+  ["var(--hardware-royal)", "var(--hardware-card-mint)"],
+  ["var(--hardware-navy)", "var(--hardware-mint)"],
+];
+
+function stakeholderSlug(stakeholder: Stakeholder) {
+  return stakeholder.storyHref.replace(/^#/, "");
 }
 
-export interface StakeholderGroup {
-  title: string;
-  description: string;
-  flow?: string;
-  stakeholders: Stakeholder[];
-}
-
-export function StakeholderCard({ stakeholder }: { stakeholder: Stakeholder }) {
-  const [open, setOpen] = useState(false);
+function StakeholderCard({
+  stakeholder,
+  open,
+  onToggle,
+  detailsId,
+}: {
+  stakeholder: Stakeholder;
+  open: boolean;
+  onToggle: () => void;
+  detailsId: string;
+}) {
   const [failedPortrait, setFailedPortrait] = useState<string | null>(null);
-  const headingId = useId();
+  const headingId = `stakeholder-heading-${stakeholderSlug(stakeholder)}`;
+  const triggerId = `stakeholder-trigger-${stakeholderSlug(stakeholder)}`;
   return (
     <article className={styles.card} aria-labelledby={headingId}>
       <div className={styles.portrait}>
@@ -42,7 +49,8 @@ export function StakeholderCard({ stakeholder }: { stakeholder: Stakeholder }) {
         ) : (
           <img
             src={stakeholder.portrait}
-            alt={stakeholder.name}
+            alt={`Stakeholder portrait: ${stakeholder.name}`}
+            data-logo={/\.svg(?:[?#]|$)/i.test(stakeholder.portrait)}
             loading="lazy"
             decoding="async"
             onError={() => setFailedPortrait(stakeholder.portrait)}
@@ -50,7 +58,7 @@ export function StakeholderCard({ stakeholder }: { stakeholder: Stakeholder }) {
         )}
       </div>
       <div className={styles.summary}>
-        <h5 id={headingId}>{stakeholder.name}</h5>
+        <h4 id={headingId}>{stakeholder.name}</h4>
         <p className={styles.identity}>{stakeholder.identity}</p>
         <dl>
           <dt>Question</dt>
@@ -59,35 +67,136 @@ export function StakeholderCard({ stakeholder }: { stakeholder: Stakeholder }) {
           <dd className={styles.impact}>{stakeholder.impact}</dd>
         </dl>
       </div>
-      <Collapse
-        variant="plain"
-        headerAs="div"
-        open={open}
-        onToggle={setOpen}
-        className={styles.details}
-        headerClassName={styles.trigger}
-        header={
-          <span>
-            {open ? "Collapse" : "Expand"}
-            <span className={styles.srOnly}>: {stakeholder.name}</span>
-          </span>
-        }
+      <button
+        type="button"
+        id={triggerId}
+        className={styles.detailsTrigger}
+        aria-expanded={open}
+        aria-controls={detailsId}
+        onClick={onToggle}
       >
-        <dl>
-          <dt>Why we reached out</dt>
-          <dd>{stakeholder.why}</dd>
-          <dt>What we heard</dt>
-          <dd>{stakeholder.heard}</dd>
-          <dt>What we did with it</dt>
-          <dd>{stakeholder.changed}</dd>
-          <dt>Where it led</dt>
-          <dd>{stakeholder.led}</dd>
-        </dl>
-        <a href={stakeholder.storyHref} className={styles.story}>
-          Read the full TRACE story ↓
-        </a>
-      </Collapse>
+        <span>{open ? "Collapse" : "Expand"} details</span>
+        <span className={styles.srOnly}> for {stakeholder.name}</span>
+      </button>
     </article>
+  );
+}
+
+function StakeholderGroupSection({
+  group,
+  index,
+}: {
+  group: StakeholderGroup;
+  index: number;
+}) {
+  const id = useId();
+  const [openStory, setOpenStory] = useState<string | null>(null);
+  const [accent, tint] = GROUP_ACCENTS[index % GROUP_ACCENTS.length];
+  const expanded = group.stakeholders.find(
+    (stakeholder) => stakeholderSlug(stakeholder) === openStory,
+  );
+  const detailsId = `${id}-details`;
+
+  useEffect(() => {
+    if (!openStory) return;
+    const panel = document.getElementById(detailsId);
+    if (!panel) return;
+
+    panel.focus({ preventScroll: true });
+    panel.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
+    });
+  }, [detailsId, openStory]);
+
+  const closeDetails = () => {
+    const triggerId = openStory
+      ? `stakeholder-trigger-${openStory}`
+      : undefined;
+    setOpenStory(null);
+    if (triggerId) {
+      requestAnimationFrame(() => document.getElementById(triggerId)?.focus());
+    }
+  };
+
+  return (
+    <section
+      id={stakeholderGroupId(group.title)}
+      aria-labelledby={`${id}-${index}`}
+      style={
+        {
+          "--group-accent": accent,
+          "--group-tint": tint,
+        } as CSSProperties
+      }
+    >
+      <header className={styles.groupHeading}>
+        <div>
+          <h3 id={`${id}-${index}`}>{group.title}</h3>
+          <p>{group.description}</p>
+          {group.flow && <p className={styles.flow}>{group.flow}</p>}
+        </div>
+        <span className={styles.count}>
+          {group.stakeholders.length} perspectives
+        </span>
+      </header>
+      <div className={styles.grid} data-count={group.stakeholders.length}>
+        {group.stakeholders.map((stakeholder) => {
+          const slug = stakeholderSlug(stakeholder);
+          return (
+            <StakeholderCard
+              key={stakeholder.storyHref}
+              stakeholder={stakeholder}
+              open={openStory === slug}
+              detailsId={detailsId}
+              onToggle={() =>
+                setOpenStory((current) => (current === slug ? null : slug))
+              }
+            />
+          );
+        })}
+      </div>
+      <div
+        className={styles.detailsPanel}
+        id={detailsId}
+        role="region"
+        aria-labelledby={
+          openStory ? `stakeholder-heading-${openStory}` : undefined
+        }
+        tabIndex={-1}
+        hidden={!expanded}
+      >
+        {expanded && openStory && (
+          <>
+            <div className={styles.detailsHeading}>
+              <strong>{expanded.name}</strong>
+              <button type="button" onClick={closeDetails}>
+                Close
+                <span className={styles.srOnly}>
+                  {" "}
+                  details for {expanded.name}
+                </span>
+              </button>
+            </div>
+            <dl className={styles.detailsList}>
+              <dt>Why we reached out</dt>
+              <dd>{expanded.why}</dd>
+              <dt>What we heard</dt>
+              <dd>{expanded.heard}</dd>
+              <dt>What we did with it</dt>
+              <dd>{expanded.changed}</dd>
+              <dt>Where it led</dt>
+              <dd>{expanded.led}</dd>
+            </dl>
+            <a href={expanded.storyHref} className={styles.story}>
+              Read the full TRACE story ↓
+            </a>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -96,30 +205,14 @@ export function StakeholderNavigator({
 }: {
   groups: StakeholderGroup[];
 }) {
-  const id = useId();
   return (
     <div className={styles.navigator}>
       {groups.map((group, index) => (
-        <section key={group.title} aria-labelledby={`${id}-${index}`}>
-          <header className={styles.groupHeading}>
-            <span className={styles.number}>
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <h4 id={`${id}-${index}`}>{group.title}</h4>
-              <p>{group.description}</p>
-              {group.flow && <p className={styles.flow}>{group.flow}</p>}
-            </div>
-          </header>
-          <div className={styles.grid}>
-            {group.stakeholders.map((stakeholder) => (
-              <StakeholderCard
-                key={stakeholder.storyHref}
-                stakeholder={stakeholder}
-              />
-            ))}
-          </div>
-        </section>
+        <StakeholderGroupSection
+          key={group.title}
+          group={group}
+          index={index}
+        />
       ))}
     </div>
   );

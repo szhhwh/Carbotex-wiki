@@ -1,0 +1,84 @@
+.band {
+  display: grid;
+  grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
+  gap: 0.85rem 1rem;
+  align-items: stretch;
+  margin: 1.3rem 0;
+  padding: 0.85rem;
+  border: 0;
+  border-radius: var(--ihp-radius, 1rem);
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: var(--ihp-text-body, 1rem);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  max-width: 12rem;
+  padding: 0.35rem 0.5rem;
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-transform: none;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.item {
+  display: grid;
+  min-width: 9rem;
+  padding: 0.7rem 0.85rem;
+  border: 0;
+  border-radius: var(--ihp-radius-sm, 0.75rem);
+  background: var(--hardware-white, #fff);
+}
+
+.item:nth-child(even) {
+  background: var(--hardware-card-mint, #b8e3da);
+}
+
+.item strong {
+  color: var(--hardware-royal, #2f52a1);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.item span {
+  margin-top: 0.15rem;
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-meta, 0.84rem);
+  line-height: 1.35;
+}
+
+.item small {
+  margin-top: 0.2rem;
+  color: var(--hardware-royal, #2f52a1);
+  font-size: var(--ihp-text-label, 0.8rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+@media (max-width: 600px) {
+  .band {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .label {
+    max-width: none;
+  }
+
+  .item {
+    flex: 1 1 9rem;
+  }
+}

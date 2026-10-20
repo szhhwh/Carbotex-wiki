@@ -1,0 +1,139 @@
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+
+:global(#article-body) .markdown h4,
+:global(#article-body) .markdown h5,
+:global(#article-body) .markdown h6 {
+  margin: 1.7rem 0 0.7rem;
+  color: var(--ihp-card-heading, #1e4fbc);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+:global(#article-body) .inlineLabel[class] {
+  margin: 1.8rem 0 0.95rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-left: 0.4rem solid var(--hardware-green, #007c60);
+  border-radius: var(--ihp-radius, 1rem);
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--ihp-card-heading, #1e4fbc);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.3rem, 2.3vw, 1.7rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+:global(#article-body) .inlineLabel[data-level="3"] {
+  color: var(--ihp-heading-strong, #005f49);
+}
+
+.storyMarker {
+  display: block;
+  margin: 1.9rem 0 0.95rem;
+  padding: 0.2rem 0 0.2rem 0.9rem;
+  border: 0;
+  border-left: 0.55rem solid var(--hardware-yellow, #ffc647);
+  border-radius: 0;
+  background: transparent;
+  color: var(--hardware-ink, #003f34);
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
+.storyMarker:focus {
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
+}
+
+.storyImpact {
+  color: var(--hardware-navy, #1f315f);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.anchorTarget {
+  display: block;
+  height: 0;
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
+.anchorTarget:focus + * {
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
+  border-radius: var(--ihp-radius-sm, 0.75rem);
+}
+
+.epigraph {
+  display: grid;
+  grid-template-columns: 6.75rem minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0.55rem 1.25rem;
+  align-items: center;
+  margin: 0 0 2rem;
+  padding: var(--ihp-padding, 1.25rem);
+  border: 0;
+  border-radius: var(--ihp-radius-lg, 1.5rem);
+  background: var(--hardware-pale-yellow, #ffe7b6);
+  color: var(--hardware-ink, #003f34);
+}
+
+.epigraphCover {
+  grid-row: 1 / span 2;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 4px solid var(--hardware-white, #fff);
+  border-radius: var(--ihp-radius, 1rem);
+}
+
+.epigraph blockquote {
+  grid-column: 2;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.epigraph blockquote p {
+  margin: 0;
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.epigraph.epigraph > figcaption {
+  grid-column: 2;
+}
+
+@media (max-width: 620px) {
+  .epigraph {
+    grid-template-columns: 4.85rem minmax(0, 1fr);
+    gap: 0.5rem 0.85rem;
+    padding: var(--ihp-padding, 1rem);
+  }
+
+  .epigraph blockquote p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .storyMarker,
+  .anchorTarget {
+    scroll-margin-top: calc(var(--site-nav-height, 6rem) + 5.5rem);
+  }
+}

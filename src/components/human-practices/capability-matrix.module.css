@@ -1,0 +1,203 @@
+.wrapper {
+  margin: 1.6rem 0;
+  overflow-x: auto;
+  border: 0;
+  border-radius: var(--ihp-radius-lg, 1.5rem);
+  background: var(--hardware-white, #fff);
+}
+
+.table {
+  width: 100%;
+  min-width: 46rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.6;
+}
+
+.table th,
+.table td {
+  padding: 1rem 1.1rem;
+  border: 0;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--hardware-ink, #003f34) 16%, transparent);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-transform: none;
+}
+
+.wrapper .table thead tr th {
+  background: var(--hardware-yellow, #ffc647);
+}
+
+.table thead th:first-child {
+  width: 20%;
+  background: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.wrapper .table thead tr th:first-child {
+  background: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.table tbody th {
+  width: 20%;
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--hardware-royal, #2f52a1);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.wrapper .table tbody tr th {
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--hardware-royal, #2f52a1);
+}
+
+.table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.table tbody tr:nth-child(even) td {
+  background: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.wrapper .table tbody tr:nth-child(even) td {
+  background: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.table tbody tr:hover td {
+  background: color-mix(
+    in srgb,
+    var(--hardware-card-mint, #b8e3da) 48%,
+    var(--hardware-white, #fff)
+  );
+}
+
+.wrapper .table tbody tr:hover td {
+  background: color-mix(
+    in srgb,
+    var(--hardware-card-mint, #b8e3da) 48%,
+    var(--hardware-white, #fff)
+  );
+}
+
+.headLabel {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px; /* taste-skill-ignore: screen-reader-only utility */
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 840px) {
+  .wrapper {
+    overflow: visible;
+  }
+
+  .table {
+    min-width: 0;
+    font-size: var(--ihp-text-body, 1rem);
+  }
+
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table th,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tbody {
+    padding: 0.85rem;
+  }
+
+  .table tbody tr {
+    padding: 1rem;
+    border: 0;
+    border-radius: var(--ihp-radius, 1rem);
+    background: var(--hardware-white, #fff);
+  }
+
+  .table tbody tr:nth-child(odd) {
+    background: var(--hardware-card-mint, #b8e3da);
+  }
+
+  .table tbody tr:nth-child(even) {
+    background: var(--hardware-pale-yellow, #ffe7b6);
+  }
+
+  .table tbody tr + tr {
+    margin-top: 0.75rem;
+  }
+
+  .table tbody tr:last-child {
+    border-bottom: var(--ihp-border, 1px solid #9cd7ca);
+  }
+
+  .table tbody th,
+  .table tbody td {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .wrapper .table tbody tr th,
+  .wrapper .table tbody tr td {
+    background: transparent;
+  }
+
+  .table tbody th {
+    margin-bottom: 0.7rem;
+    font-size: 1.35rem;
+  }
+
+  .table tbody td {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid
+      color-mix(in srgb, var(--hardware-ink, #003f34) 18%, transparent);
+  }
+
+  .table tbody td::before {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--hardware-royal, #2f52a1);
+    content: attr(data-label);
+    font-family: var(--hardware-display, Impact, sans-serif);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}

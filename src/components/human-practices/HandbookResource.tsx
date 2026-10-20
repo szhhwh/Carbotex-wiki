@@ -31,7 +31,6 @@ export function HandbookResource({
         <span className={styles.coverFormat}>PDF</span>
       </div>
       <div className={styles.body}>
-        <span className={styles.eyebrow}>Reusable resource</span>
         <Heading id={`${id}-title`} className={styles.title}>
           {title}
         </Heading>

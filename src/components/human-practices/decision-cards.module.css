@@ -1,0 +1,132 @@
+.list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1.7rem 0 2rem;
+}
+
+.entry {
+  --decision-accent: var(--hardware-yellow, #ffc647);
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1fr);
+  gap: 0.75rem 1.5rem;
+  min-width: 0;
+  padding: 1.25rem 0 1.5rem clamp(1rem, 2vw, 1.35rem);
+  border-left: 0.45rem solid var(--decision-accent);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+}
+
+.entry:nth-child(3n + 2) {
+  --decision-accent: var(--hardware-card-mint, #b8e3da);
+}
+
+.entry:nth-child(3n) {
+  --decision-accent: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.area {
+  align-self: start;
+  margin: 0;
+  color: var(--hardware-green, #007c60);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.shift {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.65rem;
+  align-items: center;
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-body, 1rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.shift svg {
+  flex: 0 0 auto;
+  color: var(--hardware-green, #007c60);
+}
+
+.shift strong {
+  color: var(--hardware-navy, #1f315f);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.entry p {
+  grid-column: 2;
+  max-width: 48rem;
+  margin: 0;
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.65;
+}
+
+.entry > a {
+  display: inline-flex;
+  grid-column: 2;
+  gap: 0.4rem;
+  align-items: center;
+  justify-self: start;
+  min-height: 2.75rem;
+  padding: 0.55rem 0;
+  color: var(--hardware-navy, #1f315f);
+  font-size: var(--ihp-text-label, 0.875rem);
+  font-weight: 800;
+  line-height: 1.35;
+  text-decoration-line: underline;
+  text-decoration-color: var(--hardware-yellow, #ffc647);
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.22em;
+  transition:
+    color var(--ihp-duration, 170ms) ease,
+    text-decoration-color var(--ihp-duration, 170ms) ease;
+}
+
+.entry > a svg {
+  flex: 0 0 auto;
+  transition: transform var(--ihp-duration, 170ms) ease;
+}
+
+.entry > a:hover {
+  color: var(--hardware-green, #007c60);
+  text-decoration-color: var(--hardware-green, #007c60);
+}
+
+.entry > a:hover svg {
+  transform: translateX(0.2rem);
+}
+
+.entry > a:focus-visible {
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+    padding-right: 0.25rem;
+  }
+
+  .area,
+  .shift,
+  .entry p,
+  .entry > a {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry > a,
+  .entry > a svg {
+    transition: none;
+  }
+}

@@ -1,0 +1,145 @@
+.section {
+  margin: 2rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 0.45rem solid var(--hardware-yellow, #ffc647);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1fr);
+  gap: 0.75rem 1.5rem;
+  align-items: start;
+  padding-bottom: 1.15rem;
+}
+
+.section .header h3 {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--ihp-heading, #007c60);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.header p {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.6;
+}
+
+.list {
+  display: grid;
+}
+
+.item {
+  --collaborator-accent: var(--hardware-yellow, #ffc647);
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.8fr) minmax(0, 1.35fr) auto;
+  gap: 0.55rem 1.5rem;
+  align-items: start;
+  min-width: 0;
+  padding: 1.05rem 0 1.1rem 1.1rem;
+  border-left: 0.35rem solid var(--collaborator-accent);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  text-decoration: none;
+  transition: color var(--ihp-duration, 170ms) ease;
+}
+
+.item:nth-child(3n + 2) {
+  --collaborator-accent: var(--hardware-card-mint, #b8e3da);
+}
+
+.item:nth-child(3n) {
+  --collaborator-accent: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.name {
+  color: var(--hardware-navy, #1f315f);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.description {
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.6;
+}
+
+.link {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-self: start;
+  min-height: 2.75rem;
+  color: var(--hardware-green, #007c60);
+  font-size: var(--ihp-text-label, 0.875rem);
+  font-weight: 800;
+  line-height: 1.35;
+  text-decoration-line: underline;
+  text-decoration-color: var(--hardware-yellow, #ffc647);
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.22em;
+}
+
+.link svg {
+  flex: 0 0 auto;
+  transition: transform var(--ihp-duration, 170ms) ease;
+}
+
+.item:hover .name,
+.item:hover .link {
+  color: var(--hardware-green, #007c60);
+}
+
+.item:hover .link svg {
+  transform: translateX(0.2rem);
+}
+
+.item:focus-visible {
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .item {
+    grid-template-columns: minmax(10rem, 0.65fr) minmax(0, 1fr);
+  }
+
+  .link {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+
+  .name,
+  .description,
+  .link {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .link svg {
+    transition: none;
+  }
+}

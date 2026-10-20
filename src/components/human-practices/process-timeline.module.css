@@ -1,0 +1,115 @@
+.timeline {
+  margin: 1.55rem 0;
+  padding: var(--ihp-padding-wide, 1.5rem);
+  border: 0;
+  border-radius: var(--ihp-radius-lg, 1.5rem);
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+}
+
+.heading {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 1.1rem;
+}
+
+.heading h4 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+  align-items: baseline;
+  margin: 0;
+  color: var(--hardware-royal, #2f52a1);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+}
+
+.heading h4 > span {
+  color: var(--hardware-royal, #2f52a1);
+  font-size: var(--ihp-text-meta, 0.875rem);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.heading h4 > strong {
+  color: var(--hardware-royal, #2f52a1);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.heading > span:last-child {
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-meta, 0.84rem);
+  line-height: 1.45;
+}
+
+.steps {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  border-radius: var(--ihp-radius-sm, 0.75rem);
+  background: var(--hardware-white, #fff);
+}
+
+.steps li:nth-child(even) {
+  background: var(--hardware-pale-yellow, #ffe7b6);
+}
+
+.stepHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: baseline;
+}
+
+.label {
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-meta, 0.84rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.steps strong {
+  color: var(--hardware-navy, #1f315f);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.meter {
+  grid-column: 1 / -1;
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(
+    in srgb,
+    var(--hardware-yellow, #ffc647) 56%,
+    var(--hardware-white, #fff)
+  );
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  min-width: 0.22rem;
+  border-radius: inherit;
+  background: var(--hardware-green, #007c60);
+}
+
+@media (max-width: 520px) {
+  .timeline {
+    padding: var(--ihp-padding, 1.25rem);
+  }
+}

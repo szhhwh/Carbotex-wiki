@@ -1,0 +1,93 @@
+.card {
+  margin: 1.3rem 0;
+  padding: var(--ihp-padding, 1.25rem);
+  border: 0;
+  border-left-width: 0.45rem;
+  border-radius: var(--ihp-radius, 1rem);
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+}
+
+.header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-bottom: 0.55rem;
+}
+
+.icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  place-items: center;
+}
+
+.card .header h4 {
+  margin: 0;
+  color: var(--ihp-card-heading, #1e4fbc);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.body {
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.7;
+}
+
+.body > :first-child {
+  margin-top: 0.65rem;
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+:global(#article-body) .card .body a {
+  color: var(--hardware-navy, #1f315f);
+  font-weight: 700;
+  text-decoration-color: currentColor;
+}
+
+:global(#article-body) .card > .link {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-label, 0.875rem);
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    background-color var(--ihp-duration, 170ms) ease,
+    transform var(--ihp-duration, 170ms) ease;
+}
+
+.link:hover {
+  background: var(--hardware-white, #fff);
+  transform: translateY(-2px);
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}

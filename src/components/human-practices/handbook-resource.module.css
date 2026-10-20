@@ -1,16 +1,14 @@
 .resource {
-  --handbook-green: #225842;
-  --handbook-line: #c4d0b4;
   display: grid;
   grid-template-columns: 8.5rem minmax(0, 1fr);
   gap: clamp(1.2rem, 3vw, 2rem);
   margin-block: 2.4rem;
-  padding: clamp(1.25rem, 3vw, 2rem);
-  border: 1px solid var(--handbook-line);
-  border-radius: 1.2rem;
-  background:
-    radial-gradient(ellipse at 100% 0, #e1ead3 0, #e1ead300 65%), #f5f6eb;
-  color: #314b41;
+  padding: var(--ihp-padding-wide, 1.5rem);
+  border: 0;
+  border-radius: var(--ihp-radius-lg, 1.5rem);
+  background: var(--hardware-card-mint, #b8e3da);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
 }
 
 .cover {
@@ -21,26 +19,25 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.6rem;
-  padding: 1.3rem 1rem 1rem;
-  border: 1px solid #164b39;
-  border-left: 6px solid #b89a58;
-  border-radius: 0.2rem 0.6rem 0.6rem 0.2rem;
-  background: linear-gradient(140deg, #356e50, #194735);
-  color: #f5f3dc;
-  box-shadow: 0.25rem 0.35rem 0 #cdd8bd;
-  font:
-    1.05rem Georgia,
-    serif;
+  padding: 1.2rem 1rem 1rem;
+  border: 0;
+  border-radius: var(--ihp-radius, 1rem);
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .coverRule {
   width: 100%;
-  height: 1px;
-  background: #d8dbb480;
+  height: 2px;
+  background: var(--hardware-green, #007c60);
 }
 
 .coverFormat {
-  font: 0.7rem/1.2 sans-serif;
+  font: 700 var(--ihp-text-label, 0.8rem)/1.2
+    var(--hardware-body, "Trebuchet MS", sans-serif);
   letter-spacing: 0.16em;
 }
 
@@ -48,26 +45,24 @@
   min-width: 0;
 }
 
-.eyebrow {
-  color: #806329;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.resource .title {
+.resource .body .title {
   margin: 0.5rem 0 1rem;
-  color: var(--handbook-green);
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: clamp(1.7rem, 2.5vw, 2.2rem);
-  line-height: 1.2;
+  color: var(--ihp-heading, #007c60);
+  font-family: var(--hardware-display, Impact, sans-serif);
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
+.resource .body h4.title {
+  color: var(--ihp-card-heading, #1e4fbc);
+}
+
 .copy {
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: var(--ihp-text-body, 1rem);
+  line-height: 1.7;
   overflow-wrap: anywhere;
 }
 
@@ -82,24 +77,26 @@
   gap: 0.8rem 1rem;
   margin-top: 1.5rem;
   padding-top: 1.2rem;
-  border-top: 1px solid var(--handbook-line);
 }
 
-.resource .action {
+:global(#article-body) .resource .action {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
-  padding: 0.65rem 1rem;
-  border: 1px solid var(--handbook-green);
-  border-radius: 0.5rem;
-  background: var(--handbook-green);
-  color: #fffdf2;
-  font-size: 0.9rem;
-  font-weight: 700;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--hardware-yellow, #ffc647);
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-meta, 0.84rem);
+  font-weight: 800;
   line-height: 1.5;
   text-decoration: none;
+  transition:
+    background-color var(--ihp-duration, 170ms) ease,
+    transform var(--ihp-duration, 170ms) ease;
 }
 
 .action svg {
@@ -107,21 +104,22 @@
 }
 
 .resource .action:hover {
-  background: #174733;
-  color: #fffdf2;
+  background: var(--hardware-white, #fff);
+  color: var(--hardware-ink, #003f34);
+  transform: translateY(-2px);
 }
 
 .resource .action:focus-visible {
-  outline: 2px solid #225842;
-  outline-offset: 4px;
+  outline: 3px solid var(--ihp-focus, #007c60);
+  outline-offset: 3px;
 }
 
 .format {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: #587066;
-  font-size: 0.77rem;
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-label, 0.8rem);
   line-height: 1.5;
 }
 
@@ -131,8 +129,8 @@
 
 .resource .unavailable {
   margin: 0;
-  color: #587066;
-  font-size: 0.9rem;
+  color: var(--hardware-ink, #003f34);
+  font-size: var(--ihp-text-body, 1rem);
 }
 
 @media (max-width: 600px) {
@@ -153,5 +151,11 @@
 
   .resource .action {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resource .action {
+    transition: none;
   }
 }
