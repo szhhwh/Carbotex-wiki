@@ -60,7 +60,6 @@ export function HumanPractices() {
       <TraceCycleProvider>
         <ArticlePage
           title="Integrated Human Practices"
-          lead="We did not use Human Practices to justify Carbotex. We used it to modify Carbotex."
           heroImage={{
             src: "https://static.igem.wiki/teams/6147/wiki/igem-collage-1.webp",
             alt: "Collage of OUC-Haide team members during stakeholder meetings, laboratory work, and iGEM presentations.",

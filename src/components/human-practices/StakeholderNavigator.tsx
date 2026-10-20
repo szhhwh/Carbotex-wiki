@@ -1,49 +1,103 @@
 import { useEffect, useId, useState, type CSSProperties } from "react";
-import { UserRound } from "lucide-react";
+import { ArrowUpRight, UserRound } from "lucide-react";
 import type { IhpStakeholder, IhpStakeholderGroup } from "./ihp-types";
 import { stakeholderGroupId } from "./ihp-links";
 import styles from "./stakeholder-navigator.module.css";
 
-export type Stakeholder = IhpStakeholder;
-export type StakeholderGroup = IhpStakeholderGroup & { flow?: string };
+type GroupTheme = CSSProperties & {
+  "--group-accent": string;
+  "--group-header-ink": string;
+  "--group-surface": string;
+  "--group-border": string;
+};
 
-const GROUP_ACCENTS = [
-  ["var(--hardware-green)", "var(--hardware-card-mint)"],
-  ["var(--hardware-royal)", "var(--hardware-pale-yellow)"],
-  ["var(--hardware-navy)", "var(--hardware-mint)"],
-  ["var(--hardware-green)", "var(--hardware-pale-yellow)"],
-  ["var(--hardware-royal)", "var(--hardware-card-mint)"],
-  ["var(--hardware-navy)", "var(--hardware-mint)"],
+const GROUP_THEMES: GroupTheme[] = [
+  {
+    "--group-accent": "#006b52",
+    "--group-header-ink": "#ffffff",
+    "--group-surface": "#e6f2ed",
+    "--group-border": "#79b7a4",
+  },
+  {
+    "--group-accent": "#1f7a5c",
+    "--group-header-ink": "#ffffff",
+    "--group-surface": "#dff1e9",
+    "--group-border": "#83bea9",
+  },
+  {
+    "--group-accent": "#a8d58e",
+    "--group-header-ink": "#003f34",
+    "--group-surface": "#eef6df",
+    "--group-border": "#9dbf84",
+  },
+  {
+    "--group-accent": "#b85213",
+    "--group-header-ink": "#ffffff",
+    "--group-surface": "#fff0e2",
+    "--group-border": "#dc9668",
+  },
+  {
+    "--group-accent": "#f0bd3d",
+    "--group-header-ink": "#003f34",
+    "--group-surface": "#fff3ce",
+    "--group-border": "#dbb45f",
+  },
+  {
+    "--group-accent": "#087aa3",
+    "--group-header-ink": "#ffffff",
+    "--group-surface": "#e4f4fa",
+    "--group-border": "#72bad5",
+  },
 ];
 
-function stakeholderSlug(stakeholder: Stakeholder) {
+function getGroupTheme(index: number) {
+  return GROUP_THEMES[index % GROUP_THEMES.length];
+}
+
+function stakeholderSlug(stakeholder: IhpStakeholder) {
   return stakeholder.storyHref.replace(/^#/, "");
+}
+
+function storyNumber(value: number) {
+  return String(value).padStart(2, "0");
 }
 
 function StakeholderCard({
   stakeholder,
+  number,
   open,
   onToggle,
   detailsId,
 }: {
-  stakeholder: Stakeholder;
+  stakeholder: IhpStakeholder;
+  number: number;
   open: boolean;
   onToggle: () => void;
   detailsId: string;
 }) {
   const [failedPortrait, setFailedPortrait] = useState<string | null>(null);
-  const headingId = `stakeholder-heading-${stakeholderSlug(stakeholder)}`;
-  const triggerId = `stakeholder-trigger-${stakeholderSlug(stakeholder)}`;
+  const slug = stakeholderSlug(stakeholder);
+  const headingId = `stakeholder-heading-${slug}`;
+  const triggerId = `stakeholder-trigger-${slug}`;
+
   return (
-    <article className={styles.card} aria-labelledby={headingId}>
+    <article
+      className={styles.card}
+      aria-labelledby={headingId}
+      data-open={open}
+      data-stakeholder-card
+    >
+      <span className={styles.cardNumber} aria-hidden="true">
+        {storyNumber(number)}
+      </span>
       <div className={styles.portrait}>
         {failedPortrait === stakeholder.portrait ? (
           <span
-            className={styles.fallback}
+            className={styles.portraitFallback}
             role="img"
             aria-label={`Portrait unavailable: ${stakeholder.name}`}
           >
-            <UserRound size={32} aria-hidden="true" />
+            <UserRound size={28} aria-hidden="true" />
             <span>Portrait unavailable</span>
           </span>
         ) : (
@@ -57,45 +111,147 @@ function StakeholderCard({
           />
         )}
       </div>
-      <div className={styles.summary}>
+      <div className={styles.cardSummary}>
         <h4 id={headingId}>{stakeholder.name}</h4>
-        <p className={styles.identity}>{stakeholder.identity}</p>
-        <dl>
-          <dt>Question</dt>
-          <dd>{stakeholder.question}</dd>
-          <dt>Impact</dt>
-          <dd className={styles.impact}>{stakeholder.impact}</dd>
-        </dl>
+        <button
+          type="button"
+          id={triggerId}
+          className={styles.detailsTrigger}
+          aria-expanded={open}
+          aria-controls={detailsId}
+          onClick={onToggle}
+        >
+          <span>{open ? "Hide details" : "View details"}</span>
+          <span className={styles.srOnly}> for {stakeholder.name}</span>
+        </button>
       </div>
-      <button
-        type="button"
-        id={triggerId}
-        className={styles.detailsTrigger}
-        aria-expanded={open}
-        aria-controls={detailsId}
-        onClick={onToggle}
-      >
-        <span>{open ? "Collapse" : "Expand"} details</span>
-        <span className={styles.srOnly}> for {stakeholder.name}</span>
-      </button>
     </article>
+  );
+}
+
+function AdditionalCollaborators({
+  group,
+  headingId,
+}: {
+  group: IhpStakeholderGroup;
+  headingId: string;
+}) {
+  const additional = group.additionalCollaborators;
+  if (!additional) return null;
+
+  return (
+    <div
+      className={styles.additionalCollaborators}
+      data-additional-collaborators
+    >
+      <h4 id={`${headingId}-additional`} className={styles.additionalTitle}>
+        {additional.title}
+      </h4>
+      <div className={styles.additionalList}>
+        {additional.items.map((item) => (
+          <a className={styles.additionalCard} href={item.href} key={item.name}>
+            <span className={styles.additionalCopy}>
+              <strong>{item.name}</strong>
+              {item.identity && <span>{item.identity}</span>}
+            </span>
+            <ArrowUpRight
+              className={styles.additionalArrow}
+              size={15}
+              aria-hidden="true"
+            />
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }
 
 function StakeholderGroupSection({
   group,
   index,
+  startNumber,
+  openStory,
+  onToggle,
+  detailsId,
 }: {
-  group: StakeholderGroup;
+  group: IhpStakeholderGroup;
   index: number;
+  startNumber: number;
+  openStory: string | null;
+  onToggle: (slug: string) => void;
+  detailsId: string;
 }) {
   const id = useId();
-  const [openStory, setOpenStory] = useState<string | null>(null);
-  const [accent, tint] = GROUP_ACCENTS[index % GROUP_ACCENTS.length];
-  const expanded = group.stakeholders.find(
-    (stakeholder) => stakeholderSlug(stakeholder) === openStory,
+  const headingId = `${id}-${index}`;
+  const descriptionId = `${headingId}-description`;
+
+  return (
+    <section
+      className={styles.column}
+      id={stakeholderGroupId(group.title)}
+      aria-labelledby={headingId}
+      aria-describedby={descriptionId}
+      style={getGroupTheme(index)}
+    >
+      <header className={styles.groupHeading} data-stakeholder-heading>
+        <h3 id={headingId}>{group.title}</h3>
+        <p className={styles.srOnly} id={descriptionId}>
+          {group.description}
+        </p>
+      </header>
+      <div className={styles.cardStack}>
+        {group.stakeholders.map((stakeholder, stakeholderIndex) => {
+          const slug = stakeholderSlug(stakeholder);
+          return (
+            <StakeholderCard
+              key={stakeholder.storyHref}
+              stakeholder={stakeholder}
+              number={startNumber + stakeholderIndex}
+              open={openStory === slug}
+              detailsId={detailsId}
+              onToggle={() => onToggle(slug)}
+            />
+          );
+        })}
+      </div>
+      <AdditionalCollaborators group={group} headingId={headingId} />
+    </section>
   );
+}
+
+export function StakeholderNavigator({
+  groups,
+}: {
+  groups: IhpStakeholderGroup[];
+}) {
+  const id = useId();
   const detailsId = `${id}-details`;
+  const [openStory, setOpenStory] = useState<{
+    groupIndex: number;
+    slug: string;
+  } | null>(null);
+
+  let nextNumber = 1;
+  const groupStartNumbers = groups.map((group) => {
+    const startNumber = nextNumber;
+    nextNumber += group.stakeholders.length;
+    return startNumber;
+  });
+
+  const expandedGroup = openStory ? groups[openStory.groupIndex] : undefined;
+  const expanded = expandedGroup?.stakeholders.find(
+    (stakeholder) => stakeholderSlug(stakeholder) === openStory?.slug,
+  );
+  const expandedIndex =
+    expandedGroup && openStory
+      ? expandedGroup.stakeholders.findIndex(
+          (stakeholder) => stakeholderSlug(stakeholder) === openStory.slug,
+        )
+      : -1;
+  const expandedNumber =
+    openStory && expandedIndex >= 0
+      ? groupStartNumbers[openStory.groupIndex] + expandedIndex
+      : null;
 
   useEffect(() => {
     if (!openStory) return;
@@ -113,7 +269,7 @@ function StakeholderGroupSection({
 
   const closeDetails = () => {
     const triggerId = openStory
-      ? `stakeholder-trigger-${openStory}`
+      ? `stakeholder-trigger-${openStory.slug}`
       : undefined;
     setOpenStory(null);
     if (triggerId) {
@@ -122,56 +278,27 @@ function StakeholderGroupSection({
   };
 
   return (
-    <section
-      id={stakeholderGroupId(group.title)}
-      aria-labelledby={`${id}-${index}`}
-      style={
-        {
-          "--group-accent": accent,
-          "--group-tint": tint,
-        } as CSSProperties
-      }
-    >
-      <header className={styles.groupHeading}>
-        <div>
-          <h3 id={`${id}-${index}`}>{group.title}</h3>
-          <p>{group.description}</p>
-          {group.flow && <p className={styles.flow}>{group.flow}</p>}
-        </div>
-        <span className={styles.count}>
-          {group.stakeholders.length} perspectives
-        </span>
-      </header>
-      <div className={styles.grid} data-count={group.stakeholders.length}>
-        {group.stakeholders.map((stakeholder) => {
-          const slug = stakeholderSlug(stakeholder);
-          return (
-            <StakeholderCard
-              key={stakeholder.storyHref}
-              stakeholder={stakeholder}
-              open={openStory === slug}
-              detailsId={detailsId}
-              onToggle={() =>
-                setOpenStory((current) => (current === slug ? null : slug))
-              }
-            />
-          );
-        })}
-      </div>
+    <div className={styles.navigator} data-stakeholder-navigator>
       <div
         className={styles.detailsPanel}
         id={detailsId}
         role="region"
-        aria-labelledby={
-          openStory ? `stakeholder-heading-${openStory}` : undefined
-        }
+        aria-labelledby={`${detailsId}-title`}
         tabIndex={-1}
         hidden={!expanded}
+        data-stakeholder-details
+        style={openStory ? getGroupTheme(openStory.groupIndex) : undefined}
       >
-        {expanded && openStory && (
+        {expanded && expandedNumber && (
           <>
             <div className={styles.detailsHeading}>
-              <strong>{expanded.name}</strong>
+              <div>
+                <span className={styles.detailsKicker}>
+                  Stakeholder perspective {storyNumber(expandedNumber)}
+                </span>
+                <h4 id={`${detailsId}-title`}>{expanded.name}</h4>
+                <p>{expanded.identity}</p>
+              </div>
               <button type="button" onClick={closeDetails}>
                 Close
                 <span className={styles.srOnly}>
@@ -181,39 +308,43 @@ function StakeholderGroupSection({
               </button>
             </div>
             <dl className={styles.detailsList}>
-              <dt>Why we reached out</dt>
-              <dd>{expanded.why}</dd>
-              <dt>What we heard</dt>
-              <dd>{expanded.heard}</dd>
-              <dt>What we did with it</dt>
-              <dd>{expanded.changed}</dd>
-              <dt>Where it led</dt>
-              <dd>{expanded.led}</dd>
+              {[
+                ["Why we reached out", expanded.why],
+                ["What we heard", expanded.heard],
+                ["What we did with it", expanded.changed],
+                ["Where it led", expanded.led],
+              ].map(([label, value]) => (
+                <div className={styles.detailItem} key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
             </dl>
-            <a href={expanded.storyHref} className={styles.story}>
-              Read the full TRACE story ↓
+            <a href={expanded.storyHref} className={styles.storyLink}>
+              Read the full TRACE story <span aria-hidden="true">↓</span>
             </a>
           </>
         )}
       </div>
-    </section>
-  );
-}
-
-export function StakeholderNavigator({
-  groups,
-}: {
-  groups: StakeholderGroup[];
-}) {
-  return (
-    <div className={styles.navigator}>
-      {groups.map((group, index) => (
-        <StakeholderGroupSection
-          key={group.title}
-          group={group}
-          index={index}
-        />
-      ))}
+      <div className={styles.columns} data-stakeholder-columns>
+        {groups.map((group, index) => (
+          <StakeholderGroupSection
+            key={group.title}
+            group={group}
+            index={index}
+            startNumber={groupStartNumbers[index]}
+            openStory={openStory?.groupIndex === index ? openStory.slug : null}
+            detailsId={detailsId}
+            onToggle={(slug) =>
+              setOpenStory((current) =>
+                current?.groupIndex === index && current.slug === slug
+                  ? null
+                  : { groupIndex: index, slug },
+              )
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 }

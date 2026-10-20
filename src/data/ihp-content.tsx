@@ -335,7 +335,7 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
         storyHref: "#ihp-shenzhen-infrastructure",
       },
       {
-        name: "Qingdao Institute of Bioenergy and Bioprocess Technology, Chinese Academy of Sciences (QIBEBT)",
+        name: "Qingdao Institute of Bioenergy and Bioprocess Technology (QIBEBT)",
         portrait: "https://static.igem.wiki/teams/6147/wiki/card/20-qibebt.svg",
         identity: "Research Institute · Renewable Carbon · Biomanufacturing",
         question: "What does a complete biomanufacturing system depend on?",
@@ -386,6 +386,20 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
         storyHref: "#ihp-grand-apic",
       },
     ],
+    additionalCollaborators: {
+      title: "Additional iGEM Teams & Collaborators",
+      items: [
+        {
+          name: "Other teams",
+          href: "#ihp-community",
+        },
+        {
+          name: "Prof. Ning Yan",
+          identity: "Artistic Guidance & Science Communication",
+          href: "#ihp-collab-ning-yan",
+        },
+      ],
+    },
   },
 ];
 

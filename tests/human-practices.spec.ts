@@ -161,7 +161,7 @@ test.describe("integrated human practices", () => {
     ).toHaveAttribute("alt", /^Stakeholder portrait: /);
   });
 
-  test("stakeholder details expand and collapse independently", async ({
+  test("stakeholder details expand, receive focus, and return focus", async ({
     page,
   }) => {
     await openIhp(page);
@@ -171,9 +171,9 @@ test.describe("integrated human practices", () => {
     );
     const card = group.locator("article").first();
     const expand = card.locator("button[aria-expanded]").first();
-    const details = group.locator(':scope > [role="region"]');
+    const details = page.locator("[data-stakeholder-details]");
 
-    await expect(expand).toHaveAccessibleName(/^Expand details for /);
+    await expect(expand).toHaveAccessibleName(/^View details for /);
     await expect(expand).toHaveAttribute("aria-expanded", "false");
     await expect(details).toBeHidden();
 
@@ -181,7 +181,7 @@ test.describe("integrated human practices", () => {
     await expect(expand).toHaveAttribute("aria-expanded", "true");
     await expect(details).toBeVisible();
     await expect(details).toBeFocused();
-    await expect(expand).toHaveAccessibleName(/^Collapse details for /);
+    await expect(expand).toHaveAccessibleName(/^Hide details for /);
 
     await details.getByRole("button", { name: /^Close details/ }).click();
     await expect(expand).toHaveAttribute("aria-expanded", "false");
@@ -485,60 +485,81 @@ test.describe("integrated human practices", () => {
     expect(layout.page).toBeLessThanOrEqual(layout.viewport + 1);
   });
 
-  test("stakeholder grids use one column on mobile", async ({
+  test("stakeholder navigator uses six columns on desktop", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop");
+    await openIhp(page);
+
+    const navigator = page.locator("[data-stakeholder-navigator]");
+    const columns = navigator.locator("[data-stakeholder-columns]");
+    const columnCount = await columns.evaluate(
+      (element) =>
+        getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+    );
+
+    expect(columnCount).toBe(6);
+    await expect(navigator.locator("[data-stakeholder-card]")).toHaveCount(22);
+    await expect(navigator.locator("[data-stakeholder-heading]")).toHaveCount(
+      6,
+    );
+    for (const title of [
+      "Feedstock & Agricultural Reality",
+      "Biomanufacturing Pathway",
+      "Carbon Utilization & Engineering",
+      "Material & Application Design",
+      "Sustainable Manufacturing & Scale-up",
+      "Evaluation & Community Engagement",
+    ]) {
+      await expect(
+        navigator.getByRole("heading", { name: title, exact: true }),
+      ).toBeVisible();
+    }
+    await expect(navigator).toContainText(
+      "Qingdao Institute of Bioenergy and Bioprocess Technology (QIBEBT)",
+    );
+    await expect(
+      navigator.getByRole("heading", {
+        name: "Additional iGEM Teams & Collaborators",
+      }),
+    ).toBeVisible();
+    await expect(navigator).toContainText("Prof. Ning Yan");
+    await expect(navigator).toContainText(
+      "Artistic Guidance & Science Communication",
+    );
+  });
+
+  test("stakeholder navigator uses one column on mobile", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "mobile");
     await openIhp(page);
 
-    const columns = await page.evaluate(() =>
-      Array.from(
-        document.querySelectorAll<HTMLElement>(
-          'section[id^="ihp-stakeholder-group-"] [data-count="2"], section[id^="ihp-stakeholder-group-"] [data-count="4"]',
-        ),
-      ).map(
-        (grid) => getComputedStyle(grid).gridTemplateColumns.split(" ").length,
-      ),
-    );
+    const columnCount = await page
+      .locator("[data-stakeholder-columns]")
+      .evaluate(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+      );
 
-    expect(columns.length).toBeGreaterThan(0);
-    expect(columns).toEqual(columns.map(() => 1));
+    expect(columnCount).toBe(1);
   });
 
-  test("three-card stakeholder groups center the final card on tablet", async ({
+  test("stakeholder navigator reflows to three columns on tablet", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop");
     await openIhp(page);
     await page.setViewportSize({ width: 768, height: 1024 });
 
-    const grid = page
-      .locator('section[id^="ihp-stakeholder-group-"] [data-count="3"]')
-      .first();
-    await grid.scrollIntoViewIfNeeded();
+    const columnCount = await page
+      .locator("[data-stakeholder-columns]")
+      .evaluate(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+      );
 
-    await expect
-      .poll(() =>
-        grid.evaluate((element) => {
-          const lastCard = element.querySelector<HTMLElement>(
-            ":scope > article:last-child",
-          );
-          if (!lastCard) return null;
-          const card = lastCard.getBoundingClientRect();
-          const container = element.getBoundingClientRect();
-          return {
-            centered:
-              Math.abs(
-                card.left +
-                  card.width / 2 -
-                  (container.left + container.width / 2),
-              ) < 2,
-            halfColumn:
-              Math.abs(card.width - (element.clientWidth - 16) / 2) < 2,
-          };
-        }),
-      )
-      .toEqual({ centered: true, halfColumn: true });
+    expect(columnCount).toBe(3);
   });
 
   test("mobile outline opens and navigates to a section", async ({

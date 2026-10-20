@@ -13,7 +13,6 @@
     transparent
   );
   --ihp-border: 1px solid var(--ihp-border-color);
-  --ihp-shadow: none;
   --ihp-focus: var(--hardware-green, #007c60);
   --ihp-heading: var(--hardware-green, #007c60);
   --ihp-heading-strong: #005f49;
@@ -51,11 +50,6 @@
 
 .page :global(.references-list) {
   overflow-wrap: anywhere;
-}
-
-.storyAnchor {
-  display: block;
-  scroll-margin-top: 7rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
