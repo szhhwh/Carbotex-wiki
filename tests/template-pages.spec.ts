@@ -1,61 +1,22 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 const templatePages = [
   {
     path: "/contribution",
     title: "Contribution",
-    lead: "Make a useful contribution for future iGEM teams",
   },
   {
     path: "/experiments",
     title: "Experiments",
-    lead: "Describe the research and experiments that drove your project",
   },
   {
     path: "/attributions",
     title: "Attributions",
-    lead: "Accurate attribution is essential in the iGEM Competition",
   },
 ] as const;
 
-async function expectVisibleArticleLead(
-  page: Page,
-  path: string,
-  copy: string,
-) {
-  await page.goto(`/ouc-haide${path}`);
-
-  const lead = page.locator("[data-article-lead]");
-  await expect(lead).toBeVisible();
-  await expect(lead).toContainText(copy);
-
-  const layout = await lead.evaluate((element) => {
-    const computed = getComputedStyle(element);
-    const rect = element.getBoundingClientRect();
-    return {
-      width: rect.width,
-      height: rect.height,
-      fontPx: Number.parseFloat(computed.fontSize),
-      lineHeightPx: Number.parseFloat(computed.lineHeight),
-      clipPath: computed.clipPath,
-      opacity: computed.opacity,
-      visibility: computed.visibility,
-      overflowX: element.scrollWidth - element.clientWidth,
-    };
-  });
-
-  expect(layout.width).toBeGreaterThan(0);
-  expect(layout.height).toBeGreaterThan(0);
-  expect(layout.fontPx).toBeGreaterThanOrEqual(16);
-  expect(layout.lineHeightPx).toBeGreaterThan(layout.fontPx);
-  expect(layout.clipPath).toBe("none");
-  expect(layout.opacity).toBe("1");
-  expect(layout.visibility).toBe("visible");
-  expect(layout.overflowX).toBeLessThanOrEqual(1);
-}
-
 test.describe("template article pages", () => {
-  test("keeps every article lead visible and readable at three widths", async ({
+  test("keeps every article hero title and media visible at three widths", async ({
     page,
   }) => {
     for (const viewport of [
@@ -66,11 +27,8 @@ test.describe("template article pages", () => {
       await page.setViewportSize(viewport);
 
       for (const templatePage of templatePages) {
-        await expectVisibleArticleLead(
-          page,
-          templatePage.path,
-          templatePage.lead,
-        );
+        await page.goto(`/ouc-haide${templatePage.path}`);
+        await expect(page.locator("[data-article-lead]")).toHaveCount(0);
 
         await expect(
           page.getByRole("heading", {
@@ -79,17 +37,26 @@ test.describe("template article pages", () => {
           }),
         ).toBeVisible();
 
-        const heroRatio = await page
-          .locator("[data-hero-media-slot]")
-          .evaluate((element) => {
-            const rect = element.getBoundingClientRect();
-            return rect.width / rect.height;
-          });
-        expect(heroRatio).toBeCloseTo(1069 / 400, 2);
-        await expect(page.locator("[data-hero-media-slot] > span")).toHaveCSS(
-          "background-color",
-          "rgba(0, 0, 0, 0)",
+        const hero = page.locator("[data-hero-media-slot]");
+        await expect(hero).toBeVisible();
+        await expect(hero.locator(":scope > img, :scope > span")).toHaveCount(
+          1,
         );
+
+        const heroRatio = await hero.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.width / rect.height;
+        });
+        expect(heroRatio).toBeCloseTo(1069 / 400, 2);
+
+        const titleBandAlignment = await hero.evaluate((element) => {
+          const mediaRect = element.getBoundingClientRect();
+          const bandRect = element.nextElementSibling!.getBoundingClientRect();
+          return Math.abs(
+            mediaRect.bottom - (bandRect.top + bandRect.height / 2),
+          );
+        });
+        expect(titleBandAlignment).toBeLessThanOrEqual(1);
 
         expect(
           await page.evaluate(

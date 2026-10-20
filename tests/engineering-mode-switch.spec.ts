@@ -16,9 +16,7 @@ test("switches the outline and article between Hardware and Wet Lab", async ({
 
   await expect(hardware).toHaveAttribute("aria-pressed", "true");
   await expect(hardware).toHaveAttribute("aria-controls", "article-body");
-  await expect(page.locator("[data-article-lead]")).toContainText(
-    "automated ammonia-nitrogen removal system",
-  );
+  await expect(page.locator("[data-article-lead]")).toHaveCount(0);
   await expect(page.locator("#engineering-overview")).toBeVisible();
   await expect(page.locator("#wet-engineering")).toHaveCount(0);
   await expect(outline.locator('a[href="#engineering-overview"]')).toHaveCount(
@@ -63,9 +61,6 @@ test("switches the outline and article between Hardware and Wet Lab", async ({
 
   await wetLab.click();
   await expect(wetLab).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("[data-article-lead]")).toContainText(
-    "Carbotex links A08 strain engineering",
-  );
   await expect(page).toHaveURL(/#wet-engineering$/);
   await expect(page.locator("#wet-engineering")).toBeVisible();
   await expect(page.locator("#engineering-overview")).toHaveCount(0);
@@ -87,9 +82,6 @@ test("switches the outline and article between Hardware and Wet Lab", async ({
 
   await hardware.click();
   await expect(hardware).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("[data-article-lead]")).toContainText(
-    "automated ammonia-nitrogen removal system",
-  );
   await expect(page).toHaveURL(/#engineering-overview$/);
   await expect(page.locator("#engineering-overview")).toBeVisible();
   await expect(page.locator("#wet-engineering")).toHaveCount(0);

@@ -46,7 +46,6 @@ interface HeroImage {
 
 interface ArticlePageProps {
   title: string;
-  lead: ReactNode;
   /** Optional image shown in the header media slot. */
   heroImage?: HeroImage;
   sections: ArticleSection[];
@@ -68,12 +67,10 @@ interface ArticlePageProps {
 
 export function ArticleHero({
   title,
-  lead,
   heroImage,
   headingId,
 }: {
   title: string;
-  lead: ReactNode;
   heroImage?: HeroImage;
   headingId?: string;
   theme?: ArticleTheme;
@@ -131,9 +128,6 @@ export function ArticleHero({
         </h1>
         <BubbleCluster />
       </div>
-      <div className={styles.heroLead} data-article-lead>
-        {lead}
-      </div>
     </header>
   );
 }
@@ -175,7 +169,6 @@ function BubbleCluster() {
 
 export function ArticlePage({
   title,
-  lead,
   heroImage,
   sections,
   references = false,
@@ -386,12 +379,7 @@ export function ArticlePage({
       data-sticky-outline={stickyMobileOutline ? "true" : undefined}
     >
       {referenceOrder && <ReferenceOrder keys={referenceOrder} />}
-      <ArticleHero
-        title={title}
-        lead={lead}
-        heroImage={heroImage}
-        theme={theme}
-      />
+      <ArticleHero title={title} heroImage={heroImage} theme={theme} />
 
       {contentControls ? (
         <div className={pageStyles.contentControls}>{contentControls}</div>

@@ -326,7 +326,6 @@ export function SafetyAndSecurity() {
   return (
     <ArticlePage
       title="Safety"
-      lead="A responsible approach to microbial, project, laboratory, and environmental safety throughout the Carbotex project."
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-safety.avif",
         alt: "Illustration of a safety shield, laboratory workstation, and protective equipment.",

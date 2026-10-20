@@ -5,10 +5,7 @@ import styles from "./page-load-state.module.css";
 export function NotFound() {
   return (
     <main className={styles.notFoundPage} aria-label="Page not found">
-      <ArticleHero
-        title="Not Found"
-        lead="The requested URL was not found on this server."
-      />
+      <ArticleHero title="Not Found" />
       <div className={`${styles.panel} ${styles.notFoundPanel}`}>
         <p className={styles.notFoundCode} aria-hidden="true">
           404

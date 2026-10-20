@@ -108,11 +108,5 @@ const sections: ArticleSection[] = [
 ];
 
 export function Model() {
-  return (
-    <ArticlePage
-      title="Model"
-      lead="A reading space for assumptions, evidence and the models that connect them."
-      sections={sections}
-    />
-  );
+  return <ArticlePage title="Model" sections={sections} />;
 }

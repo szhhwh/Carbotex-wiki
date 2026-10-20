@@ -62,11 +62,7 @@ const sections: ArticleSection[] = [
 export function Contribution() {
   return (
     <TemplatePageFrame>
-      <ArticlePage
-        title="Contribution"
-        lead="Make a useful contribution for future iGEM teams and document it on this page."
-        sections={sections}
-      />
+      <ArticlePage title="Contribution" sections={sections} />
     </TemplatePageFrame>
   );
 }

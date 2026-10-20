@@ -1155,11 +1155,6 @@ const wetEngineeringIds = new Set(
   wetEngineeringSections.map((section) => section.id),
 );
 
-const hardwareLead =
-  "Four cycles of DBTL-driven development of an automated ammonia-nitrogen removal system for anaerobic fermentation effluent.";
-const wetLabLead =
-  "Carbotex links A08 strain engineering with the use of corn-stover sugars and the development of an adhesive formulation.";
-
 function initialEngineeringMode(): EngineeringMode {
   const hash = window.location.hash.slice(1);
   return wetEngineeringIds.has(hash) ||
@@ -1187,7 +1182,6 @@ export function Engineering() {
   return (
     <ArticlePage
       title="Engineering Success"
-      lead={isWetLab ? wetLabLead : hardwareLead}
       sections={isWetLab ? wetEngineeringSections : hardwareSections}
       contentControls={
         <EngineeringModeSwitch value={mode} onChange={selectMode} />

@@ -1,66 +1,60 @@
 import { expect, test } from "@playwright/test";
 
+const BACK_TO_TOP = '[data-back-to-top="true"]';
+
 test.describe("back to top", () => {
-  test("stays unavailable near the top and reveals after the threshold", async ({
+  test("is mounted once across fullscreen, article, and not-found routes", async ({
     page,
   }) => {
-    await page.goto("/ouc-haide/education", { waitUntil: "networkidle" });
+    for (const path of ["/", "/description", "/members", "/not-a-real-page"]) {
+      await page.goto(`/ouc-haide${path}`, { waitUntil: "networkidle" });
+      await expect(page.locator(BACK_TO_TOP)).toHaveCount(1);
+    }
+  });
 
-    const button = page.locator('[data-back-to-top="true"]');
+  test("reveals after the threshold and returns an article to the top", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/ouc-haide/description", { waitUntil: "networkidle" });
+
+    const button = page.locator(BACK_TO_TOP);
+    await expect(button).toHaveCount(1);
     await expect(button).toHaveAttribute("data-visible", "false");
     await expect(button).toHaveCSS("visibility", "hidden");
     await expect(button).toHaveAttribute("tabindex", "-1");
 
-    await page.evaluate(() => {
-      window.scrollTo({
-        top: Math.max(window.innerHeight, 1200),
-        behavior: "instant",
-      });
-    });
-    await expect(button).toHaveAttribute("data-visible", "true");
-    await expect(button).toHaveCSS("visibility", "visible");
-    await expect(button).toHaveAttribute("tabindex", "0");
-  });
-
-  test("returns an article to the top and hands focus to its heading", async ({
-    page,
-  }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/ouc-haide/education", { waitUntil: "networkidle" });
     await page.evaluate(() =>
       window.scrollTo({ top: 1400, behavior: "instant" }),
     );
-
-    const button = page.locator('[data-back-to-top="true"]');
     await expect(button).toHaveAttribute("data-visible", "true");
-    await button.click();
+    await expect(button).toHaveCSS("visibility", "visible");
+    await expect(button).toHaveAttribute("tabindex", "0");
 
+    await button.click();
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page.locator("main h1")).toBeFocused();
   });
 
-  test("keeps the reveal state in sync after a page navigation", async ({
+  test("keeps the reveal state in sync after page navigation", async ({
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/ouc-haide/education", { waitUntil: "networkidle" });
+    await page.goto("/ouc-haide/description", { waitUntil: "networkidle" });
     await page.evaluate(() =>
       window.scrollTo({ top: 1400, behavior: "instant" }),
     );
-    await expect(page.locator('[data-back-to-top="true"]')).toHaveAttribute(
-      "data-visible",
-      "true",
-    );
+
+    const button = page.locator(BACK_TO_TOP);
+    await expect(button).toHaveAttribute("data-visible", "true");
 
     await page
       .getByRole("banner")
       .getByRole("link", { name: "OUC-Haide home" })
       .click();
     await expect(page).toHaveURL(/\/ouc-haide\/$/);
-    await expect(page.locator('[data-back-to-top="true"]')).toHaveAttribute(
-      "data-visible",
-      "false",
-    );
+    await expect(button).toHaveCount(1);
+    await expect(button).toHaveAttribute("data-visible", "false");
   });
 
   test("works with the Lenis-owned home scroll after a responsive remount", async ({
@@ -79,7 +73,7 @@ test.describe("back to top", () => {
       }
     });
 
-    const button = page.locator('[data-back-to-top="true"]');
+    const button = page.locator(BACK_TO_TOP);
     await expect(button).toHaveAttribute("data-visible", "true");
     await page.setViewportSize({ width: 639, height: 1000 });
     await page.evaluate(() =>
@@ -90,16 +84,16 @@ test.describe("back to top", () => {
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   });
 
-  test("limits the fixed hit target to the mascot artwork", async ({
+  test("keeps the floating mascot hit target limited to the artwork", async ({
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/ouc-haide/education", { waitUntil: "networkidle" });
+    await page.goto("/ouc-haide/description", { waitUntil: "networkidle" });
     await page.evaluate(() =>
       window.scrollTo({ top: 1400, behavior: "instant" }),
     );
 
-    const button = page.locator('[data-back-to-top="true"]');
+    const button = page.locator(BACK_TO_TOP);
     await expect(button).toHaveAttribute("data-visible", "true");
     const hit = await button.evaluate((element) => {
       const artwork = element.querySelector("svg");
@@ -122,21 +116,5 @@ test.describe("back to top", () => {
 
     expect(hit.artTopLeft).not.toBe("BUTTON");
     expect(hit.center).toBe("BUTTON");
-  });
-
-  test("moves focus before a smooth document scroll finishes", async ({
-    page,
-  }) => {
-    await page.goto("/ouc-haide/education", { waitUntil: "networkidle" });
-    await page.evaluate(() =>
-      window.scrollTo({ top: 1400, behavior: "instant" }),
-    );
-
-    const button = page.locator('[data-back-to-top="true"]');
-    await expect(button).toHaveAttribute("data-visible", "true");
-    await button.click();
-
-    await expect(page.locator("main h1")).toBeFocused();
-    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   });
 });

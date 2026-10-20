@@ -90,59 +90,6 @@
   content: "";
 }
 
-.resourceIndex {
-  margin: 1.8rem 0;
-  padding: 0;
-  border-top: 2px solid var(--hardware-green);
-  list-style: none;
-}
-
-.resourceIndex li {
-  border-bottom: 2px solid var(--hardware-green);
-}
-
-.resourceLink {
-  display: grid;
-  padding: 1.15rem 0.4rem;
-  grid-template-columns: 4rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem;
-  color: var(--hardware-ink);
-  text-decoration: none;
-}
-
-.resourceLink:hover {
-  background: var(--hardware-pale-yellow);
-}
-
-.resourceYear {
-  color: var(--hardware-ink);
-  font-family: var(--hardware-body);
-  font-size: 1rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.resourceTeam {
-  color: var(--hardware-navy);
-  font-family: var(--hardware-display);
-  font-size: clamp(1.55rem, 2.5vw, 2rem);
-  font-weight: 400;
-  line-height: 1.05;
-  overflow-wrap: anywhere;
-  text-transform: uppercase;
-}
-
-.resourceAction {
-  color: var(--hardware-navy);
-  font-family: var(--hardware-body);
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 0.12em;
-  text-underline-offset: 0.18em;
-}
-
 .attributionFrame {
   display: block;
   min-height: 13.5rem;
@@ -222,18 +169,9 @@
 
 .requirementCard :where(a):focus-visible,
 .promptCard :where(a):focus-visible,
-.resourceLink:focus-visible,
 .attributionFallback a:focus-visible {
   outline: 3px solid var(--hardware-navy);
   outline-offset: 4px;
-}
-
-@media (max-width: 760px) {
-  .resourceLink {
-    padding-block: 1rem;
-    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
-    gap: 0.75rem;
-  }
 }
 
 @media (max-width: 900px) {
@@ -270,14 +208,12 @@
   .requirementCard,
   .promptCard,
   .formCard,
-  .checklist li,
-  .resourceLink {
+  .checklist li {
     border: 1px solid CanvasText; /* taste-skill-ignore */
   }
 
   .requirementCard :where(a):focus-visible,
   .promptCard :where(a):focus-visible,
-  .resourceLink:focus-visible,
   .attributionViewport[data-frame-focused="true"],
   .attributionFallback a:focus-visible {
     outline-color: Highlight;

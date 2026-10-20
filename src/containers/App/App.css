@@ -7,11 +7,11 @@
   --hardware-ink: #003f34;
   --hardware-green: #007c60;
   --hardware-emerald: #007c60;
-  --hardware-aqua: #02b186;
   --hardware-paper: #fbf0dd;
   --hardware-mint: #9cd7ca;
   --hardware-card-mint: #b8e3da;
   --hardware-yellow: #ffc647;
+  --hardware-soft-yellow: #f4d58d;
   --hardware-pale-yellow: #ffe7b6;
   --hardware-brown: #86530c;
   --hardware-card-heading: #1e4fbc;
@@ -116,53 +116,6 @@ body {
   ::-webkit-scrollbar-thumb:active {
     background: Highlight;
   }
-}
-
-.bg-dark {
-  background-color: #343a40 !important;
-}
-
-.bg-hero {
-  background-color: var(--hardware-yellow);
-}
-
-/* CALLOUT */
-.bd-callout {
-  padding: 1.25rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  border: 0;
-  border-radius: 1.5rem;
-  background: var(--hardware-pale-yellow);
-  color: var(--hardware-ink);
-}
-
-.bd-callout h4 {
-  margin-bottom: 0.25rem;
-}
-
-.bd-callout p:last-child {
-  margin-bottom: 0;
-}
-
-.bd-callout code {
-  border-radius: 0.25rem;
-}
-
-.bd-callout + .bd-callout {
-  margin-top: -0.25rem;
-}
-
-.bd-callout-info {
-  background: var(--hardware-card-mint);
-}
-
-.bd-callout-warning {
-  background: var(--hardware-pale-yellow);
-}
-
-.bd-callout-danger {
-  background: var(--hardware-yellow);
 }
 
 /* CITATIONS (<Cite /> and <References />) */

@@ -397,7 +397,6 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
             clampProgress(pointProgress(point.y) - 0.035),
           );
         });
-
       },
     );
 
@@ -413,11 +412,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
 
   return (
     <main className={`${styles.page} ${styles.theme}`}>
-      <ArticleHero
-        title="Meet Our Team"
-        lead="Meet the students, instructors, and advisors behind OUC-Haide's Carbotex project."
-        headingId="members-heading"
-      />
+      <ArticleHero title="Meet Our Team" headingId="members-heading" />
 
       <section className={styles.intro} aria-labelledby="team-intro-heading">
         <h2 id="team-intro-heading" className={styles.srOnly}>

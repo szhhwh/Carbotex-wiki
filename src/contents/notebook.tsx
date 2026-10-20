@@ -812,24 +812,6 @@ export function Notebook() {
   return (
     <ArticlePage
       title="Wet Lab Notebook"
-      lead={
-        <>
-          <p>
-            Wet lab work followed the route from corn-stover sugars to
-            poly(malic acid) (PMA) production and a broth-derived adhesive. The
-            work covered chassis identification, sugar-dependent growth and
-            fermentation, transcription factor engineering, pyruvate carboxylase
-            (PYC) engineering, and material preparation and testing. Unmodified{" "}
-            <em>Aureobasidium melanogenum</em> A08 is designated wild type (WT);
-            overexpression is abbreviated OE in strain labels.
-          </p>
-          <p>
-            This notebook summarizes the work retrospectively by date range,
-            from February 10 to October 15, 2026. Detailed procedures are
-            provided in Protocols, and full datasets are presented in Results.
-          </p>
-        </>
-      }
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-notebook.avif",
         alt: "Illustration of a calendar, laboratory notebook, and sample storage boxes.",

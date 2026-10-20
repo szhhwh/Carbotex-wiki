@@ -106,12 +106,5 @@ const sections: ArticleSection[] = [
 ];
 
 export function Description() {
-  return (
-    <ArticlePage
-      title="Description"
-      lead="A clear route through the question, the motivation and the evidence behind a project."
-      sections={sections}
-      references
-    />
-  );
+  return <ArticlePage title="Description" sections={sections} references />;
 }

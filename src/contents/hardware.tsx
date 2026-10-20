@@ -1009,7 +1009,6 @@ export function Hardware() {
   return (
     <ArticlePage
       title="Hardware"
-      lead="This page documents the design, component selection, operation, and testing of our modular hardware platform for automated ammonia-nitrogen removal from anaerobic fermentation effluent."
       sections={sections}
       references
       referencesIntro="The following references informed the design, simulation, and implementation of our hardware platform. Citations are used throughout the text to link specific design decisions to their scientific basis."

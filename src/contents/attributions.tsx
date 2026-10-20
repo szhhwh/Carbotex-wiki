@@ -294,11 +294,7 @@ export function Attributions() {
 
   return (
     <TemplatePageFrame>
-      <ArticlePage
-        title="Attributions"
-        lead="Accurate attribution is essential in the iGEM Competition. It ensures that the judges can properly assess your team's contributions and recognize the support provided by external collaborators. This page is dedicated to fulfilling the Attributions requirement for judging."
-        sections={sections}
-      />
+      <ArticlePage title="Attributions" sections={sections} />
     </TemplatePageFrame>
   );
 }
