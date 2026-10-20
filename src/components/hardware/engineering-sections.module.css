@@ -7,6 +7,8 @@
   --eng-yellow: var(--hardware-yellow, #ffc647);
   --eng-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
   --eng-white: var(--hardware-white, #fff);
+  --eng-heading-secondary: #357965;
+  --eng-heading-tertiary: #4b756a;
   --eng-body: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
   --eng-display: var(
     --hardware-display,
@@ -33,7 +35,6 @@
 .scope.scope h3,
 .scope.scope h4 {
   margin: 0;
-  color: var(--eng-ink);
   font-family: var(--eng-display);
   font-style: normal;
   font-weight: 400;
@@ -46,13 +47,29 @@
 }
 
 .scope.scope h3 {
+  color: var(--eng-heading-secondary);
   font-size: var(--eng-h3);
 }
 
 .scope.scope h4 {
-  color: var(--eng-navy);
+  color: var(--eng-heading-tertiary);
   font-size: var(--eng-h4);
   line-height: 1.2;
+}
+
+.scope .objectiveHeading span {
+  color: var(--eng-heading-secondary);
+}
+
+.scope .journeyLabel,
+.scope .journeyTrack strong,
+.scope .manifest strong,
+.scope .findings strong,
+.scope .loopItem > span,
+.scope .sequenceDetailed strong,
+.scope .insight span,
+.scope .summary li > span {
+  color: var(--eng-heading-tertiary);
 }
 
 .scope.scope p {
@@ -62,7 +79,10 @@
   line-height: 1.65;
 }
 
-.briefHeader > span,
+.scope.scope p.cycleFocus {
+  color: var(--eng-heading-tertiary);
+}
+
 .journeyLabel,
 .insight span {
   display: block;
@@ -81,18 +101,7 @@
   border-top: 0.45rem solid var(--eng-yellow);
 }
 
-.briefHeader {
-  display: grid;
-  grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1fr);
-  align-items: end;
-  gap: 0.7rem 1.5rem;
-}
-
-.briefHeader > span {
-  color: var(--eng-navy);
-}
-
-.briefHeader h3 {
+.brief > h3 {
   max-width: 22ch;
 }
 
@@ -138,7 +147,6 @@
 }
 
 .objectiveHeading span {
-  color: var(--eng-ink);
   font-family: var(--eng-display);
   font-size: clamp(1.3rem, 1.9vw, 1.6rem);
   line-height: 1.15;
@@ -180,7 +188,6 @@
 
 .journeyLabel {
   margin-bottom: 0.65rem;
-  color: var(--eng-navy);
 }
 
 .journeyTrack {
@@ -227,7 +234,6 @@
 }
 
 .journeyTrack strong {
-  color: var(--eng-navy);
   font-size: max(1.02rem, 0.9em);
   line-height: 1.3;
   overflow-wrap: break-word;
@@ -281,7 +287,6 @@
   z-index: 1;
   max-width: 43rem;
   margin: 0;
-  color: var(--eng-ink);
   font-family: var(--eng-display);
   font-size: clamp(1.45rem, 2.3vw, 1.95rem);
   font-weight: 400;
@@ -468,7 +473,6 @@
 .manifest strong,
 .findings strong {
   display: block;
-  color: var(--eng-ink);
   font-size: 1em;
   line-height: 1.45;
 }
@@ -517,7 +521,6 @@
 
 .loopItem > span {
   display: block;
-  color: var(--eng-navy);
   font-size: max(0.875rem, 0.82em);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -611,7 +614,6 @@
 }
 
 .sequenceDetailed strong {
-  color: var(--eng-ink);
   font-size: 1em;
   line-height: 1.45;
 }
@@ -672,10 +674,6 @@
   color: var(--eng-navy);
 }
 
-.insight span {
-  color: var(--eng-navy);
-}
-
 .insight p {
   margin: 0.25rem 0 0;
   color: var(--eng-ink);
@@ -725,7 +723,6 @@
 
 .summary li > span {
   display: block;
-  color: var(--eng-navy);
   font-size: max(0.875rem, 0.78em);
   font-weight: 700;
   letter-spacing: 0.045em;
@@ -799,10 +796,6 @@
   .scope {
     --eng-h3: clamp(1.35rem, 5.4vw, 1.55rem);
     --eng-h4: clamp(1.08rem, 4.3vw, 1.28rem);
-  }
-
-  .briefHeader {
-    grid-template-columns: 1fr;
   }
 
   .objectiveHeading {

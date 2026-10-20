@@ -36,10 +36,7 @@ export function EngineeringBrief({
       className={clsx(styles.scope, styles.brief)}
       aria-labelledby={headingId}
     >
-      <div className={styles.briefHeader}>
-        <span>Engineering brief</span>
-        <h3 id={headingId}>One problem, four iterations</h3>
-      </div>
+      <h3 id={headingId}>Engineering brief</h3>
       <div className={styles.briefGrid}>
         {briefItems.map(({ icon: Icon, label, text }) => (
           <div className={styles.briefItem} key={label}>

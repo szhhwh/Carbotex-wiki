@@ -1,3 +1,8 @@
+/* The mode switch uniquely identifies the Engineering page. */
+main:has([data-engineering-mode-switch]) h2 {
+  color: #009e75;
+}
+
 .source,
 .modeSwitchRow {
   --wet-ink: var(--hardware-ink, #003f34);
@@ -7,6 +12,8 @@
   --wet-yellow: var(--hardware-yellow, #ffc647);
   --wet-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
   --wet-white: var(--hardware-white, #fff);
+  --engineering-heading-secondary: #357965;
+  --engineering-heading-tertiary: #4b756a;
 }
 
 .source {
@@ -18,6 +25,7 @@
 .source > .sourceHeading {
   max-width: 24ch;
   margin-top: 2.5rem;
+  color: var(--engineering-heading-secondary, var(--wet-green));
 }
 
 .modeSwitchRow {
@@ -350,7 +358,7 @@
 
 .contentPanel {
   --content-accent: var(--wet-yellow);
-  --content-accent-ink: var(--wet-ink);
+  --content-accent-ink: var(--engineering-heading-tertiary, var(--wet-ink));
   height: clamp(27rem, 58vh, 37rem);
   min-width: 0;
   overflow: auto;
@@ -386,7 +394,7 @@
 
 .contentPanel[data-phase="Learn"] {
   --content-accent: var(--wet-mint);
-  --content-accent-ink: var(--wet-ink);
+  --content-accent-ink: var(--engineering-heading-tertiary, var(--wet-ink));
 }
 
 .contentPanel::-webkit-scrollbar {
@@ -414,7 +422,7 @@
 
 .contentHeader h3 {
   margin: 0;
-  color: var(--wet-ink);
+  color: var(--engineering-heading-secondary, var(--wet-green));
   font-size: clamp(1.45rem, 2.35vw, 2.1rem);
   letter-spacing: -0.015em;
   line-height: 1.1;
