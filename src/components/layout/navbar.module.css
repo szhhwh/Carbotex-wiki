@@ -106,8 +106,6 @@
 }
 
 .navigation {
-  margin-right: 0;
-  margin-left: auto;
   z-index: 1;
 }
 
@@ -286,6 +284,20 @@
 }
 
 @media (min-width: 1101px) {
+  .bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .brand {
+    justify-self: start;
+  }
+
+  .navigation {
+    margin-inline: 0;
+    justify-self: end;
+  }
+
   .megaMenu[data-menu-variant="project"] .illustration {
     transform: translateY(-2.5rem);
   }

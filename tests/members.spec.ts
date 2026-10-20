@@ -50,32 +50,56 @@ test.describe("team members page", () => {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/ouc-haide/members");
 
-    await expect(page.locator("#members-heading")).toHaveText("MEMBER");
-    const titleAlignment = await page.evaluate(() => {
-      const heading = document
-        .querySelector<HTMLElement>("#members-heading")
+    await expect(page.locator("#members-heading")).toHaveText("Meet Our Team");
+    await expect(page.locator("[data-hero-media-slot]")).toBeVisible();
+    await expect(page.locator("[data-hero-media-slot]")).toContainText(
+      "Header image placeholder",
+    );
+    const heroComesBeforePhoto = await page.evaluate(() => {
+      const hero = document
+        .querySelector<HTMLElement>("[data-hero-media-slot]")
         ?.getBoundingClientRect();
-      const banner = document
+      const photo = document
         .querySelector<HTMLElement>("figure")
         ?.getBoundingClientRect();
-      if (!heading || !banner) return Number.POSITIVE_INFINITY;
-      return Math.abs((heading.top + heading.bottom) / 2 - banner.bottom);
+      if (!hero || !photo) return false;
+      return hero.bottom <= photo.top;
     });
-    expect(titleAlignment).toBeLessThan(1);
+    expect(heroComesBeforePhoto).toBe(true);
     await expect(page.locator("figure img")).toHaveAttribute(
       "alt",
       /OUC-Haide team/,
     );
-    await expect(page.locator("article")).toHaveCount(10);
+    await expect(page.locator("article")).toHaveCount(18);
+    await expect(page.locator("article").first()).toContainText("Guanglei Liu");
+    await expect(page.locator("article").first()).toContainText("Primary PI");
+    await expect(page.locator("article").nth(1)).toContainText("Yajun Liu");
+    await expect(page.locator("article").nth(1)).toContainText("Secondary PI");
+    await expect(page.locator("article").nth(2)).toContainText("Ya Liu");
+    await expect(page.locator("article").nth(2)).toContainText("Secondary PI");
+    await expect(page.locator("article").nth(3)).toContainText("Hong Jiang");
+    await expect(page.locator("article").nth(3)).toContainText("Secondary PI");
+    await expect(page.locator("article").nth(4)).toContainText("Qiaoyue Ren");
+    await expect(page.locator("article").nth(4)).toContainText("Instructor");
+    await expect(page.locator("article").nth(5)).toContainText("Yueyang Sun");
+    await expect(page.locator("article").nth(5)).toContainText("Instructor");
+    await expect(page.locator("article").nth(13)).toContainText("Suiyuan Wang");
+    await expect(page.locator("article").nth(13)).toContainText("Dry Lab");
+    await expect(page.locator("article").last()).toContainText("Advisors");
+    await expect(page.locator("article").last()).toContainText(
+      "Special Thanks To",
+    );
 
     if (testInfo.project.name === "desktop") {
-      await expect(page.locator("[data-member-dot]")).toHaveCount(10);
+      await expect(page.locator("[data-member-dot]")).toHaveCount(18);
       await expect(page.locator("[data-member-dot]").first()).toBeVisible();
       await expect(page.locator("article").first()).toBeHidden();
 
       await page.evaluate(() => {
         document
-          .querySelectorAll<HTMLButtonElement>("[data-member-dot]")[1]
+          .querySelector<HTMLButtonElement>(
+            '[data-member-dot][data-member-id="zhibo-yang-model"]',
+          )
           ?.click();
       });
     } else {
@@ -106,6 +130,89 @@ test.describe("team members page", () => {
     await expect(dialog).toHaveCount(0);
     expect(errors).toEqual([]);
   });
+
+  test("keeps the shared Hardware shell inside each responsive breakpoint", async ({
+    page,
+  }) => {
+    for (const viewport of [
+      { width: 1440, height: 1000 },
+      { width: 768, height: 900 },
+      { width: 390, height: 844 },
+    ]) {
+      await page.setViewportSize(viewport);
+      await page.goto("/ouc-haide/members");
+      await expect(page.locator("#members-heading")).toBeVisible();
+
+      const layout = await page.evaluate(() => {
+        const media = document
+          .querySelector<HTMLElement>("[data-hero-media-slot]")
+          ?.getBoundingClientRect();
+        const photo = document
+          .querySelector<HTMLElement>("figure")
+          ?.getBoundingClientRect();
+
+        return {
+          overflow:
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+          placeholder: document.querySelector("[data-hero-media-slot]")
+            ?.textContent,
+          mediaWidth: media?.width ?? 0,
+          photoWidth: photo?.width ?? 0,
+          photoTop: photo?.top ?? 0,
+          mediaBottom: media?.bottom ?? 0,
+        };
+      });
+
+      expect(layout.overflow).toBeLessThanOrEqual(1);
+      expect(layout.placeholder).toContain("Header image placeholder");
+      expect(layout.mediaWidth).toBeGreaterThan(0);
+      expect(layout.photoWidth).toBeGreaterThan(0);
+      expect(layout.photoTop).toBeGreaterThanOrEqual(layout.mediaBottom);
+      await expect(page.locator("article")).toHaveCount(18);
+    }
+  });
+
+  test("removes the member index and keeps the responsive network layout", async ({
+    page,
+  }) => {
+    for (const viewport of [
+      { width: 1440, height: 900 },
+      { width: 1440, height: 1000 },
+      { width: 768, height: 900 },
+      { width: 390, height: 844 },
+    ]) {
+      await page.setViewportSize(viewport);
+      await page.goto("/ouc-haide/members");
+      await expect(page.locator("#members-heading")).toBeVisible();
+      await expect(page.locator("[data-member-index]")).toHaveCount(0);
+      await expect(page.getByText("Member index", { exact: true })).toHaveCount(
+        0,
+      );
+      await expect(page.getByText("Full roster", { exact: true })).toHaveCount(
+        0,
+      );
+
+      if (viewport.width >= 1200) {
+        await expect(page.locator("[data-member-dot]")).toHaveCount(18);
+        await expect(page.locator("#team-network")).toBeVisible();
+        await expect(page.locator("#roster-heading")).toBeHidden();
+      } else {
+        await expect(page.locator("#roster-heading")).toBeVisible();
+      }
+
+      await expect(
+        page.getByText("The people behind Carbotex", { exact: true }),
+      ).toHaveCount(0);
+      expect(
+        await page.evaluate(
+          () =>
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+        ),
+      ).toBeLessThanOrEqual(1);
+    }
+  });
 });
 
 test.describe("team members reduced motion", () => {
@@ -118,6 +225,6 @@ test.describe("team members reduced motion", () => {
 
     await expect(page.locator("[data-member-dot]").first()).toBeHidden();
     await expect(page.locator("article").first()).toBeVisible();
-    await expect(page.locator("article")).toHaveCount(10);
+    await expect(page.locator("article")).toHaveCount(18);
   });
 });

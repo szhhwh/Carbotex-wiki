@@ -6,43 +6,77 @@ export interface PlotPoint {
   y: number;
 }
 
-export type MemberPoint = PlotPoint;
+export interface MemberPoint extends PlotPoint {
+  color: string;
+}
 
-export interface NetworkCurve {
+export interface NetworkLine {
   from: PlotPoint;
   to: PlotPoint;
   path: string;
 }
 
-export interface BackgroundNetworkCurve extends NetworkCurve {
-  scrollAnchor: number;
-}
-
 export interface NetworkGeometry {
   memberPoints: MemberPoint[];
   backgroundPoints: PlotPoint[];
-  backgroundLines: BackgroundNetworkCurve[];
-  mainLines: NetworkCurve[];
+  backgroundLines: NetworkLine[];
+  mainLines: NetworkLine[];
 }
 
-const xPattern = [0.22, 0.76, 0.3, 0.8, 0.2, 0.73, 0.28, 0.78, 0.24, 0.72];
-const pointSpacing = 0.46;
-const backgroundXPatterns = [
-  [0.08, 0.53, 0.9],
-  [0.27, 0.61, 0.94],
-  [0.1, 0.44, 0.84],
+export const NETWORK_START_VH = 45;
+export const NETWORK_SPACING_VH = 45;
+export const NETWORK_END_VH = 57;
+
+const xPattern = [0.2, 0.7, 0.3, 0.8];
+const xJitter = [
+  0.018, -0.026, 0.012, -0.02, 0.028, -0.014, 0.022, -0.03, 0.016, -0.018,
+  0.026, -0.024, 0.014, -0.028, 0.02, -0.012, 0.024, -0.022,
 ];
-const backgroundYOffsets = [0.12, 0.31, 0.2];
-// Keep curve bows visually even in the tall, non-uniform network viewBox.
+const yJitterVh = [
+  3, -4, 5, -2, 4, -5, 2, -3, 5, -4, 3, -2, 4, -3, 2, -4, 3, -2,
+];
+const backgroundXPatterns = [
+  [0.08, 0.55, 0.9],
+  [0.27, 0.6, 0.9],
+  [0.1, 0.58, 0.85],
+];
+const backgroundYOffsetsVh = [12, 31, 20];
+const networkColors = [
+  "#fdc007",
+  "#fcb011",
+  "#fb971e",
+  "#fa8724",
+  "#e64b41",
+  "#ed4a8e",
+  "#f04aa0",
+  "#ea40d5",
+  "#de61dc",
+  "#c92adf",
+  "#9428ac",
+  "#352153",
+];
 const networkAspectRatio = 3.6;
-const backgroundBendPattern = [3.4, 2.8, 4.1, 3.6, 3, 4.3];
-const mainBendPattern = [4.8, -5.2, 4.4, -4.9, 5.3, -4.5];
+const backgroundBendPattern = [1.8, 1.4, 2.1, 1.7, 1.5, 2];
+const mainBendPattern = [2.6, -2.8, 2.4, -2.7, 2.8, -2.5];
 
-function distance(a: PlotPoint, b: PlotPoint) {
-  return Math.hypot(a.x - b.x, a.y - b.y);
+export function getNetworkHeight(memberCount: number) {
+  return (
+    NETWORK_START_VH +
+    Math.max(0, memberCount - 1) * NETWORK_SPACING_VH +
+    NETWORK_END_VH
+  );
 }
 
-function makeCurvePath(
+function networkColor(index: number) {
+  const patternLength = networkColors.length * 2 - 2;
+  const position = index % patternLength;
+  const colorIndex =
+    position < networkColors.length ? position : patternLength - position;
+
+  return networkColors[colorIndex];
+}
+
+function makeGentleCurvePath(
   from: PlotPoint,
   to: PlotPoint,
   bend: number,
@@ -64,7 +98,7 @@ function makeCurvePath(
   const normalY = dx / screenLength;
   const midpointX = (x1 + x2) / 2;
   const midpointY = (y1 + y2) / 2;
-  let bendDirection = Math.sign(bend) || 1;
+  let direction = Math.sign(bend) || 1;
 
   if (bendOutward) {
     const positiveDistance = Math.hypot(
@@ -78,10 +112,10 @@ function makeCurvePath(
         networkAspectRatio,
     );
 
-    bendDirection = positiveDistance >= negativeDistance ? 1 : -1;
+    direction = positiveDistance >= negativeDistance ? 1 : -1;
   }
 
-  const signedBend = Math.abs(bend) * bendDirection;
+  const signedBend = Math.abs(bend) * direction;
   const controlX = Math.min(98, Math.max(2, midpointX + normalX * signedBend));
   const controlY = Math.min(
     99,
@@ -91,17 +125,28 @@ function makeCurvePath(
   return `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`;
 }
 
-function makeBackgroundPoints(memberPoints: MemberPoint[], yScale: number) {
+function distance(a: PlotPoint, b: PlotPoint) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+function makeBackgroundPoints(
+  memberPoints: MemberPoint[],
+  networkHeightVh: number,
+) {
   return memberPoints.slice(0, -1).flatMap((point, index) => {
     const pattern = backgroundXPatterns[index % backgroundXPatterns.length];
+    const pointYVh = point.y * networkHeightVh;
 
     return pattern.map((x, offsetIndex) => {
-      const jitter = (((index * 7 + offsetIndex * 3) % 5) - 2) * 0.008;
+      const xJitterValue = (((index * 7 + offsetIndex * 3) % 5) - 2) * 0.008;
+      const yJitter = (((index * 5 + offsetIndex * 2) % 7) - 3) * 1.5;
 
       return {
         id: `background-${index}-${offsetIndex}`,
-        x: Math.min(0.95, Math.max(0.05, x + jitter)),
-        y: point.y + backgroundYOffsets[offsetIndex] * yScale,
+        x: Math.min(0.95, Math.max(0.05, x + xJitterValue)),
+        y:
+          (pointYVh + backgroundYOffsetsVh[offsetIndex] + yJitter) /
+          networkHeightVh,
       };
     });
   });
@@ -123,9 +168,8 @@ function nearestPoints(
 function makeBackgroundLines(
   memberPoints: MemberPoint[],
   backgroundPoints: PlotPoint[],
-  networkHeight: number,
 ) {
-  const lines = new Map<string, Omit<NetworkCurve, "path">>();
+  const lines = new Map<string, Omit<NetworkLine, "path">>();
 
   const addLine = (from: PlotPoint, to: PlotPoint) => {
     const [first, second] = from.id < to.id ? [from, to] : [to, from];
@@ -143,14 +187,12 @@ function makeBackgroundLines(
 
   return [...lines.values()].map((line, index) => ({
     ...line,
-    path: makeCurvePath(
+    path: makeGentleCurvePath(
       line.from,
       line.to,
       backgroundBendPattern[index % backgroundBendPattern.length],
       true,
     ),
-    // Preserve the original scroll timeline's unnormalized vertical anchor.
-    scrollAnchor: ((line.from.y + line.to.y) / 2) * (networkHeight / 100),
   }));
 }
 
@@ -161,7 +203,7 @@ function makeMainLines(memberPoints: MemberPoint[]) {
     return {
       from,
       to,
-      path: makeCurvePath(
+      path: makeGentleCurvePath(
         from,
         to,
         mainBendPattern[index % mainBendPattern.length],
@@ -172,24 +214,30 @@ function makeMainLines(memberPoints: MemberPoint[]) {
 
 export function createNetworkGeometry(
   members: TeamMember[],
-  networkHeight: number,
+  networkHeightVh: number,
 ): NetworkGeometry {
-  const yScale = 100 / networkHeight;
   const memberPoints = members.map((member, index) => ({
     id: member.id,
-    x: xPattern[index % xPattern.length],
-    y: (0.5 + index * pointSpacing) * yScale,
+    x: Math.min(
+      0.94,
+      Math.max(
+        0.06,
+        xPattern[index % xPattern.length] + xJitter[index % xJitter.length],
+      ),
+    ),
+    y:
+      (NETWORK_START_VH +
+        index * NETWORK_SPACING_VH +
+        yJitterVh[index % yJitterVh.length]) /
+      networkHeightVh,
+    color: networkColor(index),
   }));
-  const backgroundPoints = makeBackgroundPoints(memberPoints, yScale);
+  const backgroundPoints = makeBackgroundPoints(memberPoints, networkHeightVh);
 
   return {
     memberPoints,
     backgroundPoints,
-    backgroundLines: makeBackgroundLines(
-      memberPoints,
-      backgroundPoints,
-      networkHeight,
-    ),
+    backgroundLines: makeBackgroundLines(memberPoints, backgroundPoints),
     mainLines: makeMainLines(memberPoints),
   };
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { initials } from "./member-meta";
+import { initials, portraitStyle } from "./member-meta";
 import type { TeamMember } from "./types";
 
 interface MemberPortraitProps {
@@ -28,6 +28,7 @@ export function MemberPortrait({
           alt={alt}
           loading="lazy"
           decoding="async"
+          style={portraitStyle(member)}
           onError={() => setFailed(true)}
         />
       )}

@@ -74,25 +74,28 @@ test.describe("shared navbar", () => {
       const alignment = await page.evaluate(() => {
         const bar = document.querySelector("header > div");
         const navigation = document.querySelector("header nav");
-        if (!bar || !navigation) return null;
+        const brand = document.querySelector("header > div > a");
+        if (!bar || !navigation || !brand) return null;
 
         const barRect = bar.getBoundingClientRect();
         const navRect = navigation.getBoundingClientRect();
+        const brandRect = brand.getBoundingClientRect();
         const barStyle = getComputedStyle(bar);
 
         return {
-          navRight: navRect.right,
           contentRight:
             barRect.right - Number.parseFloat(barStyle.paddingRight || "0"),
-          marginRight: getComputedStyle(navigation).marginRight,
+          brandRight: brandRect.right,
+          navLeft: navRect.left,
+          navRight: navRect.right,
         };
       });
 
       expect(alignment).not.toBeNull();
+      expect(alignment!.navLeft).toBeGreaterThan(alignment!.brandRight);
       expect(
         Math.abs(alignment!.navRight - alignment!.contentRight),
       ).toBeLessThanOrEqual(1);
-      expect(alignment!.marginRight).toBe("0px");
     }
 
     if ((page.viewportSize()?.width ?? 1440) <= 1100) {

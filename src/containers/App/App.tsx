@@ -74,7 +74,11 @@ const App = () => {
   // Fullscreen pages (e.g. scroll-driven Home) drop the fixed-navbar body offset
   useEffect(() => {
     document.body.classList.toggle("fullscreen-page", isFullscreen);
-    return () => document.body.classList.remove("fullscreen-page");
+    document.body.classList.toggle("inner-page", !isFullscreen);
+    return () => {
+      document.body.classList.remove("fullscreen-page");
+      document.body.classList.remove("inner-page");
+    };
   }, [isFullscreen]);
 
   useEffect(() => {
@@ -112,10 +116,6 @@ const App = () => {
           path="*"
           element={
             <ReferencesProvider>
-              <Header
-                title="Not Found"
-                lead="The requested URL was not found on this server."
-              />
               <NotFound />
               <RouteContentReady />
             </ReferencesProvider>

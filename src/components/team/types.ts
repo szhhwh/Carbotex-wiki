@@ -1,4 +1,7 @@
 export type MemberRole =
+  | "pi"
+  | "secondaryPi"
+  | "instructor"
   | "leader"
   | "wetlab"
   | "drylab"
@@ -18,5 +21,10 @@ export interface TeamMember {
   major: string;
   roles: [MemberRole, ...MemberRole[]];
   image: string;
+  imageCrop?: {
+    scale?: number;
+    origin?: string;
+    objectPosition?: string;
+  };
   facts: MemberFact[];
 }

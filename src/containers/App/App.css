@@ -2,21 +2,51 @@
 @property --image-viewer-gutter-color {
   syntax: "<color>";
   inherits: false;
-  initial-value: #fbfaf4;
+  initial-value: #fbf0dd;
 }
 
 :root {
+  /* Shared Carbotex visual system, derived from the Hardware color card. */
+  --hardware-display:
+    Impact, Haettenschweiler, "Fira Sans Extra Condensed", "Arial Narrow",
+    sans-serif;
+  --hardware-body: "Trebuchet MS", "Fira Sans", sans-serif;
+  --hardware-ink: #003f34;
+  --hardware-green: #007c60;
+  --hardware-emerald: #007c60;
+  --hardware-aqua: #02b186;
+  --hardware-paper: #fbf0dd;
+  --hardware-mint: #9cd7ca;
+  --hardware-card-mint: #b8e3da;
+  --hardware-yellow: #ffc647;
+  --hardware-pale-yellow: #ffe7b6;
+  --hardware-brown: #86530c;
+  --hardware-card-heading: #1e4fbc;
+  --hardware-blue: #4c9bd7;
+  --hardware-royal: #2f52a1;
+  --hardware-navy: #1f315f;
+  --hardware-white: #fff;
+
   /* Text on the wiki's light paper backgrounds; decorative gold stays separate. */
-  --text-accent: #78602e;
+  --text-accent: var(--hardware-brown);
   --scrollbar-track: #f2f2f2;
   --scrollbar-thumb: #767676;
   --scrollbar-thumb-hover: #4a4a4a;
-  --page-paper: #fbfaf4;
+  --page-paper: var(--hardware-paper);
   --image-viewer-gutter-color: var(--page-paper);
   background-color: var(--image-viewer-gutter-color);
   overflow-y: auto;
   scrollbar-gutter: stable;
   transition: --image-viewer-gutter-color 200ms ease;
+}
+
+body {
+  background: var(--hardware-paper);
+}
+
+::selection {
+  background: var(--hardware-yellow);
+  color: #000;
 }
 
 /* Keep layout width fixed while a native modal prevents page scrolling.
@@ -98,7 +128,7 @@
 }
 
 .bg-hero {
-  background-color: #45b06cff;
+  background-color: var(--hardware-yellow);
 }
 
 /* CALLOUT */
@@ -106,9 +136,10 @@
   padding: 1.25rem;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  border: 1px solid #e9ecef;
-  border-left-width: 0.25rem;
-  border-radius: 0.25rem;
+  border: 0;
+  border-radius: 1.5rem;
+  background: var(--hardware-pale-yellow);
+  color: var(--hardware-ink);
 }
 
 .bd-callout h4 {
@@ -128,28 +159,47 @@
 }
 
 .bd-callout-info {
-  border-left-color: #5bc0de;
+  background: var(--hardware-card-mint);
 }
 
 .bd-callout-warning {
-  border-left-color: #f0ad4e;
+  background: var(--hardware-pale-yellow);
 }
 
 .bd-callout-danger {
-  border-left-color: #d9534f;
+  background: var(--hardware-yellow);
 }
 
 /* CITATIONS (<Cite /> and <References />) */
 sup.cite-ref {
-  margin-left: 2px;
+  margin-left: 0.125em;
+  font-family: var(--hardware-body);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: super;
   white-space: nowrap;
 }
 
 sup.cite-ref a {
-  text-decoration: none;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
 }
 
-.references-list li {
-  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
-  margin-bottom: 0.5rem;
+/* Expand the pointer target without moving the superscript glyph or markup. */
+body.inner-page sup.cite-ref a {
+  position: relative;
+}
+
+body.inner-page sup.cite-ref a::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(24px, 100%);
+  height: 24px;
+  content: "";
+  transform: translate(-50%, -50%);
 }

@@ -1,0 +1,49 @@
+.header {
+  width: min(88%, 88rem);
+  margin: clamp(1.75rem, 3.45vw, 3rem) auto 0;
+  overflow: hidden;
+  border-radius: clamp(1.75rem, 4vw, 3rem);
+  background: var(--hardware-yellow, #ffc647);
+  color: #000;
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+}
+
+.inner {
+  display: grid;
+  min-height: clamp(15rem, 34vw, 25rem);
+  align-content: center;
+  gap: 1rem;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+.kicker {
+  color: var(--hardware-ink, #003f34);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.header h1 {
+  max-width: 14ch;
+  margin: 0;
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.header p {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--hardware-ink, #003f34);
+  font-size: clamp(1rem, 1.4vw, 1.22rem);
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .header {
+    width: calc(100% - 2rem);
+  }
+}

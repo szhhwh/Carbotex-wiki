@@ -31,7 +31,7 @@
 }
 
 .button:focus-visible {
-  outline: 3px solid #0a473b;
+  outline: 3px solid var(--hardware-ink, #0a473b);
   outline-offset: 0.3rem;
 }
 

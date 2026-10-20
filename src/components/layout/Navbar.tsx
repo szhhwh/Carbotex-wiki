@@ -153,21 +153,6 @@ export function Navbar() {
           />
         </Link>
 
-        <button
-          ref={mobileToggleRef}
-          type="button"
-          className={styles.mobileToggle}
-          aria-expanded={mobileOpen}
-          aria-controls="primary-navigation"
-          aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-          onClick={() => {
-            setMobileOpen((isOpen) => !isOpen);
-            setOpenFolder(null);
-          }}
-        >
-          {mobileOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-
         <nav
           id="primary-navigation"
           className={styles.navigation}
@@ -281,6 +266,21 @@ export function Navbar() {
             })}
           </ul>
         </nav>
+
+        <button
+          ref={mobileToggleRef}
+          type="button"
+          className={styles.mobileToggle}
+          aria-expanded={mobileOpen}
+          aria-controls="primary-navigation"
+          aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+          onClick={() => {
+            setMobileOpen((isOpen) => !isOpen);
+            setOpenFolder(null);
+          }}
+        >
+          {mobileOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
       </div>
       <NavbarScrollProgress />
     </header>

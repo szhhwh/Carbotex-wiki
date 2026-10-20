@@ -8,17 +8,30 @@ import {
   type CSSProperties,
 } from "react";
 import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
+import { ArticleHero } from "../article/ArticlePage";
+import { Caption } from "../media/Caption";
 import { MemberPortrait } from "./MemberPortrait";
 import { MemberProfileDialog } from "./MemberProfileDialog";
-import { initials, primaryRole } from "./member-meta";
-import { createNetworkGeometry, type MemberPoint } from "./network-geometry";
+import {
+  initials,
+  memberRoleLabel,
+  portraitStyle,
+  primaryRole,
+} from "./member-meta";
+import {
+  createNetworkGeometry,
+  getNetworkHeight,
+  type MemberPoint,
+} from "./network-geometry";
 import { RoleChips } from "./RoleChips";
 import type { TeamMember } from "./types";
 import styles from "./team-members.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger, CustomEase);
 
 interface TeamMembersPageProps {
   members: TeamMember[];
@@ -35,11 +48,12 @@ function MemberNode({
   onOpen: (member: TeamMember) => void;
 }) {
   const [failed, setFailed] = useState(false);
-  const role = primaryRole(member);
   const isAdvisorGroup = member.roles[0] === "advisor";
+  const roleLabel = memberRoleLabel(member);
 
   return (
     <div
+      id={`member-${member.id}`}
       className={styles.nodeAnchor}
       style={{
         left: `${point.x * 100}%`,
@@ -52,39 +66,40 @@ function MemberNode({
           isAdvisorGroup ? styles.advisorDot : ""
         }`}
         data-member-dot
+        data-member-id={member.id}
         aria-label={
           isAdvisorGroup
             ? `Open the ${member.name}' message`
-            : `Open ${member.name}'s profile (${role.label})`
+            : `Open ${member.name}'s profile (${roleLabel})`
         }
         aria-haspopup="dialog"
         onClick={() => onOpen(member)}
       >
         {isAdvisorGroup ? (
           <span
-            className={styles.advisorNode}
-            style={{ backgroundColor: role.color }}
+            className={styles.advisorPill}
+            style={{ backgroundColor: point.color }}
           >
             Advisors
           </span>
         ) : (
           <svg viewBox="0 0 30 30" aria-hidden="true">
-            <circle cx="15" cy="15" r="15" fill={role.color} />
+            <circle cx="15" cy="15" r="15" fill={point.color} />
           </svg>
         )}
-        <span className={styles.dotImageSlot} aria-hidden="true">
-          <span
-            className={styles.dotInitials}
-            style={{ backgroundColor: role.color }}
-          >
-            {initials(member.name)}
-          </span>
+        <span
+          className={styles.dotImageSlot}
+          style={{ "--member-ring-color": point.color } as CSSProperties}
+          aria-hidden="true"
+        >
+          <span className={styles.dotInitials}>{initials(member.name)}</span>
           {!failed && (
             <img
               src={member.image}
               alt=""
               loading="eager"
               decoding="async"
+              style={portraitStyle(member)}
               onError={() => setFailed(true)}
             />
           )}
@@ -155,7 +170,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
   const gradientPrefix = useId().replace(/:/g, "");
 
-  const networkHeight = 50 + (members.length - 1) * 46 + 52;
+  const networkHeight = getNetworkHeight(members.length);
   const { memberPoints, backgroundPoints, backgroundLines, mainLines } =
     useMemo(
       () => createNetworkGeometry(members, networkHeight),
@@ -176,7 +191,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
 
     const media = gsap.matchMedia();
     media.add(
-      "(min-width: 1025px) and (prefers-reduced-motion: no-preference)",
+      "(min-width: 1200px) and (prefers-reduced-motion: no-preference)",
       () => {
         const backgroundLines = [
           ...network.querySelectorAll<SVGPathElement>("[data-background-line]"),
@@ -185,41 +200,37 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
           ...network.querySelectorAll<SVGPathElement>("[data-main-line]"),
         ];
 
-        gsap.set([...backgroundLines, ...mainLines], {
-          strokeDashoffset: 1,
-        });
-
-        const backgroundTimeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: network,
-            start: "top 68%",
-            end: "bottom bottom",
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
+        gsap.set([...backgroundLines, ...mainLines], { drawSVG: "0%" });
 
         backgroundLines.forEach((line) => {
-          const y = Number(line.dataset.lineY ?? 0);
-          backgroundTimeline.to(
-            line,
-            {
-              strokeDashoffset: 0,
-              duration: 0.075,
-              ease: "none",
+          gsap.to(line, {
+            drawSVG: "100%",
+            duration: gsap.utils.clamp(1, 2, line.getTotalLength() / 100),
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: line,
+              start: "top 60%",
+              end: "bottom 90%",
+              scrub: false,
+              toggleActions: "play none reverse none",
             },
-            Math.min(0.92, Math.max(0, y * 0.92)),
-          );
+          });
         });
+
+        const lineEase = CustomEase.create(
+          "member-network-line",
+          "M0,0 C0.366,0 0.924,0.522 0.954,0.705 1,0.988 1,1 1,1",
+        );
 
         mainLines.forEach((line) => {
           gsap.to(line, {
-            strokeDashoffset: 0,
-            ease: "none",
+            drawSVG: "100%",
+            ease: lineEase,
             scrollTrigger: {
               trigger: line,
-              start: "top 45%",
-              end: "bottom 82%",
+              // Keep the scroll range positive for short, steep network segments.
+              start: "top 80%",
+              end: "top 20%",
               scrub: true,
               invalidateOnRefresh: true,
             },
@@ -254,7 +265,16 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
 
   return (
     <main className={`${styles.page} ${styles.theme}`}>
-      <header className={styles.intro}>
+      <ArticleHero
+        title="Meet Our Team"
+        lead="Meet the students, instructors, and advisors behind OUC-Haide's Carbotex project."
+        headingId="members-heading"
+      />
+
+      <section className={styles.intro} aria-labelledby="team-intro-heading">
+        <h2 id="team-intro-heading" className={styles.srOnly}>
+          About OUC-Haide
+        </h2>
         <figure className={styles.groupPhotoFrame}>
           {photoFailed ? (
             <div className={styles.photoFallback} role="status">
@@ -270,12 +290,16 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
               onError={() => setPhotoFailed(true)}
             />
           )}
-          <figcaption className={styles.heroTitle}>
-            <span className={styles.heroKicker}>OUC-HAIDE / TEAM 2026</span>
-            <h1 id="members-heading" className={styles.heroWordmark}>
-              MEMBER
-            </h1>
-          </figcaption>
+          <Caption className={styles.photoCaption}>
+            <span>OUC-HAIDE / TEAM 2026</span>
+            <span className={styles.captionBubbles} aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
+          </Caption>
         </figure>
 
         <div className={styles.introContent}>
@@ -318,14 +342,15 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
               together to finish the Wiki. Behind every part of Carbotex is
               someone with their own story, talents, and sense of humor.
             </p>
-            <p>
+            <p className={styles.introClosing}>
               <strong>This is OUC-Haide. Come get to know us!</strong>
             </p>
           </div>
         </div>
-      </header>
+      </section>
 
       <section
+        id="team-network"
         ref={networkRef}
         className={styles.network}
         style={{ "--network-height": `${networkHeight}vh` } as CSSProperties}
@@ -344,8 +369,8 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
           <defs>
             {memberPoints.slice(0, -1).map((point, index) => {
               const next = memberPoints[index + 1];
-              const fromColor = primaryRole(members[index]).color;
-              const toColor = primaryRole(members[index + 1]).color;
+              const fromColor = point.color;
+              const toColor = next.color;
               const leftToRight = point.x <= next.x;
 
               return (
@@ -369,7 +394,6 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
               <path
                 key={`${line.from.id}-${line.to.id}`}
                 data-background-line
-                data-line-y={line.scrollAnchor}
                 d={line.path}
                 pathLength="1"
                 vectorEffect="non-scaling-stroke"
@@ -420,7 +444,6 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
 
       <section className={styles.staticRoster} aria-labelledby="roster-heading">
         <div className={styles.staticRosterHeader}>
-          <p className={styles.eyebrow}>The people behind Carbotex</p>
           <h2 id="roster-heading">Team Members</h2>
         </div>
         <div className={styles.staticGrid}>

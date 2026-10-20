@@ -1,0 +1,112 @@
+.lockup {
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  align-content: center;
+}
+
+.teamBrand {
+  display: block;
+  width: min(100%, 15.25rem);
+  border-radius: 50%;
+  transition: transform 220ms ease;
+}
+
+.teamBrand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0.8rem 1rem #063d3b12);
+}
+
+.institutions {
+  --logo-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: min(100%, 18rem);
+  margin-top: var(--logo-gap);
+  align-items: center;
+  justify-content: center;
+  gap: var(--logo-gap);
+}
+
+.institutions img {
+  display: block;
+}
+
+.haideFrame {
+  --haide-height: 5.25rem;
+  position: relative;
+  width: calc(var(--haide-height) * 0.8557);
+  height: var(--haide-height);
+  flex: none;
+  overflow: hidden;
+  transform: translateY(-0.24rem);
+}
+
+.haideMark {
+  position: absolute;
+  width: calc(var(--haide-height) * 1.2795);
+  height: calc(var(--haide-height) * 1.2795);
+  top: calc(var(--haide-height) * -0.2111);
+  left: calc(var(--haide-height) * -0.1994);
+  max-width: none;
+}
+
+.oucMark {
+  width: 5.25rem;
+  height: 5.25rem;
+  transform: translateY(-0.24rem);
+}
+
+.adelaideMark {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 4rem;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0);
+  opacity: 0.82;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .teamBrand:hover {
+    transform: translateY(-0.18rem);
+  }
+}
+
+.teamBrand:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 650px) {
+  .teamBrand {
+    width: 11rem;
+  }
+
+  .institutions {
+    --logo-gap: 0.8rem;
+    width: min(100%, 16.75rem);
+  }
+
+  .haideFrame {
+    --haide-height: 4.5rem;
+    transform: translateY(-0.18rem);
+  }
+
+  .oucMark {
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translateY(-0.18rem);
+  }
+
+  .adelaideMark {
+    height: 3.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teamBrand {
+    transition: none;
+  }
+}

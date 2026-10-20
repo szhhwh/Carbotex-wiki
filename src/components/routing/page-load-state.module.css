@@ -1,4 +1,5 @@
 .panel {
+  position: relative;
   display: flex;
   min-height: min(55svh, 32rem);
   flex-direction: column;
@@ -6,10 +7,59 @@
   justify-content: center;
   gap: 1rem;
   padding: clamp(2rem, 5vw, 5rem);
-  border: 1px solid #d7dfce;
+  overflow: hidden;
+  border: 2px solid var(--hardware-mint, #9cd7ca);
   border-radius: 1.25rem;
-  background: #f5f6eb;
-  color: #174936;
+  background: var(--hardware-pale-yellow, #ffe7b6);
+  color: var(--hardware-ink, #003f34);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  isolation: isolate;
+}
+
+.notFoundPage {
+  min-height: 100vh;
+  padding-top: clamp(1.75rem, 3.45vw, 3rem);
+  background: var(--hardware-paper, #fbf0dd);
+}
+
+.panel::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: 0.85rem;
+  background: linear-gradient(
+    100deg,
+    var(--hardware-mint, #9cd7ca) 0 39%,
+    var(--hardware-blue, #4c9bd7) 39% 69%,
+    var(--hardware-yellow, #ffc647) 69%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.panel::after {
+  position: absolute;
+  z-index: 0;
+  right: -8%;
+  bottom: -2.2rem;
+  width: min(56rem, 70vw);
+  aspect-ratio: 2.15;
+  border-radius: 52% 0 0 / 74% 0 0;
+  background: linear-gradient(
+    166deg,
+    var(--hardware-mint, #9cd7ca) 0 42%,
+    var(--hardware-pale-yellow, #ffe7b6) 42% 64%,
+    var(--hardware-blue, #4c9bd7) 64%
+  );
+  content: "";
+  opacity: 0.5;
+  pointer-events: none;
+  transform: rotate(-3deg);
+}
+
+.panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .panel[data-layout="article"],
@@ -18,50 +68,93 @@
   padding-top: calc(var(--site-nav-height, 6rem) + 2rem);
   border: 0;
   border-radius: 0;
-  background: linear-gradient(155deg, #e5f0df, #faf9f1);
+  background: var(--hardware-paper, #fbf0dd);
+}
+
+.notFoundPanel {
+  display: grid;
+  width: min(88%, 88rem);
+  min-height: 0;
+  grid-template-columns: minmax(9rem, 0.48fr) minmax(0, 1fr);
+  margin: 1.5rem auto clamp(2.5rem, 5vw, 4rem);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--hardware-card-mint, #b8e3da);
+}
+
+.notFoundCode {
+  margin: 0;
+  color: var(--hardware-green, #007c60);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(5.5rem, 12vw, 10rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.8;
+}
+
+.notFoundBody {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.25rem;
 }
 
 .eyebrow {
-  color: #947a42;
-  font:
-    700 0.7rem/1.4 Arial,
-    Helvetica,
-    sans-serif;
+  color: var(--hardware-ink, #003f34);
+  font: 700 0.7rem/1.4 var(--hardware-body, "Trebuchet MS", sans-serif);
   letter-spacing: 0.18em;
 }
 
 .message {
   max-width: 36rem;
   margin: 0;
-  font:
-    400 clamp(1.05rem, 1.8vw, 1.35rem)/1.55 Arial,
-    Helvetica,
-    sans-serif;
+  font: 400 clamp(1.05rem, 1.8vw, 1.35rem)/1.55
+    var(--hardware-body, "Trebuchet MS", sans-serif);
 }
 
 .errorTitle {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  color: var(--hardware-green, #007c60);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
   font-size: clamp(2.5rem, 5vw, 4.8rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
 }
 
 .retry {
+  display: inline-flex;
   min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
   padding: 0.65rem 1.2rem;
-  border: 1px solid #245b46;
+  border: 0;
   border-radius: 999px;
-  background: #245b46;
-  color: white;
-  font:
-    700 0.86rem/1 Arial,
-    Helvetica,
-    sans-serif;
+  background: var(--hardware-yellow, #ffc647);
+  color: #000;
+  font: 700 0.86rem/1 var(--hardware-body, "Trebuchet MS", sans-serif);
+  text-decoration: none;
   cursor: pointer;
 }
 
 .retry:focus-visible {
-  outline: 2px solid #245b46;
+  outline: 3px solid var(--hardware-ink, #003f34);
   outline-offset: 3px;
+}
+
+@media (max-width: 650px) {
+  .notFoundPanel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .notFoundCode {
+    font-size: clamp(5rem, 28vw, 7rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .panel,
+  .retry {
+    border: 1px solid CanvasText;
+  }
 }
