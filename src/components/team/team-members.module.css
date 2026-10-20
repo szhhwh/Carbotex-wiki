@@ -6,7 +6,6 @@
   --team-card-mint: var(--hardware-card-mint, #b8e3da);
   --team-yellow: var(--hardware-yellow, #ffc647);
   --team-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
-  --team-brown: var(--hardware-brown, #86530c);
   --team-white: var(--hardware-white, #fff);
   --team-display: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
   --team-body: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
@@ -39,7 +38,7 @@
 }
 
 .intro {
-  width: min(88%, 88rem);
+  width: var(--site-shell-width);
   margin-inline: auto;
   padding-block: clamp(2.25rem, 4.5vw, 4.5rem) 0;
 }
@@ -239,7 +238,7 @@
   fill: none;
   stroke: #d7d7d7;
   stroke-linecap: round;
-  stroke-width: 6;
+  stroke-width: 4.5;
 }
 
 .mainLines path {
@@ -258,9 +257,10 @@
 .backgroundDot {
   position: absolute;
   display: block;
-  width: 1.875rem;
-  height: 1.875rem;
+  width: 1.35rem;
+  height: 1.35rem;
   transform: translate(-50%, -50%);
+  will-change: transform, opacity;
 }
 
 .backgroundDot svg {
@@ -278,10 +278,6 @@
   z-index: 5;
   scroll-margin-top: 60vh;
   transform: translate(-50%, -50%);
-}
-
-.nodeAnchor:has(.memberDotActive) {
-  z-index: 20;
 }
 
 .memberDot {
@@ -305,22 +301,17 @@
   height: 2.75rem;
 }
 
-.memberDot:hover:not(.memberDotActive) {
+.memberDot:hover {
   transform: scale(1.2);
 }
 
-.advisorDot:hover:not(.memberDotActive) {
+.advisorDot:hover {
   transform: scale(1.06);
 }
 
 .memberDot:focus-visible {
   outline: 4px solid var(--team-ink);
   outline-offset: 4px;
-}
-
-.memberDotActive:focus-visible .dotImageSlot {
-  outline: 4px solid var(--team-ink);
-  outline-offset: 5px;
 }
 
 .advisorPill {
@@ -344,20 +335,11 @@
   transition: opacity 160ms ease;
 }
 
-.memberDotActive .advisorPill {
-  opacity: 0;
-  visibility: hidden;
-}
-
 .memberDot > svg {
   display: block;
   width: 1.875rem;
   height: 1.875rem;
   transition: opacity 160ms ease;
-}
-
-.memberDotActive > svg {
-  opacity: 0;
 }
 
 .dotImageSlot {
@@ -371,14 +353,11 @@
   border-radius: 50%;
   background: var(--member-ring-color, var(--team-yellow));
   opacity: 0;
-  pointer-events: none;
+  pointer-events: auto;
   transform: translate(-50%, -50%) scale(0.083333);
   transform-origin: 50% 50%;
   visibility: hidden;
-  transition:
-    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 0.18s ease,
-    visibility 0s linear 0.3s;
+  will-change: transform, opacity;
 }
 
 .dotImageSlot::after {
@@ -390,16 +369,6 @@
   border-radius: inherit;
   content: "";
   pointer-events: none;
-}
-
-.memberDotActive .dotImageSlot {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
-  visibility: visible;
-  transition:
-    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 0.18s ease;
 }
 
 .dotImageSlot img,
@@ -428,13 +397,13 @@
 
 .staticRoster {
   display: none;
-  padding: clamp(3rem, 6vw, 5.5rem) clamp(1rem, 4vw, 4rem) 6rem;
+  padding: clamp(3rem, 6vw, 5.5rem) 0 6rem;
   scroll-margin-top: calc(var(--site-nav-height, 4.5rem) + 1rem);
 }
 
 .staticRosterHeader {
   display: flex;
-  width: min(100%, 88rem);
+  width: var(--site-shell-width);
   margin: 0 auto clamp(2rem, 3.5vw, 3.25rem);
   padding-bottom: clamp(1rem, 2vw, 1.5rem);
   align-items: flex-end;
@@ -460,7 +429,7 @@
 
 .staticGrid {
   display: grid;
-  width: min(100%, 88rem);
+  width: var(--site-shell-width);
   margin-inline: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.5rem);
@@ -902,7 +871,6 @@
 
 @media (max-width: 700px) {
   .intro {
-    width: calc(100% - 2rem);
     padding-top: 1.75rem;
   }
 

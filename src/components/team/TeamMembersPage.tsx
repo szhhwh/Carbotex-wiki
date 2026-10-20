@@ -8,7 +8,6 @@ import {
   type CSSProperties,
 } from "react";
 import gsap from "gsap";
-import { CustomEase } from "gsap/CustomEase";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
@@ -31,7 +30,7 @@ import { RoleChips } from "./RoleChips";
 import type { TeamMember } from "./types";
 import styles from "./team-members.module.css";
 
-gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger, CustomEase);
+gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger);
 
 interface TeamMembersPageProps {
   members: TeamMember[];
@@ -193,63 +192,212 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
     media.add(
       "(min-width: 1200px) and (prefers-reduced-motion: no-preference)",
       () => {
-        const backgroundLines = [
+        const backgroundLineElements = [
           ...network.querySelectorAll<SVGPathElement>("[data-background-line]"),
         ];
-        const mainLines = [
+        const mainLineElements = [
           ...network.querySelectorAll<SVGPathElement>("[data-main-line]"),
         ];
+        const backgroundDotElements = [
+          ...network.querySelectorAll<HTMLElement>("[data-background-dot]"),
+        ];
+        const dots = [
+          ...network.querySelectorAll<HTMLButtonElement>("[data-member-dot]"),
+        ];
+        const viewportHeight = window.innerHeight;
+        const networkHeight = network.offsetHeight;
+        const scrollSpan = networkHeight + viewportHeight;
+        const pointProgress = (pointY: number) =>
+          (pointY * networkHeight + viewportHeight / 2) / scrollSpan;
+        const clampProgress = (progress: number) =>
+          gsap.utils.clamp(0, 1, progress);
+        const avatarEnterProgress = (pointY: number) =>
+          clampProgress(pointProgress(pointY) - 0.025);
+        const avatarExitProgress = (pointY: number) => {
+          // Hide an avatar only after it reaches the lower edge while moving
+          // upward. The gap between enter and exit creates the hold on the
+          // downward pass.
+          const exitLine = viewportHeight * 0.82;
+          return clampProgress(
+            (pointY * networkHeight + viewportHeight - exitLine) / scrollSpan,
+          );
+        };
 
-        gsap.set([...backgroundLines, ...mainLines], { drawSVG: "0%" });
+        gsap.set([...backgroundLineElements, ...mainLineElements], {
+          drawSVG: "0%",
+        });
+        gsap.set(backgroundDotElements, {
+          autoAlpha: 0,
+          scale: 0.35,
+          transformOrigin: "50% 50%",
+        });
 
-        backgroundLines.forEach((line) => {
-          gsap.to(line, {
-            drawSVG: "100%",
-            duration: gsap.utils.clamp(1, 2, line.getTotalLength() / 100),
+        const avatarStates = dots.map((dot, index) => {
+          const image = dot.querySelector<HTMLElement>(
+            `.${styles.dotImageSlot}`,
+          );
+
+          return {
+            dot,
+            image,
+            base: dot.firstElementChild,
+            point: memberPoints[index],
+            expanded: false,
+          };
+        });
+
+        avatarStates.forEach((state) => {
+          if (!state.image || !state.base) return;
+          gsap.set(state.image, {
+            autoAlpha: 0,
+            scale: 0.083333,
+            transformOrigin: "50% 50%",
+          });
+          gsap.set(state.base, { autoAlpha: 1 });
+          gsap.set(state.dot, { zIndex: 5 });
+        });
+
+        const showAvatar = (state: (typeof avatarStates)[number]) => {
+          if (state.expanded || !state.image || !state.base) return;
+
+          state.expanded = true;
+          gsap.killTweensOf([state.dot, state.image, state.base]);
+          gsap.set(state.dot, { zIndex: 20 });
+          gsap.to(state.image, {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.36,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+          gsap.to(state.base, {
+            autoAlpha: 0,
+            duration: 0.18,
+            delay: 0.12,
             ease: "power1.out",
-            scrollTrigger: {
-              trigger: line,
-              start: "top 60%",
-              end: "bottom 90%",
-              scrub: false,
-              toggleActions: "play none reverse none",
-            },
+            overwrite: "auto",
           });
+        };
+
+        const hideAvatar = (state: (typeof avatarStates)[number]) => {
+          if (!state.expanded || !state.image || !state.base) return;
+
+          state.expanded = false;
+          gsap.killTweensOf([state.dot, state.image, state.base]);
+          gsap.to(state.image, {
+            autoAlpha: 0,
+            scale: 0.083333,
+            duration: 0.28,
+            ease: "power2.in",
+            overwrite: "auto",
+          });
+          gsap.to(state.base, {
+            autoAlpha: 1,
+            duration: 0.18,
+            delay: 0.1,
+            ease: "power1.out",
+            overwrite: "auto",
+          });
+          gsap.to(state.dot, {
+            zIndex: 5,
+            duration: 0.28,
+            ease: "none",
+            overwrite: "auto",
+          });
+        };
+
+        const syncAvatars = (progress: number, direction: number) => {
+          avatarStates.forEach((state) => {
+            if (!state.point) return;
+
+            if (
+              direction > 0 &&
+              !state.expanded &&
+              progress >= avatarEnterProgress(state.point.y)
+            ) {
+              showAvatar(state);
+            }
+
+            if (
+              direction < 0 &&
+              state.expanded &&
+              progress <= avatarExitProgress(state.point.y)
+            ) {
+              hideAvatar(state);
+            }
+          });
+        };
+
+        const timeline = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: network,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.35,
+            invalidateOnRefresh: true,
+            onRefresh: (self) => syncAvatars(self.progress, 1),
+            onUpdate: (self) => syncAvatars(self.progress, self.direction),
+          },
         });
 
-        const lineEase = CustomEase.create(
-          "member-network-line",
-          "M0,0 C0.366,0 0.924,0.522 0.954,0.705 1,0.988 1,1 1,1",
-        );
+        // Keep the whole constellation on one scroll clock. Independent
+        // triggers can all fire in the same frame when the wheel jumps.
+        timeline.to({}, { duration: 1 });
 
-        mainLines.forEach((line) => {
-          gsap.to(line, {
-            drawSVG: "100%",
-            ease: lineEase,
-            scrollTrigger: {
-              trigger: line,
-              // Keep the scroll range positive for short, steep network segments.
-              start: "top 80%",
-              end: "top 20%",
-              scrub: true,
-              invalidateOnRefresh: true,
+        backgroundLines.forEach((line, index) => {
+          const start = clampProgress(
+            pointProgress(Math.min(line.from.y, line.to.y)) - 0.018,
+          );
+          const duration = Math.max(
+            0.055,
+            pointProgress(Math.max(line.from.y, line.to.y)) - start + 0.025,
+          );
+
+          timeline.to(
+            backgroundLineElements[index],
+            {
+              drawSVG: "100%",
+              duration,
+              ease: index % 2 === 0 ? "power2.inOut" : "power1.inOut",
             },
-          });
+            start,
+          );
         });
 
-        network
-          .querySelectorAll<HTMLElement>("[data-member-dot]")
-          .forEach((dot) => {
-            ScrollTrigger.create({
-              trigger: dot,
-              start: "center 80%",
-              end: "top -25%",
-              toggleClass: {
-                targets: dot,
-                className: styles.memberDotActive,
-              },
-            });
-          });
+        mainLines.forEach((line, index) => {
+          const start = clampProgress(pointProgress(line.from.y) - 0.03);
+
+          timeline.to(
+            mainLineElements[index],
+            {
+              drawSVG: "100%",
+              duration: Math.max(
+                0.09,
+                pointProgress(line.to.y) - start + 0.025,
+              ),
+              ease: "power2.inOut",
+            },
+            start,
+          );
+        });
+
+        backgroundPoints.forEach((point, index) => {
+          const backgroundDot = backgroundDotElements[index];
+          if (!backgroundDot) return;
+
+          timeline.to(
+            backgroundDot,
+            {
+              autoAlpha: 0.78,
+              scale: 1,
+              duration: 0.06,
+              ease: "power2.out",
+            },
+            clampProgress(pointProgress(point.y) - 0.035),
+          );
+        });
+
       },
     );
 
@@ -259,7 +407,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
       cancelAnimationFrame(refresh);
       media.revert();
     };
-  }, []);
+  }, [backgroundLines, backgroundPoints, mainLines, memberPoints]);
 
   const openMember = (member: TeamMember) => setActiveMember(member);
 
@@ -420,6 +568,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
             <span
               key={point.id}
               className={styles.backgroundDot}
+              data-background-dot
               style={{
                 left: `${point.x * 100}%`,
                 top: `${point.y * 100}%`,

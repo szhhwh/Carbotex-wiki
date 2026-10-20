@@ -35,12 +35,13 @@ const xJitter = [
 const yJitterVh = [
   3, -4, 5, -2, 4, -5, 2, -3, 5, -4, 3, -2, 4, -3, 2, -4, 3, -2,
 ];
-const backgroundXPatterns = [
-  [0.08, 0.55, 0.9],
-  [0.27, 0.6, 0.9],
-  [0.1, 0.58, 0.85],
+const backgroundLaneOffsets = [
+  [-0.24, 0.24],
+  [0.24, -0.24],
+  [-0.2, 0.2],
+  [0.2, -0.2],
 ];
-const backgroundYOffsetsVh = [12, 31, 20];
+const backgroundYFractions = [0.34, 0.72];
 const networkColors = [
   "#fdc007",
   "#fcb011",
@@ -125,75 +126,53 @@ function makeGentleCurvePath(
   return `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`;
 }
 
-function distance(a: PlotPoint, b: PlotPoint) {
-  return Math.hypot(a.x - b.x, a.y - b.y);
-}
-
-function makeBackgroundPoints(
-  memberPoints: MemberPoint[],
-  networkHeightVh: number,
-) {
+function makeBackgroundPoints(memberPoints: MemberPoint[]) {
   return memberPoints.slice(0, -1).flatMap((point, index) => {
-    const pattern = backgroundXPatterns[index % backgroundXPatterns.length];
-    const pointYVh = point.y * networkHeightVh;
+    const next = memberPoints[index + 1];
+    const lane = backgroundLaneOffsets[index % backgroundLaneOffsets.length];
+    const centerX = (point.x + next.x) / 2;
+    const verticalSpan = next.y - point.y;
 
-    return pattern.map((x, offsetIndex) => {
-      const xJitterValue = (((index * 7 + offsetIndex * 3) % 5) - 2) * 0.008;
-      const yJitter = (((index * 5 + offsetIndex * 2) % 7) - 3) * 1.5;
-
+    return backgroundYFractions.map((fraction, offsetIndex) => {
       return {
         id: `background-${index}-${offsetIndex}`,
-        x: Math.min(0.95, Math.max(0.05, x + xJitterValue)),
-        y:
-          (pointYVh + backgroundYOffsetsVh[offsetIndex] + yJitter) /
-          networkHeightVh,
+        x: Math.min(0.94, Math.max(0.06, centerX + lane[offsetIndex])),
+        y: point.y + verticalSpan * fraction,
       };
     });
   });
-}
-
-function nearestPoints(
-  origin: PlotPoint,
-  candidates: PlotPoint[],
-  count: number,
-) {
-  return candidates
-    .filter((point) => point.id !== origin.id)
-    .map((point) => ({ point, distance: distance(origin, point) }))
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, count)
-    .map(({ point }) => point);
 }
 
 function makeBackgroundLines(
   memberPoints: MemberPoint[],
   backgroundPoints: PlotPoint[],
 ) {
-  const lines = new Map<string, Omit<NetworkLine, "path">>();
+  return memberPoints.slice(0, -1).flatMap((point, index) => {
+    const next = memberPoints[index + 1];
+    const firstBackground = backgroundPoints[index * 2];
+    const secondBackground = backgroundPoints[index * 2 + 1];
+    const pairs = [
+      [point, firstBackground],
+      [firstBackground, secondBackground],
+      [secondBackground, next],
+    ] as const;
 
-  const addLine = (from: PlotPoint, to: PlotPoint) => {
-    const [first, second] = from.id < to.id ? [from, to] : [to, from];
-    lines.set(`${first.id}:${second.id}`, { from: first, to: second });
-  };
+    return pairs.map(([from, to], pairIndex) => {
+      const [upper, lower] = from.y <= to.y ? [from, to] : [to, from];
+      const lineIndex = index * pairs.length + pairIndex;
 
-  backgroundPoints.forEach((backgroundPoint) => {
-    nearestPoints(backgroundPoint, memberPoints, 2).forEach((member) => {
-      addLine(backgroundPoint, member);
-    });
-    nearestPoints(backgroundPoint, backgroundPoints, 2).forEach((point) => {
-      addLine(backgroundPoint, point);
+      return {
+        from: upper,
+        to: lower,
+        path: makeGentleCurvePath(
+          upper,
+          lower,
+          backgroundBendPattern[lineIndex % backgroundBendPattern.length],
+          true,
+        ),
+      };
     });
   });
-
-  return [...lines.values()].map((line, index) => ({
-    ...line,
-    path: makeGentleCurvePath(
-      line.from,
-      line.to,
-      backgroundBendPattern[index % backgroundBendPattern.length],
-      true,
-    ),
-  }));
 }
 
 function makeMainLines(memberPoints: MemberPoint[]) {
@@ -232,7 +211,7 @@ export function createNetworkGeometry(
       networkHeightVh,
     color: networkColor(index),
   }));
-  const backgroundPoints = makeBackgroundPoints(memberPoints, networkHeightVh);
+  const backgroundPoints = makeBackgroundPoints(memberPoints);
 
   return {
     memberPoints,
