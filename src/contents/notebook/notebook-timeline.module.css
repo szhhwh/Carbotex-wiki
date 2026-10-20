@@ -1,0 +1,175 @@
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  position: absolute;
+  top: 1.65rem;
+  bottom: 1.65rem;
+  left: 0.44rem;
+  width: 0.7rem;
+  border-radius: 999px;
+  background: var(--hardware-mint);
+  content: "";
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.55rem minmax(8.5rem, 0.27fr) minmax(0, 1fr);
+  gap: 0 1.25rem;
+  padding-block: clamp(1.8rem, 3.4vw, 2.8rem);
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  width: 1.55rem;
+  aspect-ratio: 1;
+  align-self: start;
+  margin-top: 0.38rem;
+  border: 0.36rem solid var(--hardware-paper);
+  border-radius: 50%;
+  outline: 0.18rem solid var(--hardware-navy);
+  background: var(--hardware-yellow);
+}
+
+.date {
+  align-self: start;
+  margin: 0;
+  padding-top: 0.05rem;
+  color: var(--hardware-green);
+  font-family: var(--hardware-body);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.entry {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none; /* taste-skill-ignore: explicit reset for editorial rows */
+  color: var(--hardware-ink);
+}
+
+.item .entry .title {
+  max-width: 44rem;
+  margin: 0 0 1rem;
+  color: var(--hardware-navy);
+  font-family: var(--hardware-display);
+  font-size: clamp(1.75rem, 2.55vw, 2.35rem);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.body {
+  max-width: 60ch;
+  color: var(--hardware-ink);
+  font-family: var(--hardware-body);
+  font-size: 1em;
+  line-height: 1.62;
+  overflow-wrap: anywhere;
+}
+
+.body :where(p, ul, ol) {
+  margin: 0 0 1rem;
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+.body :where(ul, ol) {
+  padding-left: 1.25rem;
+}
+
+.body li + li {
+  margin-top: 0.4rem;
+}
+
+.body strong {
+  color: var(--hardware-ink);
+  font-weight: 800;
+}
+
+.body :where(a) {
+  color: var(--hardware-navy);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+.body :where(a):hover {
+  color: var(--hardware-royal);
+}
+
+.body :where(a, button):focus-visible {
+  outline: 3px solid var(--hardware-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .timeline::before {
+    left: 0.36rem;
+    width: 0.55rem;
+  }
+
+  .item {
+    grid-template-columns: 1.27rem minmax(0, 1fr);
+    gap: 0 0.9rem;
+    padding-block: 1.65rem;
+  }
+
+  .marker {
+    width: 1.27rem;
+    grid-row: 1 / span 2;
+    margin-top: 0.3rem;
+    border-width: 0.28rem;
+    outline-width: 0.14rem;
+  }
+
+  .date {
+    margin-bottom: 0.55rem;
+  }
+
+  .entry {
+    grid-column: 2;
+  }
+
+  .item .entry .title {
+    font-size: clamp(1.4rem, 5.8vw, 1.65rem);
+    line-height: 1.12;
+  }
+
+  .body {
+    line-height: 1.6;
+  }
+}
+
+@media (forced-colors: active) {
+  .marker {
+    border-color: Canvas;
+    background: CanvasText;
+    outline-color: CanvasText;
+  }
+
+  .date,
+  .entry {
+    color: CanvasText;
+  }
+
+  .body :where(a, button):focus-visible {
+    outline-color: Highlight;
+  }
+}

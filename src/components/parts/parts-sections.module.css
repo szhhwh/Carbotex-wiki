@@ -1,0 +1,722 @@
+.partsPage {
+  --parts-body-size: 1.125rem;
+  --parts-small-size: 0.875rem;
+  --parts-group-size: clamp(1.55rem, 2.63vw, 2rem);
+  display: contents;
+}
+
+.partsPage.partsPage :global(main article) {
+  --article-text: var(--parts-body-size);
+}
+
+.partsPage.partsPage :global(main article h3) {
+  font-size: var(--parts-group-size);
+  line-height: 1.15;
+}
+
+.partsPage.partsPage :global([data-article-lead]),
+.partsPage.partsPage :global(main article button) {
+  font-size: var(--parts-body-size);
+}
+
+.corePairs,
+.backboneStack,
+.metabolismBoard,
+.donorSection,
+.constructCatalog,
+.toolSection {
+  --parts-ink: var(--hardware-ink, #003f34);
+  --parts-green: var(--hardware-green, #007c60);
+  --parts-paper: var(--hardware-paper, #fbf0dd);
+  --parts-mint: var(--hardware-mint, #9cd7ca);
+  --parts-card-mint: var(--hardware-card-mint, #b8e3da);
+  --parts-yellow: var(--hardware-yellow, #ffc647);
+  --parts-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
+  --parts-navy: var(--hardware-navy, #1f315f);
+  --parts-heading: var(--hardware-card-heading, #1e4fbc);
+  --parts-radius: 2rem;
+  --parts-body-size: 1.125rem;
+  --parts-small-size: 0.875rem;
+  --parts-group-size: clamp(1.55rem, 2.63vw, 2rem);
+  --parts-display: var(
+    --hardware-display,
+    Impact,
+    "Fira Sans Extra Condensed",
+    "Arial Narrow",
+    sans-serif
+  );
+  --parts-body: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  min-width: 0;
+  container-type: inline-size;
+  color: var(--parts-ink);
+  font-family: var(--parts-body);
+}
+
+.sectionCopy {
+  display: contents;
+}
+
+.sectionCopy > p {
+  max-width: 66ch;
+}
+
+.partCard {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.partBody {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: 0.7rem;
+}
+
+.typeTag {
+  width: fit-content;
+  max-width: 100%;
+  color: var(--parts-ink);
+  font-family: var(--parts-body);
+  font-size: var(--parts-small-size);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+.partName.partName.partName {
+  margin: 0;
+  color: var(--parts-heading);
+  font-family: var(--parts-display);
+  font-size: var(--parts-body-size);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.partRole.partRole.partRole {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--parts-ink);
+  font-family: var(--parts-body);
+  font-size: var(--parts-body-size);
+  line-height: 1.62;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+.partHeading,
+.partMeta,
+.partFooter {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+}
+
+.partHeading,
+.partFooter {
+  align-items: flex-end;
+}
+
+.partHeading .typeTag,
+.partFooter .typeTag {
+  flex: 0 1 auto;
+}
+
+.partCopy {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.registryLink.registryLink.registryLink[href] {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.6rem 0.88rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--parts-navy);
+  color: var(--parts-paper);
+  font-family: var(--parts-body);
+  font-size: var(--parts-small-size);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.registryLink.registryLink.registryLink[href]:focus-visible {
+  outline: 3px solid var(--parts-ink);
+  outline-offset: 3px;
+}
+
+.groupTitle.groupTitle.groupTitle,
+.bandTitle.bandTitle.bandTitle,
+.catalogTitle.catalogTitle.catalogTitle,
+.toolTitle.toolTitle.toolTitle {
+  margin: 0;
+  color: var(--parts-navy);
+  font-family: var(--parts-display);
+  font-size: var(--parts-group-size);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.bandCount,
+.panelCount {
+  flex: 0 0 auto;
+  color: var(--parts-ink);
+  font-family: var(--parts-body);
+  font-size: var(--parts-small-size);
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Core: paired cards share one field, with the relationship carried by an arrow. */
+.corePairs {
+  display: grid;
+  gap: 1.1rem;
+  margin: 2rem 0 2.75rem;
+}
+
+.corePair {
+  overflow: hidden;
+  padding: clamp(0.9rem, 2.4vw, 1.25rem);
+  border-radius: var(--parts-radius);
+  background: var(--parts-card-mint);
+}
+
+.pairBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.coreRegulator,
+.coreConstruct {
+  padding: clamp(1rem, 2.2vw, 1.35rem);
+  border-radius: 1.4rem;
+}
+
+.coreRegulator {
+  background: var(--parts-pale-yellow);
+}
+
+.coreConstruct {
+  background: var(--parts-paper);
+}
+
+.coreRegulator .partBody,
+.coreConstruct .partBody {
+  height: 100%;
+  grid-template-areas:
+    "name meta"
+    "copy copy";
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+  gap: 0.7rem 1.25rem;
+}
+
+.coreRegulator .partName,
+.coreConstruct .partName {
+  grid-area: name;
+}
+
+.coreRegulator .partRole,
+.coreConstruct .partRole {
+  grid-area: copy;
+}
+
+.coreRegulator .partMeta,
+.coreConstruct .partMeta {
+  grid-area: meta;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pairArrow {
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  justify-self: center;
+  border: 2px solid var(--parts-ink);
+  border-radius: 50%;
+  background: var(--parts-yellow);
+  color: var(--parts-ink);
+  place-items: center;
+}
+
+.pairArrow svg {
+  display: block;
+  transform: rotate(90deg);
+}
+
+/* Backbones: wide structural rows with name, description and record in parallel. */
+.backboneStack {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0 2.75rem;
+}
+
+.backboneRow {
+  padding: clamp(1.2rem, 2.7vw, 1.7rem);
+  border-radius: var(--parts-radius);
+  background: var(--parts-card-mint);
+}
+
+.backboneRow:nth-child(2n) {
+  background: var(--parts-pale-yellow);
+}
+
+.backboneRow .partBody {
+  grid-template-areas:
+    "heading copy"
+    "heading link";
+  grid-template-columns: minmax(10rem, 0.68fr) minmax(0, 1.65fr);
+  align-items: start;
+  gap: 0.7rem 1.2rem;
+}
+
+.backboneRow .partHeading {
+  grid-area: heading;
+  display: grid;
+  justify-content: start;
+  align-items: start;
+  gap: 0.45rem;
+}
+
+.backboneRow .partRole {
+  grid-area: copy;
+}
+
+.backboneRow .registryLink {
+  grid-area: link;
+  justify-self: start;
+}
+
+/* Metabolism: regulators and the xylose panel use different internal structures. */
+.metabolismBoard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  margin: 2rem 0 2.75rem;
+}
+
+.regulatorColumn {
+  min-width: 0;
+  padding: 0.9rem;
+  border-radius: var(--parts-radius);
+  background: var(--parts-card-mint);
+}
+
+.groupHeader {
+  padding: 0.25rem 0.25rem 0.8rem;
+}
+
+.regulatorStack {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.regulatorCard {
+  padding: 1rem;
+  border-radius: 1.35rem;
+  background: var(--parts-paper);
+}
+
+.regulatorCard:nth-child(2n) {
+  background: var(--parts-pale-yellow);
+}
+
+.regulatorCard .partBody {
+  grid-template-areas:
+    "name copy"
+    "footer copy";
+  grid-template-columns: minmax(9rem, 10rem) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: 0.65rem 1.4rem;
+}
+
+.regulatorCard .partName {
+  grid-area: name;
+}
+
+.regulatorCard .partRole {
+  grid-area: copy;
+}
+
+.regulatorCard .partFooter {
+  grid-area: footer;
+  justify-content: flex-start;
+}
+
+.xylosePanel {
+  min-width: 0;
+  padding: 0 0.8rem 0.8rem;
+  overflow: hidden;
+  border-radius: var(--parts-radius);
+  background: var(--parts-pale-yellow);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0 -0.8rem 0.8rem;
+  padding: 0.95rem 0.9rem;
+  background: var(--parts-yellow);
+}
+
+.panelCount {
+  text-align: right;
+}
+
+.xyloseList {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
+}
+
+.xyloseItem {
+  min-width: 0;
+  padding: 0.35rem;
+}
+
+.xyloseItem .partBody {
+  height: 100%;
+  grid-template-areas:
+    "name"
+    "copy"
+    "link";
+  grid-template-rows: auto 1fr auto;
+}
+
+.xyloseItem .partName {
+  grid-area: name;
+}
+
+.xyloseItem .partCopy {
+  grid-area: copy;
+}
+
+.xyloseItem .registryLink {
+  grid-area: link;
+  justify-self: start;
+}
+
+/* Donors: an open ledger with no row rules; hierarchy comes from the row grid. */
+.donorSection {
+  margin: 2rem 0 2.75rem;
+  overflow: hidden;
+  border-radius: var(--parts-radius);
+  background: var(--parts-paper);
+}
+
+.ledgerHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1.25rem;
+  background: var(--parts-yellow);
+}
+
+.donorLedger {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.6rem 1rem 0.8rem;
+}
+
+.donorRow {
+  padding: 1rem 0.5rem;
+}
+
+.donorRow .partBody {
+  grid-template-areas:
+    "heading copy"
+    "heading link";
+  grid-template-columns: minmax(10rem, 0.68fr) minmax(0, 1.65fr);
+  align-items: start;
+  gap: 0.7rem 1.4rem;
+}
+
+.donorRow .partHeading {
+  grid-area: heading;
+  display: grid;
+  justify-content: start;
+  align-items: start;
+  gap: 0.45rem;
+}
+
+.donorRow .partRole {
+  grid-area: copy;
+}
+
+.donorRow .registryLink {
+  grid-area: link;
+  background: var(--parts-green);
+  color: var(--parts-paper);
+}
+
+/* Constructs: a broad technical index, distinct from the donor comparison. */
+.constructCatalog {
+  margin: 2rem 0 2.75rem;
+  padding: 0.9rem 1.1rem 1rem;
+  border-radius: var(--parts-radius);
+  background: var(--parts-card-mint);
+}
+
+.catalogHeader,
+.toolHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0 0.9rem;
+}
+
+.catalogRows {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.constructRow {
+  padding: 1rem 0.25rem;
+}
+
+.constructRow .partBody {
+  grid-template-areas:
+    "heading copy"
+    "link copy";
+  grid-template-columns: minmax(10rem, 0.68fr) minmax(0, 1.65fr);
+  align-items: start;
+  gap: 0.55rem 1.2rem;
+}
+
+.constructRow .partHeading {
+  grid-area: heading;
+  display: grid;
+  justify-content: start;
+  align-items: start;
+  gap: 0.4rem;
+}
+
+.constructRow .partRole {
+  grid-area: copy;
+}
+
+.constructRow .registryLink {
+  grid-area: link;
+  min-height: 2.75rem;
+  padding: 0.45rem 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--parts-green);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.24em;
+}
+
+/* Tools: two filled stages with a central directional connector. */
+.toolSection {
+  margin: 2rem 0 2.75rem;
+}
+
+.toolHeader {
+  display: block;
+  padding: 0 0 0.9rem;
+}
+
+.toolFlow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.toolCard {
+  padding: clamp(1rem, 2.4vw, 1.3rem);
+  border-radius: var(--parts-radius);
+  background: var(--parts-pale-yellow);
+}
+
+.toolCard:nth-child(3) {
+  background: var(--parts-card-mint);
+}
+
+.toolCard .partBody {
+  grid-template-areas:
+    "name"
+    "copy"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+}
+
+.toolCard .partName {
+  grid-area: name;
+}
+
+.toolCard .partRole {
+  grid-area: copy;
+}
+
+.toolCard .partFooter {
+  grid-area: footer;
+}
+
+.toolConnector {
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-self: center;
+  justify-self: center;
+  border: 2px solid var(--parts-ink);
+  border-radius: 50%;
+  background: var(--parts-yellow);
+  color: var(--parts-ink);
+  place-items: center;
+}
+
+.toolConnector svg {
+  transform: rotate(90deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .registryLink.registryLink.registryLink[href]:hover {
+    background: var(--parts-yellow);
+    color: var(--parts-ink);
+  }
+
+  .constructRow .registryLink.registryLink.registryLink[href]:hover {
+    background: transparent;
+    color: var(--parts-navy);
+  }
+}
+
+@container (max-width: 48rem) {
+  .toolFlow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+
+  .toolConnector {
+    justify-self: center;
+  }
+
+  .toolConnector svg {
+    transform: rotate(90deg);
+  }
+
+  .regulatorCard .partBody {
+    grid-template-areas:
+      "name"
+      "copy"
+      "footer";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .xyloseList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .backboneRow .partBody,
+  .donorRow .partBody,
+  .constructRow .partBody {
+    grid-template-areas:
+      "heading"
+      "copy"
+      "link";
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+}
+
+@container (max-width: 32rem) {
+  .coreRegulator .partBody,
+  .coreConstruct .partBody {
+    grid-template-areas:
+      "name"
+      "copy"
+      "meta";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .coreRegulator .partMeta,
+  .coreConstruct .partMeta {
+    justify-content: flex-start;
+  }
+
+  .ledgerHeader,
+  .catalogHeader {
+    align-items: flex-start;
+  }
+
+  .ledgerHeader {
+    padding: 1rem;
+  }
+
+  .donorLedger {
+    padding-inline: 0.65rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .partMeta,
+  .partFooter {
+    align-items: flex-start;
+  }
+
+  .registryLink.registryLink.registryLink[href] {
+    padding-inline: 0.8rem;
+  }
+
+  .panelHeader {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .registryLink.registryLink.registryLink[href] {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .corePair,
+  .backboneRow,
+  .regulatorColumn,
+  .xylosePanel,
+  .donorSection,
+  .constructCatalog,
+  .toolCard {
+    outline: 2px solid CanvasText;
+  }
+
+  .registryLink.registryLink.registryLink[href]:focus-visible {
+    outline-color: Highlight;
+  }
+}

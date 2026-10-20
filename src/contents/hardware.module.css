@@ -1,0 +1,49 @@
+:global(body:has(main[data-article-theme="hardware"])) {
+  --hardware-display:
+    Impact, Haettenschweiler, "Fira Sans Extra Condensed", "Arial Narrow",
+    sans-serif;
+  --hardware-body: "Trebuchet MS", "Fira Sans", sans-serif;
+  --hardware-ink: #003f34;
+  --hardware-green: #007c60;
+  --hardware-emerald: #007c60;
+  --hardware-aqua: #02b186;
+  --hardware-paper: #fbf0dd;
+  --hardware-mint: #9cd7ca;
+  --hardware-card-mint: #b8e3da;
+  --hardware-yellow: #ffc647;
+  --hardware-pale-yellow: #ffe7b6;
+  --hardware-brown: #86530c;
+  --page-paper: var(--hardware-paper);
+  background: var(--hardware-paper);
+}
+
+.dataStream {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 3rem;
+}
+
+.dataStream > div > h3 {
+  margin-top: 0;
+}
+
+.dataStream > figure {
+  width: 100%;
+  margin-block: 1.6rem 0;
+}
+
+@media (max-width: 600px) {
+  .dataStream {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+
+  .dataStream > figure {
+    width: min(100%, 24rem);
+    margin-top: 0;
+    margin-inline: auto;
+  }
+}

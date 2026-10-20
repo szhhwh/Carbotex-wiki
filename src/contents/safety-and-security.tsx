@@ -82,15 +82,15 @@ const sections: ArticleSection[] = [
           <Cite k={["zhou2024melanin", "dailin2023pullulan"]} />. However,
           opportunistic infections caused by this species have been reported in
           humans, including catheter-related bloodstream infection{" "}
-          <Cite k="yamamoto2022catheter" /> and skin and soft-tissue infection
-          in an immunocompetent host. Patel et al. noted that the species is
-          more commonly an opportunistic fungus in immunocompromised hosts{" "}
-          <Cite k="patel2025skin" />. In our experiments,{" "}
-          <em>Escherichia coli</em> DH5α was used as a cloning host. DH5α is a
-          commonly used competent strain for molecular cloning and is included
-          on the approved-organism whitelist. During experimental work and
-          management, our team will follow BSL-1 laboratory procedures to
-          control potential risks.
+          <Cite k="yamamoto2022catheter" />. Skin and soft-tissue infection in
+          an immunocompetent host has also been reported. Patel et al. noted
+          that the species is more commonly an opportunistic fungus in
+          immunocompromised hosts <Cite k="patel2025skin" />. In our
+          experiments, <em>Escherichia coli</em> DH5α was used as a cloning
+          host. DH5α is a commonly used competent strain for molecular cloning
+          and is included on the approved-organism whitelist. During
+          experimental work and management, our team will follow BSL-1
+          laboratory procedures to control potential risks.
         </p>
       </>
     ),
@@ -150,16 +150,16 @@ const sections: ArticleSection[] = [
           First, PMA has good biocompatibility and is non-immunogenic;
           biosynthetically produced PMA has been reported to exhibit
           biocompatibility comparable to, or better than, chemically synthesized
-          PMA{" "}
-          <Cite k={["zhang2021pmananoplatform", "qi2022highmwpolymalate"]} />,
-          supporting its potential as a biocompatible and environmentally
-          favorable material. Dopamine is also an endogenous compound in the
-          human body, and PMA functionalized with dopamine through amide bonds
-          showed no cytotoxicity <Cite k="Tang2020PMLADA" />. Second, the
-          adhesive uses biodegradable PMA as its polymer backbone, allowing
-          gradual degradation and metabolism in vivo and potentially reducing
-          the risks of persistent residues and inflammation associated with
-          long-term implantation. Taken together, the reported biocompatibility,
+          PMA, supporting its potential as a biocompatible and environmentally
+          favorable material{" "}
+          <Cite k={["zhang2021pmananoplatform", "qi2022highmwpolymalate"]} />.
+          Dopamine is also an endogenous compound in the human body, and PMA
+          functionalized with dopamine through amide bonds showed no
+          cytotoxicity <Cite k="Tang2020PMLADA" />. Second, the adhesive uses
+          biodegradable PMA as its polymer backbone, allowing gradual
+          degradation and metabolism in vivo and potentially reducing the risks
+          of persistent residues and inflammation associated with long-term
+          implantation. Taken together, the reported biocompatibility,
           biodegradability, and lack of cytotoxicity provide a basis for further
           investigating PMA–DA in underwater applications and biomedical uses
           such as tissue adhesion.
@@ -213,8 +213,8 @@ const sections: ArticleSection[] = [
               Before each activity, the operator identifies hazards associated
               with the materials, equipment, energy sources, and anticipated
               waste streams; reviews the applicable procedures and safety data
-              sheets (SDSs) <Cite k="oucchemicalsds" />; and confirms the
-              locations of emergency equipment and exits. Personal protective
+              sheets (SDSs); and confirms the locations of emergency equipment
+              and exits <Cite k="oucchemicalsds" />. Personal protective
               equipment is selected for the specific task rather than applied as
               a fixed checklist. A lab coat and closed-toe footwear are the
               baseline; eye, hand, and other protection is matched to splash,

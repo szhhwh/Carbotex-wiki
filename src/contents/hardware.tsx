@@ -1,13 +1,522 @@
 import {
-  ArticlePage,
   ArticleNote,
+  ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
-import { Figure } from "../components/media/Figure";
 import { Cite } from "../components/article/References";
+import {
+  BudgetExplorer,
+  CalibrationGrid,
+  ComponentCatalog,
+  FailureMatrix,
+  HardwareTakeaways,
+  IoTSystemMap,
+  MediaPair,
+  OperationLoop,
+  OutlookRoadmap,
+  SafeguardGrid,
+  ValidationSnapshot,
+  type BudgetItem,
+  type CalibrationEntry,
+  type CatalogGroup,
+  type FailureMode,
+  type HardwareTakeaway,
+  type IoTNodeGroup,
+  type OperationStep,
+  type OutlookStage,
+  type Safeguard,
+} from "../components/hardware/HardwareSections";
+import { Figure } from "../components/media/Figure";
 import { VideoEmbed } from "../components/media/VideoEmbed";
+import styles from "./hardware.module.css";
 
-// Content supplied in received/wiki-materials/dry-lab/hardware/page.md.
+const takeaways: HardwareTakeaway[] = [
+  {
+    metric: "Cation exchange",
+    title: "Waste ammonium becomes a removable stream",
+    text: "Resin removes ammonium from anaerobic fermentation broth so the treated liquid can continue to aerobic malate biosynthesis.",
+    icon: "exchange",
+  },
+  {
+    metric: "$171.54",
+    title: "Built from commercially available parts",
+    text: "The complete platform uses off-the-shelf components and a detailed, replicable bill of materials.",
+    icon: "cost",
+  },
+  {
+    metric: "STM32 + ESP8266",
+    title: "Local control with cloud visibility",
+    text: "The IoT layer monitors pH, temperature, turbidity, and liquid level through real-time cloud connectivity.",
+    icon: "iot",
+  },
+  {
+    metric: "Fail-safe",
+    title: "Tested with real fermentation effluent",
+    text: "Pump, valve, and sensor failures are covered by explicit safeguards, with local operation independent of the cloud.",
+    icon: "validation",
+  },
+];
+
+const componentGroups: CatalogGroup[] = [
+  {
+    id: "fluidic",
+    label: "Fluidic Components",
+    parts: [
+      {
+        name: "Motor RS-380SA (Peristaltic Pump)",
+        specification: "DC motor, 10 units",
+        function: "Drives fluid through the column and tubing circuit",
+      },
+      {
+        name: "WK4A Four-Way Switch",
+        specification: "4-way valve, 1 unit",
+        function:
+          "Switches fluid routing among adsorption, washing, and regeneration loops",
+      },
+      {
+        name: "Check Valve (8 mm)",
+        specification: "20 units",
+        function: "Prevents backflow within the fluidic circuit",
+      },
+      {
+        name: "Silicone Tube (ID 3 mm, OD 5 mm)",
+        specification: "5 m",
+        function:
+          "Connects all fluidic components; chemically inert and flexible",
+      },
+    ],
+  },
+  {
+    id: "chemistry",
+    label: "Adsorbent Materials",
+    parts: [
+      {
+        name: "Sodium-Type Cation Exchange Resin",
+        specification: "2 units",
+        function: "Na⁺ form resin for selective NH₄⁺ capture",
+      },
+      {
+        name: "Strong-Acid Cation Exchange Resin",
+        specification: "1 unit",
+        function:
+          "H⁺ form resin for high-capacity ammonium adsorption and regeneration",
+      },
+    ],
+  },
+  {
+    id: "structure",
+    label: "Structural Components",
+    parts: [
+      {
+        name: "Bambu Lab PLA Basic Filament",
+        specification: "6 spools",
+        function: "3D-printed structural housing and custom mounts",
+      },
+      {
+        name: "Double-Sided Perforated Board (9×15)",
+        specification: "1 unit",
+        function: "Prototyping board for electronic component mounting",
+      },
+      {
+        name: "Perforated Board Kit",
+        specification: "1 kit",
+        function: "Additional mounting and wiring substrate",
+      },
+      {
+        name: "M3 Copper Standoffs (8/15/20 mm)",
+        specification: "several sets",
+        function: "Spacers for stacking and securing PCB layers",
+      },
+      {
+        name: "M2 & M3 Screws",
+        specification: "several sets",
+        function: "Fasteners for mechanical assembly",
+      },
+      {
+        name: "Cable Ties (3.6 mm × 30 cm)",
+        specification: "several pcs",
+        function: "Cable management and tubing securing",
+      },
+      {
+        name: "Foam Adhesive Tape (20 mm × 3 m)",
+        specification: "1 rolls",
+        function: "Vibration dampening and component cushioning",
+      },
+    ],
+  },
+  {
+    id: "sensing",
+    label: "Sensing Components",
+    parts: [
+      {
+        name: "NTC Temperature Sensor",
+        specification: "4 units",
+        function: "Monitors fermentation broth temperature",
+      },
+      {
+        name: "pH Sensor",
+        specification: "2 units",
+        function:
+          "Tracks ion exchange progress; pH shift indicates resin saturation",
+      },
+      {
+        name: "AZDM01 Turbidity Sensor",
+        specification: "2 units",
+        function: "Measures broth turbidity for process monitoring",
+      },
+      {
+        name: "Flexible Liquid-Level Sensor",
+        specification: "5 units",
+        function: "Detects fluid levels in reservoirs and column",
+      },
+    ],
+  },
+  {
+    id: "control",
+    label: "Electronic and Control Components",
+    parts: [
+      {
+        name: "STM32F103C8T6 Development Kit",
+        specification: "1 unit",
+        function:
+          "Main controller; collects sensor data and drives pump/valve/OLED",
+      },
+      {
+        name: "ESP8266 Wi-Fi Image-Transmission Module",
+        specification: "1 unit",
+        function: "Cloud connectivity via MQTT to OneNET platform",
+      },
+      {
+        name: "IoT Component Kit (Expansion Board, Modules, ST-LINK)",
+        specification: "1 kit",
+        function: "Programmer, expansion board, and peripheral modules",
+      },
+    ],
+  },
+];
+
+const operationSteps: OperationStep[] = [
+  {
+    phase: "Trigger",
+    title: "Sample and threshold",
+    detail:
+      "The system samples anaerobic effluent. When ammonia nitrogen exceeds the preset threshold, the pumps start.",
+  },
+  {
+    phase: "Adsorb",
+    title: "Capture ammonium",
+    detail:
+      "Broth enters the column and NH₄⁺ binds to the resin while eluate pH is tracked.",
+  },
+  {
+    phase: "Deliver",
+    title: "Send treated liquid downstream",
+    detail:
+      "Ammonia-depleted liquid proceeds to sugar concentration and aerobic xylose fermentation.",
+  },
+  {
+    phase: "Regenerate",
+    title: "Switch at saturation",
+    detail:
+      "A constant eluate pH marks saturation. Valves switch and regenerant elutes the captured ammonium.",
+  },
+  {
+    phase: "Repeat",
+    title: "Wash and re-enter service",
+    detail:
+      "After washing, the cartridge is ready for another adsorption cycle.",
+  },
+];
+
+const failureModes: FailureMode[] = [
+  {
+    risk: "Pump failure / power loss",
+    consequence: "Fluid stops circulating; fermentation broth stalls in column",
+    mitigation:
+      "System detects pump inactivity via current sensor; triggers audible alarm and sends cloud notification",
+  },
+  {
+    risk: "Sensor drift (pH)",
+    consequence:
+      "Incorrect saturation detection; resin overflows or under-regenerates",
+    mitigation:
+      "Two pH sensors deployed in parallel for cross-validation; system enters safe-hold mode if readings diverge beyond threshold",
+  },
+  {
+    risk: "Valve stuck",
+    consequence: "Fluid routed to wrong loop; potential cross-contamination",
+    mitigation:
+      "Valve position feedback via limit switches; system halts if expected position not confirmed within timeout",
+  },
+  {
+    risk: "ESP8266 disconnects",
+    consequence: "Remote monitoring lost; local control continues",
+    mitigation:
+      "OLED displays local data independently; pump/valve control runs autonomously on STM32 without cloud dependency",
+  },
+  {
+    risk: "Resin saturation undetected",
+    consequence: "Ammonia breakthrough into downstream",
+    mitigation:
+      "Liquid-level sensor at column outlet detects flow interruption; pH trend analysis triggers regeneration cycle automatically",
+  },
+];
+
+const iotGroups: IoTNodeGroup[] = [
+  {
+    label: "Sense + control",
+    nodes: ["DHT11", "STM32F103C8T6", "Tactile button"],
+    detail: "Local sampling, control logic, and on-board interaction.",
+  },
+  {
+    label: "Local interface",
+    nodes: ["0.96-inch OLED", "LED"],
+    detail: "Readings and network diagnostics remain visible on site.",
+  },
+  {
+    label: "Cloud + user",
+    nodes: ["ESP8266", "OneNET", "Mobile app", "PC console"],
+    detail: "Data are relayed through a shared hotspot for remote access.",
+  },
+];
+
+const calibrationEntries: CalibrationEntry[] = [
+  {
+    sensor: "pH Sensor",
+    method: "Two-point calibration with pH 4.01 and pH 6.86 standard buffers",
+    accuracy: "±0.1 pH",
+    response: "< 30 s",
+    icon: "ph",
+  },
+  {
+    sensor: "NTC Temperature Sensor",
+    method: "Ice-point (0 °C) and boiling-point (100 °C) calibration",
+    accuracy: "±0.5 °C",
+    response: "< 5 s",
+    icon: "temperature",
+  },
+  {
+    sensor: "AZDM01 Turbidity Sensor",
+    method: "Calibration with Formazin standard solutions (0, 20, 100 NTU)",
+    accuracy: "±5% FS",
+    response: "< 2 s",
+    icon: "turbidity",
+  },
+  {
+    sensor: "Liquid-Level Sensor",
+    method: "Threshold calibration at known fill volumes",
+    accuracy: "Binary (on/off)",
+    response: "< 1 s",
+    icon: "level",
+  },
+];
+
+const safeguards: Safeguard[] = [
+  {
+    title: "Sensor watchdog",
+    detail:
+      "If any sensor stops reporting data for more than 60 seconds, the system flags the sensor as unresponsive and alerts the operator via the OLED display and cloud notification.",
+  },
+  {
+    title: "Data validation",
+    detail:
+      "Sensor readings outside physically plausible ranges (e.g., pH < 0 or > 14, temperature < −20 °C or > 120 °C) are rejected and logged as errors.",
+  },
+  {
+    title: "Redundant pH sensing",
+    detail:
+      "Two pH sensors are deployed at different points in the fluidic circuit. If their readings diverge by more than 0.5 pH units, the system enters safe-hold mode and alerts the operator.",
+  },
+];
+
+const outlookStages: OutlookStage[] = [
+  {
+    horizon: "Near term",
+    title: "Hardware iteration",
+    text: "A snap-in modular filter cartridge will let us swap adsorbents, such as media for calcium malate, on site. CFD-guided refinements and a multi-way valve for cartridge recycling will support resin reuse.",
+  },
+  {
+    horizon: "Next",
+    title: "Scale-up potential",
+    text: "The modular architecture can scale from a single treatment unit to multiple columns or a reactor array. We regard pilot scale as the next step, with industrial scale only after sustained-treatment validation.",
+  },
+  {
+    horizon: "Boundary",
+    title: "Real-world application",
+    text: "Our primary use case is laboratory-scale anaerobic fermentation effluent treatment, with automated ammonia-nitrogen removal before downstream aerobic malate biosynthesis. The platform was designed, tested, and validated for this scenario. It addresses a real bottleneck: manual ammonium removal is labor-intensive, inconsistent, and limits throughput in multi-stage fermentation workflows. At $171.54 total, the low-cost, 3D-printed, open-source system is accessible to undergraduate and research laboratories worldwide. Field deployment beyond the laboratory will require pilot-scale validation, long-term stability testing beyond 7 days of continuous operation, and regulatory review. These remain future work rather than current claims.",
+  },
+];
+
+const budgetItems: BudgetItem[] = [
+  {
+    number: 1,
+    name: "Bambu Lab PLA Basic Filament",
+    quantity: 6,
+    unitCost: 7.04,
+    cost: 42.24,
+    group: "structure",
+  },
+  {
+    number: 2,
+    name: "IoT Component Kit (Expansion Board, Modules, ST-LINK)",
+    quantity: 1,
+    unitCost: 14.79,
+    cost: 14.79,
+    group: "control",
+  },
+  {
+    number: 3,
+    name: "Double-Sided Perforated Board (9×15)",
+    quantity: 1,
+    unitCost: 2.37,
+    cost: 2.37,
+    group: "structure",
+  },
+  {
+    number: 4,
+    name: "Perforated Board Kit",
+    quantity: 1,
+    unitCost: 2.71,
+    cost: 2.71,
+    group: "structure",
+  },
+  {
+    number: 5,
+    name: "M3 Copper Standoffs (8/15/20 mm)",
+    quantity: 1,
+    unitCost: 4.47,
+    cost: 4.47,
+    group: "structure",
+  },
+  {
+    number: 6,
+    name: "M2 & M3 Screws",
+    quantity: 1,
+    unitCost: 7.86,
+    cost: 7.86,
+    group: "structure",
+  },
+  {
+    number: 7,
+    name: "Cable Ties (3.6 mm × 30 cm)",
+    quantity: 200,
+    unitCost: 0.02,
+    cost: 4,
+    group: "structure",
+  },
+  {
+    number: 8,
+    name: "Foam Adhesive Tape (20 mm × 3 m)",
+    quantity: 2,
+    unitCost: 1.14,
+    cost: 2.28,
+    group: "structure",
+  },
+  {
+    number: 9,
+    name: "NTC Temperature Sensor",
+    quantity: 4,
+    unitCost: 0.28,
+    cost: 1.12,
+    group: "sensing",
+  },
+  {
+    number: 10,
+    name: "STM32F103C8T6 Development Kit",
+    quantity: 1,
+    unitCost: 14.58,
+    cost: 14.58,
+    group: "control",
+  },
+  {
+    number: 11,
+    name: "AZDM01 Turbidity Sensor",
+    quantity: 2,
+    unitCost: 4.39,
+    cost: 8.78,
+    group: "sensing",
+  },
+  {
+    number: 12,
+    name: "pH Sensor (Module, Electrode, Calibration)",
+    quantity: 2,
+    unitCost: 9.3,
+    cost: 18.6,
+    group: "sensing",
+  },
+  {
+    number: 13,
+    name: "ESP8266 Wi-Fi Image-Transmission Module",
+    quantity: 1,
+    unitCost: 8.45,
+    cost: 8.45,
+    group: "control",
+  },
+  {
+    number: 14,
+    name: "Motor RS-380SA (Peristaltic Pump)",
+    quantity: 10,
+    unitCost: 0.28,
+    cost: 2.8,
+    group: "fluidic",
+  },
+  {
+    number: 15,
+    name: "Sodium-Type Cation Exchange Resin",
+    quantity: 2,
+    unitCost: 2.08,
+    cost: 4.16,
+    group: "chemistry",
+  },
+  {
+    number: 16,
+    name: "Strong-Acid Cation Exchange Resin",
+    quantity: 1,
+    unitCost: 9.7,
+    cost: 9.7,
+    group: "chemistry",
+  },
+  {
+    number: 17,
+    name: "Silicone Tube (ID 3 mm, OD 5 mm)",
+    quantity: 5,
+    unitCost: 0.92,
+    cost: 4.6,
+    group: "fluidic",
+  },
+  {
+    number: 18,
+    name: "WK4A Four-Way Switch",
+    quantity: 1,
+    unitCost: 7.78,
+    cost: 7.78,
+    group: "fluidic",
+  },
+  {
+    number: 19,
+    name: "Check Valve (8 mm)",
+    quantity: 20,
+    unitCost: 0.1,
+    cost: 2,
+    group: "fluidic",
+  },
+  {
+    number: 20,
+    name: "Flexible Liquid-Level Sensor",
+    quantity: 5,
+    unitCost: 1.65,
+    cost: 8.25,
+    group: "sensing",
+  },
+];
+
+const referenceKeys = [
+  "zhang2021ammonium",
+  "versteeg2007cfd",
+  "gargalo2020smart",
+  "igem2024engineering",
+];
+
 const sections: ArticleSection[] = [
   {
     id: "hardware-overview",
@@ -25,34 +534,14 @@ const sections: ArticleSection[] = [
           sensor calibration, system reliability, and failure-mode handling —
           are reported in the corresponding sections below.
         </p>
-        <p>
-          <strong>Key Takeaways:</strong>
-        </p>
-        <ul>
-          <li>
-            The platform removes ammonium waste from anaerobic fermentation
-            broth using cation exchange resin, enabling downstream aerobic
-            malate biosynthesis.
-          </li>
-          <li>
-            The total hardware cost is $171.54, using only commercially
-            available components.
-          </li>
-          <li>
-            The IoT system provides real-time monitoring of pH, temperature,
-            turbidity, and liquid level via STM32 + ESP8266 cloud connectivity.
-          </li>
-          <li>
-            The system was tested with real fermentation effluent and includes
-            fail-safe mechanisms for pump, valve, and sensor failures.
-          </li>
-        </ul>
+        <HardwareTakeaways items={takeaways} />
       </>
     ),
   },
   {
     id: "hardware-introduction",
-    title: "Part 1. Introduction",
+    eyebrow: "Part 1",
+    title: "Introduction",
     content: (
       <>
         <p>
@@ -83,7 +572,8 @@ const sections: ArticleSection[] = [
   },
   {
     id: "hardware-structure",
-    title: "Part 2. Structure Overview",
+    eyebrow: "Part 2",
+    title: "Structure Overview",
     content: (
       <>
         <p>
@@ -111,34 +601,39 @@ const sections: ArticleSection[] = [
           caption="Fluid stream"
           fallback={<p>Image unavailable.</p>}
         />
-        <h3>2.2 Data stream</h3>
-        <p>
-          Sensors measure the pH and temperature of the anaerobic effluent. The
-          main controller collects sensor readings, displays data locally on an
-          OLED screen, and transmits data to the cloud via the MQTT protocol.
-          Users can remotely monitor system status and adjust operational
-          parameters through mobile applications or WeChat mini programs. A
-          system overview diagram visualizes the fluid routing and data flow
-          between modules, illustrating how our hardware fits into the full
-          biomanufacturing workflow.
-        </p>
-        <Figure
-          id="hardware-figure-2-2"
-          src="https://static.igem.wiki/teams/6147/wiki/figure2-2-data-stream-overview-drawio.avif"
-          intrinsicWidth={1353}
-          intrinsicHeight={2217}
-          maxHeight="min(65svh, 640px)"
-          alt="Data stream overview"
-          captionPrefix="Figure 2-2."
-          caption="Data stream overview"
-          fallback={<p>Image unavailable.</p>}
-        />
+        <div className={styles.dataStream}>
+          <div>
+            <h3>2.2 Data stream</h3>
+            <p>
+              Sensors measure the pH and temperature of the anaerobic effluent.
+              The main controller collects sensor readings, displays data
+              locally on an OLED screen, and transmits data to the cloud via the
+              MQTT protocol. Users can remotely monitor system status and adjust
+              operational parameters through mobile applications or WeChat mini
+              programs. A system overview diagram visualizes the fluid routing
+              and data flow between modules, illustrating how our hardware fits
+              into the full biomanufacturing workflow.
+            </p>
+          </div>
+          <Figure
+            id="hardware-figure-2-2"
+            src="https://static.igem.wiki/teams/6147/wiki/figure2-2-data-stream-overview.avif"
+            intrinsicWidth={1353}
+            intrinsicHeight={2217}
+            maxHeight="min(75svh, 680px)"
+            alt="Data stream overview"
+            captionPrefix="Figure 2-2."
+            caption="Data stream overview"
+            fallback={<p>Image unavailable.</p>}
+          />
+        </div>
       </>
     ),
   },
   {
     id: "hardware-components",
-    title: "Part 3. Hardware Component Selection",
+    eyebrow: "Part 3",
+    title: "Hardware Component Selection",
     content: (
       <>
         <p>
@@ -160,49 +655,6 @@ const sections: ArticleSection[] = [
           switching without manual reconfiguration, which is critical for
           unattended operation.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="3.1 Fluidic Components"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Component</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Motor RS-380SA (Peristaltic Pump)</th>
-                <td>DC motor, 10 units</td>
-                <td>Drives fluid through the column and tubing circuit</td>
-              </tr>
-              <tr>
-                <th scope="row">WK4A Four-Way Switch</th>
-                <td>4-way valve, 1 unit</td>
-                <td>
-                  Switches fluid routing among adsorption, washing, and
-                  regeneration loops
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Check Valve (8 mm)</th>
-                <td>20 units</td>
-                <td>Prevents backflow within the fluidic circuit</td>
-              </tr>
-              <tr>
-                <th scope="row">Silicone Tube (ID 3 mm, OD 5 mm)</th>
-                <td>5 m</td>
-                <td>
-                  Connects all fluidic components; chemically inert and flexible
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <h3>3.2 Adsorbent Materials</h3>
         <p>
           Two types of cation exchange resin are used to capture NH₄⁺ ions from
@@ -211,95 +663,11 @@ const sections: ArticleSection[] = [
           provide higher selectivity for NH₄⁺ and are regenerable, reducing
           long-term cost and waste.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="3.2 Adsorbent Materials"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Component</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Sodium-Type Cation Exchange Resin</th>
-                <td>2 units</td>
-                <td>Na⁺ form resin for selective NH₄⁺ capture</td>
-              </tr>
-              <tr>
-                <th scope="row">Strong-Acid Cation Exchange Resin</th>
-                <td>1 unit</td>
-                <td>
-                  H⁺ form resin for high-capacity ammonium adsorption and
-                  regeneration
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <h3>3.3 Structural Components</h3>
         <p>
           The mechanical housing and support structure are fabricated from
           3D-printed and off-the-shelf parts.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="3.3 Structural Components"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Component</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Bambu Lab PLA Basic Filament</th>
-                <td>6 spools</td>
-                <td>3D-printed structural housing and custom mounts</td>
-              </tr>
-              <tr>
-                <th scope="row">Double-Sided Perforated Board (9×15)</th>
-                <td>1 unit</td>
-                <td>Prototyping board for electronic component mounting</td>
-              </tr>
-              <tr>
-                <th scope="row">Perforated Board Kit</th>
-                <td>1 kit</td>
-                <td>Additional mounting and wiring substrate</td>
-              </tr>
-              <tr>
-                <th scope="row">M3 Copper Standoffs (8/15/20 mm)</th>
-                <td>1 set</td>
-                <td>Spacers for stacking and securing PCB layers</td>
-              </tr>
-              <tr>
-                <th scope="row">M2 &amp; M3 Screws</th>
-                <td>1 set</td>
-                <td>Fasteners for mechanical assembly</td>
-              </tr>
-              <tr>
-                <th scope="row">Cable Ties (3.6 mm × 30 cm)</th>
-                <td>200 pcs</td>
-                <td>Cable management and tubing securing</td>
-              </tr>
-              <tr>
-                <th scope="row">Foam Adhesive Tape (20 mm × 3 m)</th>
-                <td>2 rolls</td>
-                <td>Vibration dampening and component cushioning</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <h3>3.4 Sensing Components</h3>
         <p>
           Sensors monitor real-time fermentation parameters to trigger automated
@@ -309,49 +677,6 @@ const sections: ArticleSection[] = [
           Turbidity and liquid-level sensors serve as secondary indicators for
           process integrity and leak detection.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="3.4 Sensing Components"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Component</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">NTC Temperature Sensor</th>
-                <td>4 units</td>
-                <td>Monitors fermentation broth temperature</td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  pH Sensor (Module + Electrode + Calibration)
-                </th>
-                <td>2 units</td>
-                <td>
-                  Tracks ion exchange progress; pH shift indicates resin
-                  saturation
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">AZDM01 Turbidity Sensor</th>
-                <td>2 units</td>
-                <td>Measures broth turbidity for process monitoring</td>
-              </tr>
-              <tr>
-                <th scope="row">Flexible Liquid-Level Sensor</th>
-                <td>5 units</td>
-                <td>Detects fluid levels in reservoirs and column</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <h3>3.5 Electronic and Control Components</h3>
         <p>
           The control architecture is centered around an STM32 microcontroller
@@ -363,57 +688,21 @@ const sections: ArticleSection[] = [
           and is widely documented in the DIY IoT community, reducing the
           barrier for replication.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="3.5 Electronic and Control Components"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Component</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">STM32F103C8T6 Development Kit</th>
-                <td>1 unit</td>
-                <td>
-                  Main controller; collects sensor data and drives
-                  pump/valve/OLED
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">ESP8266 Wi-Fi Image-Transmission Module</th>
-                <td>1 unit</td>
-                <td>Cloud connectivity via MQTT to OneNET platform</td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  IoT Component Kit (Expansion Board, Modules, ST-LINK)
-                </th>
-                <td>1 kit</td>
-                <td>Programmer, expansion board, and peripheral modules</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ComponentCatalog groups={componentGroups} />
         <p>
           The total hardware cost is <strong>171.54 USD</strong> (detailed
-          breakdown in Part 8). The complete bill of materials ensures that the
-          system can be replicated from commercially available components at low
-          cost, supporting the project's goal of accessible, open-source
-          biomanufacturing hardware.
+          breakdown in the device budget). The complete bill of materials
+          ensures that the system can be replicated from commercially available
+          components at low cost, supporting the project's goal of accessible,
+          open-source biomanufacturing hardware.
         </p>
       </>
     ),
   },
   {
     id: "hardware-ammonia-removal",
-    title: "Part 4. Ammonia-Nitrogen Removal System",
+    eyebrow: "Part 4",
+    title: "Ammonia-Nitrogen Removal System",
     content: (
       <>
         <p>
@@ -432,10 +721,11 @@ const sections: ArticleSection[] = [
           fermentation effluent binds to the resin's functional groups via ion
           exchange, releasing H⁺ or Na⁺ into the liquid phase. Once saturated,
           the resin can be regenerated through elution to recover its adsorption
-          capacity for repeated use <Cite k="bernstein2007ionexchange" />. After
-          this treatment, the ammonia nitrogen concentration of the broth drops
-          to a sufficiently low level, and the liquid can be sent to downstream
-          sugar concentration and aerobic fermentation.
+          capacity for repeated use
+          <Cite k="zhang2021ammonium" />. After this treatment, the ammonia
+          nitrogen concentration of the broth drops to a sufficiently low level,
+          and the liquid can be sent to downstream sugar concentration and
+          aerobic fermentation.
         </p>
         <Figure
           id="hardware-figure-4-1"
@@ -453,49 +743,64 @@ const sections: ArticleSection[] = [
           Cartridges can be filled with different adsorbents and replaced on
           demand. CFD simulation is applied to optimize internal fluid pathways,
           minimizing dead volume and ensuring uniform flow distribution across
-          the resin bed <Cite k="rahimi2021cfd" />. Multi-way valves switch
+          the resin bed <Cite k="versteeg2007cfd" />. Multi-way valves switch
           pipelines between the adsorption loop, washing loop and resin
           regeneration loop to enable resin reuse.
         </p>
-        <ArticleNote label="Image pending upload">
-          <p>
-            <strong>Figure 4-2.</strong> Fluid Optimization
-          </p>
-        </ArticleNote>
-        <ArticleNote label="Video pending upload">
-          <p>
-            <strong>Video 4-1.</strong> Fluid Simulation
-          </p>
-        </ArticleNote>
+        <MediaPair>
+          <Figure
+            id="hardware-figure-4-2"
+            src="https://static.igem.wiki/teams/6147/wiki/fluid-simulation-contour.avif"
+            intrinsicWidth={825}
+            intrinsicHeight={477}
+            alt="Fluid simulation contour showing velocity distribution"
+            captionPrefix="Figure 4-2."
+            caption="Fluid Residual Plot"
+            fallback={<p>Image unavailable.</p>}
+          />
+          <Figure
+            id="hardware-figure-4-3"
+            src="https://static.igem.wiki/teams/6147/wiki/fig3-cycle2-cfd.avif"
+            intrinsicWidth={2304}
+            intrinsicHeight={1728}
+            alt="Fluid simulation contour showing velocity distribution"
+            captionPrefix="Figure 4-3."
+            caption="Fluid Simulation Contour"
+            fallback={<p>Image unavailable.</p>}
+          />
+        </MediaPair>
         <h3>Automatic Operation Workflow</h3>
+        <p>The workflow runs automatically as follows:</p>
         <p>
-          The workflow runs automatically as follows: The system samples
-          anaerobic fermentation effluent. When ammonia nitrogen exceeds the
-          preset threshold, peristaltic pumps start and feed the broth into the
-          adsorption column for ammonium capture.
+          The system samples anaerobic fermentation effluent. When ammonia
+          nitrogen exceeds the preset threshold, peristaltic pumps start and
+          feed the broth into the adsorption column for ammonium capture. At the
+          same time, eluate pH is tracked. Its pH will drop as ion exchange
+          proceeds. A constant eluate pH signifies resin saturation.
         </p>
         <p>
           Ammonia-depleted liquid flows out of the column and proceeds to
           downstream sugar concentration and aerobic xylose fermentation for
-          malate and poly-malate production.
+          malate and poly-malate production. When the resin approaches
+          saturation, valves switch to regeneration mode. Regenerant flows
+          through the column to elute trapped ammonium waste. After washing, the
+          resin cartridge is ready for another adsorption cycle.
         </p>
-        <p>
-          When the resin approaches saturation, valves switch to regeneration
-          mode. Regenerant flows through the column to elute trapped ammonium
-          waste.
-        </p>
-        <p>
-          After washing, the resin cartridge is ready for another adsorption
-          cycle.
-        </p>
-        <ArticleNote label="Image pending upload">
+        <OperationLoop steps={operationSteps} />
+        <Figure
+          id="hardware-figure-4-4"
+          src="https://static.igem.wiki/teams/6147/wiki/hardware-diagram.avif"
+          intrinsicWidth={1068}
+          intrinsicHeight={781}
+          alt="Hardware diagram labeling the peristaltic pumps, multi-way valve, ion-exchange column, and pretreatment bottles"
+          captionPrefix="Figure 4-4."
+          caption="Hardware Diagram"
+          fallback={<p>Image unavailable.</p>}
+        />
+        <ArticleNote theme="hardware" label="Video 4-1 · upload pending">
           <p>
-            <strong>Figure 4-3.</strong> Hardware Diagram
-          </p>
-        </ArticleNote>
-        <ArticleNote label="Video pending upload">
-          <p>
-            <strong>Video 4-2.</strong> Working Condition
+            <strong>Working Condition.</strong> The supplied static MP4 is not
+            yet available from the iGEM host.
           </p>
         </ArticleNote>
         <h3>4.1 Failure Mode and Safety Design</h3>
@@ -503,73 +808,7 @@ const sections: ArticleSection[] = [
           To ensure safe unattended operation, we analyzed critical failure
           modes and implemented corresponding safeguards:
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="4.1 Failure Mode and Safety Design"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Failure Mode</th>
-                <th scope="col">Consequence</th>
-                <th scope="col">Mitigation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Pump failure / power loss</th>
-                <td>
-                  Fluid stops circulating; fermentation broth stalls in column
-                </td>
-                <td>
-                  System detects pump inactivity via current sensor; triggers
-                  audible alarm and sends cloud notification
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Sensor drift (pH)</th>
-                <td>
-                  Incorrect saturation detection; resin overflows or
-                  under-regenerates
-                </td>
-                <td>
-                  Two pH sensors deployed in parallel for cross-validation;
-                  system enters safe-hold mode if readings diverge beyond
-                  threshold
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Valve stuck</th>
-                <td>
-                  Fluid routed to wrong loop; potential cross-contamination
-                </td>
-                <td>
-                  Valve position feedback via limit switches; system halts if
-                  expected position not confirmed within timeout
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">ESP8266 disconnects</th>
-                <td>Remote monitoring lost; local control continues</td>
-                <td>
-                  OLED displays local data independently; pump/valve control
-                  runs autonomously on STM32 without cloud dependency
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Resin saturation undetected</th>
-                <td>Ammonia breakthrough into downstream</td>
-                <td>
-                  Liquid-level sensor at column outlet detects flow
-                  interruption; pH trend analysis triggers regeneration cycle
-                  automatically
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <FailureMatrix items={failureModes} />
         <p>
           The system is designed to fail safe: in the event of any sensor or
           communication failure, the STM32 defaults to stopping all pumps and
@@ -591,12 +830,20 @@ const sections: ArticleSection[] = [
           confirming the reliability of the fluidic circuit under real
           fermentation broth conditions.
         </p>
+        <ValidationSnapshot
+          signals={[
+            "Real anaerobic fermentation effluent",
+            "Multiple adsorption-regeneration cycles",
+            "No mechanical failure observed",
+          ]}
+        />
       </>
     ),
   },
   {
     id: "hardware-iot",
-    title: "Part 5. IoT Monitoring and Control System",
+    eyebrow: "Part 5",
+    title: "IoT Monitoring and Control System",
     content: (
       <>
         <h3>5.1 System Overview</h3>
@@ -607,7 +854,7 @@ const sections: ArticleSection[] = [
           This system enables real-time tracking of key environmental parameters
           and remote control capabilities, ensuring stable operation of the
           biological ammonia-nitrogen removal process{" "}
-          <Cite k="wang2020iotbioprocess" />.
+          <Cite k="gargalo2020smart" />.
         </p>
         <p>
           The hardware platform is built on a single development board centered
@@ -619,6 +866,7 @@ const sections: ArticleSection[] = [
           used in the experiments and their data are displayed in the user
           application.
         </p>
+        <IoTSystemMap groups={iotGroups} />
         <Figure
           id="hardware-figure-5-1"
           src="https://static.igem.wiki/teams/6147/wiki/fig5-1-system-arch.avif"
@@ -634,6 +882,7 @@ const sections: ArticleSection[] = [
           src="https://static.igem.wiki/teams/6147/wiki/20261009-145147.avif"
           intrinsicWidth={1824}
           intrinsicHeight={2008}
+          maxHeight="min(72svh, 720px)"
           alt="Photograph of the integrated development board. An ST-LINK V2 programmer, STM32 minimal system, OLED display, ESP8266 Wi-Fi module, and DHT11 temperature/humidity sensor are wired together for the ammonia-nitrogen removal monitoring system."
           captionPrefix="Figure 5-2."
           caption="Photograph of the integrated development board. An ST-LINK V2 programmer, STM32 minimal system, OLED display, ESP8266 Wi-Fi module, and DHT11 temperature/humidity sensor are wired together for the ammonia-nitrogen removal monitoring system."
@@ -659,7 +908,10 @@ const sections: ArticleSection[] = [
         </p>
         <VideoEmbed
           src="https://video.igem.org/videos/embed/qTd67URK3G5zPEptrTrRsQ"
-          title="HARDWARE video5-1"
+          title="HARDWARE video 5-1"
+          provider="raw"
+          allow="fullscreen"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           captionPrefix="Video 5-1."
           caption="OLED display showing the boot initialization sequence of the ESP8266 network connection."
         />
@@ -679,6 +931,7 @@ const sections: ArticleSection[] = [
           src="https://static.igem.wiki/teams/6147/wiki/20261009-145155.avif"
           intrinsicWidth={1058}
           intrinsicHeight={1216}
+          maxHeight="min(72svh, 680px)"
           alt="Mobile application interface. The HBuilderX-built app (also deployable as a WeChat Mini Program) displays real-time temperature, humidity, pH, and turbidity values and offers remote LED control, demonstrating end-to-end remote monitoring and control."
           captionPrefix="Figure 5-3."
           caption="Mobile application interface. The HBuilderX-built app (also deployable as a WeChat Mini Program) displays real-time temperature, humidity, pH, and turbidity values and offers remote LED control, demonstrating end-to-end remote monitoring and control."
@@ -686,7 +939,10 @@ const sections: ArticleSection[] = [
         />
         <VideoEmbed
           src="https://video.igem.org/videos/embed/u6pTEWPWtHFk3WeDh5oU8t"
-          title="HARDWARE video5-2"
+          title="HARDWARE video 5-2"
+          provider="raw"
+          allow="fullscreen"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           captionPrefix="Video 5-2."
           caption="Mobile application interface showing real-time sensor data and LED control."
         />
@@ -706,54 +962,7 @@ const sections: ArticleSection[] = [
           characteristics were documented to ensure reliable operation during
           fermentation monitoring:
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="5.4 Sensor Calibration and System Reliability"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Sensor</th>
-                <th scope="col">Calibration Method</th>
-                <th scope="col">Accuracy</th>
-                <th scope="col">Response Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">pH Sensor</th>
-                <td>
-                  Two-point calibration with pH 4.01 and pH 6.86 standard
-                  buffers
-                </td>
-                <td>±0.1 pH</td>
-                <td>&lt; 30 s</td>
-              </tr>
-              <tr>
-                <th scope="row">NTC Temperature Sensor</th>
-                <td>Ice-point (0 °C) and boiling-point (100 °C) calibration</td>
-                <td>±0.5 °C</td>
-                <td>&lt; 5 s</td>
-              </tr>
-              <tr>
-                <th scope="row">AZDM01 Turbidity Sensor</th>
-                <td>
-                  Calibration with Formazin standard solutions (0, 20, 100 NTU)
-                </td>
-                <td>±5% FS</td>
-                <td>&lt; 2 s</td>
-              </tr>
-              <tr>
-                <th scope="row">Liquid-Level Sensor</th>
-                <td>Threshold calibration at known fill volumes</td>
-                <td>Binary (on/off)</td>
-                <td>&lt; 1 s</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <CalibrationGrid entries={calibrationEntries} />
         <p>
           The IoT system was designed for continuous operation throughout the
           fermentation cycle (24–72 hours). The STM32 microcontroller operates
@@ -768,256 +977,29 @@ const sections: ArticleSection[] = [
           To handle sensor-specific failures, the system implements the
           following reliability measures:
         </p>
-        <ul>
-          <li>
-            <strong>Sensor watchdog</strong>: If any sensor stops reporting data
-            for more than 60 seconds, the system flags the sensor as
-            unresponsive and alerts the operator via the OLED display and cloud
-            notification.
-          </li>
-          <li>
-            <strong>Data validation</strong>: Sensor readings outside physically
-            plausible ranges (e.g., pH &lt; 0 or &gt; 14, temperature &lt; −20
-            °C or &gt; 120 °C) are rejected and logged as errors.
-          </li>
-          <li>
-            <strong>Redundant pH sensing</strong>: Two pH sensors are deployed
-            at different points in the fluidic circuit. If their readings
-            diverge by more than 0.5 pH units, the system enters safe-hold mode
-            and alerts the operator.
-          </li>
-        </ul>
+        <SafeguardGrid items={safeguards} />
       </>
     ),
   },
   {
     id: "hardware-outlook",
-    title: "Part 6. Future Application and Outlook",
-    content: (
-      <>
-        <h3>Hardware Iteration</h3>
-        <p>
-          In the short term, we plan a snap-in modular filter-cartridge design,
-          so that cartridges filled with different adsorbents (e.g., for calcium
-          malate) can be swapped on site. CFD-guided refinements of the fluid
-          pathway, combined with a multi-way valve for cartridge recycling, will
-          also enable resin reuse.
-        </p>
-        <h3>Scale-Up Potential</h3>
-        <p>
-          Built on a modular architecture, the system is designed to scale from
-          a single treatment unit to multiple columns or a reactor array. Rather
-          than claiming industrial readiness, we regard scale-up as a future
-          direction — first to pilot scale, and only to industrial scale after
-          sustained-treatment validation.
-        </p>
-        <h3>Real-World Application</h3>
-        <p>
-          Our primary use case is{" "}
-          <strong>
-            laboratory-scale anaerobic fermentation effluent treatment
-          </strong>{" "}
-          — automated ammonia-nitrogen removal before downstream aerobic malate
-          biosynthesis. This is the scenario for which the hardware was
-          designed, tested, and validated. The platform addresses a real
-          bottleneck: manual ammonium removal is labor-intensive, inconsistent,
-          and limits throughput in multi-stage fermentation workflows. Built on
-          low-cost, 3D-printed, open-source hardware ($171.54 total), the system
-          is accessible to undergraduate and research laboratories worldwide.
-          Field deployment beyond the laboratory will require pilot-scale
-          validation, long-term stability testing (continuous operation &gt; 7
-          days), and regulatory review — these are explicitly listed as future
-          work rather than current claims.
-        </p>
-      </>
-    ),
+    eyebrow: "Part 6",
+    title: "Future Application and Outlook",
+    content: <OutlookRoadmap stages={outlookStages} />,
   },
   {
     id: "hardware-budget",
-    title: "Part 8. Device Budget",
+    eyebrow: "Part 7",
+    title: "Device Budget",
     content: (
       <>
         <p>
           The detailed hardware budget of the IoT monitoring and control system
-          and the NH₄⁺-N removal hardware is listed below.
+          and the NH₄⁺-N removal hardware is listed below. The ledger groups the
+          source line items by subsystem so the cost structure can be inspected
+          without losing the exact purchase quantities.
         </p>
-        <div
-          className="table-responsive"
-          role="region"
-          aria-label="Device budget"
-          tabIndex={0}
-        >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Cost per Unit (USD)</th>
-                <th scope="col">Cost (USD)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Bambu Lab PLA Basic Filament</td>
-                <td>6</td>
-                <td>7.04</td>
-                <td>42.24</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>IoT Component Kit (Expansion Board, Modules, ST-LINK)</td>
-                <td>1</td>
-                <td>14.79</td>
-                <td>14.79</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Double-Sided Perforated Board (9×15)</td>
-                <td>1</td>
-                <td>2.37</td>
-                <td>2.37</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Perforated Board Kit</td>
-                <td>1</td>
-                <td>2.71</td>
-                <td>2.71</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>M3 Copper Standoffs (8/15/20 mm)</td>
-                <td>1</td>
-                <td>4.47</td>
-                <td>4.47</td>
-              </tr>
-              <tr>
-                <th scope="row">6</th>
-                <td>M2 &amp; M3 Screws</td>
-                <td>1</td>
-                <td>7.86</td>
-                <td>7.86</td>
-              </tr>
-              <tr>
-                <th scope="row">7</th>
-                <td>Cable Ties (3.6 mm × 30 cm)</td>
-                <td>200</td>
-                <td>0.02</td>
-                <td>4.00</td>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>Foam Adhesive Tape (20 mm × 3 m)</td>
-                <td>2</td>
-                <td>1.14</td>
-                <td>2.28</td>
-              </tr>
-              <tr>
-                <th scope="row">9</th>
-                <td>NTC Temperature Sensor</td>
-                <td>4</td>
-                <td>0.28</td>
-                <td>1.12</td>
-              </tr>
-              <tr>
-                <th scope="row">10</th>
-                <td>STM32F103C8T6 Development Kit</td>
-                <td>1</td>
-                <td>14.58</td>
-                <td>14.58</td>
-              </tr>
-              <tr>
-                <th scope="row">11</th>
-                <td>AZDM01 Turbidity Sensor</td>
-                <td>2</td>
-                <td>4.39</td>
-                <td>8.78</td>
-              </tr>
-              <tr>
-                <th scope="row">12</th>
-                <td>pH Sensor (Module, Electrode, Calibration)</td>
-                <td>2</td>
-                <td>9.30</td>
-                <td>18.60</td>
-              </tr>
-              <tr>
-                <th scope="row">13</th>
-                <td>ESP8266 Wi-Fi Image-Transmission Module</td>
-                <td>1</td>
-                <td>8.45</td>
-                <td>8.45</td>
-              </tr>
-              <tr>
-                <th scope="row">14</th>
-                <td>Motor RS-380SA (Peristaltic Pump)</td>
-                <td>10</td>
-                <td>0.28</td>
-                <td>2.80</td>
-              </tr>
-              <tr>
-                <th scope="row">15</th>
-                <td>Sodium-Type Cation Exchange Resin</td>
-                <td>2</td>
-                <td>2.08</td>
-                <td>4.16</td>
-              </tr>
-              <tr>
-                <th scope="row">16</th>
-                <td>Strong-Acid Cation Exchange Resin</td>
-                <td>1</td>
-                <td>9.70</td>
-                <td>9.70</td>
-              </tr>
-              <tr>
-                <th scope="row">17</th>
-                <td>Silicone Tube (ID 3 mm, OD 5 mm)</td>
-                <td>5</td>
-                <td>0.92</td>
-                <td>4.60</td>
-              </tr>
-              <tr>
-                <th scope="row">18</th>
-                <td>WK4A Four-Way Switch</td>
-                <td>1</td>
-                <td>7.78</td>
-                <td>7.78</td>
-              </tr>
-              <tr>
-                <th scope="row">19</th>
-                <td>Check Valve (8 mm)</td>
-                <td>20</td>
-                <td>0.10</td>
-                <td>2.00</td>
-              </tr>
-              <tr>
-                <th scope="row">20</th>
-                <td>Flexible Liquid-Level Sensor</td>
-                <td>5</td>
-                <td>1.65</td>
-                <td>8.25</td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  <strong>Total</strong>
-                </th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <strong>171.54</strong>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          The following references informed the design, simulation, and
-          implementation of our hardware platform. Citations are used throughout
-          the text to link specific design decisions to their scientific basis.{" "}
-          <Cite k="igem2024engineering" />
-        </p>
+        <BudgetExplorer items={budgetItems} />
       </>
     ),
   },
@@ -1027,9 +1009,13 @@ export function Hardware() {
   return (
     <ArticlePage
       title="Hardware"
-      lead="A modular platform for automated ammonia-nitrogen removal and real-time fermentation monitoring."
+      lead="This page documents the design, component selection, operation, and testing of our modular hardware platform for automated ammonia-nitrogen removal from anaerobic fermentation effluent."
       sections={sections}
       references
+      referencesIntro="The following references informed the design, simulation, and implementation of our hardware platform. Citations are used throughout the text to link specific design decisions to their scientific basis."
+      referenceOrder={referenceKeys}
+      stickyMobileOutline
+      theme="hardware"
     />
   );
 }

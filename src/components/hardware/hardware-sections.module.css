@@ -1,0 +1,1289 @@
+.scope {
+  --hw-cream: var(--hardware-paper, #fbf0dd);
+  --hw-yellow: var(--hardware-yellow, #ffc647);
+  --hw-light-yellow: var(--hardware-pale-yellow, #ffe7b6);
+  --hw-mint: var(--hardware-mint, #9cd7ca);
+  --hw-card-mint: var(--hardware-card-mint, #b8e3da);
+  --hw-ink: var(--hardware-ink, #003f34);
+  --hw-emerald: var(--hardware-green, #007c60);
+  --hw-card-heading: var(--hardware-card-heading, #1e4fbc);
+  --hw-link: var(--hardware-green, #007c60);
+  --hw-blue: var(--hardware-blue, #4c9bd7);
+  --hw-royal: var(--hardware-royal, #2f52a1);
+  --hw-navy: var(--hardware-navy, #1f315f);
+  --hw-white: var(--hardware-white, #fff);
+  --hw-text: var(--article-text, clamp(1rem, 1.65vw, 1.3125rem));
+  --hw-display: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  --hw-body: var(--hardware-body, "Trebuchet MS", sans-serif);
+  --hw-radius: 2rem;
+  --hw-gap: clamp(1rem, 2vw, 1.5rem);
+  min-width: 0;
+  color: var(--hw-ink);
+  font-family: var(--hw-body);
+  font-size: var(--hw-text);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.scope.scope h3,
+.scope.scope h4 {
+  font-family: var(--hw-display);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.scope.scope h3 {
+  margin: 0;
+  color: var(--hw-emerald);
+  font-size: clamp(1.9rem, 3vw, 2.65rem);
+  line-height: 1.15;
+}
+
+.scope.scope h4 {
+  margin: 0;
+  color: var(--hw-card-heading);
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.scope.scope p {
+  color: inherit;
+  font-size: 1em;
+  line-height: 1.65;
+}
+
+.takeaways,
+.flowMap,
+.catalog,
+.operationLoop,
+.failureMatrix,
+.iotMap,
+.calibration,
+.budget {
+  margin: 2rem 0 2.75rem;
+}
+
+.takeawayGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hw-gap);
+  margin-top: 1.5rem;
+}
+
+.takeawayCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.35rem, 2.6vw, 2rem);
+  border-radius: var(--hw-radius);
+  background: var(--hw-card-mint);
+}
+
+.takeawayCard:nth-child(4n + 2),
+.takeawayCard:nth-child(4n + 3) {
+  background: var(--hw-light-yellow);
+}
+
+.takeawayMetric {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--hw-card-heading);
+}
+
+.takeawayMetric svg {
+  flex: 0 0 auto;
+}
+
+.takeawayMetric strong {
+  font-family: var(--hw-display);
+  font-size: clamp(1.8rem, 2.7vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.scope .takeawayCard h4 {
+  font-family: var(--hw-body);
+  font-size: max(1.25rem, 1em);
+  font-weight: 700;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.takeawayCard p {
+  margin: 0.65rem 0 0;
+}
+
+.lanes {
+  display: grid;
+  gap: var(--hw-gap);
+  margin-top: 1.5rem;
+}
+
+.lane {
+  --lane-fill: var(--hw-card-mint);
+  --lane-heading: var(--hw-card-heading);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-radius: var(--hw-radius);
+  background: var(--lane-fill);
+}
+
+.lane_data {
+  --lane-fill: var(--hw-navy);
+  --lane-heading: var(--hw-white);
+  color: var(--hw-white);
+}
+
+.laneHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--lane-heading);
+}
+
+.laneHeading strong {
+  color: var(--lane-heading);
+  font-family: var(--hw-display);
+  font-size: clamp(1.5rem, 2vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.laneIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.flowSteps {
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flowSteps li {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0;
+  align-items: center;
+  margin: 0;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  background: var(--hw-cream);
+  color: var(--hw-ink);
+  font-size: var(--hw-text);
+  line-height: 1.4;
+}
+
+.flowArrow {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 1rem);
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--hw-ink);
+  transform: translate(-50%, -50%);
+}
+
+.lane_data .flowArrow {
+  color: var(--hw-white);
+}
+
+.catalogHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.8fr);
+  align-items: end;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalogHeader p {
+  margin: 0;
+}
+
+.catalogGrid {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hw-gap);
+}
+
+.catalogColumn {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.catalogCard {
+  width: 100%;
+  min-width: 0;
+}
+
+.catalogCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.4rem 1.5rem;
+  border-radius: var(--hw-radius);
+  background: var(--hw-card-mint);
+  color: var(--hw-card-heading);
+}
+
+.catalogIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.catalogIcon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.scope .catalogCardHeader h4 {
+  min-width: 0;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  text-wrap: pretty;
+}
+
+.partList {
+  display: grid;
+  gap: 1.2rem;
+  margin: 1.3rem 0 0;
+  padding: 0 0.65rem;
+  list-style: none;
+}
+
+.partList li {
+  min-width: 0;
+  margin: 0;
+}
+
+.partTopline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.partTopline strong {
+  font-size: max(1.125rem, 1em);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.partSpecification {
+  color: var(--hw-navy);
+  font-size: var(--hw-text);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.partList p {
+  margin: 0.35rem 0 0;
+}
+
+.operationHeader,
+.iotHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.loopBadge,
+.iotProtocol {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--hw-ink);
+  font-size: var(--hw-text);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.loopBadge svg,
+.iotProtocol svg {
+  flex: 0 0 auto;
+}
+
+.operationSteps {
+  display: grid;
+  gap: 2.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operationSteps li {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  align-items: center;
+  gap: 1rem 2rem;
+  margin: 0;
+  padding: 1.6rem 2rem;
+  border-radius: var(--hw-radius);
+  background: var(--hw-light-yellow);
+}
+
+.operationSteps li:nth-child(even) {
+  background: var(--hw-card-mint);
+}
+
+.operationSteps li:first-child,
+.operationSteps li:last-child {
+  background: var(--hw-yellow);
+}
+
+.operationPhase {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: var(--hw-text);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.operationSteps p {
+  margin: 0;
+}
+
+.operationConnector {
+  position: absolute;
+  top: calc(100% + 1.25rem);
+  left: 50%;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  color: var(--hw-ink);
+  place-items: center;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.failureHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.failureSymbol {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding-top: 0.35rem;
+}
+
+.failureSymbol svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.failureList {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.failureItem {
+  border-radius: var(--hw-radius);
+  background: var(--hw-light-yellow);
+}
+
+.failureItem[data-open="true"] {
+  background: var(--hw-yellow);
+}
+
+.failureSummary {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr) 2.75rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.3rem 1.5rem;
+  border: 0;
+  border-radius: var(--hw-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background-color 180ms ease;
+}
+
+.failureSummary:hover {
+  background: var(--hw-yellow);
+}
+
+.failureRisk {
+  color: var(--hw-card-heading);
+  font-size: max(1.125rem, 1em);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.failureConsequence {
+  font-size: var(--hw-text);
+  line-height: 1.55;
+}
+
+.failureChevron {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--hw-ink);
+  color: var(--hw-cream);
+  place-items: center;
+  transition: transform 220ms ease;
+}
+
+.failureItem[data-open="true"] .failureChevron {
+  transform: rotate(180deg);
+}
+
+.failureDisclosure {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 260ms ease;
+}
+
+.failureItem[data-open="true"] .failureDisclosure {
+  grid-template-rows: 1fr;
+}
+
+.failureBody {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.failureBodyInner {
+  margin: 0 1.5rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1.25rem;
+  background: var(--hw-cream);
+}
+
+.failureBodyInner span {
+  font-size: var(--hw-text);
+  font-weight: 700;
+}
+
+.failureBodyInner p {
+  margin: 0.4rem 0 0;
+}
+
+.validation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 1.5rem 2rem;
+  margin: 2rem 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--hw-radius);
+  background: var(--hw-card-mint);
+}
+
+.validation strong {
+  display: block;
+  color: var(--hw-card-heading);
+  font-family: var(--hw-display);
+  font-size: clamp(1.65rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.validation ul {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.validation li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.validation li svg {
+  flex: 0 0 auto;
+  margin-top: 0.15rem;
+}
+
+.iotProtocol {
+  color: var(--hw-navy);
+}
+
+.iotChain {
+  --iot-gap: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--iot-gap);
+  margin-top: 1.5rem;
+}
+
+.iotGroup {
+  --iot-heading: var(--hw-card-heading);
+  position: relative;
+  min-width: 0;
+  padding: 1.5rem;
+  border-radius: var(--hw-radius);
+  background: var(--hw-card-mint);
+  color: var(--hw-ink);
+}
+
+.iotGroup:nth-child(3n + 2) {
+  --iot-heading: var(--hw-white);
+  background: var(--hw-navy);
+  color: var(--hw-white);
+}
+
+.iotGroup:nth-child(3n) {
+  --iot-heading: var(--hw-white);
+  background: var(--hw-royal);
+  color: var(--hw-white);
+}
+
+.iotGroupTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  color: var(--iot-heading);
+}
+
+.iotGroupTitle > span {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding-top: 0.2rem;
+}
+
+.iotGroupTitle strong {
+  min-width: 0;
+  color: var(--iot-heading);
+  font-family: var(--hw-display);
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.iotGroup ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.iotGroup li {
+  min-width: 0;
+  margin: 0;
+  font-size: var(--hw-text);
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.iotGroup p {
+  margin: 1rem 0 0;
+  line-height: 1.55;
+}
+
+.iotConnector {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + var(--iot-gap) / 2);
+  z-index: 1;
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--hw-navy);
+  place-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.iotFootnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  color: var(--hw-ink);
+}
+
+.iotFootnote svg {
+  flex: 0 0 auto;
+  margin-top: 0.35rem;
+}
+
+.calibrationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hw-gap);
+  margin-top: 1.5rem;
+}
+
+.calibrationCard {
+  min-width: 0;
+  padding: clamp(1.35rem, 2.5vw, 2rem);
+  border-radius: var(--hw-radius);
+  background: var(--hw-card-mint);
+}
+
+.calibrationCard header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--hw-card-heading);
+}
+
+.calibrationCard header span {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding-top: 0.25rem;
+}
+
+.scope .calibrationCard h4 {
+  min-width: 0;
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  text-wrap: pretty;
+}
+
+.calibrationCard dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+}
+
+.calibrationCard dl > div {
+  min-width: 0;
+}
+
+.calibrationCard dt {
+  font-size: var(--hw-text);
+  font-weight: 700;
+}
+
+.calibrationCard dd {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin: 0.3rem 0 0;
+  font-family: var(--hw-display);
+  font-size: clamp(1.45rem, 2.1vw, 1.95rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.calibrationCard dd svg {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.calibrationCard p {
+  margin: 1.2rem 0 0;
+}
+
+.safeguards {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.safeguards article {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 0.8fr) minmax(0, 1.7fr);
+  align-items: start;
+  gap: 0.7rem 1rem;
+  padding: 1.6rem 1.75rem;
+  border-radius: var(--hw-radius);
+  background: var(--hw-light-yellow);
+}
+
+.safeguards article:nth-child(even) {
+  background: var(--hw-card-mint);
+}
+
+.safeguards article > svg {
+  margin-top: 0.2rem;
+  color: var(--hw-card-heading);
+}
+
+.safeguards p {
+  margin: 0;
+}
+
+.outlook {
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.outlook li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 0.7fr) minmax(0, 1.4fr);
+  align-items: start;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+  padding: 2rem;
+  border-radius: var(--hw-radius);
+  background: var(--hw-light-yellow);
+}
+
+.outlook li:nth-child(3n + 2) {
+  background: var(--hw-card-mint);
+}
+
+.outlook li:nth-child(3n) {
+  background: var(--hw-yellow);
+}
+
+.outlook li:not(:last-child)::after {
+  position: absolute;
+  top: 2.8rem;
+  bottom: -3.7rem;
+  left: calc(2.5rem - 2px);
+  width: 4px;
+  background: var(--hw-ink);
+  content: "";
+}
+
+.outlookNode {
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1 / 4;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  background: var(--hw-ink);
+}
+
+.outlook li > span:not(.outlookNode) {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: var(--hw-text);
+  font-weight: 700;
+}
+
+.scope.outlook h3 {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: clamp(1.6rem, 2.3vw, 2rem);
+  line-height: 1.2;
+}
+
+.outlook p {
+  grid-column: 3;
+  grid-row: 1 / 4;
+  margin: 0;
+}
+
+.budget {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: var(--hw-radius);
+  background: var(--hw-light-yellow);
+  font-variant-numeric: tabular-nums;
+}
+
+.budgetSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.budgetTotal {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.75rem;
+  border-radius: 1.5rem;
+  background: var(--hw-yellow);
+}
+
+.budgetTotal span {
+  font-size: var(--hw-text);
+  font-weight: 700;
+}
+
+.budgetTotal strong {
+  font-family: var(--hw-display);
+  font-size: clamp(2.75rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.budgetBar {
+  display: flex;
+  gap: 4px;
+  height: 1rem;
+  margin: 1.75rem 0 1.25rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--hw-cream);
+}
+
+.budgetBar > span {
+  flex: 0 1 var(--budget-share);
+  height: 100%;
+  transition: opacity 180ms ease;
+}
+
+.bar_structure,
+.budgetDot_structure {
+  background: var(--hw-navy);
+}
+
+.bar_control,
+.budgetDot_control {
+  background: var(--hw-royal);
+}
+
+.bar_sensing,
+.budgetDot_sensing {
+  background: var(--hw-blue);
+}
+
+.bar_fluidic,
+.budgetDot_fluidic {
+  background: var(--hw-emerald);
+}
+
+.bar_chemistry,
+.budgetDot_chemistry {
+  background: var(--hw-ink);
+}
+
+.barMuted {
+  opacity: 0.25;
+}
+
+.budgetFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.budgetFilters button {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--hw-cream);
+  color: var(--hw-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--hw-text);
+  line-height: 1.4;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.budgetFilters button > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.budgetFilters button strong {
+  color: inherit;
+  font-size: inherit;
+}
+
+.budgetFilters button:hover {
+  background: var(--hw-card-mint);
+}
+
+.budgetFilters button[aria-pressed="true"] {
+  background: var(--hw-ink);
+  color: var(--hw-cream);
+}
+
+.budgetDot_structure,
+.budgetDot_control,
+.budgetDot_sensing,
+.budgetDot_fluidic,
+.budgetDot_chemistry {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.budgetFilters button[aria-pressed="true"] i {
+  background: currentColor;
+}
+
+.budgetListHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.budgetListHeader p {
+  margin: 0;
+}
+
+.budgetListHeader strong {
+  flex: 0 0 auto;
+  font-family: var(--hw-display);
+  font-size: 1.9rem;
+  font-weight: 400;
+}
+
+.budgetList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.budgetList li {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: var(--hw-cream);
+}
+
+.budgetNumber {
+  padding-top: 0.1rem;
+  color: var(--hw-navy);
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.budgetList li > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.budgetList li > div strong {
+  font-size: var(--hw-text);
+  line-height: 1.45;
+}
+
+.budgetList li > div span {
+  font-size: var(--hw-text);
+  line-height: 1.5;
+}
+
+.budgetCost {
+  font-size: max(1.125rem, 1em);
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.mediaPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--hw-gap);
+  margin: 1.5rem 0 2rem;
+}
+
+.mediaPair > figure {
+  width: 100%;
+  min-width: 0;
+  margin-block: 0;
+}
+
+.pendingMedia {
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.pendingFrame {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  min-height: 18rem;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-radius: var(--hw-radius);
+  background: var(--hw-mint);
+}
+
+.pendingContent {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: var(--hw-white);
+  color: var(--hw-ink);
+  text-align: center;
+}
+
+.pendingContent strong {
+  color: var(--hw-card-heading);
+  font-family: var(--hw-display);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.pendingContent span,
+.pendingContent small {
+  max-width: 100%;
+  font-size: 1em;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.videoUnavailable .pendingFrame {
+  aspect-ratio: 16 / 9;
+}
+
+.scope :where(a, button, summary):focus-visible {
+  outline: 3px solid var(--hw-navy);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1000px) {
+  .flowSteps {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .flowArrow {
+    top: calc(100% + 1rem);
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .catalogHeader {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .operationHeader,
+  .iotHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .iotChain {
+    --iot-gap: 2.5rem;
+  }
+
+  .iotGroup {
+    padding: 1.25rem;
+  }
+
+  .iotGroupTitle {
+    flex-direction: column;
+  }
+
+  .safeguards article {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .safeguards p {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .takeawayGrid,
+  .calibrationGrid,
+  .validation,
+  .mediaPair,
+  .budgetList {
+    grid-template-columns: 1fr;
+  }
+
+  .takeawayCard {
+    padding: 1.5rem;
+  }
+
+  .takeawayMetric strong {
+    font-size: 2rem;
+  }
+
+  .catalogGrid {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .catalogColumn {
+    display: contents;
+  }
+
+  .catalogCard {
+    order: var(--catalog-order);
+  }
+
+  .catalogCardHeader {
+    padding: 1.35rem 1.5rem;
+  }
+
+  .partList {
+    padding-inline: 0.35rem;
+  }
+
+  .operationSteps li {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    padding: 1.5rem;
+  }
+
+  .failureSummary {
+    grid-template-columns: minmax(0, 1fr) 2.75rem;
+    gap: 0.65rem 1rem;
+    padding: 1.25rem;
+  }
+
+  .failureConsequence {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .failureChevron {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .failureBodyInner {
+    margin: 0 1rem 1rem;
+    padding: 1.1rem;
+  }
+
+  .iotChain {
+    grid-template-columns: 1fr;
+  }
+
+  .iotGroup {
+    padding: 1.5rem;
+  }
+
+  .iotGroupTitle {
+    flex-direction: row;
+  }
+
+  .iotConnector {
+    top: calc(100% + var(--iot-gap) / 2);
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .calibrationCard {
+    padding: 1.5rem;
+  }
+
+  .calibrationCard dd {
+    font-size: 1.5rem;
+  }
+
+  .safeguards article {
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .safeguards p {
+    grid-column: 1 / -1;
+  }
+
+  .outlook li {
+    grid-template-columns: 1rem minmax(0, 1fr);
+    gap: 0.4rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .outlook li:not(:last-child)::after {
+    top: 2.3rem;
+    bottom: -3.2rem;
+    left: calc(2rem - 2px);
+  }
+
+  .outlook p {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 0.7rem;
+  }
+
+  .budgetSummary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .budgetTotal {
+    padding: 1.5rem;
+  }
+
+  .budgetFilters button {
+    flex: 1 1 auto;
+    padding-inline: 0.9rem;
+  }
+
+  .budgetListHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .budgetList li {
+    grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    padding: 0.9rem;
+  }
+
+  .budgetCost {
+    font-size: 1em;
+  }
+
+  .pendingFrame {
+    min-height: 20rem;
+    padding: 1rem;
+  }
+
+  .pendingContent {
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .budgetBar > span,
+  .budgetFilters button,
+  .failureSummary,
+  .failureChevron,
+  .failureDisclosure {
+    transition: none;
+  }
+}

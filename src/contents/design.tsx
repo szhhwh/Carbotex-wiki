@@ -3,7 +3,25 @@ import {
   type ArticleSection,
 } from "../components/article/ArticlePage";
 import { Cite } from "../components/article/References";
+import { Figure, type FigureProps } from "../components/media/Figure";
 import styles from "./design.module.css";
+
+function DiagramFigure(props: FigureProps) {
+  const label = [props.captionPrefix, props.caption]
+    .filter((value): value is string => typeof value === "string")
+    .join(" ");
+
+  return (
+    <div
+      className={styles.diagramScroller}
+      role="region"
+      aria-label={`Diagram: ${label}`.trim()}
+      tabIndex={0}
+    >
+      <Figure {...props} />
+    </div>
+  );
+}
 
 // Content supplied in processed/wetlab_design/wet_design.md.
 const sections: ArticleSection[] = [
@@ -28,26 +46,34 @@ const sections: ArticleSection[] = [
               poly(malic acid) (PMA) production and material application as the
               main lines:
             </p>
-            <ul>
+            <ol className={styles.moduleRoute}>
               <li>
-                <strong>Saccharification Module</strong> - releases fermentable
-                sugars from straw
+                <strong>Saccharification Module</strong>
+                <span className={styles.moduleCopy}>
+                  Releases fermentable sugars from straw
+                </span>
               </li>
               <li>
-                <strong>Xylose Module</strong> - improves the chassis's use of
-                mixed sugars in the corn-stover hydrolysate supplied by the
-                preceding module.
+                <strong>Xylose Module</strong>
+                <span className={styles.moduleCopy}>
+                  Improves the chassis's use of mixed sugars in the corn-stover
+                  hydrolysate supplied by the preceding module.
+                </span>
               </li>
               <li>
-                <strong>PYC Module</strong> - tests genes encoding pyruvate
-                carboxylase (PYC) to enhance malate precursor supply for
-                poly(malic acid)(PMA) production.
+                <strong>PYC Module</strong>
+                <span className={styles.moduleCopy}>
+                  Tests genes encoding pyruvate carboxylase (PYC) to enhance
+                  malate precursor supply for poly(malic acid) (PMA) production.
+                </span>
               </li>
               <li>
-                <strong>Adhesive Module</strong> - converts PMA into a
-                functional adhesive material
+                <strong>Adhesive Module</strong>
+                <span className={styles.moduleCopy}>
+                  Converts PMA into a functional adhesive material
+                </span>
               </li>
-            </ul>
+            </ol>
             <p>
               Together, these modules define a route from agricultural residues
               to adhesive materials. Saccharification supplies fermentable
@@ -56,6 +82,16 @@ const sections: ArticleSection[] = [
               PMA-containing fermentation broth is then used for adhesive
               preparation.
             </p>
+            <DiagramFigure
+              id="design-figure-1"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/correct-this-overview-while-retaining-restrained-native-biorender-styling-and-th.avif"
+              intrinsicWidth={4000}
+              intrinsicHeight={1943}
+              alt="Overview diagram of the wet-project path from corn stover through hydrolysate preparation and A08 fermentation, with engineered xylose and PYC modules supporting PMA production before dopamine functionalization into a PMA-based adhesive."
+              captionPrefix="Figure 1."
+              caption="Overall wet-project path"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -68,13 +104,13 @@ const sections: ArticleSection[] = [
               PMA is a biodegradable polyester composed of malic acid units. Its
               water solubility and pendant carboxyl groups provide a basis for
               functionalization. PMA derivatives have been investigated for drug
-              delivery; PMA–calcium-phosphate hybrids have been explored for
+              delivery, PMA–calcium-phosphate hybrids have been explored for
               bone tissue engineering, and malic-acid-based copolyesters have
-              been studied as rheology modifiers in aqueous formulations.{" "}
+              been studied as rheology modifiers in aqueous formulations{" "}
               <Cite
                 k={["ding2011pmla", "hara2025pmatcp", "picken2025rheology"]}
-              />{" "}
-              These studies illustrate the applications of PMA and related
+              />
+              . These studies illustrate the applications of PMA and related
               materials. Our project builds on{" "}
               <em>Aureobasidium melanogenum</em> A08's existing ability to
               produce PMA, using strain engineering to improve production and
@@ -117,7 +153,7 @@ const sections: ArticleSection[] = [
               laboratory-provided background information. Our own
               chassis-characterization work comprises morphology observation and
               internal transcribed spacer (ITS) sequence-based identification.
-              These observations support the taxonomic assignment of the A08 and
+              These observations support the taxonomic assignment of A08 and
               provide a traceable starting point for engineering.
             </p>
           </>
@@ -132,7 +168,7 @@ const sections: ArticleSection[] = [
       <>
         <p>
           Our genetic design connects two engineering goals: improving sugar
-          utilization through transcriptional regulation and enhance precursor
+          utilization through transcriptional regulation and enhancing precursor
           supply through PYC engineering. The xylose module targets AraR and
           XlnR, while the PYC module further evaluates the genes from different
           donors based on this. These constructs are combined in{" "}
@@ -142,7 +178,7 @@ const sections: ArticleSection[] = [
         <p>
           We distinguish three genetic operations: target-gene expression using
           pNAT-LoxP-rDNA, transcription-factor knockout using fl4a-hpt-loxp, and
-          marker recycling using Cre enzyme supplied separately.
+          marker recycling using separately supplied Cre enzyme.
         </p>
       </>
     ),
@@ -155,48 +191,100 @@ const sections: ArticleSection[] = [
             <p>
               We use pNAT-LoxP-rDNA as the common expression backbone for the
               xylose and PYC modules. OUC-China 2025 lists this backbone as
-              BBa_25QPWVAX. <Cite k="ouc2025pnat" /> The supplied sequence is
+              BBa_25QPWVAX <Cite k="ouc2025pnat" />. The supplied sequence is
               5,455 base pairs (bp) long and contains components for bacterial
               plasmid replication, fungal selection, and ribosomal DNA
               (rDNA)-associated integration. This framework allows different
               target genes to use the same vector design.
             </p>
-            <p>
-              <strong>Key components:</strong>
-            </p>
-            <ul>
-              <li>
-                <strong>Ampicillin-resistance marker</strong> — supports
-                selection of recombinant plasmids in <em>Escherichia coli</em>
-              </li>
-              <li>
-                <strong>ColE1 origin</strong> — supports plasmid replication in{" "}
-                <em>E. coli</em>
-              </li>
-              <li>
-                <strong>18S and 26S rDNA regions</strong> — provide homologous
-                sequences for the rDNA integration design
-              </li>
-              <li>
-                <strong>TEF regulatory region</strong> — The translation
-                elongation factor (TEF) promoter was selected to support
-                high-level, constitutive expression of the inserted target
-                genes. <Cite k={["vanden1997tefgfp", "zhao2026amxlnr"]} />
-              </li>
-              <li>
-                <strong>
-                  Nourseothricin-resistance selection cassette (NAT)
-                </strong>{" "}
-                — provides nourseothricin resistance for A08 selection; the
-                cassette includes a phosphoglycerate kinase (PGK)-annotated
-                regulatory region
-              </li>
-              <li>
-                <strong>lox71 and lox66 sites</strong> — the sequence-identified
-                mutant lox sites flank the NAT selection interval and provide
-                recognition sites for Cre-mediated marker recycling
-              </li>
-            </ul>
+            <h4 className={styles.sectionLabel}>Backbone modules</h4>
+            <div className={styles.constructMap}>
+              <div className={styles.constructSegment}>
+                <p className={styles.constructSegmentLabel}>
+                  Plasmid propagation
+                </p>
+                <ul>
+                  <li>
+                    <strong>Ampicillin-resistance marker</strong>
+                    <span>
+                      Supports selection of recombinant plasmids in{" "}
+                      <em>Escherichia coli</em>
+                    </span>
+                  </li>
+                  <li>
+                    <strong>ColE1 origin</strong>
+                    <span>
+                      Supports plasmid replication in <em>E. coli</em>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.constructSegment}>
+                <p className={styles.constructSegmentLabel}>
+                  Genome integration
+                </p>
+                <ul>
+                  <li>
+                    <strong>18S and 26S rDNA regions</strong>
+                    <span>
+                      Provide homologous sequences for the rDNA integration
+                      design
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.constructSegment}>
+                <p className={styles.constructSegmentLabel}>
+                  Expression cassette
+                </p>
+                <ul>
+                  <li>
+                    <strong>TEF regulatory region</strong>
+                    <span>
+                      The translation elongation factor (TEF) promoter was
+                      selected to support high-level, constitutive expression of
+                      the inserted target genes{" "}
+                      <Cite k={["vanden1997tefgfp", "zhao2026amxlnr"]} />.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.constructSegment}>
+                <p className={styles.constructSegmentLabel}>
+                  Selection and recycling
+                </p>
+                <ul>
+                  <li>
+                    <strong>
+                      Nourseothricin-resistance selection cassette (NAT)
+                    </strong>
+                    <span>
+                      Provides nourseothricin resistance for A08 selection; the
+                      cassette includes a phosphoglycerate kinase
+                      (PGK)-annotated regulatory region
+                    </span>
+                  </li>
+                  <li>
+                    <strong>lox71 and lox66 sites</strong>
+                    <span>
+                      The sequence-identified mutant lox sites flank the NAT
+                      selection interval and provide recognition sites for
+                      Cre-mediated marker recycling
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <DiagramFigure
+              id="design-figure-2"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/rdna.avif"
+              intrinsicWidth={3141}
+              intrinsicHeight={2541}
+              alt="Circular map of the pNAT-LoxP-rDNA plasmid showing the expression cassette, NAT marker, lox sites, bacterial elements, and 18S and 26S rDNA homology regions."
+              captionPrefix="Figure 2."
+              caption="pNAT-LoxP-rDNA"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -216,37 +304,63 @@ const sections: ArticleSection[] = [
               target gene. The homology arms therefore specify both the target
               locus and the boundaries of the intended replacement. This
               strategy follows the established principle of homology-directed
-              gene disruption. <Cite k="rothstein1983disruption" /> The HPT
-              cassette enables selection with hygromycin B, while the directly
-              oriented lox71 and lox66 sites allow subsequent marker excision by
-              separately supplied Cre recombinase. Marker excision removes the
-              HPT-containing interval without restoring the deleted target-gene
-              region.
+              gene disruption <Cite k="rothstein1983disruption" />. The
+              hygromycin B phosphotransferase (HPT) cassette enables selection
+              with hygromycin B, while the directly oriented lox71 and lox66
+              sites allow subsequent marker excision by separately supplied Cre
+              recombinase. Marker excision removes the HPT-containing interval
+              without restoring the deleted target-gene region.
             </p>
-            <p>
-              <strong>Key components:</strong>
-            </p>
-            <ul>
-              <li>
-                <strong>Target-specific homology arms</strong> — match the
-                genomic regions flanking <em>xlnR</em> or <em>araR</em> and
-                define the intended replacement interval.
-              </li>
-              <li>
-                <strong>HPT selection cassette</strong> — enables hygromycin B
-                selection of candidate transformants.
-              </li>
-              <li>
-                <strong>Directly oriented lox71 and lox66 sites</strong> — flank
-                the HPT-containing interval for subsequent Cre-mediated marker
-                recycling.
-              </li>
-              <li>
-                <strong>Ampicillin-resistance marker and ColE1 origin</strong> —
-                support bacterial selection and plasmid propagation during
-                construct assembly.
-              </li>
-            </ul>
+            <h4 className={styles.sectionLabel}>Knockout construct roles</h4>
+            <dl className={styles.assemblyRows}>
+              <div>
+                <dt>Target-specific homology arms</dt>
+                <dd>
+                  Match the genomic regions flanking <em>xlnR</em> or{" "}
+                  <em>araR</em> and define the intended replacement interval.
+                </dd>
+              </div>
+              <div>
+                <dt>HPT selection cassette</dt>
+                <dd>
+                  Enables hygromycin B selection of candidate transformants.
+                </dd>
+              </div>
+              <div>
+                <dt>Directly oriented lox71 and lox66 sites</dt>
+                <dd>
+                  Flank the HPT-containing interval for subsequent Cre-mediated
+                  marker recycling.
+                </dd>
+              </div>
+              <div>
+                <dt>Ampicillin-resistance marker and ColE1 origin</dt>
+                <dd>
+                  Support bacterial selection and plasmid propagation during
+                  construct assembly.
+                </dd>
+              </div>
+            </dl>
+            <DiagramFigure
+              id="design-figure-3"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/fl4a-hpt-loxp.avif"
+              intrinsicWidth={2541}
+              intrinsicHeight={2500}
+              alt="Circular map of the fl4a-hpt-loxp knockout backbone showing the HPT cassette, lox sites, bacterial elements, and multiple cloning sites for introducing homology arms."
+              captionPrefix="Figure 3."
+              caption="fl4a-hpt-loxp"
+              fallback={<p>Image unavailable.</p>}
+            />
+            <DiagramFigure
+              id="design-figure-4"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/knock.svg"
+              intrinsicWidth={1800}
+              intrinsicHeight={1110}
+              alt="Two-panel schematic showing the fl4a-hpt-loxp backbone combined with xlnR or araR homology arms, followed by homologous replacement of the target-gene interval and target disruption."
+              captionPrefix="Figure 4."
+              caption="Homologous recombination knockout"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -257,12 +371,12 @@ const sections: ArticleSection[] = [
           <>
             <p>
               For the PYC module, the same backbone is used to carry
-              PYC-encoding sequences from <em>Aureobasidium melanogenum</em> A08
-              , <em>Aureobasidium thailandense</em> ZW03-4,{" "}
+              PYC-encoding sequences from <em>Aureobasidium melanogenum</em>{" "}
+              A08, <em>Aureobasidium thailandense</em> ZW03-4,{" "}
               <em>Yarrowia lipolytica</em>, and{" "}
               <em>Saccharomyces cerevisiae</em>. The donor labels ZW(At), YL,
               and SC refer to these three heterologous sources, respectively.
-              PYC(pyruvate carboxylase) denotes the enzyme; the corresponding
+              PYC (pyruvate carboxylase) denotes the enzyme; the corresponding
               gene is italicized as <em>pyc</em> unless an established
               donor-specific symbol applies. The SC candidate specifically uses{" "}
               <em>S. cerevisiae</em> <em>PYC1</em>. The donor-selection
@@ -287,96 +401,108 @@ const sections: ArticleSection[] = [
               expression strategies that improve pentose-based production.
             </p>
             <p>
-              The collection contains four core parts:two genes and their
+              The collection contains four core parts: two genes and their
               corresponding constructs—supported by a shared expression backbone
               and a knockout backbone.
             </p>
-            <div
-              className={styles.tableScroller}
-              role="region"
-              aria-label="Table. Components of the A08 Pentose-Regulation Part Collection."
-              tabIndex={0}
-            >
-              <table>
-                <caption>
-                  Table. Components of the A08 Pentose-Regulation Part
-                  Collection.
-                </caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Part</th>
-                    <th scope="col">Composition and role in the collection</th>
-                    <th scope="col">Registry ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      A08 <em>xlnR</em> gene
-                    </th>
-                    <td>
-                      The endogenous A08 gene corresponding to g3332.t1. Encodes
-                      the transcription factor XlnR and provides the gene
-                      sequence for functional studies and expression constructs.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      A08 <em>araR</em> gene
-                    </th>
-                    <td>
-                      The endogenous A08 gene corresponding to g13480.t1.
-                      Encodes the transcription factor AraR and provides the
-                      gene sequence for functional studies and expression
-                      constructs.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      A08 <em>xlnR</em> expression construct
-                    </th>
-                    <td>
-                      An 8,251-base-pair (bp) pNAT-LoxP-rDNA-derived plasmid
-                      carrying the A08 <em>xlnR</em> gene sequence under the
-                      translation elongation factor (TEF) promoter. Used for the
-                      XlnR-overexpression intervention.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      A08 <em>araR</em> expression construct
-                    </th>
-                    <td>
-                      A 7,765-bp pNAT-LoxP-rDNA-derived plasmid carrying the A08{" "}
-                      <em>araR</em> gene sequence under the TEF promoter. Used
-                      for the AraR-overexpression intervention.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">pNAT-LoxP-rDNA expression backbone</th>
-                    <td>
-                      The existing parent backbone shared by both expression
-                      constructs. Provides the expression framework,
-                      nourseothricin-resistance (NAT) selection, and ribosomal
-                      DNA (rDNA) homology regions.
-                    </td>
-                    <td>BBa_25QPWVAX</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">fl4a-hpt-loxp knockout backbone</th>
-                    <td>
-                      The supporting backbone for target-specific knockout
-                      constructs. Target-specific homology arms adapt the
-                      backbone for <em>xlnR</em> or <em>araR</em> disruption.
-                    </td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className={styles.tableCard}>
+              <p
+                id="design-table-components-caption"
+                className={styles.tableCaption}
+              >
+                Table. Components of the A08 Pentose-Regulation Part Collection.
+              </p>
+              <p id="design-table-components-hint" className={styles.tableHint}>
+                Swipe horizontally to view all columns. The first column stays
+                visible.
+              </p>
+              <div
+                className={styles.tableScroller}
+                role="region"
+                aria-labelledby="design-table-components-caption"
+                aria-describedby="design-table-components-hint"
+                tabIndex={0}
+              >
+                <table aria-labelledby="design-table-components-caption">
+                  <thead>
+                    <tr>
+                      <th scope="col">Part</th>
+                      <th scope="col">
+                        Composition and role in the collection
+                      </th>
+                      <th scope="col">Registry ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">
+                        A08 <em>xlnR</em> gene
+                      </th>
+                      <td>
+                        The endogenous A08 gene corresponding to g3332.t1.
+                        Encodes the transcription factor XlnR and provides the
+                        gene sequence for functional studies and expression
+                        constructs.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        A08 <em>araR</em> gene
+                      </th>
+                      <td>
+                        The endogenous A08 gene corresponding to g13480.t1.
+                        Encodes the transcription factor AraR and provides the
+                        gene sequence for functional studies and expression
+                        constructs.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        A08 <em>xlnR</em> expression construct
+                      </th>
+                      <td>
+                        An 8,251-base-pair (bp) pNAT-LoxP-rDNA-derived plasmid
+                        carrying the A08 <em>xlnR</em> gene sequence under the
+                        translation elongation factor (TEF) promoter. Used for
+                        the XlnR-overexpression intervention.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        A08 <em>araR</em> expression construct
+                      </th>
+                      <td>
+                        A 7,765-bp pNAT-LoxP-rDNA-derived plasmid carrying the
+                        A08 <em>araR</em> gene sequence under the TEF promoter.
+                        Used for the AraR-overexpression intervention.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">pNAT-LoxP-rDNA expression backbone</th>
+                      <td>
+                        The existing parent backbone shared by both expression
+                        constructs. Provides the expression framework,
+                        nourseothricin-resistance (NAT) selection, and ribosomal
+                        DNA (rDNA) homology regions.
+                      </td>
+                      <td>BBa_25QPWVAX</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">fl4a-hpt-loxp knockout backbone</th>
+                      <td>
+                        The supporting backbone for target-specific knockout
+                        constructs. Target-specific homology arms adapt the
+                        backbone for <em>xlnR</em> or <em>araR</em> disruption.
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <p>
               The components support complementary genetic comparisons. The
@@ -417,7 +543,7 @@ const sections: ArticleSection[] = [
               selected for improving pentose utilization. Such
               recipient-specific testing is important because AraR and XlnR do
               not necessarily have identical regulatory roles across fungal
-              hosts. <Cite k="battaglia2011regulatorydifferences" /> Where
+              hosts <Cite k="battaglia2011regulatorydifferences" />. Where
               beneficial effects are established, the corresponding expression
               strategy could then be developed further for pentose-based
               production.
@@ -437,11 +563,11 @@ const sections: ArticleSection[] = [
               mixed-sugar and corn-stover hydrolysate fermentation test
               application conditions. Each part's sequence, structure, and test
               background are described individually, while combined-strain
-              results characterize the combination. Experiments presents the
-              study design, Results provides the evidence, and Protocols
-              supplies methods. Registry collection and individual-part
-              documentation provide resources for other teams to find and reuse
-              the tools.
+              results characterize the combination. The Experiments page
+              presents the study design, the Results page provides the evidence,
+              and the Protocols page supplies methods. The registry collection
+              and individual-part documentation provide resources for other
+              teams to find and reuse the tools.
             </p>
           </>
         ),
@@ -464,7 +590,7 @@ const sections: ArticleSection[] = [
               modification, allowing the same marker to be reused in another
               engineering round. This approach has been demonstrated for
               sequential gene deletion and expression in{" "}
-              <em>Aureobasidium melanogenum</em>. <Cite k="zhang2019crelox" />
+              <em>Aureobasidium melanogenum</em> <Cite k="zhang2019crelox" />.
             </p>
             <p>
               Cre is a site-specific DNA recombinase that recognizes lox sites.
@@ -472,8 +598,8 @@ const sections: ArticleSection[] = [
               13-bp Cre-binding inverted repeats separated by an asymmetric 8-bp
               spacer. The spacer defines the orientation of the site. Cre brings
               two sites together and catalyzes DNA strand cleavage, exchange,
-              and rejoining within their spacers.{" "}
-              <Cite k="hoess1985cremechanism" /> In our constructs, the two
+              and rejoining within their spacers{" "}
+              <Cite k="hoess1985cremechanism" />. In our constructs, the two
               complete lox sites point in the same direction and flank the
               selectable interval. Following genomic integration, Cre-mediated
               recombination can excise this interval as circular DNA and
@@ -488,25 +614,58 @@ const sections: ArticleSection[] = [
               successive engineering rounds because it lowers the likelihood of
               recombination involving previously used sites. However, lox72
               retains residual recombination activity and is not considered
-              completely inactive. <Cite k="yan2008lox" />
+              completely inactive <Cite k="yan2008lox" />.
             </p>
+            <DiagramFigure
+              id="design-figure-5"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/exec-6f4baabd-88ff-4a36-903f-ae1d029439c3.avif"
+              intrinsicWidth={1506}
+              intrinsicHeight={1044}
+              alt="Schematic comparing Cre–lox marker recycling in expression and knockout constructs, showing the retained genomic loci and excised circles containing NAT or HPT."
+              captionPrefix="Figure 5."
+              caption="Cre-mediated marker recycling"
+              fallback={<p>Image unavailable.</p>}
+            />
             <p>The system supports two applications:</p>
-            <ul>
-              <li>
-                <strong>Marker recycling in expression constructs:</strong>{" "}
-                excision removes the nourseothricin-resistance (NAT) interval
-                while retaining the translation elongation factor (TEF) promoter
-                and target gene located outside it. The expression region is
-                therefore preserved for subsequent strain engineering.
-              </li>
-              <li>
-                <strong>Marker recycling in knockout constructs:</strong>{" "}
-                excision removes the hygromycin B phosphotransferase (HPT)
-                interval while retaining the target-gene deletion or disruption
-                established by homologous recombination. Removing the marker
-                does not restore the original target gene.
-              </li>
-            </ul>
+            <div
+              className={styles.recyclingMatrix}
+              role="group"
+              aria-label="Marker recycling outcomes for expression and knockout constructs"
+            >
+              <div className={styles.recyclingColumn}>
+                <p className={styles.recyclingColumnLabel}>
+                  Expression constructs
+                </p>
+                <p>
+                  Excision removes the nourseothricin-resistance (NAT) interval
+                  while retaining the translation elongation factor (TEF)
+                  promoter and target gene located outside it. The expression
+                  region is therefore preserved for subsequent strain
+                  engineering.
+                </p>
+              </div>
+              <div className={styles.recyclingColumn}>
+                <p className={styles.recyclingColumnLabel}>
+                  Knockout constructs
+                </p>
+                <p>
+                  Excision removes the hygromycin B phosphotransferase (HPT)
+                  interval while retaining the target-gene deletion or
+                  disruption established by homologous recombination. Removing
+                  the marker does not restore the original target gene.
+                </p>
+              </div>
+            </div>
+            <DiagramFigure
+              id="design-figure-6"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/cre2.avif"
+              intrinsicWidth={4000}
+              intrinsicHeight={2800}
+              alt="Detailed schematic of Cre recognition at lox sites and marker removal from expression and knockout loci, with native loxP and residual lox72 sites."
+              captionPrefix="Figure 6."
+              caption="Cre's two applications"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -527,31 +686,34 @@ const sections: ArticleSection[] = [
           participates in lignocellulose degradation, while β-glucosidase (BGL)
           converts cellobiose into glucose and alleviates cellobiose inhibition.
           The resulting hydrolysates contain glucose and xylose, providing
-          fermentable sugars for subsequent microbial production.{" "}
-          <Cite k="liu2023cornbioconversion" />
+          fermentable sugars for subsequent microbial production{" "}
+          <Cite k="liu2023cornbioconversion" />.
         </p>
         <p>
           In our project, corn-stover hydrolysate is selected as a
           representative agricultural-residue-derived carbon source for
           evaluating A08 fermentation and PMA production. The hydrolysate is
           supplied by our instructor, Yajun Liu, and prepared by the
-          collaborating laboratory using the CBS system described in this study.
+          collaborating laboratory using the CBS system described in that study.
           Our team focuses on its downstream utilization, linking
           lignocellulosic sugar supply with the xylose and PYC modules.
         </p>
-        <p>
-          <strong>Key components:</strong>
-        </p>
-        <ul>
-          <li>
-            β-Glucosidase (BGL) — converts cellobiose into glucose and helps
-            alleviate cellobiose inhibition during saccharification.
-          </li>
-          <li>
-            Engineered <em>C. thermocellum</em>ΔpyrF::P₂₆₃₈-BGL - whole-cell
-            catalyst for CBS
-          </li>
-        </ul>
+        <h3 className={styles.sectionLabel}>Catalytic exchange</h3>
+        <dl className={styles.exchangeBands}>
+          <div>
+            <dt>β-Glucosidase (BGL)</dt>
+            <dd>
+              Converts cellobiose into glucose and helps alleviate cellobiose
+              inhibition during saccharification.
+            </dd>
+          </div>
+          <div>
+            <dt>
+              Engineered <em>C. thermocellum</em> ΔpyrF::P₂₆₃₈-BGL
+            </dt>
+            <dd>Whole-cell catalyst for CBS</dd>
+          </div>
+        </dl>
         <p>
           The experimental design of this module focuses on connecting
           corn-stover hydrolysate provided by our instructor, Yajun Liu, with
@@ -560,10 +722,23 @@ const sections: ArticleSection[] = [
           particular emphasis on the sugar composition, and evaluates its
           suitability as a carbon source for A08 fermentation.
         </p>
-        <p>
-          The output is a glucose–xylose mixed-sugar hydrolysate, which becomes
-          the carbon source for the xylose and PYC modules.
-        </p>
+        <div className={styles.exchangeOutput}>
+          <p className={styles.exchangeOutputLabel}>Hydrolysate output</p>
+          <p>
+            The output is a glucose–xylose mixed-sugar hydrolysate, which
+            becomes the carbon source for the xylose and PYC modules.
+          </p>
+        </div>
+        <DiagramFigure
+          id="design-figure-7"
+          src="https://static.igem.wiki/teams/6147/wiki/wet-design/cbs.avif"
+          intrinsicWidth={4000}
+          intrinsicHeight={2800}
+          alt="Consolidated bio-saccharification workflow and subsequent HPLC-based sugar-composition analysis of the mixed-sugar corn-stover hydrolysate."
+          captionPrefix="Figure 7."
+          caption="Saccharification Module"
+          fallback={<p>Image unavailable.</p>}
+        />
       </>
     ),
   },
@@ -604,7 +779,7 @@ const sections: ArticleSection[] = [
               degradation and pentose catabolism, and its overexpression
               improves pullulan production from xylose. This same-species
               evidence supports investigating XlnR-mediated regulation for PMA
-              production in A08. <Cite k="zhao2026amxlnr" />
+              production in A08 <Cite k="zhao2026amxlnr" />.
             </p>
             <p>
               <strong>
@@ -618,7 +793,7 @@ const sections: ArticleSection[] = [
               xylitol to D-xylulose and D-xylulose to D-xylulose-5-phosphate,
               respectively. Their overlapping but distinct functions support
               evaluating the candidates individually and examining combined
-              overexpression. <Cite k="battaglia2011pentose" />
+              overexpression <Cite k="battaglia2011pentose" />.
             </p>
             <p>
               We therefore designed single-gene deletion, double-gene deletion,
@@ -629,10 +804,10 @@ const sections: ArticleSection[] = [
             </p>
             <p>
               We also used published XlnR-recognition motifs to examine promoter
-              sequences of relevant A08 genes. <Cite k="zhao2026amxlnr" /> Our
-              analysis identified matching sequences in the promoters recorded
-              as PMA synthase genes <em>PMA-1</em> and <em>PMA-2</em>, and in
-              key glycolytic gene promoters: hexokinase (<em>HK</em>),
+              sequences of relevant A08 genes <Cite k="zhao2026amxlnr" />. Our
+              analysis identified matching sequences in the promoters of genes
+              annotated as PMA synthases, <em>PMA-1</em> and <em>PMA-2</em>, and
+              in key glycolytic gene promoters: hexokinase (<em>HK</em>),
               phosphofructokinase (<em>PFK</em>), glyceraldehyde-3-phosphate
               dehydrogenase (<em>GAPDH</em>), and <em>PGK</em>. These sequence
               predictions provide a basis for examining how XlnR regulation
@@ -640,30 +815,36 @@ const sections: ArticleSection[] = [
               Direct XlnR binding to these A08 promoters has not been
               experimentally measured.
             </p>
-            <p>
-              <strong>Key components:</strong>
-            </p>
-            <ul>
-              <li>
-                <strong>AraR</strong> — the project's candidate transcriptional
-                regulator associated with pentose metabolism.
-              </li>
-              <li>
-                <strong>XlnR</strong> — a candidate supported by same-species
-                pentose-regulation research.
-              </li>
-              <li>
-                <strong>A08</strong> — the common chassis for comparing
-                deletion, single-overexpression, and combined-overexpression
-                strategies.
-              </li>
-            </ul>
+            <h4 className={styles.sectionLabel}>Regulator and chassis roles</h4>
+            <dl className={styles.roleTable}>
+              <div>
+                <dt>AraR</dt>
+                <dd>
+                  The project's candidate transcriptional regulator associated
+                  with pentose metabolism.
+                </dd>
+              </div>
+              <div>
+                <dt>XlnR</dt>
+                <dd>
+                  A candidate supported by same-species pentose-regulation
+                  research.
+                </dd>
+              </div>
+              <div>
+                <dt>A08</dt>
+                <dd>
+                  The common chassis for comparing deletion,
+                  single-overexpression, and combined-overexpression strategies.
+                </dd>
+              </div>
+            </dl>
           </>
         ),
       },
       {
         id: "design-xylose-module-experimental-design",
-        title: "Experimental Design: Xylose",
+        title: "Experimental Design",
         content: (
           <>
             <p>
@@ -714,12 +895,12 @@ const sections: ArticleSection[] = [
             </p>
             <p>
               ATP + pyruvate + HCO₃⁻ → adenosine diphosphate (ADP) + inorganic
-              phosphate + oxaloacetate. <Cite k="iubmbpyruvatecarboxylase" />
+              phosphate + oxaloacetate <Cite k="iubmbpyruvatecarboxylase" />.
             </p>
             <p>
               The oxaloacetate formed can then be reduced to malate by malate
-              dehydrogenase, consuming NADH and producing NAD⁺.{" "}
-              <Cite k="iubmbmalatedehydrogenase" /> PYC engineering therefore
+              dehydrogenase, consuming NADH and producing NAD⁺{" "}
+              <Cite k="iubmbmalatedehydrogenase" />. PYC engineering therefore
               targets precursor formation; polymer synthesis is a downstream
               biosynthetic process.
             </p>
@@ -730,7 +911,7 @@ const sections: ArticleSection[] = [
               <em>Aureobasidium pullulans</em>, the overexpression strain's PMA
               titer was 15.1% higher than that of the wild type. Because this
               result comes from another species in the same genus, it supports
-              testing PYC engineering in A08. <Cite k="feng2018pycmodel" />
+              testing PYC engineering in A08 <Cite k="feng2018pycmodel" />.
             </p>
             <p>
               Our modelling group also used A08 genomic resources to prioritize
@@ -759,7 +940,42 @@ const sections: ArticleSection[] = [
               includes the native PYC-encoding gene from A08 and three
               heterologous PYC-encoding candidates.
             </p>
-            <h4>Native A08 - a reference for endogenous overexpression.</h4>
+            <div className={styles.candidatePanel}>
+              <p className={styles.candidatePanelLabel}>PYC candidate panel</p>
+              <dl className={styles.candidateRows}>
+                <div>
+                  <dt>Native A08</dt>
+                  <dd>A reference for endogenous overexpression.</dd>
+                </div>
+                <div>
+                  <dt>
+                    <em>Aureobasidium thailandense</em> ZW03-4
+                  </dt>
+                  <dd>
+                    A closely related donor with a laboratory-observed
+                    organic-acid phenotype.
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <em>Yarrowia lipolytica</em>
+                  </dt>
+                  <dd>
+                    A yeast donor with an established foundation in high-level
+                    organic acid production.
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <em>Saccharomyces cerevisiae</em>
+                  </dt>
+                  <dd>
+                    A model-yeast candidate with demonstrated applications in
+                    malate production.
+                  </dd>
+                </div>
+              </dl>
+            </div>
             <p>
               The native <em>pyc</em> candidate from{" "}
               <em>Aureobasidium melanogenum</em> A08 provides the host’s own
@@ -770,17 +986,13 @@ const sections: ArticleSection[] = [
               introducing a gene encoding a heterologous enzyme. This comparison
               helps assess whether changing the PYC source offers an advantage.
             </p>
-            <h4>
-              <em>Aureobasidium thailandense</em> ZW03-4 - a closely related
-              donor with a laboratory-observed organic-acid phenotype.
-            </h4>
             <p>
               Preliminary work in our laboratory identified{" "}
               <em>A. thailandense</em> ZW03-4 as a strain capable of
               accumulating substantial amounts of fumaric acid. Fumarate and
               malate are connected intermediates in C4-dicarboxylic acid
               metabolism and can be interconverted through a fumarase-catalyzed
-              reaction. <Cite k="iubmbfumarase" /> The fumarate-accumulating
+              reaction <Cite k="iubmbfumarase" />. The fumarate-accumulating
               phenotype of ZW03-4 therefore motivated us to investigate its
               associated precursor-supply pathways. In addition, ZW03-4 belongs
               to the same genus as A08, providing a candidate for comparing PYC
@@ -795,13 +1007,9 @@ const sections: ArticleSection[] = [
               as the sole cause of that phenotype. A separate feasibility
               precedent is the overexpression of the <em>PYC1</em> gene from{" "}
               <em>Aureobasidium</em> sp. P6 in <em>A. melanogenum</em>,
-              supporting PYC-encoding gene transfer within the genus.{" "}
+              supporting PYC-encoding gene transfer within the genus{" "}
               <Cite k="tang2018pyc" />.
             </p>
-            <h4>
-              <em>Yarrowia lipolytica</em> - a yeast donor with an established
-              foundation in high-level organic acid production.
-            </h4>
             <p>
               <em>Yarrowia lipolytica</em> is a widely studied chassis for
               organic acid biomanufacturing and has been engineered to produce
@@ -819,7 +1027,7 @@ const sections: ArticleSection[] = [
               precedent directly relevant to our candidate. In the reductive
               succinate-production branch, oxaloacetate is converted to
               succinate through malate and fumarate, establishing a clear
-              connection to the malate precursor supply targeted in our project.{" "}
+              connection to the malate precursor supply targeted in our project{" "}
               <Cite k="cui2023succinate" />. The final succinate titer reflects
               a multi-engineered strain, not the effect of YlPyc alone.
             </p>
@@ -828,7 +1036,7 @@ const sections: ArticleSection[] = [
               <em>Y. lipolytica</em> produced citric and isocitric acids from
               crude glycerol, reaching a combined concentration of 75.9 ± 1.8
               g/L. This further demonstrates the yeast’s value as an organic
-              acid production chassis. <Cite k="rzechonek2019citrate" />.
+              acid production chassis <Cite k="rzechonek2019citrate" />.
             </p>
             <p>
               Based on these studies, we included PYC from{" "}
@@ -836,10 +1044,6 @@ const sections: ArticleSection[] = [
               with this organic acid engineering background can improve PMA
               production in A08.
             </p>
-            <h4>
-              <em>Saccharomyces cerevisiae</em> - a model-yeast candidate with
-              demonstrated applications in malate production.
-            </h4>
             <p>
               The <em>S. cerevisiae</em> <em>PYC1</em> and <em>PYC2</em> genes
               have been extensively characterized and applied in metabolic
@@ -851,15 +1055,13 @@ const sections: ArticleSection[] = [
               precursor supply with malate production from xylose, aligning with
               our objectives for sugar utilization and PMA precursor supply. We
               therefore selected <em>S. cerevisiae</em> <em>PYC1</em> as the
-              candidate to evaluate its application potential in A08.{" "}
+              candidate to evaluate its application potential in A08{" "}
               <Cite k="kang2022malate" />. The reported malate production
               reflects the combined pathway-engineering strategy, not{" "}
               <em>PYC1</em> overexpression alone.
             </p>
-            <p>
-              <strong>Key components:</strong>
-            </p>
-            <ul>
+            <h4 className={styles.componentHeading}>Key components:</h4>
+            <ul className={styles.componentGrid}>
               <li>
                 <strong>PYC-encoding candidates</strong> — the native A08
                 candidate and the ZW, YL, and SC heterologous candidates; SC
@@ -877,12 +1079,22 @@ const sections: ArticleSection[] = [
                 <strong>A08</strong> — the PMA-producing chassis.
               </li>
             </ul>
+            <DiagramFigure
+              id="design-figure-8"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/pyc.avif"
+              intrinsicWidth={4000}
+              intrinsicHeight={2800}
+              alt="PYC candidate panel from A08, Aureobasidium thailandense ZW03-4, Yarrowia lipolytica, and Saccharomyces cerevisiae PYC1, showing their role in precursor supply to PMA."
+              captionPrefix="Figure 8."
+              caption="PYC candidate and precursor supply"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
       {
         id: "design-pyc-module-experimental-design",
-        title: "Experimental Design: PYC",
+        title: "Experimental Design",
         content: (
           <>
             <p>
@@ -894,7 +1106,7 @@ const sections: ArticleSection[] = [
               <em>Aureobasidium thailandense</em> ZW03-4 (ZW),{" "}
               <em>Yarrowia lipolytica</em> (YL), and{" "}
               <em>Saccharomyces cerevisiae</em> (SC). The SC candidate is{" "}
-              <em>PYC1</em>. Each candidate is designed in the common
+              <em>PYC1</em>. Each candidate is constructed using the common
               pNAT-LoxP-rDNA backbone for introduction into the same
               OE-XlnR+AraR recipient background.
             </p>
@@ -926,11 +1138,21 @@ const sections: ArticleSection[] = [
         </p>
         <p>
           PMA's pendant carboxyl groups allow functional molecules to be
-          attached, as illustrated by its use in drug-delivery research.{" "}
-          <Cite k="ding2011pmla" /> Following discussions with our instructor,
+          attached, as illustrated by its use in drug-delivery research{" "}
+          <Cite k="ding2011pmla" />. Following discussions with our instructor,
           Ya Liu, we selected adhesive development as the application direction
           and investigated dopamine functionalization of PMA-containing broth.
         </p>
+        <DiagramFigure
+          id="design-figure-9"
+          src="https://static.igem.wiki/teams/6147/wiki/wet-design/all-route.avif"
+          intrinsicWidth={4000}
+          intrinsicHeight={1033}
+          alt="Chemical route for coupling dopamine to PMA through EDC and NHS activation to form PMA-DA."
+          captionPrefix="Figure 9."
+          caption="PMA-DA route"
+          fallback={<p>Image unavailable.</p>}
+        />
       </>
     ),
     subsections: [
@@ -946,20 +1168,20 @@ const sections: ArticleSection[] = [
               group available for interactions with substrate surfaces.
               Depending on the substrate and reaction conditions, these
               interactions can involve hydrogen bonding, metal coordination, and
-              oxidation-related reactions. <Cite k="lee2011musseladhesives" />
+              oxidation-related reactions <Cite k="lee2011musseladhesives" />.
             </p>
             <p>
               We observed that A08 is capable of producing high-molecular-weight
-              PMA, which further supports the selection of it as a source of
-              polymers. Longer chains may improve cohesion through chain
-              entanglement, but increased viscosity can hinder spreading and
-              surface contact. Our design therefore considers the balance
-              between interfacial adhesion, material cohesion, and
-              processability, rather than assuming that higher molecular weight
-              always improves bonding.{" "}
+              PMA, which further supports its selection as the polymer source.
+              Longer chains may improve cohesion through chain entanglement, but
+              increased viscosity can hinder spreading and surface contact. Our
+              design therefore considers the balance between interfacial
+              adhesion, material cohesion, and processability, rather than
+              assuming that higher molecular weight always improves bonding{" "}
               <Cite
                 k={["jenkins2013molecularweight", "siebert2019molecularweight"]}
               />
+              .
             </p>
             <p>
               Tang et al. prepared a dopamine-functionalized PMA adhesive
@@ -967,13 +1189,11 @@ const sections: ArticleSection[] = [
               1-ethyl-3-(3-dimethylaminopropyl)carbodiimide hydrochloride
               (EDC·HCl) and N-hydroxysuccinimide (NHS). Their study provides a
               chemical precedent for our coupling strategy and dopamine
-              feed-ratio selection. <Cite k="Tang2020PMLADA" /> We adapt this
+              feed-ratio selection <Cite k="Tang2020PMLADA" />. We adapt this
               approach to PMA-containing fermentation broth.
             </p>
-            <p>
-              <strong>Key components:</strong>
-            </p>
-            <ul>
+            <h3 className={styles.componentHeading}>Key components:</h3>
+            <ul className={styles.componentGrid}>
               <li>
                 <strong>PMA-containing broth</strong> — A08 fermentation
                 supernatant after cell removal, used as the starting material
@@ -1006,7 +1226,7 @@ const sections: ArticleSection[] = [
       },
       {
         id: "design-adhesive-module-experimental-design",
-        title: "Experimental Design: Adhesive",
+        title: "Experimental Design",
         content: (
           <>
             <p>
@@ -1022,7 +1242,7 @@ const sections: ArticleSection[] = [
               functionality.
             </p>
             <p>The evaluation addresses the following questions:</p>
-            <ul>
+            <ul className={styles.applicationGrid}>
               <li>
                 <strong>Can the formulation bond different substrates?</strong>{" "}
                 Bonded specimens prepared from glass, stainless steel, and{" "}
@@ -1032,7 +1252,7 @@ const sections: ArticleSection[] = [
                 the adhesive alone.
               </li>
               <li>
-                <strong>How does formulation affect adhesion?</strong>{" "}
+                <strong>How does the formulation affect adhesion?</strong>{" "}
                 Comparisons of material concentration and dopamine-to-carboxyl
                 input ratio examine how preparation conditions influence
                 adhesive performance. Underwater tests further assess adhesion
@@ -1043,7 +1263,7 @@ const sections: ArticleSection[] = [
                   How does the material behave in a biological or aqueous
                   environment?
                 </strong>{" "}
-                L929 cell-compatibility assessment evaluates the cellular
+                An L929 cell-compatibility assessment evaluates the cellular
                 response to the formulation. Mass-loss measurements in
                 phosphate-buffered saline (PBS) examine its stability in an
                 aqueous environment.
@@ -1056,6 +1276,16 @@ const sections: ArticleSection[] = [
               prototype, with wet-surface and soft-tissue adhesion as directions
               for further development.
             </p>
+            <DiagramFigure
+              id="design-figure-10"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/adhensive.avif"
+              intrinsicWidth={4000}
+              intrinsicHeight={2800}
+              alt="PMA-DA adhesive preparation workflow, including EDC/NHS activation, dopamine coupling, dialysis, freeze-drying, and schematic evaluation targets for adhesive-joint performance, underwater adhesion, and L929 cell response."
+              captionPrefix="Figure 10."
+              caption="Adhesive Module"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -1074,83 +1304,94 @@ const sections: ArticleSection[] = [
           and material tests examine the function of the broth-derived
           formulation.
         </p>
-        <div
-          className={styles.tableScroller}
-          role="region"
-          aria-label="Table D1. Design questions, evaluation readouts, and subsequent decisions for the four modules."
-          tabIndex={0}
-        >
-          <table>
-            <caption>
-              Table D1. Design questions, evaluation readouts, and subsequent
-              decisions for the four modules.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Module</th>
-                <th scope="col">Design question</th>
-                <th scope="col">Main evaluation</th>
-                <th scope="col">Decision supported</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Saccharification</th>
-                <td>
-                  Is the supplied corn-stover hydrolysate suitable for A08
-                  fermentation?
-                </td>
-                <td>
-                  Feedstock and hydrolysate composition, sugar profile, and
-                  hydrolysate fermentation performance.
-                </td>
-                <td>Define the downstream feedstock conditions.</td>
-              </tr>
-              <tr>
-                <th scope="row">Xylose</th>
-                <td>
-                  Which regulatory strategy supports growth and PMA production
-                  on pentose-containing substrates?
-                </td>
-                <td>
-                  Growth on different sugars, deletion and overexpression
-                  phenotypes, PMA concentration, and related transcripts.
-                </td>
-                <td>Select the recipient background for PYC engineering.</td>
-              </tr>
-              <tr>
-                <th scope="row">PYC</th>
-                <td>
-                  Which PYC construct performs better in the dual-regulator
-                  background?
-                </td>
-                <td>
-                  Construct and strain identity, PMA concentration under matched
-                  conditions, and biomass.
-                </td>
-                <td>
-                  Select a better-performing tested combination; matched-parent
-                  comparisons evaluate the added PYC contribution.
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Adhesive</th>
-                <td>
-                  Can PMA-containing broth be developed into a functional
-                  adhesive material?
-                </td>
-                <td>
-                  Material and joint testing, formulation comparisons,
-                  underwater performance, cellular responses, and aqueous
-                  stability.
-                </td>
-                <td>
-                  Select formulations and define evidence-supported application
-                  directions.
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className={styles.tableCard}>
+          <p
+            id="design-table-evaluation-caption"
+            className={styles.tableCaption}
+          >
+            Table D1. Design questions, evaluation readouts, and subsequent
+            decisions for the four modules.
+          </p>
+          <p id="design-table-evaluation-hint" className={styles.tableHint}>
+            Swipe horizontally to view all columns. The first column stays
+            visible.
+          </p>
+          <div
+            className={styles.tableScroller}
+            role="region"
+            aria-labelledby="design-table-evaluation-caption"
+            aria-describedby="design-table-evaluation-hint"
+            tabIndex={0}
+          >
+            <table aria-labelledby="design-table-evaluation-caption">
+              <thead>
+                <tr>
+                  <th scope="col">Module</th>
+                  <th scope="col">Design question</th>
+                  <th scope="col">Main evaluation</th>
+                  <th scope="col">Decision supported</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Saccharification</th>
+                  <td>
+                    Is the supplied corn-stover hydrolysate suitable for A08
+                    fermentation?
+                  </td>
+                  <td>
+                    Feedstock and hydrolysate composition, sugar profile, and
+                    hydrolysate fermentation performance.
+                  </td>
+                  <td>Define the downstream feedstock conditions.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Xylose</th>
+                  <td>
+                    Which regulatory strategy supports growth and PMA production
+                    on pentose-containing substrates?
+                  </td>
+                  <td>
+                    Growth on different sugars, deletion and overexpression
+                    phenotypes, PMA concentration, and related transcripts.
+                  </td>
+                  <td>Select the recipient background for PYC engineering.</td>
+                </tr>
+                <tr>
+                  <th scope="row">PYC</th>
+                  <td>
+                    Which PYC construct performs better in the dual-regulator
+                    background?
+                  </td>
+                  <td>
+                    Construct and strain identity, PMA concentration under
+                    matched conditions, and biomass.
+                  </td>
+                  <td>
+                    Select a better-performing tested combination;
+                    matched-parent comparisons evaluate the added PYC
+                    contribution.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Adhesive</th>
+                  <td>
+                    Can PMA-containing broth be developed into a functional
+                    adhesive material?
+                  </td>
+                  <td>
+                    Material and joint testing, formulation comparisons,
+                    underwater performance, cellular responses, and aqueous
+                    stability.
+                  </td>
+                  <td>
+                    Select formulations and define evidence-supported
+                    application directions.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </>
     ),
@@ -1161,7 +1402,7 @@ export function Design() {
   return (
     <ArticlePage
       title="Design"
-      lead="From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale behind our chassis, genetic constructs, and four connected wet-lab modules."
+      lead="From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale for our chassis choice, genetic constructs, and four connected wet-lab modules."
       sections={sections}
       references
       stickyMobileOutline

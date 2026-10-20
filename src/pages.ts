@@ -17,6 +17,9 @@ const Engineering = lazy(() =>
     default: Engineering,
   })),
 );
+const Parts = lazy(() =>
+  import("./contents/parts.tsx").then(({ Parts }) => ({ default: Parts })),
+);
 const Contribution = lazy(() =>
   import("./contents/contribution.tsx").then(({ Contribution }) => ({
     default: Contribution,
@@ -132,6 +135,7 @@ const Pages: (Page | Folder)[] = [
         path: "/contribution",
         component: Contribution,
         lead: "Make a useful contribution for future iGEM teams and document it on this page.",
+        layout: "article",
       },
     ],
   },
@@ -147,18 +151,27 @@ const Pages: (Page | Folder)[] = [
         layout: "article",
       },
       {
+        name: "Parts",
+        title: "Parts",
+        path: "/parts",
+        component: Parts,
+        lead: "The Pentose-Regulation Part Collection connects regulator genes, expression constructs, precursor-supply candidates, and reusable genetic-engineering tools.",
+        layout: "article",
+      },
+      {
         name: "Experiments",
         title: "Experiments",
         path: "/experiments",
         component: Experiments,
-        lead: "Describe the research and experiments that drove your project, providing sufficient information for other teams to understand and evaluate your work.",
+        lead: "From hydrolysate conditioning and regulator engineering to HPLC quantification and adhesive testing, these experiments explain how each comparison was designed and measured.",
+        layout: "article",
       },
       {
         name: "Protocols",
         title: "Protocols",
         path: "/protocols",
         component: Protocols,
-        lead: "Thorough documentation of experimental protocols is essential for reproducibility and transparency. Describe your methods in enough detail for other teams to reproduce your work.",
+        lead: "Our wet-lab protocols cover strain preparation, molecular cloning, A08 transformation, corn-stover hydrolysate processing, fermentation analysis and PMA–dopamine adhesive preparation.",
         layout: "article",
       },
       {
@@ -167,13 +180,15 @@ const Pages: (Page | Folder)[] = [
         path: "/notebook",
         component: Notebook,
         lead: "This serves as a chronological record of your team's progress throughout the season. It documents your daily activities, experiments, discussions, and decisions.",
+        layout: "article",
       },
       {
         name: "Results",
         title: "Results",
         path: "/results",
         component: Results,
-        lead: "Present the results of your project, along with a detailed analysis and discussion of their significance. Also outline future plans and reflections on the impact of your project.",
+        lead: "From strain identification and PMA production to a dopamine-functionalised bioadhesive: the experimental evidence behind Carbotex.",
+        layout: "article",
       },
       {
         name: "Safety",
@@ -201,7 +216,7 @@ const Pages: (Page | Folder)[] = [
         title: "Hardware",
         path: "/hardware",
         component: Hardware,
-        lead: "A modular platform for automated ammonia-nitrogen removal and real-time fermentation monitoring.",
+        lead: "This page documents the design, component selection, operation, and testing of our modular hardware platform for automated ammonia-nitrogen removal from anaerobic fermentation effluent.",
         layout: "article",
       },
     ],
@@ -223,7 +238,6 @@ const Pages: (Page | Folder)[] = [
         path: "/education",
         component: Education,
         lead: "Innovative educational tools and outreach activities have the ability to establish a two-way dialogue with new communities by discussing public values and the science behind synthetic biology.",
-        layout: "article",
       },
     ],
   },
@@ -243,6 +257,7 @@ const Pages: (Page | Folder)[] = [
         title: "Attributions",
         path: "/attributions",
         component: Attributions,
+        layout: "article",
         lead: "Accurate attribution is essential in the iGEM Competition. It ensures that the judges can properly assess your team's contributions and recognize the support provided by external collaborators. This page is dedicated to fulfilling the Attributions requirement for judging.",
       },
     ],
