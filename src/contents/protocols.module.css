@@ -1,69 +1,12 @@
 .libraryIntro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.3fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
   padding: clamp(1.5rem, 3.4vw, 2.6rem);
   border-radius: 2rem;
   background: var(--hardware-card-mint);
 }
 
-.introCopy {
-  min-width: 0;
-}
-
-:global(#protocol-library) .introCopy p {
-  max-width: 60ch;
+:global(#protocol-library) .libraryIntro > p {
   margin: 0;
-  color: var(--hardware-ink);
-  font-size: inherit;
-  line-height: 1.62;
   text-wrap: pretty;
-}
-
-.tally {
-  display: grid;
-  min-width: 10rem;
-  grid-template-areas:
-    "number label"
-    "number meta";
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  column-gap: 0.9rem;
-  padding: 1.15rem 1.25rem;
-  border-radius: 1.5rem;
-  background: var(--hardware-yellow);
-  color: var(--hardware-navy);
-}
-
-.tally strong {
-  grid-area: number;
-  font-family: var(--hardware-display);
-  font-size: clamp(3rem, 4.5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 0.82;
-}
-
-.tallyLabel,
-.tallyMeta {
-  min-width: 0;
-  line-height: 1.25;
-}
-
-.tallyLabel {
-  grid-area: label;
-  align-self: end;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.tallyMeta {
-  grid-area: meta;
-  align-self: start;
-  color: var(--hardware-ink);
-  font-size: 0.95rem;
-  font-weight: 700;
 }
 
 .groupIndex {
@@ -82,7 +25,6 @@
   gap: 1rem;
   padding: 0.65rem 0.8rem;
   border-radius: 0.85rem;
-  background: transparent;
   color: var(--hardware-navy);
   text-decoration: none;
   transition:
@@ -117,23 +59,20 @@
 }
 
 :global(#protocol-library) h3 {
-  max-width: 31em;
-  font-family: var(--hardware-display);
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
   line-height: 1.05;
   overflow-wrap: anywhere;
   text-wrap: balance;
 }
 
-.groupDescription {
-  max-width: 60ch;
-  margin: 0 0 1rem;
-  color: var(--hardware-ink);
+.groupDescription,
+:global(#protocol-library) .summary {
   font-size: 1rem;
   line-height: 1.58;
   text-wrap: pretty;
+}
+
+.groupDescription {
+  margin: 0 0 1rem;
 }
 
 .protocolField {
@@ -149,26 +88,16 @@
   display: grid;
   min-width: 0;
   gap: 0.85rem 1.5rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none; /* taste-skill-ignore: explicit reset for editorial rows */
 }
 
 .documentHeading {
   min-width: 0;
-  grid-column: 1 / -1;
 }
 
 :global(#protocol-library) .documentTitle {
   margin: 0;
   color: var(--hardware-navy);
-  font-family: var(--hardware-display);
   font-size: clamp(1.55rem, 2.1vw, 2.1rem);
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
   line-height: 1.06;
   overflow-wrap: anywhere;
   text-wrap: balance;
@@ -187,12 +116,7 @@
 }
 
 :global(#protocol-library) .summary {
-  max-width: 60ch;
   margin: 0;
-  color: var(--hardware-ink);
-  font-size: 1rem;
-  line-height: 1.58;
-  text-wrap: pretty;
 }
 
 :global(#protocol-library) .documentAction {
@@ -227,26 +151,48 @@
   transform: translate(2px, -2px);
 }
 
-.protocolField[data-protocol-layout="notes"] .document {
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr) auto;
-  align-items: start;
+.protocolField:is(
+  [data-protocol-layout="notes"],
+  [data-protocol-layout="sequence"],
+  [data-protocol-layout="compare"]
+) {
+  .document {
+    grid-template-areas:
+      "heading heading"
+      "summary action";
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .documentHeading {
+    grid-area: heading;
+  }
+
+  .summary {
+    grid-area: summary;
+  }
+
+  .documentAction {
+    grid-area: action;
+  }
 }
 
-.protocolField[data-protocol-layout="notes"] .documentHeading {
-  grid-row: span 2;
-}
-
-.protocolField[data-protocol-layout="notes"] .documentAction {
-  grid-column: 2;
-}
-
-.protocolField[data-protocol-layout="split"] {
+.protocolField:is(
+  [data-protocol-layout="split"],
+  [data-protocol-layout="pair"]
+) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  background: var(--hardware-card-mint);
+
+  .document {
+    align-content: start;
+  }
 }
 
-.protocolField[data-protocol-layout="split"] .document {
-  align-content: start;
+.protocolField:is(
+  [data-protocol-layout="split"],
+  [data-protocol-layout="compare"]
+) {
+  background: var(--hardware-card-mint);
 }
 
 :global(#protocol-library)
@@ -255,30 +201,16 @@
   font-size: clamp(1.35rem, 1.55vw, 1.45rem);
 }
 
-.protocolField[data-protocol-layout="split"] .documentAction {
-  align-self: end;
-}
-
 .protocolField[data-protocol-layout="sequence"] {
   gap: 2.4rem;
-  background: var(--hardware-yellow);
-}
-
-.protocolField[data-protocol-layout="sequence"] .document {
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr) auto;
-  align-items: start;
+  background: var(--hardware-soft-yellow);
 }
 
 .protocolField[data-protocol-layout="sequence"] .documentHeading {
   padding-right: clamp(0.5rem, 2vw, 1.5rem);
 }
 
-.protocolField[data-protocol-layout="sequence"] .summary {
-  grid-column: 1 / 3;
-}
-
 .protocolField[data-protocol-layout="sequence"] .documentAction {
-  grid-column: 3;
   align-self: center;
 }
 
@@ -296,10 +228,6 @@
   padding-block: clamp(1.4rem, 3vw, 2rem);
 }
 
-.protocolField[data-protocol-layout="ledger"] .document + .document {
-  padding-top: clamp(1.4rem, 3vw, 2rem);
-}
-
 .protocolField[data-protocol-layout="ledger"] .documentHeading {
   display: contents;
 }
@@ -310,52 +238,22 @@
 
 .protocolField[data-protocol-layout="ledger"] .summary {
   grid-area: summary;
-  max-width: 45rem;
 }
 
 .protocolField[data-protocol-layout="ledger"] .documentAction {
   grid-area: action;
-  align-self: start;
 }
 
 .protocolField[data-protocol-layout="compare"] {
   gap: 2.6rem;
-  background: var(--hardware-card-mint);
 }
 
 .protocolField[data-protocol-layout="compare"] .document {
-  grid-template-areas:
-    "heading heading"
-    "summary action";
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
   gap: 1rem 2rem;
 }
 
-.protocolField[data-protocol-layout="compare"] .documentHeading {
-  grid-area: heading;
-}
-
-.protocolField[data-protocol-layout="compare"] .summary {
-  grid-area: summary;
-}
-
-.protocolField[data-protocol-layout="compare"] .documentAction {
-  grid-area: action;
-}
-
 .protocolField[data-protocol-layout="pair"] {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 5vw, 4rem);
-  background: var(--hardware-pale-yellow);
-}
-
-.protocolField[data-protocol-layout="pair"] .document {
-  align-content: start;
-}
-
-.protocolField[data-protocol-layout="pair"] .documentAction {
-  margin-top: auto;
 }
 
 .srOnly {
@@ -376,39 +274,32 @@
 }
 
 @media (max-width: 960px) {
-  .protocolField[data-protocol-layout="notes"] .document,
-  .protocolField[data-protocol-layout="sequence"] .document,
-  .protocolField[data-protocol-layout="ledger"] .document,
-  .protocolField[data-protocol-layout="compare"] .document {
-    grid-template-areas:
-      "heading"
-      "summary"
-      "action";
-    grid-template-columns: minmax(0, 1fr);
-  }
+  .protocolField:not(
+    [data-protocol-layout="split"],
+    [data-protocol-layout="pair"]
+  ) {
+    .document {
+      grid-template-areas:
+        "heading"
+        "summary"
+        "action";
+      grid-template-columns: minmax(0, 1fr);
+    }
 
-  .protocolField[data-protocol-layout="notes"] .documentHeading,
-  .protocolField[data-protocol-layout="sequence"] .documentHeading,
-  .protocolField[data-protocol-layout="compare"] .documentHeading {
-    grid-area: heading;
-    grid-row: auto;
-    padding-right: 0;
-  }
+    .documentHeading {
+      grid-area: heading;
+      grid-row: auto;
+      padding-right: 0;
+    }
 
-  .protocolField[data-protocol-layout="notes"] .summary,
-  .protocolField[data-protocol-layout="sequence"] .summary,
-  .protocolField[data-protocol-layout="ledger"] .summary,
-  .protocolField[data-protocol-layout="compare"] .summary {
-    grid-area: summary;
-  }
+    .summary {
+      grid-area: summary;
+    }
 
-  .protocolField[data-protocol-layout="notes"] .documentAction,
-  .protocolField[data-protocol-layout="sequence"] .documentAction,
-  .protocolField[data-protocol-layout="ledger"] .documentAction,
-  .protocolField[data-protocol-layout="compare"] .documentAction {
-    grid-area: action;
-    grid-column: auto;
-    align-self: start;
+    .documentAction {
+      grid-area: action;
+      align-self: start;
+    }
   }
 
   .protocolField[data-protocol-layout="ledger"] .documentHeading {
@@ -422,14 +313,6 @@
 }
 
 @media (max-width: 760px) {
-  .libraryIntro {
-    grid-template-columns: 1fr;
-  }
-
-  .tally {
-    justify-self: start;
-  }
-
   .groupIndex {
     grid-template-columns: 1fr;
   }

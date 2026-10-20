@@ -13,8 +13,17 @@ interface ProtocolDocument {
   pdfUrl: string;
 }
 
+type ProtocolLayout =
+  | "notes"
+  | "split"
+  | "sequence"
+  | "ledger"
+  | "compare"
+  | "pair";
+
 interface ProtocolGroup {
   id: string;
+  layout: ProtocolLayout;
   title: string;
   description: string;
   protocols: ProtocolDocument[];
@@ -23,6 +32,7 @@ interface ProtocolGroup {
 const protocolGroups: ProtocolGroup[] = [
   {
     id: "strain-cultivation-and-identification",
+    layout: "notes",
     title: "Strain Cultivation and Identification",
     description:
       "Three protocols cover routine A08 cultivation, genomic DNA preparation and ITS-based identification.",
@@ -64,6 +74,7 @@ const protocolGroups: ProtocolGroup[] = [
   },
   {
     id: "molecular-cloning",
+    layout: "split",
     title: "Molecular Cloning",
     description:
       "Six protocols describe DNA amplification, electrophoresis, purification, assembly, bacterial transformation and plasmid isolation.",
@@ -125,6 +136,7 @@ const protocolGroups: ProtocolGroup[] = [
   },
   {
     id: "a08-transformation-and-transformant-screening",
+    layout: "sequence",
     title: "A08 Transformation and Transformant Screening",
     description:
       "Four protocols cover protoplast transformation, electroporation and antibiotic rescreening of candidate A08 transformants.",
@@ -165,6 +177,7 @@ const protocolGroups: ProtocolGroup[] = [
   },
   {
     id: "corn-stover-hydrolysate-preparation-and-sugar-analysis",
+    layout: "ledger",
     title: "Corn-Stover Hydrolysate Preparation and Sugar Analysis",
     description:
       "Three protocols cover corn-stover composition, hydrolysate conditioning and monosaccharide measurement.",
@@ -197,6 +210,7 @@ const protocolGroups: ProtocolGroup[] = [
   },
   {
     id: "fermentation-and-gene-expression-analysis",
+    layout: "compare",
     title: "Fermentation and Gene Expression Analysis",
     description:
       "Four protocols describe fermentation comparisons, transcript measurements and malic-acid analysis after PMA hydrolysis.",
@@ -242,6 +256,7 @@ const protocolGroups: ProtocolGroup[] = [
   },
   {
     id: "adhesive-preparation-and-cell-response",
+    layout: "pair",
     title: "Adhesive Preparation and Cell Response",
     description:
       "Two protocols cover PMA–dopamine adhesive preparation and the L929 cell-response assay.",
@@ -288,16 +303,7 @@ const protocolSections: ArticleSection[] = [
     content: (
       <>
         <div className={styles.libraryIntro}>
-          <div className={styles.introCopy}>
-            <p>{protocolOverview}</p>
-          </div>
-          <div className={styles.tally}>
-            <strong>{protocolCount}</strong>
-            <span className={styles.tallyLabel}>protocol documents</span>
-            <span className={styles.tallyMeta}>
-              {protocolGroups.length} workflows
-            </span>
-          </div>
+          <p>{protocolOverview}</p>
         </div>
 
         <nav className={styles.groupIndex} aria-label="Protocol workflows">
@@ -316,7 +322,7 @@ const protocolSections: ArticleSection[] = [
         </nav>
       </>
     ),
-    subsections: protocolGroups.map((group, groupIndex) => ({
+    subsections: protocolGroups.map((group) => ({
       id: group.id,
       title: group.title,
       content: (
@@ -324,11 +330,7 @@ const protocolSections: ArticleSection[] = [
           <p className={styles.groupDescription}>{group.description}</p>
           <div
             className={styles.protocolField}
-            data-protocol-layout={
-              ["notes", "split", "sequence", "ledger", "compare", "pair"][
-                groupIndex
-              ]
-            }
+            data-protocol-layout={group.layout}
           >
             {group.protocols.map(({ number, title, summary, pdfUrl }) => (
               <article
@@ -376,7 +378,6 @@ export function Protocols() {
   return (
     <ArticlePage
       title="Protocols"
-      lead={protocolOverview}
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-protocols.avif",
         alt: "Illustration of a laboratory checklist, pipetting, and petri dishes.",
