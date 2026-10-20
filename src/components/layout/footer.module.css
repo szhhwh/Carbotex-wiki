@@ -175,10 +175,10 @@
   transition: transform 220ms ease;
 }
 
-.card:nth-child(3n + 2) {
+.card[data-tone="1"] {
   background: var(--footer-accent);
 }
-.card:nth-child(3n + 3) {
+.card[data-tone="2"] {
   background: var(--footer-card-alt);
 }
 .card:hover {

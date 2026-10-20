@@ -46,6 +46,18 @@ async function readCarousel(viewport: Locator): Promise<CarouselState> {
   });
 }
 
+async function readActiveCard(viewport: Locator) {
+  return viewport.evaluate((element) => {
+    const track = element.firstElementChild as HTMLElement;
+    const card = track.children[1] as HTMLElement;
+
+    return {
+      background: getComputedStyle(card).backgroundColor,
+      href: card.getAttribute("href"),
+    };
+  });
+}
+
 test.describe("footer project carousel", () => {
   test("card rotation keeps the footer layout vertically stable", async ({
     page,
@@ -249,6 +261,51 @@ test.describe("footer project carousel", () => {
 
     expect(Math.abs(after.position - expectedPosition)).toBeLessThan(0.02);
     expect(Math.abs(after.scrollY - before.scrollY)).toBeLessThan(2);
+  });
+
+  test("wheel rotation keeps each card color attached to its content", async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      testInfo.project.name === "mobile",
+      "wheel input requires a mouse",
+    );
+
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const viewport = await openFooterCarousel(page);
+    const before = await readActiveCard(viewport);
+    expect(before).toEqual({
+      background: "rgb(184, 227, 218)",
+      href: "/ouc-haide/description",
+    });
+
+    const { step } = await readCarousel(viewport);
+    await viewport.evaluate(
+      (element, deltaY) => {
+        const rect = element.getBoundingClientRect();
+        element.dispatchEvent(
+          new WheelEvent("wheel", {
+            bubbles: true,
+            cancelable: true,
+            clientX: rect.left + 10,
+            clientY: rect.top + 10,
+            deltaY,
+          }),
+        );
+      },
+      (step / WHEEL_SENSITIVITY) * 2.05,
+    );
+
+    await expect
+      .poll(async () => (await readCarousel(viewport)).status)
+      .toContain("Project card 3 of");
+
+    await expect
+      .poll(async () => readActiveCard(viewport))
+      .toEqual({
+        background: "rgb(156, 215, 202)",
+        href: "/ouc-haide/contribution",
+      });
   });
 
   test("a horizontal touch swipe advances the mobile carousel", async ({

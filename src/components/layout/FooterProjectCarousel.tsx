@@ -151,6 +151,7 @@ export function FooterProjectCarousel() {
                 key={offset}
                 to={card.path}
                 className={styles.card}
+                data-tone={cardIndex % 3}
                 tabIndex={offset >= 0 && offset < visibleCount ? 0 : -1}
                 aria-hidden={!exposed || undefined}
                 inert={!exposed}
@@ -162,8 +163,12 @@ export function FooterProjectCarousel() {
           })}
         </div>
         <div className={styles.measure} aria-hidden="true">
-          {footerCards.map((card) => (
-            <div className={styles.card} key={card.path}>
+          {footerCards.map((card, cardIndex) => (
+            <div
+              className={styles.card}
+              data-tone={cardIndex % 3}
+              key={card.path}
+            >
               <FooterCardContent card={card} />
             </div>
           ))}
