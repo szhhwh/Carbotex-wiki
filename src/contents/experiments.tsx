@@ -1108,6 +1108,10 @@ export function Experiments() {
     <ArticlePage
       title="Experiments"
       lead="From hydrolysate conditioning and regulator engineering to HPLC quantification and adhesive testing, these experiments explain how each comparison was designed and measured."
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-experiments.avif",
+        alt: "Illustration of microscopes, laboratory instruments, and gel electrophoresis.",
+      }}
       sections={sections}
       references
       referencesIntro="Sources cited in the experimental descriptions."

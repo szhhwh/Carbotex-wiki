@@ -377,6 +377,10 @@ export function Protocols() {
     <ArticlePage
       title="Protocols"
       lead={protocolOverview}
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-protocols.avif",
+        alt: "Illustration of a laboratory checklist, pipetting, and petri dishes.",
+      }}
       sections={protocolSections}
       stickyMobileOutline
       theme="hardware"

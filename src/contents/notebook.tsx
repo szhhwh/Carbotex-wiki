@@ -830,6 +830,10 @@ export function Notebook() {
           </p>
         </>
       }
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-notebook.avif",
+        alt: "Illustration of a calendar, laboratory notebook, and sample storage boxes.",
+      }}
       sections={sections}
       references
       stickyMobileOutline

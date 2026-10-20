@@ -810,6 +810,10 @@ export function Results() {
     <ArticlePage
       title="Results"
       lead="From strain identification and PMA production to a dopamine-functionalised bioadhesive: the experimental evidence behind Carbotex."
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-results.avif",
+        alt: "Illustration of chromatograms, bar charts, and gel electrophoresis results.",
+      }}
       sections={sections}
       references
       stickyMobileOutline

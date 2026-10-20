@@ -1403,6 +1403,10 @@ export function Design() {
     <ArticlePage
       title="Design"
       lead="From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale for our chassis choice, genetic constructs, and four connected wet-lab modules."
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-design.avif",
+        alt: "Illustration of genetic design, cell engineering, and molecular building blocks.",
+      }}
       sections={sections}
       references
       stickyMobileOutline
