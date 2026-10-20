@@ -1,11 +1,36 @@
 import { expect, test } from "@playwright/test";
 
 const navigationFolders = [
-  { name: "Project", variant: "project", minimumLinks: 3 },
-  { name: "Wet Lab", variant: "wet", minimumLinks: 6 },
-  { name: "Dry Lab", variant: "dry", minimumLinks: 2 },
-  { name: "Human Practices", variant: "human-practices", minimumLinks: 2 },
-  { name: "Team", variant: "team", minimumLinks: 2 },
+  {
+    name: "Project",
+    variant: "project",
+    minimumLinks: 3,
+    currentPath: "/contribution",
+  },
+  {
+    name: "Wet Lab",
+    variant: "wet",
+    minimumLinks: 6,
+    currentPath: "/design",
+  },
+  {
+    name: "Dry Lab",
+    variant: "dry",
+    minimumLinks: 2,
+    currentPath: "/model",
+  },
+  {
+    name: "Human Practices",
+    variant: "human-practices",
+    minimumLinks: 2,
+    currentPath: "/education",
+  },
+  {
+    name: "Team",
+    variant: "team",
+    minimumLinks: 2,
+    currentPath: "/members",
+  },
 ] as const;
 
 test.describe("shared navbar", () => {
@@ -239,6 +264,41 @@ test.describe("shared navbar", () => {
         await expect(modelStem).toHaveCount(1);
         await expect(modelStem).toHaveCSS("stroke", "rgb(10, 71, 59)");
       }
+    }
+  });
+
+  test("keeps every active dropdown item on the white card stroke", async ({
+    page,
+  }) => {
+    for (const folder of navigationFolders) {
+      await page.goto(`/ouc-haide${folder.currentPath}`);
+
+      if ((page.viewportSize()?.width ?? 1440) <= 1100) {
+        await page.getByRole("button", { name: "Open navigation" }).click();
+      }
+
+      await page
+        .locator("header nav button")
+        .filter({ hasText: new RegExp(`^${folder.name}$`, "i") })
+        .click();
+
+      const panel = page.locator(`[data-menu-variant="${folder.variant}"]`);
+      const currentItem = panel.locator('a[aria-current="page"]');
+      const itemBorderColors = await panel
+        .locator("a")
+        .evaluateAll((items) =>
+          items.map((item) => getComputedStyle(item).borderTopColor),
+        );
+
+      await expect(panel).toBeVisible();
+      expect(new Set(itemBorderColors)).toEqual(
+        new Set(["rgb(255, 255, 255)"]),
+      );
+      await expect(currentItem).toHaveCount(1);
+      await expect(currentItem).toHaveCSS(
+        "border-top-color",
+        "rgb(255, 255, 255)",
+      );
     }
   });
 
