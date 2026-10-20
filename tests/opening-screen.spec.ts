@@ -104,7 +104,7 @@ test("inline opening paints before the application can download", async ({
     centeredX: true,
     centeredY: true,
     embedded: true,
-    background: "rgb(251, 250, 244)",
+    background: "rgb(251, 240, 221)",
   });
   release();
   await expect(page.locator(opening)).toHaveCount(0);

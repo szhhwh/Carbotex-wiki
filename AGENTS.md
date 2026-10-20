@@ -70,6 +70,13 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
 - **Styling**: CSS Modules (`*.module.css`) + native CSS nesting + custom
   properties as design tokens; Bootstrap/react-bootstrap is for content-page
   typography only — the home visual is fully custom
+- **Media captions**: All image and video captions must render through
+  `src/components/media/Caption.tsx` and use the shared
+  `src/components/media/caption.module.css` typography. This includes custom
+  figures, galleries, carousels, pending-media states, and team photo captions.
+  Page-specific styles may control layout or decoration,
+  but must not override the shared caption or caption-prefix color, font,
+  font-size, line-height, or weight.
 - **echarts**: on-demand imports (`echarts/core` + register only the chart
   types used); never import the full package
 - **three**: plain `three` (no react-three-fiber) — WebGL scenes live in

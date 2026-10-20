@@ -1,10 +1,39 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
+import { readFileSync } from "node:fs";
 // Import the leaf module directly: the barrel (./src/utils) would drag the whole
 // app (via pages.ts) into esbuild's config bundling, which cannot parse CSS Modules.
 import { stringToSlug } from "./src/utils/stringToSlug";
 import { generateReferences } from "./scripts/generate-references.mjs";
+
+// The opening must paint before React, application CSS, or external assets load.
+function openingScreen(): Plugin {
+  const source = (file: string) =>
+    readFileSync(
+      new URL(
+        `./src/components/routing/opening-screen/${file}`,
+        import.meta.url,
+      ),
+      "utf8",
+    );
+  return {
+    name: "inline-opening-screen",
+    transformIndexHtml: {
+      order: "pre",
+      handler: (html) =>
+        html
+          .replace(
+            "<!-- opening-style -->",
+            () => `<style>${source("opening-screen.css")}</style>`,
+          )
+          .replace(
+            "<!-- opening-script -->",
+            () => `<script>${source("opening-screen.js")}</script>`,
+          ),
+    },
+  };
+}
 
 // Keeps src/data/references.generated.ts in sync with src/data/references.bib:
 // regenerates it on every build (so the deployed wiki is always up to date)
@@ -17,11 +46,16 @@ function references(): Plugin {
       command = config.command;
     },
     buildStart() {
-      // Missing keys fail the deploy build; `yarn dev` only warns so pages
-      // can be written before their bib entries are pasted in.
-      generateReferences({ strict: command === "build" });
+      // Fail fast if a direct Vite build is using a missing or stale generated
+      // module.
+      if (command === "build") {
+        generateReferences({ strict: true, check: true });
+      }
     },
     configureServer(server) {
+      // Missing keys only warn during development so pages can be written
+      // before their BibTeX entries are pasted in.
+      generateReferences({ strict: false });
       const onFileChange = (file: string) => {
         if (file.endsWith("references.bib")) {
           generateReferences({ strict: false });
@@ -38,7 +72,7 @@ export default () => {
   const env = loadEnv("dev", process.cwd());
   return defineConfig({
     base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
-    plugins: [react(), svgr(), references()],
+    plugins: [openingScreen(), react(), svgr(), references()],
     build: {
       rollupOptions: {
         input: {

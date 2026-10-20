@@ -1,6 +1,7 @@
 :root {
-  --opening-paper: #fbfaf4;
-  --opening-ink: #00523f;
+  --opening-paper: var(--hardware-paper, #fbf0dd);
+  --opening-ink: var(--hardware-ink, #003f34);
+  --opening-yellow: var(--hardware-yellow, #ffc647);
   --opening-turn-duration: 1000ms;
   --opening-fade-duration: 900ms;
   --opening-reduced-hold-duration: 450ms;
@@ -56,9 +57,10 @@
   top: calc(50% + clamp(8rem, 19vmin, 13rem));
   padding: 0 1.5rem;
   text-align: center;
+  color: var(--opening-ink);
   font:
-    1rem/1.5 Georgia,
-    serif;
+    1rem/1.5 "Trebuchet MS",
+    sans-serif;
 }
 
 .opening-screen__recovery[hidden] {
@@ -70,8 +72,8 @@
   padding: 0.6rem 1.2rem;
   border: 0;
   border-radius: 999px;
-  background: var(--opening-ink);
-  color: var(--opening-paper);
+  background: var(--opening-yellow);
+  color: var(--opening-ink);
   font: inherit;
   cursor: pointer;
 }
