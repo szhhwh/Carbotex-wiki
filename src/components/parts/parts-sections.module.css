@@ -1,24 +1,3 @@
-.partsPage {
-  --parts-body-size: 1.125rem;
-  --parts-small-size: 0.875rem;
-  --parts-group-size: clamp(1.55rem, 2.63vw, 2rem);
-  display: contents;
-}
-
-.partsPage.partsPage :global(main article) {
-  --article-text: var(--parts-body-size);
-}
-
-.partsPage.partsPage :global(main article h3) {
-  font-size: var(--parts-group-size);
-  line-height: 1.15;
-}
-
-.partsPage.partsPage :global([data-article-lead]),
-.partsPage.partsPage :global(main article button) {
-  font-size: var(--parts-body-size);
-}
-
 .corePairs,
 .backboneStack,
 .metabolismBoard,
@@ -35,7 +14,7 @@
   --parts-navy: var(--hardware-navy, #1f315f);
   --parts-heading: var(--hardware-card-heading, #1e4fbc);
   --parts-radius: 2rem;
-  --parts-body-size: 1.125rem;
+  --parts-body-size: var(--article-text, 1.125rem);
   --parts-small-size: 0.875rem;
   --parts-group-size: clamp(1.55rem, 2.63vw, 2rem);
   --parts-display: var(
@@ -52,23 +31,12 @@
   font-family: var(--parts-body);
 }
 
-.sectionCopy {
-  display: contents;
-}
-
-.sectionCopy > p {
-  max-width: 66ch;
-}
-
 .partCard {
-  position: relative;
   min-width: 0;
   overflow: hidden;
 }
 
 .partBody {
-  position: relative;
-  z-index: 1;
   display: grid;
   min-width: 0;
   align-content: start;
@@ -125,11 +93,6 @@
 .partHeading,
 .partFooter {
   align-items: flex-end;
-}
-
-.partHeading .typeTag,
-.partFooter .typeTag {
-  flex: 0 1 auto;
 }
 
 .partCopy {
@@ -196,7 +159,7 @@
 .corePairs {
   display: grid;
   gap: 1.1rem;
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
 }
 
 .corePair {
@@ -255,7 +218,8 @@
   justify-content: flex-end;
 }
 
-.pairArrow {
+.pairArrow,
+.toolConnector {
   display: inline-grid;
   width: 2.75rem;
   height: 2.75rem;
@@ -267,7 +231,12 @@
   place-items: center;
 }
 
-.pairArrow svg {
+.toolConnector {
+  align-self: center;
+}
+
+.pairArrow svg,
+.toolConnector svg {
   display: block;
   transform: rotate(90deg);
 }
@@ -276,7 +245,7 @@
 .backboneStack {
   display: grid;
   gap: 1rem;
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
 }
 
 .backboneRow {
@@ -321,7 +290,7 @@
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 1rem;
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
 }
 
 .regulatorColumn {
@@ -429,7 +398,7 @@
 
 /* Donors: an open ledger with no row rules; hierarchy comes from the row grid. */
 .donorSection {
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
   overflow: hidden;
   border-radius: var(--parts-radius);
   background: var(--parts-paper);
@@ -483,14 +452,13 @@
 
 /* Constructs: a broad technical index, distinct from the donor comparison. */
 .constructCatalog {
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
   padding: 0.9rem 1.1rem 1rem;
   border-radius: var(--parts-radius);
   background: var(--parts-card-mint);
 }
 
-.catalogHeader,
-.toolHeader {
+.catalogHeader {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -542,11 +510,10 @@
 
 /* Tools: two filled stages with a central directional connector. */
 .toolSection {
-  margin: 2rem 0 2.75rem;
+  margin-block: var(--article-space-block);
 }
 
 .toolHeader {
-  display: block;
   padding: 0 0 0.9rem;
 }
 
@@ -587,23 +554,6 @@
   grid-area: footer;
 }
 
-.toolConnector {
-  display: inline-grid;
-  width: 2.75rem;
-  height: 2.75rem;
-  align-self: center;
-  justify-self: center;
-  border: 2px solid var(--parts-ink);
-  border-radius: 50%;
-  background: var(--parts-yellow);
-  color: var(--parts-ink);
-  place-items: center;
-}
-
-.toolConnector svg {
-  transform: rotate(90deg);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .registryLink.registryLink.registryLink[href]:hover {
     background: var(--parts-yellow);
@@ -618,16 +568,7 @@
 
 @container (max-width: 48rem) {
   .toolFlow {
-    grid-template-columns: minmax(0, 1fr);
     gap: 0.8rem;
-  }
-
-  .toolConnector {
-    justify-self: center;
-  }
-
-  .toolConnector svg {
-    transform: rotate(90deg);
   }
 
   .regulatorCard .partBody {
@@ -637,10 +578,6 @@
       "footer";
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto 1fr auto;
-  }
-
-  .xyloseList {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .backboneRow .partBody,

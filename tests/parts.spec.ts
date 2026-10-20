@@ -107,7 +107,6 @@ test.describe("parts page", () => {
 
     const card = page.locator("#parts-core-parts [data-part-card]").first();
     await card.scrollIntoViewIfNeeded();
-    await expect(card).toHaveAttribute("data-visible", "true");
     await expect(card).toHaveCSS("opacity", "1");
 
     const blocks = await card
@@ -184,7 +183,6 @@ test.describe("parts page", () => {
     await openParts(page);
 
     const card = page.locator("#parts-core-parts [data-part-card]").first();
-    await expect(card).toHaveAttribute("data-visible", "true");
     await expect(card).toHaveCSS("opacity", "1");
   });
 
@@ -229,6 +227,53 @@ test.describe("parts page", () => {
     const sharedMetrics = await outlineTypeMetrics(page);
 
     expect(partsMetrics).toEqual(sharedMetrics);
+  });
+
+  test("catalogue copy and blocks use the shared article rhythm", async ({
+    page,
+  }) => {
+    await openParts(page);
+
+    const metrics = await page.evaluate(() => {
+      const main = document.querySelector("main[data-article-theme]");
+      const article = document.querySelector("#article-body article");
+      const paragraph = article?.querySelector("section p");
+      const partRole = article?.querySelector("[data-part-card] p");
+      const firstBlock = article?.querySelector("[class*='corePairs']");
+      if (!main || !article || !paragraph || !partRole || !firstBlock) {
+        throw new Error("Parts article measurements were not found");
+      }
+
+      const probe = document.createElement("div");
+      probe.style.fontSize = "var(--article-text)";
+      probe.style.marginBlock = "var(--article-space-block)";
+      main.append(probe);
+
+      const expected = getComputedStyle(probe);
+      const paragraphStyle = getComputedStyle(paragraph);
+      const partRoleStyle = getComputedStyle(partRole);
+      const blockStyle = getComputedStyle(firstBlock);
+      const articleRect = article.getBoundingClientRect();
+      const paragraphRect = paragraph.getBoundingClientRect();
+      const result = {
+        expectedFontSize: expected.fontSize,
+        expectedBlockSpace: expected.marginTop,
+        paragraphFontSize: paragraphStyle.fontSize,
+        partRoleFontSize: partRoleStyle.fontSize,
+        blockMarginTop: blockStyle.marginTop,
+        blockMarginBottom: blockStyle.marginBottom,
+        articleWidth: articleRect.width,
+        paragraphWidth: paragraphRect.width,
+      };
+      probe.remove();
+      return result;
+    });
+
+    expect(metrics.paragraphFontSize).toBe(metrics.expectedFontSize);
+    expect(metrics.partRoleFontSize).toBe(metrics.expectedFontSize);
+    expect(metrics.blockMarginTop).toBe(metrics.expectedBlockSpace);
+    expect(metrics.blockMarginBottom).toBe(metrics.expectedBlockSpace);
+    expect(metrics.paragraphWidth).toBeCloseTo(metrics.articleWidth, 1);
   });
 
   test("mobile outline links to the catalogue sections", async ({

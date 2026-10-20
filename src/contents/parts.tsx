@@ -11,7 +11,6 @@ import {
   type PartRecord,
   ToolFlow,
 } from "../components/parts/PartsSections";
-import styles from "../components/parts/parts-sections.module.css";
 
 const coreParts: PartRecord[] = [
   {
@@ -345,25 +344,23 @@ const sections: ArticleSection[] = [
     id: "parts-pentose-regulation",
     title: "Pentose-Regulation Part Collection",
     content: (
-      <div className={styles.sectionCopy}>
-        <p>
-          We developed the Pentose-Regulation Part Collection to connect
-          transcription-factor function with pentose utilization and poly(malic
-          acid) (PMA) production in <em>Aureobasidium melanogenum</em> A08. The
-          collection centres on the native <em>xlnR</em> and <em>araR</em> genes
-          and their corresponding expression constructs. Together with a shared
-          expression backbone and a supporting knockout backbone, these parts
-          provide complementary ways to investigate the two regulators and
-          compare individual and combined engineering strategies.
-        </p>
-      </div>
+      <p>
+        We developed the Pentose-Regulation Part Collection to connect
+        transcription-factor function with pentose utilization and poly(malic
+        acid) (PMA) production in <em>Aureobasidium melanogenum</em> A08. The
+        collection centres on the native <em>xlnR</em> and <em>araR</em> genes
+        and their corresponding expression constructs. Together with a shared
+        expression backbone and a supporting knockout backbone, these parts
+        provide complementary ways to investigate the two regulators and compare
+        individual and combined engineering strategies.
+      </p>
     ),
     subsections: [
       {
         id: "parts-core-parts",
         title: "Core Parts",
         content: (
-          <div className={styles.sectionCopy}>
+          <>
             <p>
               The four core parts comprise two regulator genes and two
               expression-plasmid designs.
@@ -380,27 +377,27 @@ const sections: ArticleSection[] = [
                 },
               ]}
             />
-          </div>
+          </>
         ),
       },
       {
         id: "parts-supporting-backbones",
         title: "Supporting Backbones",
         content: (
-          <div className={styles.sectionCopy}>
+          <>
             <p>
               Two backbone resources support the expression and knockout
               designs. They are listed separately from the four core parts.
             </p>
             <BackboneStack parts={supportingBackbones} />
-          </div>
+          </>
         ),
       },
       {
         id: "parts-work-together",
         title: "How the Parts Work Together",
         content: (
-          <div className={styles.sectionCopy}>
+          <>
             <p>
               The regulator genes define the sequences under investigation,
               while the paired expression constructs provide a common framework
@@ -422,26 +419,24 @@ const sections: ArticleSection[] = [
               Mixed-sugar and corn-stover hydrolysate fermentations extend the
               comparison to biomass-derived carbon sources.
             </p>
-          </div>
+          </>
         ),
       },
       {
         id: "parts-reuse-beyond-a08",
         title: "Reuse Beyond A08",
         content: (
-          <div className={styles.sectionCopy}>
-            <p>
-              Other teams can reuse the regulator genes individually or together
-              to investigate pentose regulation in another fungal host.
-              A08-derived XlnR and AraR also provide candidates for heterologous
-              transcription-factor studies: host-adapted expression can test
-              their effects on metabolic-gene expression, sugar utilization, and
-              production of the chosen product. Such work requires expression
-              and selection elements compatible with the recipient. Adapting the
-              knockout framework additionally requires homology arms matching
-              the new target genome.
-            </p>
-          </div>
+          <p>
+            Other teams can reuse the regulator genes individually or together
+            to investigate pentose regulation in another fungal host.
+            A08-derived XlnR and AraR also provide candidates for heterologous
+            transcription-factor studies: host-adapted expression can test their
+            effects on metabolic-gene expression, sugar utilization, and
+            production of the chosen product. Such work requires expression and
+            selection elements compatible with the recipient. Adapting the
+            knockout framework additionally requires homology arms matching the
+            new target genome.
+          </p>
         ),
       },
     ],
@@ -450,7 +445,7 @@ const sections: ArticleSection[] = [
     id: "parts-pentose-regulation-metabolism",
     title: "Pentose Regulation and Metabolism",
     content: (
-      <div className={styles.sectionCopy}>
+      <>
         <p>
           The native regulator genes <em>xlnR</em> and <em>araR</em> are the
           focus of our regulator-engineering module. XYR, XDH, XKI, and XI form
@@ -458,14 +453,14 @@ const sections: ArticleSection[] = [
           responses in A08.
         </p>
         <MetabolismBoard parts={metabolismParts} />
-      </div>
+      </>
     ),
   },
   {
     id: "parts-pyc-donor-genes",
     title: "Pyruvate Carboxylase Donor Genes",
     content: (
-      <div className={styles.sectionCopy}>
+      <>
         <p>
           Pyruvate carboxylase (PYC) catalyzes the ATP-dependent carboxylation
           of pyruvate to oxaloacetate. Our four donor genes provide a panel for
@@ -473,14 +468,14 @@ const sections: ArticleSection[] = [
           engineering module.
         </p>
         <DonorLedger parts={pycDonorParts} />
-      </div>
+      </>
     ),
   },
   {
     id: "parts-expression-designs",
     title: "Expression Plasmid Designs",
     content: (
-      <div className={styles.sectionCopy}>
+      <>
         <p>
           The following entries describe expression designs based on the shared
           pNAT-LoxP-rDNA backbone,{" "}
@@ -496,14 +491,14 @@ const sections: ArticleSection[] = [
           engineering with precursor-supply engineering.
         </p>
         <ConstructCatalog parts={expressionParts} />
-      </div>
+      </>
     ),
   },
   {
     id: "parts-knockout-marker-recycling",
     title: "Knockout and Marker Recycling Tools",
     content: (
-      <div className={styles.sectionCopy}>
+      <>
         <p>
           Targeted gene disruption and selectable-marker recycling serve
           different purposes. The fl4a-hpt-loxp backbone provides a framework
@@ -512,14 +507,14 @@ const sections: ArticleSection[] = [
           between compatible lox sites.
         </p>
         <ToolFlow parts={toolParts} />
-      </div>
+      </>
     ),
   },
   {
     id: "parts-connect",
     title: "How the Parts Connect",
     content: (
-      <div className={styles.sectionCopy}>
+      <>
         <p>
           Within this catalogue, the A08 pentose-regulation set centres on{" "}
           <em>xlnR</em> and <em>araR</em>. Their gene entries and expression
@@ -539,29 +534,27 @@ const sections: ArticleSection[] = [
           appropriate targeting sequences where integration is intended, and
           functional testing in the new host.
         </p>
-      </div>
+      </>
     ),
   },
 ];
 
 export function Parts() {
   return (
-    <div className={styles.partsPage} data-parts-page>
-      <ArticlePage
-        title="Parts"
-        lead={
-          <>
-            Carbotex investigates pentose utilization and poly(malic acid) (PMA)
-            production in <em>Aureobasidium melanogenum</em> A08. The catalogue
-            contains 24 part records covering 19 unique iGEM Registry entries:
-            pentose-associated genes, pyruvate carboxylase donor genes,
-            expression-plasmid designs, and genetic-engineering tools. Every
-            entry links directly to its Registry record.
-          </>
-        }
-        sections={sections}
-        stickyMobileOutline
-      />
-    </div>
+    <ArticlePage
+      title="Parts"
+      lead={
+        <>
+          Carbotex investigates pentose utilization and poly(malic acid) (PMA)
+          production in <em>Aureobasidium melanogenum</em> A08. The catalogue
+          contains 24 part records covering 19 unique iGEM Registry entries:
+          pentose-associated genes, pyruvate carboxylase donor genes,
+          expression-plasmid designs, and genetic-engineering tools. Every entry
+          links directly to its Registry record.
+        </>
+      }
+      sections={sections}
+      stickyMobileOutline
+    />
   );
 }

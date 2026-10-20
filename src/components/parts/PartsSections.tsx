@@ -51,7 +51,7 @@ function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
 
   if (layout === "pair") {
     return (
-      <div className={styles.partBody} data-part-layout={layout}>
+      <div className={styles.partBody}>
         {title}
         {role}
         <div className={styles.partMeta}>
@@ -62,9 +62,9 @@ function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
     );
   }
 
-  if (layout === "regulator") {
+  if (layout === "regulator" || layout === "tool") {
     return (
-      <div className={styles.partBody} data-part-layout={layout}>
+      <div className={styles.partBody}>
         {title}
         {role}
         <div className={styles.partFooter}>
@@ -77,7 +77,7 @@ function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
 
   if (layout === "xylose") {
     return (
-      <div className={styles.partBody} data-part-layout={layout}>
+      <div className={styles.partBody}>
         {title}
         <div className={styles.partCopy}>
           {type}
@@ -88,21 +88,8 @@ function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
     );
   }
 
-  if (layout === "tool") {
-    return (
-      <div className={styles.partBody} data-part-layout={layout}>
-        {title}
-        {role}
-        <div className={styles.partFooter}>
-          {type}
-          {link}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.partBody} data-part-layout={layout}>
+    <div className={styles.partBody}>
       <div className={styles.partHeading}>
         {title}
         {type}
@@ -123,12 +110,7 @@ function PartCard({
   layout: PartLayout;
 }) {
   return (
-    <article
-      className={`${styles.partCard} ${className}`}
-      data-part-card
-      data-visible="true"
-      data-part-layout={layout}
-    >
+    <article className={`${styles.partCard} ${className}`} data-part-card>
       <PartBody part={part} layout={layout} />
     </article>
   );
