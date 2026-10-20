@@ -1,100 +1,83 @@
 import { useEffect, useRef, useState } from "react";
-import type { LucideIcon } from "lucide-react";
-import {
-  BookOpenCheck,
-  ChartNoAxesCombined,
-  ChevronDown,
-  CircleDot,
-  ClipboardCheck,
-  Cog,
-  Cpu,
-  FileText,
-  FlaskConical,
-  Gift,
-  GraduationCap,
-  Handshake,
-  ListChecks,
-  Menu,
-  PencilRuler,
-  ShieldCheck,
-  Sigma,
-  Users,
-  X,
-} from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import Pages from "../../pages.ts";
+import {
+  NavbarIllustration,
+  type NavbarIllustrationVariant,
+} from "./NavbarIllustration";
+import { NavbarMenuCurves } from "./NavbarMenuCurves";
+import { NavbarScrollProgress } from "./NavbarScrollProgress";
 import styles from "./navbar.module.css";
 
 interface NavigationDetail {
   description: string;
-  icon: LucideIcon;
 }
 
 const navigationDetails: Record<string, NavigationDetail> = {
   "/description": {
     description: "The challenge and our approach",
-    icon: FileText,
   },
   "/engineering": {
     description: "Design, build, test, and learn",
-    icon: Cog,
   },
   "/contribution": {
     description: "Resources for future teams",
-    icon: Gift,
   },
   "/design": {
     description: "What we built and why",
-    icon: PencilRuler,
+  },
+  "/parts": {
+    description: "Reusable genes, constructs, and tools",
   },
   "/experiments": {
     description: "Our experiments and their rationale",
-    icon: FlaskConical,
   },
   "/protocols": {
     description: "Reproducible, step-by-step methods",
-    icon: ListChecks,
   },
   "/notebook": {
     description: "Our research journey",
-    icon: BookOpenCheck,
   },
   "/results": {
     description: "Findings from our work",
-    icon: ChartNoAxesCombined,
   },
   "/safety-and-security": {
     description: "Responsible work by design",
-    icon: ShieldCheck,
   },
   "/model": {
     description: "From biology to prediction",
-    icon: Sigma,
   },
   "/hardware": {
     description: "Building the physical system",
-    icon: Cpu,
   },
   "/human-practices": {
     description: "Shaped together with society",
-    icon: Handshake,
   },
   "/education": {
     description: "Learning through participation",
-    icon: GraduationCap,
   },
   "/members": {
     description: "The people behind the project",
-    icon: Users,
   },
   "/attributions": {
     description: "Crediting every contribution",
-    icon: ClipboardCheck,
   },
+};
+
+const menuIllustrations: Record<string, NavbarIllustrationVariant> = {
+  Project: "project",
+  "Wet Lab": "wet",
+  "Dry Lab": "dry",
+  "Human Practices": "human-practices",
+  Team: "team",
 };
 
 const makeFolderId = (name: string | undefined, index: number) =>
   `nav-${name?.toLowerCase().replace(/[^a-z0-9]+/g, "-") || index}`;
+
+const normalizePath = (path: string) =>
+  path.length > 1 ? path.replace(/\/+$/, "") : path;
 
 export function Navbar() {
   const { pathname } = useLocation();
@@ -103,9 +86,7 @@ export function Navbar() {
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [openFolder, setOpenFolder] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 16);
-  const isHome = pathname === "/";
+  const currentPath = normalizePath(pathname);
   const menuIsOpen = openFolder !== null || mobileOpen;
 
   useEffect(() => {
@@ -143,46 +124,6 @@ export function Navbar() {
     };
   }, [mobileOpen, openFolder]);
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let scrollDirection = 0;
-    let directionalTravel = 0;
-
-    const handleScroll = () => {
-      const nextScrollY = Math.max(window.scrollY, 0);
-      const delta = nextScrollY - lastScrollY;
-      const nextDirection = Math.sign(delta);
-
-      if (nextDirection !== 0) {
-        if (nextDirection !== scrollDirection) directionalTravel = 0;
-        scrollDirection = nextDirection;
-        directionalTravel += Math.abs(delta);
-      }
-
-      setIsScrolled(nextScrollY > 16);
-
-      if (nextScrollY <= 24 || menuIsOpen) {
-        setIsHidden(false);
-        directionalTravel = 0;
-      } else if (
-        scrollDirection > 0 &&
-        nextScrollY > 120 &&
-        directionalTravel > 40
-      ) {
-        setIsHidden(true);
-        directionalTravel = 0;
-      } else if (scrollDirection < 0 && directionalTravel > 24) {
-        setIsHidden(false);
-        directionalTravel = 0;
-      }
-
-      lastScrollY = nextScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [menuIsOpen]);
-
   const closeNavigation = () => {
     setOpenFolder(null);
     setMobileOpen(false);
@@ -192,12 +133,8 @@ export function Navbar() {
     <header
       ref={rootRef}
       className={styles.navbar}
-      data-home={isHome}
-      data-hidden={isHidden}
       data-menu-open={menuIsOpen}
       data-mobile-open={mobileOpen}
-      data-scrolled={isScrolled}
-      onFocus={() => setIsHidden(false)}
     >
       <div className={styles.bar}>
         <Link
@@ -206,7 +143,14 @@ export function Navbar() {
           onClick={closeNavigation}
           aria-label={`${import.meta.env.VITE_TEAM_NAME} home`}
         >
-          {import.meta.env.VITE_TEAM_NAME}
+          <img
+            className={styles.teamLogo}
+            src="https://static.igem.wiki/teams/6147/wiki/fronted-resource/team-logo-horizon.svg"
+            width="645"
+            height="225"
+            alt=""
+            decoding="async"
+          />
         </Link>
 
         <button
@@ -234,6 +178,9 @@ export function Navbar() {
               if ("folder" in item && item.folder) {
                 const folderId = makeFolderId(item.name, pageIndex);
                 const isOpen = openFolder === folderId;
+                const illustration =
+                  (item.name ? menuIllustrations[item.name] : undefined) ??
+                  "project";
 
                 return (
                   <li className={styles.navItem} key={folderId}>
@@ -243,11 +190,17 @@ export function Navbar() {
                       }}
                       type="button"
                       className={styles.navButton}
+                      data-active={
+                        item.folder.some(
+                          (subpage) =>
+                            subpage.path &&
+                            normalizePath(subpage.path) === currentPath,
+                        ) || undefined
+                      }
                       aria-expanded={isOpen}
                       aria-controls={`${folderId}-menu`}
                       onClick={() => {
                         setOpenFolder(isOpen ? null : folderId);
-                        setIsHidden(false);
                       }}
                     >
                       <span>{item.name}</span>
@@ -261,40 +214,44 @@ export function Navbar() {
                       id={`${folderId}-menu`}
                       className={styles.megaMenu}
                       data-open={isOpen}
+                      data-menu-variant={illustration}
                       aria-hidden={!isOpen}
                     >
-                      <div className={styles.menuHeading}>
-                        <span>Explore</span>
-                        <strong>{item.name}</strong>
-                      </div>
-                      <div className={styles.menuGrid}>
-                        {item.folder.map((subpage) => {
-                          if (!subpage.path) return null;
+                      <NavbarMenuCurves variant={illustration} />
+                      <div className={styles.menuBody}>
+                        <span className={styles.menuArt}>
+                          <NavbarIllustration
+                            className={styles.illustration}
+                            variant={illustration}
+                          />
+                        </span>
+                        <div className={styles.menuGrid}>
+                          {item.folder.map((subpage) => {
+                            if (!subpage.path) return null;
 
-                          const detail = navigationDetails[subpage.path] ?? {
-                            description: subpage.title || "Explore this page",
-                            icon: CircleDot,
-                          };
-                          const Icon = detail.icon;
+                            const detail = navigationDetails[subpage.path] ?? {
+                              description: subpage.title || "Explore this page",
+                            };
 
-                          return (
-                            <Link
-                              key={subpage.path}
-                              className={styles.menuItem}
-                              to={subpage.path}
-                              tabIndex={isOpen ? 0 : -1}
-                              onClick={closeNavigation}
-                            >
-                              <span className={styles.iconFrame}>
-                                <Icon aria-hidden="true" strokeWidth={1.7} />
-                              </span>
-                              <span className={styles.itemCopy}>
+                            return (
+                              <Link
+                                key={subpage.path}
+                                className={styles.menuItem}
+                                to={subpage.path}
+                                aria-current={
+                                  normalizePath(subpage.path) === currentPath
+                                    ? "page"
+                                    : undefined
+                                }
+                                tabIndex={isOpen ? 0 : -1}
+                                onClick={closeNavigation}
+                              >
                                 <strong>{subpage.name}</strong>
                                 <span>{detail.description}</span>
-                              </span>
-                            </Link>
-                          );
-                        })}
+                              </Link>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </li>
@@ -307,6 +264,11 @@ export function Navbar() {
                     <Link
                       className={styles.navLink}
                       to={item.path}
+                      aria-current={
+                        normalizePath(item.path) === currentPath
+                          ? "page"
+                          : undefined
+                      }
                       onClick={closeNavigation}
                     >
                       {item.name}
@@ -320,6 +282,7 @@ export function Navbar() {
           </ul>
         </nav>
       </div>
+      <NavbarScrollProgress />
     </header>
   );
 }

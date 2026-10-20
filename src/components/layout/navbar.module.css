@@ -1,5 +1,5 @@
 :global(:root) {
-  --site-nav-height: clamp(4.5rem, 10svh, 6.5rem);
+  --site-nav-height: 4.5rem;
 }
 
 :global(body) {
@@ -11,56 +11,70 @@
 }
 
 .navbar {
-  --nav-height: var(--site-nav-height, clamp(4.5rem, 10svh, 6.5rem));
-  --nav-ink: #063d3b;
-  --nav-accent: #16633f;
-  --nav-panel: #f4f7e8;
-  --nav-panel-strong: #cfe5ad;
-  --nav-line: color-mix(in srgb, var(--nav-ink) 30%, transparent);
+  --nav-height: var(--site-nav-height, 4.5rem);
+  --nav-ink: var(--hardware-ink, #003f34);
+  --nav-title: #c7977f;
+  --nav-accent: #50ad88;
+  --nav-panel: #fff;
+  --nav-panel-strong: var(--hardware-pale-yellow, #ffe7b6);
+  --nav-line: var(--hardware-yellow, #ffc647);
+  --nav-progress: #eebf64;
+  --nav-track: #fff;
+  --nav-menu-panel: #02b186;
+  --nav-menu-card: #9cd7ca;
+  --nav-menu-card-hover: #b8e3da;
+  --nav-menu-ink: #0a473b;
+  --nav-menu-stroke: #fff;
+  --nav-menu-art-column: clamp(9rem, 15vw, 12.4rem);
+  --nav-menu-art-height: clamp(8.5rem, 13.2vw, 11.25rem);
+  --nav-gutter: clamp(1.5rem, 4vw, 3rem);
+  --nav-display: var(
+    --hardware-display,
+    Impact,
+    Haettenschweiler,
+    "Fira Sans Condensed",
+    "Arial Narrow",
+    sans-serif
+  );
   position: fixed;
   inset: 0 0 auto;
-  z-index: 1000;
+  z-index: 1100;
   min-height: var(--nav-height);
-  border-bottom: 1px solid transparent;
-  background: transparent;
+  border-bottom: 6px solid var(--nav-track);
+  background: var(--nav-panel);
   color: var(--nav-ink);
-  transform: translateY(0);
+  box-shadow: none;
+  backdrop-filter: none;
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 300ms ease,
     border-color 300ms ease,
-    box-shadow 300ms ease,
-    backdrop-filter 300ms ease;
-  will-change: transform;
+    box-shadow 300ms ease;
 }
 
-.navbar[data-home="false"],
-.navbar[data-scrolled="true"],
 .navbar[data-menu-open="true"] {
-  border-color: var(--nav-line);
-  background: color-mix(in srgb, var(--nav-panel) 97%, transparent);
-  box-shadow: 0 0.5rem 2rem color-mix(in srgb, var(--nav-ink) 14%, transparent);
-  backdrop-filter: blur(18px) saturate(1.25);
-}
-
-.navbar[data-hidden="true"] {
-  transform: translateY(calc(-100% - 1rem));
+  border-color: var(--nav-track);
+  background: var(--nav-panel);
 }
 
 .bar {
+  position: relative;
+  z-index: 1;
   display: flex;
-  width: min(100% - 2.5rem, 90rem);
-  min-height: var(--nav-height);
+  box-sizing: border-box;
+  width: min(100%, 90rem);
+  min-height: calc(var(--nav-height) - 6px);
   margin: 0 auto;
+  padding-inline: var(--nav-gutter);
   align-items: center;
   justify-content: space-between;
-  gap: clamp(1.5rem, 4vw, 4.5rem);
+  gap: 1.5rem;
 }
 
 .brand {
   flex: 0 0 auto;
+  border-radius: 0.2rem;
   color: var(--nav-ink);
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
   font-size: clamp(1.45rem, 2.2vw, 1.9rem);
   font-weight: 700;
   letter-spacing: -0.035em;
@@ -69,6 +83,12 @@
   transition:
     color 220ms ease,
     transform 220ms ease;
+}
+
+.teamLogo {
+  display: block;
+  height: 3rem;
+  width: auto;
 }
 
 .brand:hover {
@@ -86,13 +106,15 @@
 }
 
 .navigation {
+  margin-right: 0;
   margin-left: auto;
+  z-index: 1;
 }
 
 .navList {
   display: flex;
   align-items: center;
-  gap: clamp(0.12rem, 0.65vw, 0.75rem);
+  gap: clamp(0.5rem, 1.45vw, 1.75rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -110,16 +132,15 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  padding: 0.7rem clamp(0.52rem, 0.8vw, 0.85rem);
+  padding: 0.5rem clamp(0.35rem, 0.75vw, 0.75rem);
   border: 0;
-  border-radius: 999px;
+  border-radius: 0.25rem;
   background: transparent;
-  color: var(--nav-ink);
-  font:
-    700 clamp(0.86rem, 0.96vw, 0.96rem) / 1 Arial,
-    Helvetica,
-    sans-serif;
-  letter-spacing: 0.075em;
+  color: var(--nav-title);
+  font-family: var(--nav-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: 0.035em;
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
@@ -147,8 +168,13 @@
 .navLink:hover,
 .navButton:hover,
 .navButton[aria-expanded="true"] {
-  background: color-mix(in srgb, var(--nav-accent) 18%, transparent);
-  color: var(--nav-ink);
+  background: var(--hardware-paper, #fbf0dd);
+  color: var(--nav-accent);
+}
+
+.navLink[aria-current="page"],
+.navButton[data-active="true"] {
+  color: var(--nav-accent);
 }
 
 .navLink:hover::after,
@@ -158,8 +184,7 @@
 }
 
 .chevron {
-  width: 0.9rem;
-  height: 0.9rem;
+  display: none;
   transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -172,9 +197,9 @@
   width: 2.8rem;
   height: 2.8rem;
   padding: 0.68rem;
-  border: 1px solid color-mix(in srgb, var(--nav-ink) 42%, transparent);
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--nav-panel) 96%, transparent);
+  border: 2px solid var(--nav-ink);
+  border-radius: 0.65rem;
+  background: var(--nav-panel);
   color: var(--nav-ink);
   cursor: pointer;
 }
@@ -189,17 +214,17 @@
   position: absolute;
   top: calc(100% + 0.65rem);
   left: 50%;
-  display: grid;
-  grid-template-columns: minmax(8.5rem, 0.25fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
-  width: min(calc(100vw - 2rem), 80rem);
+  display: block;
+  width: min(calc(100vw - 1.5rem), 82rem);
   max-height: calc(100svh - var(--nav-height) - 2rem);
-  padding: clamp(1.35rem, 2.4vw, 2rem);
+  padding: 0;
   overflow: auto;
-  border: 1px solid var(--nav-line);
-  border-radius: 1.4rem;
-  background: var(--nav-panel);
-  box-shadow: 0 1.4rem 4rem color-mix(in srgb, var(--nav-ink) 28%, transparent);
+  z-index: 1;
+  border: 0;
+  border-radius: clamp(1.25rem, 2.3vw, 1.75rem);
+  background: var(--nav-menu-panel);
+  box-shadow: 0 1.25rem 3rem #1f315f26;
+  color: var(--nav-menu-ink);
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -0.75rem) scale(0.985);
@@ -218,131 +243,115 @@
   visibility: visible;
 }
 
-.menuHeading {
-  display: flex;
+:global(.navbar-menu-curves) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.menuBody {
+  position: relative;
+  z-index: 1;
+  display: grid;
   min-width: 0;
-  padding: 0.55rem 0.5rem;
-  border-right: 1px solid var(--nav-line);
-  flex-direction: column;
-  justify-content: center;
+  grid-template-columns: var(--nav-menu-art-column) minmax(0, 1fr);
+  gap: clamp(2.5rem, 11.8vw, 9.75rem);
+  padding: clamp(1.25rem, 2.25vw, 2.1rem) clamp(2.25rem, 7.7vw, 7rem)
+    clamp(1.25rem, 2.25vw, 2.1rem) clamp(2rem, 6.4vw, 5.5rem);
+  align-items: center;
 }
 
-.menuHeading span {
-  margin-bottom: 0.55rem;
-  color: color-mix(in srgb, var(--nav-ink) 82%, transparent);
-  font:
-    700 0.75rem/1 Arial,
-    Helvetica,
-    sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.megaMenu[data-menu-variant="human-practices"] .menuBody {
+  gap: clamp(2rem, 4.8vw, 4.5rem);
 }
 
-.menuHeading strong {
-  max-width: 10ch;
-  color: var(--nav-ink);
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: clamp(1.9rem, 2.8vw, 3rem);
-  font-weight: 400;
-  letter-spacing: -0.045em;
-  line-height: 0.94;
+.menuArt {
+  display: grid;
+  width: var(--nav-menu-art-column);
+  height: var(--nav-menu-art-height);
+  place-items: center;
+}
+
+.illustration {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.megaMenu[data-menu-variant="project"] .illustration {
+  height: auto;
+}
+
+@media (min-width: 1101px) {
+  .megaMenu[data-menu-variant="project"] .illustration {
+    transform: translateY(-2.5rem);
+  }
 }
 
 .menuGrid {
   display: grid;
+  min-width: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
+  column-gap: clamp(1.5rem, 3.7vw, 3.5rem);
+  row-gap: clamp(0.65rem, 1.1vw, 0.95rem);
+  align-content: center;
 }
 
 .menuItem {
-  display: grid;
+  display: flex;
   min-width: 0;
-  grid-template-columns: 3.25rem minmax(0, 1fr);
-  gap: 0.95rem;
-  align-items: center;
-  padding: 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--nav-ink) 12%, transparent);
-  border-radius: 1rem;
-  background: color-mix(in srgb, white 42%, transparent);
-  color: var(--nav-ink);
+  min-height: 5.1rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.7rem clamp(1rem, 1.45vw, 1.35rem);
+  border: 4px solid var(--nav-menu-stroke);
+  border-radius: clamp(0.7rem, 1.1vw, 0.95rem);
+  background: var(--nav-menu-card);
+  color: var(--nav-menu-ink);
   text-decoration: none;
   transition:
     transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 220ms ease,
-    border-color 220ms ease,
     box-shadow 280ms ease;
+}
+
+.menuItem[aria-current="page"] {
+  border-color: var(--nav-menu-ink);
+  background: var(--nav-menu-card-hover);
 }
 
 .menuItem:hover,
 .menuItem:focus-visible {
-  border-color: color-mix(in srgb, var(--nav-accent) 62%, transparent);
-  background: color-mix(in srgb, white 92%, transparent);
+  background: var(--nav-menu-card-hover);
   box-shadow: 0 0.75rem 1.5rem
-    color-mix(in srgb, var(--nav-ink) 19%, transparent);
-  color: var(--nav-ink);
-  transform: translateY(-0.3rem);
+    color-mix(in srgb, var(--nav-menu-ink) 24%, transparent);
+  transform: translateY(-0.2rem);
 }
 
-.iconFrame {
-  display: grid;
-  width: 3.25rem;
-  height: 3.25rem;
-  border: 1px solid color-mix(in srgb, var(--nav-accent) 52%, transparent);
-  border-radius: 0.9rem 0.9rem 0.9rem 0.3rem;
-  background: var(--nav-panel-strong);
-  color: var(--nav-accent);
-  place-items: center;
-  transition:
-    color 220ms ease,
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+.menuItem:focus-visible {
+  outline: 3px solid var(--nav-menu-ink);
+  outline-offset: 3px;
 }
 
-.iconFrame svg {
-  width: 1.45rem;
-  height: 1.45rem;
+.menuItem strong {
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: clamp(1.2rem, 1.65vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.1;
 }
 
-.menuItem:hover .iconFrame,
-.menuItem:focus-visible .iconFrame {
-  background: color-mix(in srgb, var(--nav-panel-strong) 76%, white);
-  color: var(--nav-ink);
-  transform: rotate(-3deg) scale(1.04);
-}
-
-.itemCopy {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.itemCopy strong {
-  overflow: hidden;
-  font:
-    700 1.06rem/1.2 Arial,
-    Helvetica,
-    sans-serif;
-  letter-spacing: -0.01em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.itemCopy span {
-  overflow: hidden;
-  color: color-mix(in srgb, var(--nav-ink) 84%, transparent);
-  font:
-    400 0.88rem/1.4 Arial,
-    Helvetica,
-    sans-serif;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.menuItem > span {
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: clamp(0.8rem, 0.95vw, 0.94rem);
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 @media (max-width: 1100px) {
-  .bar {
-    width: min(100% - 2rem, 90rem);
-  }
-
   .mobileToggle {
     display: block;
     flex: 0 0 auto;
@@ -351,15 +360,16 @@
   .navigation {
     position: absolute;
     top: calc(100% + 0.55rem);
-    right: 1rem;
-    left: 1rem;
+    right: var(--nav-gutter);
+    left: var(--nav-gutter);
     max-height: 0;
     overflow: auto;
     border: 1px solid transparent;
-    border-radius: 1.25rem;
+    border-radius: 1rem;
     background: var(--nav-panel);
     box-shadow: 0 1.2rem 3rem
       color-mix(in srgb, var(--nav-ink) 16%, transparent);
+    margin-inline: 0;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-0.75rem) scale(0.985);
@@ -375,7 +385,8 @@
 
   .navbar[data-mobile-open="true"] .navigation {
     max-height: calc(100svh - var(--nav-height) - 1rem);
-    border-color: var(--nav-line);
+    border: 3px solid var(--nav-line);
+    background: var(--hardware-paper, #fbf0dd);
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0) scale(1);
@@ -395,8 +406,28 @@
   .navButton {
     width: 100%;
     justify-content: space-between;
-    padding: 0.9rem 1rem;
+    padding: 0.8rem 1rem;
     border-radius: 0.8rem;
+    font-size: 1.4rem;
+  }
+
+  .navLink[aria-current="page"],
+  .navButton[data-active="true"] {
+    background: var(--hardware-pale-yellow, #ffe7b6);
+    color: var(--nav-accent);
+  }
+
+  /* The mobile menu sits on paper, so inner pages use ink rather than the
+     lighter desktop accent. Keep the home menu's existing palette untouched. */
+  :global(body.inner-page) .navbar[data-mobile-open="true"] .navLink,
+  :global(body.inner-page) .navbar[data-mobile-open="true"] .navButton,
+  :global(body.inner-page)
+    .navbar[data-mobile-open="true"]
+    .navLink[aria-current="page"],
+  :global(body.inner-page)
+    .navbar[data-mobile-open="true"]
+    .navButton[data-active="true"] {
+    color: var(--nav-ink);
   }
 
   .navLink::after,
@@ -406,15 +437,18 @@
 
   .megaMenu,
   .megaMenu[data-open="true"] {
-    position: static;
+    position: relative;
+    top: auto;
+    left: auto;
     display: block;
     width: auto;
     max-height: 0;
+    margin: 0 0.2rem;
     padding: 0;
     overflow: hidden;
     border: 0;
-    border-radius: 0;
-    background: transparent;
+    border-radius: 1.1rem;
+    background: var(--nav-menu-panel);
     box-shadow: none;
     opacity: 0;
     transform: none;
@@ -426,51 +460,91 @@
   }
 
   .megaMenu[data-open="true"] {
-    max-height: 60rem;
-    padding: 0.25rem 0 0.65rem;
+    max-height: 100rem;
+    padding: clamp(0.9rem, 1.8vw, 1.25rem);
     opacity: 1;
     visibility: visible;
   }
 
-  .menuHeading {
-    display: none;
+  .menuBody {
+    grid-template-columns: 6.8rem minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 0;
+  }
+
+  .megaMenu[data-menu-variant="human-practices"] .menuBody {
+    gap: 0.9rem;
+  }
+
+  .menuArt {
+    width: 6.8rem;
+    height: 6rem;
+  }
+
+  .megaMenu[data-menu-variant="project"] .illustration {
+    width: clamp(8rem, 32vw, 10rem);
+    height: auto;
   }
 
   .menuGrid {
-    gap: 0.4rem;
+    column-gap: 0.65rem;
+    row-gap: 0.55rem;
+  }
+
+  .chevron {
+    display: block;
+  }
+
+  .menuItem {
+    min-height: 4.15rem;
+    gap: 0.22rem;
+    padding: 0.55rem 0.8rem;
+    border-width: 3px;
+    border-radius: 0.75rem;
+  }
+
+  .menuItem strong {
+    font-size: 1.08rem;
+  }
+
+  .menuItem > span {
+    font-size: 0.79rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .menuBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .menuArt {
+    width: 100%;
+    height: 6.25rem;
+  }
+
+  .menuGrid {
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .bar {
-    width: calc(100% - 1.5rem);
+  .teamLogo {
+    height: 2.75rem;
   }
 
-  .navigation {
-    right: 0.75rem;
-    left: 0.75rem;
-  }
-
-  .menuGrid {
-    grid-template-columns: 1fr;
+  .megaMenu[data-open="true"] {
+    padding: 0.8rem;
   }
 
   .menuItem {
-    grid-template-columns: 2.85rem minmax(0, 1fr);
-    padding: 0.65rem;
-  }
-
-  .iconFrame {
-    width: 2.85rem;
-    height: 2.85rem;
+    min-height: 3.9rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navbar[data-hidden="true"] {
-    transform: none;
-  }
-
   .navbar,
   .brand,
   .navLink,
@@ -478,8 +552,7 @@
   .chevron,
   .navigation,
   .megaMenu,
-  .menuItem,
-  .iconFrame {
+  .menuItem {
     transition-duration: 0.01ms !important;
   }
 }
