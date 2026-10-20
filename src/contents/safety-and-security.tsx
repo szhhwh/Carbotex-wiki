@@ -330,6 +330,8 @@ export function SafetyAndSecurity() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-safety.avif",
         alt: "Illustration of a safety shield, laboratory workstation, and protective equipment.",
+        backgroundColor: "#e7f2f4",
+        objectFit: "contain",
       }}
       sections={sections}
       references

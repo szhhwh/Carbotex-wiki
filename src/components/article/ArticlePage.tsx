@@ -35,14 +35,20 @@ export interface ArticleSubsection {
   content: ReactNode;
 }
 
+interface HeroImage {
+  src: string;
+  alt: string;
+  /** Optional surface color visible through transparent image pixels. */
+  backgroundColor?: string;
+  /** Optional fit mode for preserving artwork bounds inside the media slot. */
+  objectFit?: "cover" | "contain";
+}
+
 interface ArticlePageProps {
   title: string;
   lead: ReactNode;
   /** Optional image shown in the header media slot. */
-  heroImage?: {
-    src: string;
-    alt: string;
-  };
+  heroImage?: HeroImage;
   sections: ArticleSection[];
   /** Render the page's cited sources after every article section. */
   references?: boolean;
@@ -64,10 +70,7 @@ export function ArticleHero({
 }: {
   title: string;
   lead: ReactNode;
-  heroImage?: {
-    src: string;
-    alt: string;
-  };
+  heroImage?: HeroImage;
   headingId?: string;
   theme?: ArticleTheme;
 }) {
@@ -80,6 +83,11 @@ export function ArticleHero({
         data-hero-media-slot
         data-has-image={heroImage ? "true" : undefined}
         aria-hidden={heroImage ? undefined : "true"}
+        style={
+          heroImage?.backgroundColor
+            ? { backgroundColor: heroImage.backgroundColor }
+            : undefined
+        }
       >
         {heroImage ? (
           <img
@@ -88,6 +96,11 @@ export function ArticleHero({
             alt={heroImage.alt}
             decoding="async"
             fetchPriority="high"
+            style={
+              heroImage.objectFit
+                ? { objectFit: heroImage.objectFit }
+                : undefined
+            }
           />
         ) : (
           <span className={styles.heroPlaceholder}>

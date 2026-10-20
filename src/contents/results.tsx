@@ -813,6 +813,8 @@ export function Results() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-results.avif",
         alt: "Illustration of chromatograms, bar charts, and gel electrophoresis results.",
+        backgroundColor: "#e7f2f4",
+        objectFit: "contain",
       }}
       sections={sections}
       references

@@ -1406,6 +1406,8 @@ export function Design() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-design.avif",
         alt: "Illustration of genetic design, cell engineering, and molecular building blocks.",
+        backgroundColor: "#e7f2f4",
+        objectFit: "contain",
       }}
       sections={sections}
       references
