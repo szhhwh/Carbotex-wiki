@@ -573,12 +573,6 @@
   color: var(--article-ink);
 }
 
-.prose figure[data-media-surface="figure"] [data-media-preview-hint] {
-  border: 0;
-  background: var(--article-paper);
-  color: var(--article-green);
-}
-
 .prose :where(table) {
   width: 100%;
   border-collapse: collapse;

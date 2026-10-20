@@ -19,7 +19,6 @@ import {
 import clsx from "clsx";
 import { Caption } from "./Caption";
 import { ImageViewer } from "./ImageViewer";
-import { Maximize2 } from "lucide-react";
 import styles from "./figure.module.css";
 
 /** One <source> entry for responsive / art-directed images (renders inside <picture>). */
@@ -222,15 +221,7 @@ export function Figure({
                 event.currentTarget.parentElement?.querySelector("img");
               setPreviewSrc(image?.currentSrc || src);
             }}
-          >
-            <span
-              className={styles.previewHint}
-              data-media-preview-hint
-              aria-hidden="true"
-            >
-              <Maximize2 size={16} /> View image
-            </span>
-          </button>
+          />
         )}
         {failed && fallback !== undefined && (
           <div

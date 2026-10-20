@@ -231,11 +231,6 @@ ul.donorLabel.donorLabel > li {
     padding-inline: 0.35rem;
   }
 
-  .diagramScroller.diagramScroller :global([class*="previewHint"]) {
-    right: auto;
-    left: calc(100cqi - 9rem);
-  }
-
   .tableCard {
     margin-block: 1.35rem 1.9rem;
     padding: 0.65rem;

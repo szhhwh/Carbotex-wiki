@@ -1,10 +1,3 @@
-/* Animate only the gutter color; keep this value out of descendant styles. */
-@property --image-viewer-gutter-color {
-  syntax: "<color>";
-  inherits: false;
-  initial-value: #fbf0dd;
-}
-
 :root {
   /* Shared Carbotex visual system, derived from the Hardware color card. */
   --hardware-display:
@@ -45,11 +38,9 @@
   --scrollbar-thumb: #767676;
   --scrollbar-thumb-hover: #4a4a4a;
   --page-paper: var(--hardware-paper);
-  --image-viewer-gutter-color: var(--page-paper);
-  background-color: var(--image-viewer-gutter-color);
+  background-color: var(--page-paper);
   overflow-y: auto;
   scrollbar-gutter: stable;
-  transition: --image-viewer-gutter-color 200ms ease;
 }
 
 body {
@@ -62,20 +53,12 @@ body {
 }
 
 /* Keep layout width fixed while a native modal prevents page scrolling.
- * The root paints the reserved gutter, so it fades with the neutral backdrop. */
+ * The root paints the reserved gutter. Change that paint in one step: a root
+ * custom-property transition invalidates styles for the entire document on
+ * every frame and makes the image-opening animation stutter. */
 :root:has(dialog[data-image-viewer][open]) {
   overflow: hidden;
-  --image-viewer-gutter-color: color-mix(in srgb, var(--page-paper) 60%, black);
-}
-
-:root:has(dialog[data-image-viewer][data-closing]) {
-  --image-viewer-gutter-color: var(--page-paper);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    transition: none;
-  }
+  background-color: color-mix(in srgb, var(--page-paper) 60%, black);
 }
 
 /* Standard styling also covers Firefox and scrollable panels inside dialogs. */

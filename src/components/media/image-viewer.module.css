@@ -1,5 +1,4 @@
 .dialog {
-  --viewer-ink: var(--hardware-ink, #003f34);
   --viewer-paper: var(--hardware-paper, #fbf0dd);
   --viewer-focus: var(--hardware-yellow, #ffc647);
   position: fixed;

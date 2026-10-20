@@ -18,8 +18,15 @@ interface ImageViewerProps {
 
 type View = { scale: number; x: number; y: number };
 type Point = { x: number; y: number };
+type PointerGesture = {
+  startX: number;
+  startY: number;
+  startedOnStage: boolean;
+  moved: boolean;
+};
 const initialView: View = { scale: 1, x: 0, y: 0 };
 const maxScale = 5;
+const clickMoveTolerance = 6;
 
 /** A native modal keeps focus inside the viewer and makes the page inert. */
 export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
@@ -28,6 +35,7 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const viewRef = useRef(initialView);
   const pointers = useRef(new Map<number, Point>());
+  const gesture = useRef<PointerGesture | null>(null);
   const [view, setView] = useState(initialView);
   const [interacting, setInteracting] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -84,12 +92,16 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
   useLayoutEffect(() => {
     if (!closing) return;
     const dialog = dialogRef.current!;
-    // Reading the animations flushes the closing styles. Wait for the actual
-    // transitions, including ::backdrop and the gutter, instead of a timer.
-    const transitions = [
-      ...dialog.getAnimations({ subtree: true }),
-      ...document.documentElement.getAnimations(),
-    ].filter((animation) => animation instanceof CSSTransition);
+    // Reading the animations flushes the closing styles. Wait for the dialog
+    // and ::backdrop transitions instead of relying on a matching timer.
+    const transitions = dialog
+      .getAnimations({ subtree: true })
+      .filter(
+        (animation) =>
+          animation instanceof CSSTransition &&
+          animation.effect instanceof KeyframeEffect &&
+          animation.effect.target === dialog,
+      );
     let cancelled = false;
     Promise.allSettled(
       transitions.map((transition) => transition.finished),
@@ -120,6 +132,26 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
     };
   }, [zoom, updateView]);
 
+  const startPointer = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0 || pointers.current.size >= 2) return;
+    if (pointers.current.size === 0) {
+      gesture.current = {
+        startX: event.clientX,
+        startY: event.clientY,
+        startedOnStage: event.target === event.currentTarget,
+        moved: false,
+      };
+    } else if (gesture.current) {
+      gesture.current.moved = true;
+    }
+    event.currentTarget.setPointerCapture(event.pointerId);
+    pointers.current.set(event.pointerId, {
+      x: event.clientX,
+      y: event.clientY,
+    });
+    setInteracting(true);
+  };
+
   const movePointer = (event: PointerEvent<HTMLDivElement>) => {
     const previous = pointers.current.get(event.pointerId);
     if (!previous) return;
@@ -128,7 +160,17 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
     )?.[1];
     const next = { x: event.clientX, y: event.clientY };
     pointers.current.set(event.pointerId, next);
+    if (
+      gesture.current &&
+      Math.hypot(
+        next.x - gesture.current.startX,
+        next.y - gesture.current.startY,
+      ) > clickMoveTolerance
+    ) {
+      gesture.current.moved = true;
+    }
     if (other) {
+      if (gesture.current) gesture.current.moved = true;
       const oldDistance = Math.hypot(
         previous.x - other.x,
         previous.y - other.y,
@@ -155,8 +197,17 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
   };
 
   const endPointer = (event: PointerEvent<HTMLDivElement>) => {
+    const wasTracked = pointers.current.has(event.pointerId);
+    const isBlankClick =
+      wasTracked &&
+      event.type === "pointerup" &&
+      pointers.current.size === 1 &&
+      gesture.current?.startedOnStage &&
+      !gesture.current.moved;
     pointers.current.delete(event.pointerId);
     setInteracting(pointers.current.size > 0);
+    if (pointers.current.size === 0) gesture.current = null;
+    if (isBlankClick) close();
   };
 
   return createPortal(
@@ -169,9 +220,6 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
       onCancel={(event) => {
         event.preventDefault();
         close();
-      }}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) close();
       }}
       onKeyDown={(event) => {
         if (closing || event.ctrlKey || event.metaKey || event.altKey) return;
@@ -229,15 +277,7 @@ export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
           data-zoomed={view.scale > 1 || undefined}
           data-interacting={interacting || undefined}
           data-lenis-prevent
-          onPointerDown={(event) => {
-            if (event.button !== 0 || pointers.current.size >= 2) return;
-            event.currentTarget.setPointerCapture(event.pointerId);
-            pointers.current.set(event.pointerId, {
-              x: event.clientX,
-              y: event.clientY,
-            });
-            setInteracting(true);
-          }}
+          onPointerDown={startPointer}
           onPointerMove={movePointer}
           onPointerUp={endPointer}
           onPointerCancel={endPointer}
