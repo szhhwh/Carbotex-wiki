@@ -417,19 +417,6 @@
     color: var(--nav-accent);
   }
 
-  /* The mobile menu sits on paper, so inner pages use ink rather than the
-     lighter desktop accent. Keep the home menu's existing palette untouched. */
-  :global(body.inner-page) .navbar[data-mobile-open="true"] .navLink,
-  :global(body.inner-page) .navbar[data-mobile-open="true"] .navButton,
-  :global(body.inner-page)
-    .navbar[data-mobile-open="true"]
-    .navLink[aria-current="page"],
-  :global(body.inner-page)
-    .navbar[data-mobile-open="true"]
-    .navButton[data-active="true"] {
-    color: var(--nav-ink);
-  }
-
   .navLink::after,
   .navButton::after {
     display: none;
