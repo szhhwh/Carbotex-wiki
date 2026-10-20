@@ -1,13 +1,8 @@
 import { Component, type ReactNode } from "react";
-import type { PageLayout } from "../../pages";
 import styles from "./page-load-state.module.css";
 
-interface PageStateProps {
+interface BoundaryProps {
   title: string;
-  layout?: PageLayout;
-}
-
-interface BoundaryProps extends PageStateProps {
   children: ReactNode;
 }
 
@@ -15,10 +10,10 @@ interface BoundaryState {
   hasError: boolean;
 }
 
-export function PageLoading({ layout = "default" }: PageStateProps) {
-  return (
-    <main className={styles.panel} data-layout={layout} aria-busy="true" />
-  );
+const routePanel = `${styles.panel} ${styles.routePanel}`;
+
+export function PageLoading() {
+  return <main className={routePanel} aria-busy="true" />;
 }
 
 export class PageLoadBoundary extends Component<BoundaryProps, BoundaryState> {
@@ -30,17 +25,11 @@ export class PageLoadBoundary extends Component<BoundaryProps, BoundaryState> {
 
   render() {
     if (this.state.hasError) {
-      const { title, layout = "default" } = this.props;
-      const Heading = layout === "default" ? "h2" : "h1";
+      const { title } = this.props;
       return (
-        <main
-          className={styles.panel}
-          data-layout={layout}
-          data-route-error
-          role="alert"
-        >
+        <main className={routePanel} data-route-error role="alert">
           <span className={styles.eyebrow}>OUC-HAIDE / WIKI</span>
-          <Heading className={styles.errorTitle}>Couldn’t open {title}</Heading>
+          <h1 className={styles.errorTitle}>Couldn’t open {title}</h1>
           <p className={styles.message}>
             Please reload this page to try again.
           </p>

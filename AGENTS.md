@@ -30,9 +30,10 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
 
 - `src/pages.ts` — data-driven page registry: **both the Navbar and the routes
   are generated from it**; adding or adjusting pages only touches this file
-  - `Page.layout: "fullscreen"` escapes the shared Header + container layout
-    (`App.tsx` branches on it and toggles `fullscreen-page` on `<body>`,
-    dropping the fixed navbar's 56px offset)
+  - `Page.layout` is required: `"article"` for content pages (each renders
+    its own hero via `ArticlePage`), `"fullscreen"` for Home (`App.tsx`
+    toggles `fullscreen-page` on `<body>`, dropping the fixed navbar's 56px
+    offset)
 - `src/containers/App/App.tsx` — global layout: Navbar + layout-branched
   routes + Footer. Always read the current path from `useLocation()`, **never
   bare `location.pathname`** (SPA navigation does not re-render the component,
@@ -54,7 +55,7 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
     `ActPlaceholder` is the skeleton for upcoming acts; reduced motion
     degrades the whole stage to a plain document flow
 - `src/components/` — grouped by responsibility; see its `README.md`:
-  `layout/` (Navbar/Header/Footer), `routing/` (loading/errors/scroll),
+  `layout/` (Navbar/Footer), `routing/` (loading/errors/scroll),
   `article/` (article structure/citations/math), `media/` (images/video),
   `ui/` (shared interaction primitives), `human-practices/` (page-specific
   presentation), and `home/` (the home stage and animations)

@@ -4,7 +4,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { getPathMapping, stringToSlug } from "../../utils";
 import { Suspense, useEffect, type ComponentType } from "react";
 import { Navbar } from "../../components/layout/Navbar";
-import { Header } from "../../components/layout/Header";
 import { NotFound } from "../../components/routing/NotFound";
 import { Footer } from "../../components/layout/Footer";
 import { ReferencesProvider } from "../../components/article/References";
@@ -18,41 +17,23 @@ import {
 } from "../../components/routing/RouteScrollManager";
 import { RouteLoadingScreen } from "../../components/routing/RouteLoadingScreen";
 import { BackToTop } from "../../components/navigation/BackToTop";
-import type { PageLayout } from "../../pages";
 
 interface PageRouteProps {
   title: string | undefined;
-  lead: string | undefined;
   component: ComponentType;
-  layout?: PageLayout;
 }
 
-function PageRoute({
-  title,
-  lead,
-  component: Component,
-  layout,
-}: PageRouteProps) {
-  const pageTitle = title || "";
-  const pageContent = (
-    <PageLoadBoundary title={pageTitle} layout={layout}>
-      <Suspense fallback={<PageLoading title={pageTitle} layout={layout} />}>
-        <Component />
-        <RouteContentReady />
-      </Suspense>
-    </PageLoadBoundary>
-  );
-
+// Every page renders its own hero (ArticlePage or the Home stage), so the
+// route only adds the shared loading/error boundary and citation context.
+function PageRoute({ title, component: Component }: PageRouteProps) {
   return (
     <ReferencesProvider>
-      {layout === "fullscreen" || layout === "article" ? (
-        pageContent
-      ) : (
-        <>
-          <Header title={pageTitle} lead={lead || ""} />
-          <div className="container">{pageContent}</div>
-        </>
-      )}
+      <PageLoadBoundary title={title || ""}>
+        <Suspense fallback={<PageLoading />}>
+          <Component />
+          <RouteContentReady />
+        </Suspense>
+      </PageLoadBoundary>
     </ReferencesProvider>
   );
 }
@@ -93,25 +74,17 @@ const App = () => {
       <RouteLoadingScreen title={title ?? ""} />
       <BackToTop />
 
-      {/* Header and PageContent */}
+      {/* Page content */}
       <Routes>
-        {Object.entries(pathMapping).map(
-          ([path, { title, lead, component, layout }]) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <PageRoute
-                  key={path}
-                  title={title}
-                  lead={lead}
-                  component={component}
-                  layout={layout}
-                />
-              }
-            />
-          ),
-        )}
+        {Object.entries(pathMapping).map(([path, { title, component }]) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <PageRoute key={path} title={title} component={component} />
+            }
+          />
+        ))}
         <Route
           path="*"
           element={

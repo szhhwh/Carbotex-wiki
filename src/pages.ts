@@ -1,6 +1,6 @@
 import { lazy, type ComponentType } from "react";
 
-export type PageLayout = "default" | "fullscreen" | "article";
+export type PageLayout = "fullscreen" | "article";
 
 // Keep route metadata immediately available to the Navbar. Each page module is
 // fetched only when its route is rendered.
@@ -96,9 +96,11 @@ class Page implements Base {
   title: string | undefined;
   path: string | undefined;
   component: ComponentType | undefined;
-  lead: string | undefined;
-  /** Fullscreen and article pages render without the shared Header and container. */
-  layout?: PageLayout;
+  /**
+   * Required: `fullscreen` drops the fixed-navbar body offset (Home);
+   * `article` pages render their own hero via `ArticlePage`.
+   */
+  layout!: PageLayout;
 }
 
 const Pages: (Page | Folder)[] = [
@@ -107,7 +109,6 @@ const Pages: (Page | Folder)[] = [
     title: "Home",
     path: "/",
     component: Home,
-    lead: "Your iGEM Journey Begins Here! We wish you a successful and rewarding season!",
     layout: "fullscreen",
   },
   {
@@ -118,7 +119,6 @@ const Pages: (Page | Folder)[] = [
         title: "Project Description",
         path: "/description",
         component: Description,
-        lead: "Describe how and why you chose your iGEM project.",
         layout: "article",
       },
       {
@@ -126,7 +126,6 @@ const Pages: (Page | Folder)[] = [
         title: "Engineering Success",
         path: "/engineering",
         component: Engineering,
-        lead: "Four cycles of DBTL-driven development of an automated ammonia-nitrogen removal system for anaerobic fermentation effluent.",
         layout: "article",
       },
       {
@@ -134,7 +133,6 @@ const Pages: (Page | Folder)[] = [
         title: "Contribution",
         path: "/contribution",
         component: Contribution,
-        lead: "Make a useful contribution for future iGEM teams and document it on this page.",
         layout: "article",
       },
     ],
@@ -147,7 +145,6 @@ const Pages: (Page | Folder)[] = [
         title: "Design",
         path: "/design",
         component: Design,
-        lead: "From agricultural residues to poly(malic acid) and bio-based adhesives: the rationale behind our chassis, genetic constructs, and four connected wet-lab modules.",
         layout: "article",
       },
       {
@@ -155,7 +152,6 @@ const Pages: (Page | Folder)[] = [
         title: "Parts",
         path: "/parts",
         component: Parts,
-        lead: "The Pentose-Regulation Part Collection connects regulator genes, expression constructs, precursor-supply candidates, and reusable genetic-engineering tools.",
         layout: "article",
       },
       {
@@ -163,7 +159,6 @@ const Pages: (Page | Folder)[] = [
         title: "Experiments",
         path: "/experiments",
         component: Experiments,
-        lead: "From hydrolysate conditioning and regulator engineering to HPLC quantification and adhesive testing, these experiments explain how each comparison was designed and measured.",
         layout: "article",
       },
       {
@@ -171,7 +166,6 @@ const Pages: (Page | Folder)[] = [
         title: "Protocols",
         path: "/protocols",
         component: Protocols,
-        lead: "Our wet-lab protocols cover strain preparation, molecular cloning, A08 transformation, corn-stover hydrolysate processing, fermentation analysis and PMA–dopamine adhesive preparation.",
         layout: "article",
       },
       {
@@ -179,7 +173,6 @@ const Pages: (Page | Folder)[] = [
         title: "Notebook",
         path: "/notebook",
         component: Notebook,
-        lead: "This serves as a chronological record of your team's progress throughout the season. It documents your daily activities, experiments, discussions, and decisions.",
         layout: "article",
       },
       {
@@ -187,7 +180,6 @@ const Pages: (Page | Folder)[] = [
         title: "Results",
         path: "/results",
         component: Results,
-        lead: "From strain identification and PMA production to a dopamine-functionalised bioadhesive: the experimental evidence behind Carbotex.",
         layout: "article",
       },
       {
@@ -195,7 +187,6 @@ const Pages: (Page | Folder)[] = [
         title: "Safety and Security",
         path: "/safety-and-security",
         component: SafetyAndSecurity,
-        lead: "A responsible approach to microbial, project, laboratory, and environmental safety throughout the Carbotex project.",
         layout: "article",
       },
     ],
@@ -208,7 +199,6 @@ const Pages: (Page | Folder)[] = [
         title: "Model",
         path: "/model",
         component: Model,
-        lead: "Explain your model's assumptions, data, parameters, and results in a way that anyone could understand.",
         layout: "article",
       },
       {
@@ -216,7 +206,6 @@ const Pages: (Page | Folder)[] = [
         title: "Hardware",
         path: "/hardware",
         component: Hardware,
-        lead: "This page documents the design, component selection, operation, and testing of our modular hardware platform for automated ammonia-nitrogen removal from anaerobic fermentation effluent.",
         layout: "article",
       },
     ],
@@ -229,7 +218,6 @@ const Pages: (Page | Folder)[] = [
         title: "Integrated Human Practices",
         path: "/human-practices",
         component: HumanPractices,
-        lead: "We did not use Human Practices to justify Carbotex. We used it to modify Carbotex.",
         layout: "article",
       },
       {
@@ -237,7 +225,7 @@ const Pages: (Page | Folder)[] = [
         title: "Education",
         path: "/education",
         component: Education,
-        lead: "Innovative educational tools and outreach activities have the ability to establish a two-way dialogue with new communities by discussing public values and the science behind synthetic biology.",
+        layout: "article",
       },
     ],
   },
@@ -249,7 +237,6 @@ const Pages: (Page | Folder)[] = [
         title: "Meet Our Team",
         path: "/members",
         component: Members,
-        lead: "This page is dedicated to introducing the individuals who made our iGEM project possible. Here, you'll find information about our team members, instructors, and advisors.",
         layout: "article",
       },
       {
@@ -258,7 +245,6 @@ const Pages: (Page | Folder)[] = [
         path: "/attributions",
         component: Attributions,
         layout: "article",
-        lead: "Accurate attribution is essential in the iGEM Competition. It ensures that the judges can properly assess your team's contributions and recognize the support provided by external collaborators. This page is dedicated to fulfilling the Attributions requirement for judging.",
       },
     ],
   },

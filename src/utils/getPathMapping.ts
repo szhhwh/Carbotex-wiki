@@ -7,8 +7,7 @@ export const getPathMapping = () => {
       name: string | undefined;
       title: string | undefined;
       component: ComponentType;
-      lead: string | undefined;
-      layout?: PageLayout;
+      layout: PageLayout;
     };
   }>((map, item) => {
     if ("path" in item && item.path && item.component) {
@@ -16,7 +15,6 @@ export const getPathMapping = () => {
         name: item.name,
         title: item.title,
         component: item.component,
-        lead: item.lead,
         layout: item.layout,
       };
     } else if ("folder" in item && item.folder) {
@@ -26,7 +24,6 @@ export const getPathMapping = () => {
             name: page.name,
             title: page.title,
             component: page.component,
-            lead: page.lead,
             layout: page.layout,
           };
         }

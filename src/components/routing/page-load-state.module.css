@@ -62,8 +62,8 @@
   z-index: 1;
 }
 
-.panel[data-layout="article"],
-.panel[data-layout="fullscreen"] {
+/* Full-page loading/error state for a route (every page owns its hero). */
+.routePanel {
   min-height: 100svh;
   padding-top: calc(var(--site-nav-height, 6rem) + 2rem);
   border: 0;
