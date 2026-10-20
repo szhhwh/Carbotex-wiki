@@ -14,6 +14,7 @@ export interface IhpFigurePart {
   ratio: string;
   caption?: string;
   figureNumber?: number;
+  frame?: "none";
 }
 
 export interface IhpGalleryPart {

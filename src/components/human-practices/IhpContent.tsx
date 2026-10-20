@@ -162,6 +162,7 @@ export function IhpParts({
                 alt={part.alt}
                 ratio={part.ratio}
                 caption={part.caption}
+                frame={part.frame}
                 captionPrefix={
                   part.figureNumber ? (
                     <>Figure {part.figureNumber}.</>

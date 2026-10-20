@@ -50,6 +50,8 @@ interface FigureBaseProps {
   maxHeight?: CSSProperties["maxHeight"];
   /** Horizontal alignment inside the parent (default "center"). */
   align?: "start" | "center" | "end";
+  /** Use "none" to place the media directly in prose without the article frame. */
+  frame?: "article" | "none";
   objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
   loading?: "lazy" | "eager";
   decoding?: "async" | "sync" | "auto";
@@ -96,6 +98,7 @@ export function Figure({
   maxWidth,
   maxHeight,
   align = "center",
+  frame = "article",
   objectFit = "contain",
   loading = "lazy",
   decoding = "async",
@@ -183,6 +186,7 @@ export function Figure({
       style={{ width, maxWidth, ...style }}
       data-media-surface={mediaSurface}
       data-media-kind="image"
+      data-media-frame={frame}
     >
       <div
         className={clsx(styles.media, mediaClassName)}

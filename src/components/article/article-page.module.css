@@ -546,11 +546,26 @@
   background: var(--hardware-white, #fff);
 }
 
+.prose
+  figure[data-media-surface="figure"][data-media-frame="none"]
+  > [data-media-kind="image"] {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 .prose figure[data-media-surface="figure"] img {
   padding: 0;
   border: 0;
   border-radius: 0;
   background: var(--hardware-white, #fff);
+}
+
+.prose figure[data-media-surface="figure"][data-media-frame="none"] img {
+  background: transparent;
 }
 
 .prose figure[data-media-surface="figure"] [data-media-fallback] {

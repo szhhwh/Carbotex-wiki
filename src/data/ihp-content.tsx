@@ -529,6 +529,7 @@ export const ihpSections: IhpSectionContent[] = [
             caption:
               "TRACE framework connecting stakeholder engagement with the Carbotex DBTL cycle.",
             figureNumber: 1,
+            frame: "none",
           },
           {
             kind: "content",
