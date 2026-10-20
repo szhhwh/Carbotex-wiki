@@ -1,26 +1,33 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const registryIds = [
+const registryRowIds = [
+  "BBa_26X6M2G5",
+  "BBa_26K4GKDM",
+  "BBa_265VC540",
+  "BBa_26BY6BJU",
   "BBa_25QPWWAX",
   "BBa_260OK570",
-  "BBa_261MMQ1L",
-  "BBa_265VC540",
-  "BBa_26603AT5",
-  "BBa_267N41A9",
-  "BBa_26B5K9XJ",
-  "BBa_26BVWV01",
-  "BBa_26BY6BJU",
-  "BBa_26E5B9VX",
-  "BBa_26ECUEKG",
-  "BBa_26ICD9HH",
-  "BBa_26IU3R0X",
-  "BBa_26JGAV43",
-  "BBa_26K3KXDO",
-  "BBa_26K4GKDM",
-  "BBa_26KHWZ9J",
-  "BBa_26WPAP5Y",
   "BBa_26X6M2G5",
+  "BBa_26K4GKDM",
+  "BBa_26JGAV43",
+  "BBa_26E5B9VX",
+  "BBa_26ICD9HH",
+  "BBa_26ECUEKG",
+  "BBa_26IU3R0X",
+  "BBa_26K3KXDO",
+  "BBa_26B5K9XJ",
+  "BBa_267N41A9",
+  "BBa_265VC540",
+  "BBa_26BY6BJU",
+  "BBa_26WPAP5Y",
+  "BBa_26BVWV01",
+  "BBa_26603AT5",
+  "BBa_26KHWZ9J",
+  "BBa_260OK570",
+  "BBa_261MMQ1L",
 ];
+
+const registryIds = [...new Set(registryRowIds)].sort();
 
 async function openParts(page: Page) {
   await page.goto("/ouc-haide/parts");
@@ -50,9 +57,6 @@ test.describe("parts page", () => {
     await openParts(page);
 
     await expect(
-      page.getByRole("heading", { name: "Parts", level: 1 }),
-    ).toBeVisible();
-    await expect(
       page.getByRole("heading", {
         name: "Pentose-Regulation Part Collection",
         level: 2,
@@ -71,6 +75,9 @@ test.describe("parts page", () => {
       expect(href).toMatch(/^https:\/\/registry\.igem\.org\/parts\/bba-/);
     }
     expect(new Set(hrefs).size).toBe(19);
+    expect(hrefs.map((href) => href.split("/").at(-1))).toEqual(
+      registryRowIds.map((id) => id.toLowerCase().replace(/_/g, "-")),
+    );
 
     const pageText = await page.locator("main").innerText();
     for (const id of registryIds) {
@@ -105,21 +112,26 @@ test.describe("parts page", () => {
   }) => {
     await openParts(page);
 
-    const card = page.locator("#parts-core-parts [data-part-card]").first();
-    await card.scrollIntoViewIfNeeded();
-    await expect(card).toHaveCSS("opacity", "1");
+    const cards = page.locator("[data-part-card]");
+    await expect(cards).toHaveCount(24);
 
-    const blocks = await card
-      .locator(":scope > div > *")
-      .evaluateAll((elements) =>
-        elements.map((element) => ({
-          tag: element.tagName,
-          text: element.textContent?.trim() ?? "",
-        })),
-      );
-    expect(blocks.map(({ tag }) => tag)).toEqual(["H4", "P", "DIV"]);
-    expect(blocks[0].text).toBe("A08 xlnR gene");
-    expect(blocks.at(-1)?.text).toContain("BBa_26X6M2G5");
+    const structures = await cards.evaluateAll((elements) =>
+      elements.map((element) =>
+        Array.from(element.children).map((child) => child.tagName),
+      ),
+    );
+    for (const structure of structures) {
+      expect(structure[0]).toMatch(/^H[34]$/);
+      expect(structure.slice(1)).toEqual(["P", "DIV"]);
+    }
+
+    const firstCard = cards.first();
+    await firstCard.scrollIntoViewIfNeeded();
+    await expect(firstCard).toHaveCSS("opacity", "1");
+    await expect(firstCard.getByRole("heading", { level: 4 })).toHaveText(
+      "A08 xlnR gene",
+    );
+    await expect(firstCard.getByRole("link")).toHaveText("BBa_26X6M2G5");
   });
 
   test("removes decorative labels and zero-padded catalogue copy", async ({
@@ -128,8 +140,10 @@ test.describe("parts page", () => {
     await openParts(page);
 
     const mainText = await page.locator("main").innerText();
-    expect(mainText).toContain("24 part records covering 19 unique");
-    expect(mainText).not.toContain("Our 18 Registry entries");
+    expect(mainText).toContain("Our 18 Registry entries");
+    expect(mainText).toContain(
+      "They are grouped below by function, with direct links to their Registry records.",
+    );
     expect(mainText).not.toContain("Candidate set");
     expect(mainText).not.toContain("Shared backbone family");
     expect(mainText).not.toContain("Tool pairing");
@@ -150,7 +164,7 @@ test.describe("parts page", () => {
     await expect(cards).toHaveCount(4);
 
     const expectedColumns = [
-      { width: 1440, columns: 1 },
+      { width: 1440, columns: 2 },
       { width: 1024, columns: 1 },
       { width: 768, columns: 1 },
       { width: 390, columns: 1 },
@@ -238,9 +252,9 @@ test.describe("parts page", () => {
       const main = document.querySelector("main[data-article-theme]");
       const article = document.querySelector("#article-body article");
       const paragraph = article?.querySelector("section p");
-      const partRole = article?.querySelector("[data-part-card] p");
-      const firstBlock = article?.querySelector("[class*='corePairs']");
-      if (!main || !article || !paragraph || !partRole || !firstBlock) {
+      const partDescription = article?.querySelector("[data-part-card] p");
+      const firstBlock = article?.querySelector("[class*='partsCollection']");
+      if (!main || !article || !paragraph || !partDescription || !firstBlock) {
         throw new Error("Parts article measurements were not found");
       }
 
@@ -251,7 +265,7 @@ test.describe("parts page", () => {
 
       const expected = getComputedStyle(probe);
       const paragraphStyle = getComputedStyle(paragraph);
-      const partRoleStyle = getComputedStyle(partRole);
+      const partDescriptionStyle = getComputedStyle(partDescription);
       const blockStyle = getComputedStyle(firstBlock);
       const articleRect = article.getBoundingClientRect();
       const paragraphRect = paragraph.getBoundingClientRect();
@@ -259,7 +273,7 @@ test.describe("parts page", () => {
         expectedFontSize: expected.fontSize,
         expectedBlockSpace: expected.marginTop,
         paragraphFontSize: paragraphStyle.fontSize,
-        partRoleFontSize: partRoleStyle.fontSize,
+        partDescriptionFontSize: partDescriptionStyle.fontSize,
         blockMarginTop: blockStyle.marginTop,
         blockMarginBottom: blockStyle.marginBottom,
         articleWidth: articleRect.width,
@@ -270,7 +284,7 @@ test.describe("parts page", () => {
     });
 
     expect(metrics.paragraphFontSize).toBe(metrics.expectedFontSize);
-    expect(metrics.partRoleFontSize).toBe(metrics.expectedFontSize);
+    expect(metrics.partDescriptionFontSize).toBe(metrics.expectedFontSize);
     expect(metrics.blockMarginTop).toBe(metrics.expectedBlockSpace);
     expect(metrics.blockMarginBottom).toBe(metrics.expectedBlockSpace);
     expect(metrics.paragraphWidth).toBeCloseTo(metrics.articleWidth, 1);

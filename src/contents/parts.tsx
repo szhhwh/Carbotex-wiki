@@ -3,25 +3,19 @@ import {
   type ArticleSection,
 } from "../components/article/ArticlePage";
 import {
-  BackboneStack,
-  ConstructCatalog,
-  CorePartPairs,
-  DonorLedger,
-  MetabolismBoard,
+  PartCollection,
   type PartRecord,
-  ToolFlow,
 } from "../components/parts/PartsSections";
 
 const coreParts: PartRecord[] = [
   {
     id: "BBa_26X6M2G5",
-    type: "Regulator gene",
     name: (
       <>
         A08 <em>xlnR</em> gene
       </>
     ),
-    role: (
+    description: (
       <>
         Provides the native XlnR regulator gene for functional studies and
         expression-construct development.
@@ -30,13 +24,12 @@ const coreParts: PartRecord[] = [
   },
   {
     id: "BBa_26K4GKDM",
-    type: "Regulator gene",
     name: (
       <>
         A08 <em>araR</em> gene
       </>
     ),
-    role: (
+    description: (
       <>
         Provides the native AraR regulator gene for individual studies and
         comparisons with <em>xlnR</em>.
@@ -45,9 +38,8 @@ const coreParts: PartRecord[] = [
   },
   {
     id: "BBa_265VC540",
-    type: "Expression construct",
     name: "pNAT-LoxP-rDNA-xlnR",
-    role: (
+    description: (
       <>
         Places the A08 <em>xlnR</em> gene in the shared TEF-promoter expression
         framework for XlnR-overexpression studies.
@@ -56,9 +48,8 @@ const coreParts: PartRecord[] = [
   },
   {
     id: "BBa_26BY6BJU",
-    type: "Expression construct",
     name: "pNAT-LoxP-rDNA-araR",
-    role: (
+    description: (
       <>
         Places the A08 <em>araR</em> gene in the same expression framework for
         AraR-overexpression studies.
@@ -70,9 +61,8 @@ const coreParts: PartRecord[] = [
 const supportingBackbones: PartRecord[] = [
   {
     id: "BBa_25QPWWAX",
-    type: "Shared backbone",
     name: "pNAT-LoxP-rDNA",
-    role: (
+    description: (
       <>
         Reused expression backbone providing the translation elongation factor
         (TEF) promoter, nourseothricin-resistance (NAT) selection framework, and
@@ -83,9 +73,8 @@ const supportingBackbones: PartRecord[] = [
   },
   {
     id: "BBa_260OK570",
-    type: "Knockout backbone",
     name: "fl4a-hpt-loxp",
-    role: (
+    description: (
       <>
         Supporting knockout backbone containing the hygromycin B
         phosphotransferase (HPT) selection interval and flanking lox sites.
@@ -99,13 +88,12 @@ const supportingBackbones: PartRecord[] = [
 const metabolismParts: PartRecord[] = [
   {
     id: "BBa_26X6M2G5",
-    type: "Regulatory gene",
     name: (
       <>
         A08 <em>xlnR</em>
       </>
     ),
-    role: (
+    description: (
       <>
         Native XlnR transcriptional regulator gene for investigating
         pentose-associated regulation and overexpression strategies.
@@ -114,13 +102,12 @@ const metabolismParts: PartRecord[] = [
   },
   {
     id: "BBa_26K4GKDM",
-    type: "Regulatory gene",
     name: (
       <>
         A08 <em>araR</em>
       </>
     ),
-    role: (
+    description: (
       <>
         Native AraR transcriptional regulator gene for investigating
         pentose-associated regulation, individually and together with{" "}
@@ -130,13 +117,12 @@ const metabolismParts: PartRecord[] = [
   },
   {
     id: "BBa_26JGAV43",
-    type: "Xylose panel",
     name: (
       <>
         A08 <em>XYR</em>
       </>
     ),
-    role: (
+    description: (
       <>
         Annotated as encoding a putative xylose reductase, with the expected
         conversion of D-xylose to xylitol. Included in the gene-expression
@@ -146,13 +132,12 @@ const metabolismParts: PartRecord[] = [
   },
   {
     id: "BBa_26E5B9VX",
-    type: "Xylose panel",
     name: (
       <>
         A08 <em>XDH</em>
       </>
     ),
-    role: (
+    description: (
       <>
         A xylose-metabolism-related cDNA sequence included in transcript-level
         comparisons.
@@ -161,13 +146,12 @@ const metabolismParts: PartRecord[] = [
   },
   {
     id: "BBa_26ICD9HH",
-    type: "Xylose panel",
     name: (
       <>
         A08 <em>XKI</em>
       </>
     ),
-    role: (
+    description: (
       <>
         Annotated as encoding a putative xylulokinase, with the expected
         phosphorylation of D-xylulose to D-xylulose-5-phosphate. Included in the
@@ -177,13 +161,12 @@ const metabolismParts: PartRecord[] = [
   },
   {
     id: "BBa_26ECUEKG",
-    type: "Xylose panel",
     name: (
       <>
         A08 <em>XI</em>
       </>
     ),
-    role: (
+    description: (
       <>
         A xylose-associated gene included in the expression panel for comparing
         WT and regulator-engineered A08.
@@ -195,9 +178,8 @@ const metabolismParts: PartRecord[] = [
 const pycDonorParts: PartRecord[] = [
   {
     id: "BBa_26IU3R0X",
-    type: "PYC donor",
     name: "A08 pyruvate carboxylase gene",
-    role: (
+    description: (
       <>
         Endogenous PYC candidate included in the donor panel for
         precursor-supply engineering.
@@ -206,25 +188,23 @@ const pycDonorParts: PartRecord[] = [
   },
   {
     id: "BBa_26K3KXDO",
-    type: "PYC donor",
     name: (
       <>
         <em>Aureobasidium thailandense</em> ZW03-4 pyruvate carboxylase gene
       </>
     ),
-    role: (
+    description: (
       <>Same-genus PYC candidate intended for heterologous expression in A08.</>
     ),
   },
   {
     id: "BBa_26B5K9XJ",
-    type: "PYC donor",
     name: (
       <>
         <em>Yarrowia lipolytica</em> pyruvate carboxylase gene
       </>
     ),
-    role: (
+    description: (
       <>
         Heterologous PYC gene retaining its native intron; expression of the
         expected protein requires correct transcript splicing.
@@ -233,13 +213,12 @@ const pycDonorParts: PartRecord[] = [
   },
   {
     id: "BBa_267N41A9",
-    type: "PYC donor",
     name: (
       <>
         <em>Saccharomyces cerevisiae PYC1</em>
       </>
     ),
-    role: (
+    description: (
       <>
         Gene encoding pyruvate carboxylase 1, included as a heterologous donor
         for precursor-supply engineering.
@@ -251,9 +230,8 @@ const pycDonorParts: PartRecord[] = [
 const expressionParts: PartRecord[] = [
   {
     id: "BBa_265VC540",
-    type: "Regulator construct",
     name: "pNAT-LoxP-rDNA-xlnR",
-    role: (
+    description: (
       <>
         Expression design for A08 <em>xlnR</em>.
       </>
@@ -261,9 +239,8 @@ const expressionParts: PartRecord[] = [
   },
   {
     id: "BBa_26BY6BJU",
-    type: "Regulator construct",
     name: "pNAT-LoxP-rDNA-araR",
-    role: (
+    description: (
       <>
         Expression design for A08 <em>araR</em>.
       </>
@@ -271,9 +248,8 @@ const expressionParts: PartRecord[] = [
   },
   {
     id: "BBa_26WPAP5Y",
-    type: "PYC construct",
     name: "pNAT-LoxP-rDNA-A08pyc",
-    role: (
+    description: (
       <>
         Endogenous PYC expression design for the dual-regulator A08 background.
       </>
@@ -281,9 +257,8 @@ const expressionParts: PartRecord[] = [
   },
   {
     id: "BBa_26BVWV01",
-    type: "PYC construct",
     name: "pNAT-LoxP-rDNA-ZWpyc",
-    role: (
+    description: (
       <>
         Expression design for the ZW03-4 PYC candidate in the dual-regulator A08
         background.
@@ -292,9 +267,8 @@ const expressionParts: PartRecord[] = [
   },
   {
     id: "BBa_26603AT5",
-    type: "PYC construct",
     name: "pNAT-LoxP-rDNA-SCpyc",
-    role: (
+    description: (
       <>
         Expression design for <em>S. cerevisiae PYC1</em> in the dual-regulator
         A08 background.
@@ -303,9 +277,8 @@ const expressionParts: PartRecord[] = [
   },
   {
     id: "BBa_26KHWZ9J",
-    type: "PYC construct",
     name: "pNAT-LoxP-rDNA-YLpyc",
-    role: (
+    description: (
       <>
         Expression design for the <em>Y. lipolytica</em> PYC gene in the
         dual-regulator A08 background.
@@ -317,9 +290,8 @@ const expressionParts: PartRecord[] = [
 const toolParts: PartRecord[] = [
   {
     id: "BBa_260OK570",
-    type: "Knockout tool",
     name: "fl4a-hpt-loxp",
-    role: (
+    description: (
       <>
         HPT-containing backbone for constructing target-specific knockout
         donors, with flanking lox sites for marker-recycling designs.
@@ -328,9 +300,8 @@ const toolParts: PartRecord[] = [
   },
   {
     id: "BBa_261MMQ1L",
-    type: "Recombination tool",
     name: "Cre recombinase sequence resource",
-    role: (
+    description: (
       <>
         Resource for Cre-mediated recombination between compatible lox sites;
         directly oriented sites support excision of the intervening DNA.
@@ -340,6 +311,20 @@ const toolParts: PartRecord[] = [
 ];
 
 const sections: ArticleSection[] = [
+  {
+    id: "parts-overview",
+    title: "Overview",
+    content: (
+      <p>
+        Carbotex investigates pentose utilization and poly(malic acid) (PMA)
+        production in <em>Aureobasidium melanogenum</em> A08. Our 18 Registry
+        entries cover pentose-associated genes, pyruvate carboxylase donor
+        genes, expression-plasmid designs, and genetic-engineering tools. They
+        are grouped below by function, with direct links to their Registry
+        records.
+      </p>
+    ),
+  },
   {
     id: "parts-pentose-regulation",
     title: "Pentose-Regulation Part Collection",
@@ -365,18 +350,7 @@ const sections: ArticleSection[] = [
               The four core parts comprise two regulator genes and two
               expression-plasmid designs.
             </p>
-            <CorePartPairs
-              pairs={[
-                {
-                  regulator: coreParts[0],
-                  construct: coreParts[2],
-                },
-                {
-                  regulator: coreParts[1],
-                  construct: coreParts[3],
-                },
-              ]}
-            />
+            <PartCollection parts={coreParts} headingLevel={4} />
           </>
         ),
       },
@@ -389,7 +363,7 @@ const sections: ArticleSection[] = [
               Two backbone resources support the expression and knockout
               designs. They are listed separately from the four core parts.
             </p>
-            <BackboneStack parts={supportingBackbones} />
+            <PartCollection parts={supportingBackbones} headingLevel={4} />
           </>
         ),
       },
@@ -452,7 +426,7 @@ const sections: ArticleSection[] = [
           the associated gene-expression panel used to examine transcriptional
           responses in A08.
         </p>
-        <MetabolismBoard parts={metabolismParts} />
+        <PartCollection parts={metabolismParts} />
       </>
     ),
   },
@@ -467,7 +441,7 @@ const sections: ArticleSection[] = [
           comparing endogenous and heterologous candidates within the PYC
           engineering module.
         </p>
-        <DonorLedger parts={pycDonorParts} />
+        <PartCollection parts={pycDonorParts} />
       </>
     ),
   },
@@ -490,7 +464,7 @@ const sections: ArticleSection[] = [
           are designed for the OE-XlnR+AraR A08 background, connecting regulator
           engineering with precursor-supply engineering.
         </p>
-        <ConstructCatalog parts={expressionParts} />
+        <PartCollection parts={expressionParts} />
       </>
     ),
   },
@@ -506,7 +480,7 @@ const sections: ArticleSection[] = [
           Cre recombinase is supplied separately to mediate recombination
           between compatible lox sites.
         </p>
-        <ToolFlow parts={toolParts} />
+        <PartCollection parts={toolParts} />
       </>
     ),
   },
@@ -543,18 +517,8 @@ export function Parts() {
   return (
     <ArticlePage
       title="Parts"
-      lead={
-        <>
-          Carbotex investigates pentose utilization and poly(malic acid) (PMA)
-          production in <em>Aureobasidium melanogenum</em> A08. The catalogue
-          contains 24 part records covering 19 unique iGEM Registry entries:
-          pentose-associated genes, pyruvate carboxylase donor genes,
-          expression-plasmid designs, and genetic-engineering tools. Every entry
-          links directly to its Registry record.
-        </>
-      }
       sections={sections}
-      stickyMobileOutline
+      stickyMobileOutline={false}
     />
   );
 }

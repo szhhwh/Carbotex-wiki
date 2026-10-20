@@ -1,111 +1,92 @@
-.corePairs,
-.backboneStack,
-.metabolismBoard,
-.donorSection,
-.toolSection {
-  --parts-ink: var(--hardware-ink, #003f34);
-  --parts-paper: var(--hardware-paper, #fbf0dd);
-  --parts-card-mint: var(--hardware-card-mint, #b8e3da);
-  --parts-yellow: var(--hardware-yellow, #ffc647);
-  --parts-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
-  --parts-navy: var(--hardware-navy, #1f315f);
-  --parts-heading: var(--hardware-card-heading, #1e4fbc);
-  --parts-radius: 2rem;
-  --parts-body-size: var(--article-text, 1.125rem);
-  --parts-small-size: 0.875rem;
-  --parts-group-size: clamp(1.55rem, 2.63vw, 2rem);
-  --parts-display: var(
-    --hardware-display,
-    Impact,
-    "Fira Sans Extra Condensed",
-    "Arial Narrow",
-    sans-serif
-  );
+.partsCollection {
+  --parts-accent: var(--hardware-green, #0b6753);
+  --parts-ink: var(--hardware-ink, #183d34);
+  --parts-line: #d2ddd7;
+  --parts-surface: #fffdf8;
+  --parts-surface-tint: #edf4ef;
   --parts-body: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
   min-width: 0;
+  margin-block: var(--article-space-block);
   container-type: inline-size;
   color: var(--parts-ink);
   font-family: var(--parts-body);
 }
 
-.partCard {
-  min-width: 0;
-  overflow: hidden;
-}
-
-.partBody {
+.partsGrid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partItem {
+  display: flex;
   min-width: 0;
-  align-content: start;
-  gap: 0.7rem;
 }
 
-.typeTag {
-  width: fit-content;
-  max-width: 100%;
-  color: var(--parts-ink);
-  font-family: var(--parts-body);
-  font-size: var(--parts-small-size);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.4;
-  overflow-wrap: break-word;
+.partCard {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.2rem 1.25rem 1.15rem 1.55rem;
+  border: 1px solid var(--parts-line);
+  border-radius: 1.25rem;
+  background: var(--parts-surface);
+  box-shadow: 0 3px 0 rgb(24 61 52 / 7%);
 }
 
-.partName.partName.partName {
-  margin: 0;
-  color: var(--parts-heading);
-  font-family: var(--parts-display);
-  font-size: var(--parts-body-size);
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.15;
-  overflow-wrap: break-word;
-  text-wrap: balance;
+.partCard::before {
+  position: absolute;
+  inset: 1rem auto 1rem 0.7rem;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--parts-accent);
+  content: "";
+  opacity: 0.45;
 }
 
-.partRole.partRole.partRole {
-  max-width: 58ch;
+.partName {
   margin: 0;
   color: var(--parts-ink);
   font-family: var(--parts-body);
-  font-size: var(--parts-body-size);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+.partDescription {
+  max-width: 62ch;
+  margin: 0.65rem 0 0;
+  font-size: var(--article-text, 1rem);
   line-height: 1.62;
   overflow-wrap: break-word;
   text-wrap: pretty;
 }
 
-.partHeading,
-.partMeta,
 .partFooter {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.65rem 1rem;
+  margin-top: auto;
+  padding-top: 0.9rem;
 }
 
-.partHeading,
-.partFooter {
-  align-items: flex-end;
-}
-
-.registryLink.registryLink.registryLink[href] {
+.registryLink {
   display: inline-flex;
   width: fit-content;
   max-width: 100%;
   min-height: 2.75rem;
   align-items: center;
-  padding: 0.6rem 0.88rem;
-  border: 0;
-  border-radius: 999px;
-  background: var(--parts-navy);
-  color: var(--parts-paper);
-  font-family: var(--parts-body);
-  font-size: var(--parts-small-size);
-  font-style: normal;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid #b8cec5;
+  border-radius: 0.65rem;
+  background: var(--parts-surface-tint);
+  color: #075c49;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -116,556 +97,47 @@
     color 160ms ease;
 }
 
-.registryLink.registryLink.registryLink[href]:focus-visible {
+.registryLink:focus-visible {
   outline: 3px solid var(--parts-ink);
   outline-offset: 3px;
 }
 
-.groupTitle.groupTitle.groupTitle,
-.bandTitle.bandTitle.bandTitle,
-.toolTitle.toolTitle.toolTitle {
-  margin: 0;
-  color: var(--parts-navy);
-  font-family: var(--parts-display);
-  font-size: var(--parts-group-size);
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.15;
-  overflow-wrap: break-word;
-  text-wrap: balance;
-}
-
-/* Core: paired cards share one field, with the relationship carried by an arrow. */
-.corePairs {
-  display: grid;
-  gap: 1.1rem;
-  margin-block: var(--article-space-block);
-}
-
-.corePair {
-  overflow: hidden;
-  padding: clamp(0.9rem, 2.4vw, 1.25rem);
-  border-radius: var(--parts-radius);
-  background: var(--parts-card-mint);
-}
-
-.pairBody {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0.85rem;
-}
-
-.coreRegulator,
-.coreConstruct {
-  padding: clamp(1rem, 2.2vw, 1.35rem);
-  border-radius: 1.4rem;
-}
-
-.coreRegulator {
-  background: var(--parts-pale-yellow);
-}
-
-.coreConstruct {
-  background: var(--parts-paper);
-}
-
-.coreRegulator .partBody,
-.coreConstruct .partBody {
-  height: 100%;
-  grid-template-areas:
-    "name meta"
-    "copy copy";
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto 1fr;
-  gap: 0.7rem 1.25rem;
-}
-
-.coreRegulator .partName,
-.coreConstruct .partName {
-  grid-area: name;
-}
-
-.coreRegulator .partRole,
-.coreConstruct .partRole {
-  grid-area: copy;
-}
-
-.coreRegulator .partMeta,
-.coreConstruct .partMeta {
-  grid-area: meta;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.pairArrow,
-.toolConnector {
-  display: inline-grid;
-  width: 2.75rem;
-  height: 2.75rem;
-  justify-self: center;
-  border: 2px solid var(--parts-ink);
-  border-radius: 50%;
-  background: var(--parts-yellow);
-  color: var(--parts-ink);
-  place-items: center;
-}
-
-.toolConnector {
-  align-self: center;
-}
-
-.pairArrow svg,
-.toolConnector svg {
-  display: block;
-  transform: rotate(90deg);
-}
-
-/* Backbones: wide structural rows with name, description and record in parallel. */
-.backboneStack {
-  display: grid;
-  gap: 1rem;
-  margin-block: var(--article-space-block);
-}
-
-.backboneRow {
-  padding: clamp(1.2rem, 2.7vw, 1.7rem);
-  border-radius: var(--parts-radius);
-  background: var(--parts-card-mint);
-}
-
-.backboneRow:nth-child(2n) {
-  background: var(--parts-pale-yellow);
-}
-
-.backboneRow .partBody {
-  grid-template-areas:
-    "heading copy"
-    "heading link";
-  grid-template-columns: minmax(10rem, 0.68fr) minmax(0, 1.65fr);
-  align-items: start;
-  gap: 0.7rem 1.2rem;
-}
-
-.backboneRow .partHeading {
-  grid-area: heading;
-  display: grid;
-  justify-content: start;
-  align-items: start;
-  gap: 0.45rem;
-}
-
-.backboneRow .partRole {
-  grid-area: copy;
-}
-
-.backboneRow .registryLink {
-  grid-area: link;
-  justify-self: start;
-}
-
-/* Metabolism: regulators and the xylose panel use different internal structures. */
-.metabolismBoard {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-  gap: 1rem;
-  margin-block: var(--article-space-block);
-}
-
-.regulatorColumn {
-  min-width: 0;
-  padding: 0.9rem;
-  border-radius: var(--parts-radius);
-  background: var(--parts-card-mint);
-}
-
-.groupHeader {
-  padding: 0.25rem 0.25rem 0.8rem;
-}
-
-.regulatorStack {
-  display: grid;
-  gap: 0.65rem;
-}
-
-.regulatorCard {
-  padding: 1rem;
-  border-radius: 1.35rem;
-  background: var(--parts-paper);
-}
-
-.regulatorCard:nth-child(2n) {
-  background: var(--parts-pale-yellow);
-}
-
-.regulatorCard .partBody {
-  grid-template-areas:
-    "name copy"
-    "footer copy";
-  grid-template-columns: minmax(9rem, 10rem) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  gap: 0.65rem 1.4rem;
-}
-
-.regulatorCard .partName {
-  grid-area: name;
-}
-
-.regulatorCard .partRole {
-  grid-area: copy;
-}
-
-.regulatorCard .partFooter {
-  grid-area: footer;
-  justify-content: flex-start;
-}
-
-.xylosePanel,
-.donorSection {
-  --parts-list-accent: #0b6753;
-  --parts-list-ink: #183d34;
-  --parts-list-line: #d2ddd7;
-  --parts-list-surface: #fffdf8;
-  --parts-list-surface-soft: #f4f1e8;
-  --parts-list-surface-tint: #edf4ef;
-  overflow: hidden;
-  border: 1px solid var(--parts-list-line);
-  border-radius: 1.5rem;
-  background: var(--parts-list-surface);
-  box-shadow: 0 3px 0 rgb(24 61 52 / 7%);
-}
-
-.xylosePanel {
-  min-width: 0;
-  padding: clamp(1rem, 2vw, 1.35rem);
-}
-
-.donorSection {
-  margin-block: var(--article-space-block);
-}
-
-.panelHeader {
-  margin: 0 0 1rem;
-  padding: 0 0 0.95rem;
-  border-bottom: 1px solid var(--parts-list-line);
-}
-
-.xyloseList,
-.donorLedger {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.xyloseList {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.85rem;
-}
-
-.xyloseListItem {
-  display: flex;
-  min-width: 0;
-}
-
-.xyloseItem {
-  width: 100%;
-  padding: 1rem;
-  border: 1px solid var(--parts-list-line);
-  border-radius: 1rem;
-  background: #fff;
-}
-
-.xyloseItem .partBody {
-  height: 100%;
-  grid-template-areas:
-    "heading"
-    "copy"
-    "link";
-  grid-template-rows: auto 1fr auto;
-  gap: 0.7rem;
-}
-
-.xyloseItem .partHeading,
-.donorRow .partHeading {
-  grid-area: heading;
-  display: grid;
-  justify-content: start;
-  align-items: start;
-}
-
-.xyloseItem .partHeading {
-  gap: 0.35rem;
-}
-
-.xyloseItem .partRole,
-.donorRow .partRole {
-  grid-area: copy;
-  color: var(--parts-list-ink);
-}
-
-.xyloseItem .partRole {
-  font-size: 1.0625rem;
-  line-height: 1.55;
-}
-
-.xyloseItem .registryLink,
-.donorRow .registryLink {
-  grid-area: link;
-  justify-self: start;
-}
-
-.xylosePanel .groupTitle.groupTitle.groupTitle,
-.donorSection .bandTitle.bandTitle.bandTitle {
-  color: var(--parts-list-ink);
-  font-family: var(--parts-body);
-  font-size: clamp(1.3rem, 2vw, 1.55rem);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.xyloseItem .partName.partName.partName,
-.donorRow .partName.partName.partName {
-  color: var(--parts-list-ink);
-  font-family: var(--parts-body);
-  font-size: 1.05rem;
-  font-weight: 800;
-  line-height: 1.32;
-  text-wrap: pretty;
-}
-
-.xyloseItem .typeTag,
-.donorRow .typeTag {
-  padding: 0.22rem 0.5rem;
-  border: 1px solid #bfd2ca;
-  border-radius: 0.45rem;
-  background: var(--parts-list-surface-tint);
-  color: #285c4d;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.35;
-}
-
-.xyloseItem .registryLink.registryLink.registryLink[href],
-.donorRow .registryLink.registryLink.registryLink[href] {
-  min-height: 2.75rem;
-  padding: 0.42rem 0.7rem;
-  border: 1px solid #b8cec5;
-  border-radius: 0.65rem;
-  background: var(--parts-list-surface-tint);
-  color: #075c49;
-  font-size: 0.875rem;
-}
-
-/* Ledger rows use a quiet accent rail and an open reading rhythm. */
-.ledgerHeader {
-  padding: 1.1rem 1.35rem;
-  border-bottom: 1px solid var(--parts-list-line);
-  background: var(--parts-list-surface-soft);
-}
-
-.donorListItem + .donorListItem {
-  border-top: 1px solid var(--parts-list-line);
-}
-
-.donorRow {
-  position: relative;
-  padding: 1.2rem 1.35rem 1.2rem 1.55rem;
-}
-
-.donorRow::before {
-  position: absolute;
-  inset: 1rem auto 1rem 0.7rem;
-  width: 3px;
-  border-radius: 999px;
-  background: var(--parts-list-line);
-  content: "";
-}
-
-.donorRow .partBody {
-  grid-template-areas:
-    "heading copy"
-    "heading link";
-  grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 1.55fr);
-  align-items: start;
-  gap: 0.7rem 1.6rem;
-}
-
-.donorRow .partHeading {
-  gap: 0.45rem;
-}
-
-.donorRow .partRole {
-  font-size: 1.0625rem;
-  line-height: 1.58;
-}
-
-/* Tools: two filled stages with a central directional connector. */
-.toolSection {
-  margin-block: var(--article-space-block);
-}
-
-.toolHeader {
-  padding: 0 0 0.9rem;
-}
-
-.toolFlow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0.75rem;
-}
-
-.toolCard {
-  padding: clamp(1rem, 2.4vw, 1.3rem);
-  border-radius: var(--parts-radius);
-  background: var(--parts-pale-yellow);
-}
-
-.toolCard:nth-child(3) {
-  background: var(--parts-card-mint);
-}
-
-.toolCard .partBody {
-  grid-template-areas:
-    "name"
-    "copy"
-    "footer";
-  grid-template-rows: auto 1fr auto;
-}
-
-.toolCard .partName {
-  grid-area: name;
-}
-
-.toolCard .partRole {
-  grid-area: copy;
-}
-
-.toolCard .partFooter {
-  grid-area: footer;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .registryLink.registryLink.registryLink[href]:hover {
-    background: var(--parts-yellow);
-    color: var(--parts-ink);
-  }
-
-  .xyloseItem .registryLink.registryLink.registryLink[href]:hover,
-  .donorRow .registryLink.registryLink.registryLink[href]:hover {
-    border-color: #7da697;
-    background: #e2eee8;
-    color: #003f34;
-  }
-
-  .xyloseItem:hover {
-    border-color: #a9c1b8;
-  }
-
-  .donorRow:hover {
-    background: #faf8f1;
-  }
-
-  .donorRow:hover::before {
-    background: var(--parts-list-accent);
-  }
-}
-
 @container (min-width: 46rem) {
-  .xyloseList {
+  .partsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@container (max-width: 48rem) {
-  .regulatorCard .partBody {
-    grid-template-areas:
-      "name"
-      "copy"
-      "footer";
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr auto;
+@media (hover: hover) and (pointer: fine) {
+  .partCard:hover {
+    border-color: #a9c1b8;
   }
 
-  .backboneRow .partBody,
-  .donorRow .partBody {
-    grid-template-areas:
-      "heading"
-      "copy"
-      "link";
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.65rem;
-  }
-}
-
-@container (max-width: 32rem) {
-  .coreRegulator .partBody,
-  .coreConstruct .partBody {
-    grid-template-areas:
-      "name"
-      "copy"
-      "meta";
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .coreRegulator .partMeta,
-  .coreConstruct .partMeta {
-    justify-content: flex-start;
-  }
-
-  .panelHeader {
-    padding-inline: 0;
-  }
-
-  .ledgerHeader {
-    padding: 1rem;
-  }
-
-  .xylosePanel {
-    padding: 1rem;
-  }
-
-  .donorRow {
-    padding-inline: 1rem;
+  .registryLink:hover {
+    border-color: #7da697;
+    background: #e2eee8;
+    color: #003f34;
   }
 }
 
 @media (max-width: 560px) {
-  .partMeta,
-  .partFooter {
-    align-items: flex-start;
-  }
-
-  .panelHeader,
-  .ledgerHeader {
-    padding-right: 7.5rem;
-  }
-
-  .registryLink.registryLink.registryLink[href] {
-    padding-inline: 0.8rem;
+  .partCard {
+    padding: 1rem 1rem 1rem 1.35rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .registryLink.registryLink.registryLink[href] {
+  .registryLink {
     transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  .corePair,
-  .backboneRow,
-  .regulatorColumn,
-  .xylosePanel,
-  .donorSection,
-  .toolCard {
+  .partCard {
     outline: 2px solid CanvasText;
   }
 
-  .registryLink.registryLink.registryLink[href]:focus-visible {
+  .registryLink:focus-visible {
     outline-color: Highlight;
   }
 }
