@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type TraceStageId =
   | "trigger"
   | "reach-out"
@@ -68,6 +70,12 @@ export interface IhpRelatedPart {
   linkLabel?: string;
 }
 
+export interface IhpContentPart {
+  kind: "content";
+  inline: boolean;
+  content: ReactNode;
+}
+
 export type IhpSpecialPartKind =
   | "epigraph"
   | "decisions"
@@ -82,10 +90,7 @@ export type IhpSpecialPartKind =
   | "unresolved-cards";
 
 export type IhpPart =
-  | {
-      kind: "markdown";
-      value: string;
-    }
+  | IhpContentPart
   | IhpFigurePart
   | IhpGalleryPart
   | IhpAnchorPart

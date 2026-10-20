@@ -1,7 +1,4 @@
-import { type AnchorHTMLAttributes, type ReactNode } from "react";
-import { Link } from "react-router-dom";
-import Markdown, { type MarkdownToJSX } from "markdown-to-jsx";
-import { Cite } from "../article/References";
+import { Children, Fragment, isValidElement, type ReactNode } from "react";
 import { Caption } from "../media/Caption";
 import { Figure } from "../media/Figure";
 import { ImageGallery } from "../media/ImageGallery";
@@ -20,63 +17,17 @@ import { StakeholderNavigator } from "./StakeholderNavigator";
 import { TraceCycle } from "./TraceCycle";
 import type {
   IhpCollaborator,
+  IhpContentPart,
   IhpPart,
   IhpStakeholderGroup,
   IhpTracePart,
 } from "./ihp-types";
 import styles from "./ihp-content.module.css";
 
-const CITATION_ALIASES: Record<string, string> = {
-  Akinosho2014CBP: "Akinosho2014Thermocellum",
-  Liu2023CBS: "liu2023cornbioconversion",
-  KeAi2026GreenCarbon: "KeAiGreenCarbon2026",
-  ISO14040_2006: "ISO14040",
-  ISO14044_2006: "ISO14044",
-};
-
 export interface StoryMeta {
   group: string;
   impact: string;
 }
-
-function SmartLink({
-  href = "",
-  children,
-  ...props
-}: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  if (href.startsWith("#ref-")) {
-    const sourceKeys = href
-      .slice(5)
-      .split(",")
-      .filter(Boolean)
-      .map((sourceKey) => CITATION_ALIASES[sourceKey] ?? sourceKey);
-    return <Cite k={sourceKeys} />;
-  }
-
-  if (href.startsWith("/")) {
-    return (
-      <Link to={href} {...props}>
-        {children}
-      </Link>
-    );
-  }
-
-  return (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  );
-}
-
-const MARKDOWN_OPTIONS: MarkdownToJSX.Options = {
-  disableParsingRawHTML: true,
-  forceWrapper: true,
-  overrides: {
-    a: {
-      component: SmartLink,
-    },
-  },
-};
 
 function cleanTraceText(value: string) {
   return value
@@ -91,12 +42,36 @@ function cleanTraceTitle(value: string) {
   return cleanTraceText(value).replace(/^\d+(?:\.\d+)*[.)]?\s+/, "");
 }
 
+function nodeText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map(nodeText).join("");
+  }
+  if (isValidElement<{ children?: ReactNode }>(node)) {
+    return nodeText(node.props.children);
+  }
+  return "";
+}
+
+function contentText(part: IhpContentPart) {
+  const content =
+    isValidElement<{ children?: ReactNode }>(part.content) &&
+    part.content.type === Fragment
+      ? part.content.props.children
+      : part.content;
+  return part.inline
+    ? nodeText(content)
+    : Children.toArray(content).map(nodeText).join(" ");
+}
+
 function triggerSummary(stages: IhpTracePart["stages"]) {
   const trigger = stages.find((stage) => stage.stage === "trigger");
   const text = cleanTraceText(
     (trigger?.parts ?? [])
-      .filter((part) => part.kind === "markdown")
-      .map((part) => part.value)
+      .filter((part): part is IhpContentPart => part.kind === "content")
+      .map(contentText)
       .join(" "),
   );
   if (!text) return undefined;
@@ -168,16 +143,17 @@ export function IhpParts({
     <>
       {parts.map((part, index) => {
         switch (part.kind) {
-          case "markdown":
+          case "content": {
+            const ContentWrapper = part.inline ? "span" : "div";
             return (
-              <Markdown
+              <ContentWrapper
                 className={styles.markdown}
-                key={`markdown-${index}`}
-                options={MARKDOWN_OPTIONS}
+                key={`content-${index}`}
               >
-                {part.value}
-              </Markdown>
+                {part.content}
+              </ContentWrapper>
             );
+          }
           case "figure":
             return (
               <Figure
