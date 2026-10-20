@@ -1,6 +1,9 @@
 import { ChapterMeta } from "./ChapterMeta";
 import { media, mediaRoot } from "./EducationAssets";
 import { ChapterGallery, ResourceCard, ResourceGrid } from "./EducationMedia";
+import { ObjectiveStatement } from "./ObjectiveStatement";
+import { ProseList } from "./ProseList";
+import { WonderQuestion } from "./WonderQuestion";
 
 export function Chapter06PreEscapeContent() {
   return (
@@ -10,6 +13,10 @@ export function Chapter06PreEscapeContent() {
         Team members
       </ChapterMeta>
       <h4>6.1 Wonder</h4>
+      <WonderQuestion>
+        Why did we shift from teaching science to fostering responsible
+        innovators?
+      </WonderQuestion>
       <p>
         Our project explores a new approach for agricultural waste utilization
         by leveraging biomanufacturing. As this approach moves beyond the
@@ -44,73 +51,79 @@ export function Chapter06PreEscapeContent() {
         development <strong>(for college students and Haide iGEMers).</strong>
       </p>
       <h4 id="chapter-06-2">
-        6.2 Activity I: Traditional paper craft workshop-“Cultural Heritage in
-        Paper, Green Future in Action”
+        6.2 Activity I: Traditional Paper Craft Workshop
       </h4>
+      <p>
+        <strong>“Cultural Heritage in Paper, Green Future in Action”</strong>
+      </p>
       <ChapterMeta kind="audience">Children in the local community</ChapterMeta>
       <h5>6.2.1 Explore Objective-driven Design</h5>
-      <p>
+      <ObjectiveStatement>
         <strong>
           Objective: Recognizing the Positive Role of Technology in Society
         </strong>
-      </p>
+      </ObjectiveStatement>
       <p>
         Aligned with the cognitive level of children, we aimed to help them
-        develop an understanding that the use of science and technology in
-        society comes with responsibility from the aspect of their real impacts
-        on society which was accessible to them. Thus, we set “recognition” as
-        the objective of this activity.
+        develop an understanding that using science and technology responsibly
+        requires considering their real-world impacts in ways children can
+        understand. Thus, we set “recognition” as the objective of this
+        activity.
       </p>
       <p>
         <strong>
           Design: Why did we choose papermaking as the central activity?
         </strong>
       </p>
-      <p>
-        <strong>·Papermaking as a tangible learning experience</strong>
-      </p>
-      <p>
-        Papermaking, a tangible process where children can directly experience
-        how technology transformed the waste into the worth, was a suitable
-        choice for the “X” component of the “Lecture + X” model developed
-        through our previous educational activities.
-      </p>
-      <p>
-        <strong>·Papermaking from a Familiar Starting Point</strong>
-      </p>
-      <p>
-        Papermaking starts from a material already familiar to primary school
-        students—paper, which was used in their everyday lives, particularly for
-        writing, reading, and communication. Starting from something familiar
-        makes it easier for them to explore the technology behind it and further
-        understand how that technology relates to and contributes to society.
-      </p>
-      <p>
-        <strong>·Papermaking as a Window into Multiple Social Values</strong>
-      </p>
-      <p>
-        Papermaking also provides more than a single perspective on the social
-        value of technology. It has long supported everyday communication, while
-        also enabling the preservation and transmission of knowledge, culture,
-        and traditions across generations. Meanwhile, using discarded paper as a
-        raw material connects this traditional technology with resource reuse
-        and sustainable development. Through these different dimensions,
-        students can better recognize that technology has real impacts on
-        multiple dimensions of society.
-      </p>
-      <p>
-        <strong>View our activity plan!</strong>
-      </p>
+      <ProseList>
+        <li>
+          <p>
+            <strong>Papermaking as a tangible learning experience:</strong>{" "}
+            Papermaking, a tangible process where children can directly
+            experience how technology transformed waste into something valuable,
+            was a suitable choice for the “X” component of the “Lecture + X”
+            model developed through our previous educational activities.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Papermaking from a Familiar Starting Point:</strong>{" "}
+            Papermaking starts with a material already familiar to primary
+            school students—paper, which they use in everyday life, particularly
+            for writing, reading, and communication. Starting from something
+            familiar makes it easier for them to explore the technology behind
+            it and further understand how that technology relates to and
+            contributes to society.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>
+              Papermaking as a Window into Multiple Social Values:
+            </strong>{" "}
+            Papermaking also provides more than a single perspective on the
+            social value of technology. It has long supported everyday
+            communication, while also enabling the preservation and transmission
+            of knowledge, culture, and traditions across generations. Meanwhile,
+            using discarded paper as a raw material connects this traditional
+            technology with resource reuse and sustainable development. Through
+            these different dimensions, students can better recognize that
+            technology has real impacts on multiple dimensions of society.
+          </p>
+        </li>
+      </ProseList>
       <ResourceGrid>
         <ResourceCard
           eyebrow="Activity plan · Chinese"
-          title="Cultural Heritage in Paper"
+          title="Chinese Version"
           href={`${mediaRoot}/6-2-1-activity-plan-chinese.pdf`}
+          actionLabel="View our activity plan!"
         />
         <ResourceCard
           eyebrow="Activity plan · English"
-          title="Cultural Heritage in Paper"
+          title="English Version"
           href={`${mediaRoot}/6-2-1-activity-plan-english.pdf`}
+          actionLabel="View our activity plan!"
         />
       </ResourceGrid>
       <h5>6.2.2 Action</h5>
@@ -150,10 +163,7 @@ export function Chapter06PreEscapeContent() {
         label="Chapter 06 traditional paper craft workshop photographs"
       />
       <h5>6.2.3 Verify</h5>
-      <h6>
-        Children’s Voices Revealed Their Growing Awareness of Technology’s
-        Real-World Value
-      </h6>
+      <h6>Children’s Voices on Technology’s Real-World Value</h6>
       <p>
         At the end of the activity, we invited students to share how papermaking
         could help people in everyday life. <strong>One student said</strong>,

@@ -1,28 +1,36 @@
+import { Figure } from "../../components/media/Figure";
+import { mediaRoot } from "./EducationAssets";
+
 export function PrincipleIntroContent() {
   return (
     <>
       <p>
-        To make our educational activities purposeful, adaptable, and
-        continuously improving, we organized them under the{" "}
+        To ensure that our educational activities are purposeful, adaptable, and
+        continuously refined, we organized them around the{" "}
         <strong>WEAVE</strong> framework:{" "}
-        <strong>Wonder, Explore, Action, Verify, and Echo.</strong> This
-        framework connects the needs that motivate an activity with the evidence
-        that informs its next iteration.{" "}
         <strong>
-          Each activity becomes both a learning experience for participants and
-          a source of learning for our team.
+          Wonder, Explore, Action, Verify, and Echo. Through this framework,
+          each activity engages participants in learning while providing our
+          team with valuable insights.
         </strong>
       </p>
       <p>
-        The visual structure of <strong>WEAVE</strong> draws inspiration from{" "}
-        <strong>Huandaiwen (环带纹)</strong>, a traditional Chinese decorative
-        motif with a flowing form. This visual continuity connects five stages
-        of WEAVE, reflecting how insights from one activity feed into the design
-        and improvement of the next.
+        The visual identity of <strong>WEAVE</strong> is inspired by{" "}
+        <strong>Huandaiwen</strong>, a traditional Chinese decorative motif
+        featuring flowing, interwoven ribbons. These continuous, intertwining
+        forms embody the interconnected nature of WEAVE’s five stages,
+        illustrating how insights and reflections flow from one activity into
+        the design of the next and into our program.
       </p>
-      <p>
-        <strong>Figure 1. Visual structure of our principle.</strong>
-      </p>
+      <Figure
+        alt="Circular Huandaiwen-inspired emblem of interwoven teal, green and gold ribbons, with a microbe, a wheel-like motif, a flowering sprout and a smiling round character woven into the loops."
+        caption="Visual structure of our principle."
+        captionPrefix="Figure 1."
+        intrinsicHeight={1693}
+        intrinsicWidth={1667}
+        maxWidth="520px"
+        src={`${mediaRoot}/visual-weave.avif`}
+      />
     </>
   );
 }

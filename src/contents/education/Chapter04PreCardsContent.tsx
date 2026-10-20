@@ -1,4 +1,6 @@
 import { ChapterMeta } from "./ChapterMeta";
+import { ObjectiveStatement } from "./ObjectiveStatement";
+import { WonderQuestion } from "./WonderQuestion";
 
 export function Chapter04PreCardsContent() {
   return (
@@ -6,9 +8,9 @@ export function Chapter04PreCardsContent() {
       <ChapterMeta kind="audience">Primary school students</ChapterMeta>
       <ChapterMeta kind="activity">Fermentation Magic Lab</ChapterMeta>
       <h4>4.1 Wonder</h4>
-      <p>
-        <strong>Why We Moved from Biological Design to Production?</strong>
-      </p>
+      <WonderQuestion>
+        Why We Moved from Biological Design to Production?
+      </WonderQuestion>
       <p>
         Our previous activities took primary school students from understanding
         DNA to redesigning biological parts. However, in the real world, these
@@ -32,23 +34,23 @@ export function Chapter04PreCardsContent() {
         </em>{" "}
         activity{" "}
         <strong>
-          where students can recognize that these living "factories" produce
+          to help students recognize that these living "factories" produce
           tangible things in real life through their invisible hard work.
         </strong>
       </p>
       <h4>4.2 Explore Objective-driven Design</h4>
-      <p>
+      <ObjectiveStatement>
         <strong>
           Objective: To demystify fermentation as a dynamic microbial process,
           demonstrating how these biological factories turn our synthetic
           "Redesigns" into tangible biomanufacturing solutions.
         </strong>
-      </p>
+      </ObjectiveStatement>
       <h5>4.2.1 Content Design</h5>
       <p>
-        For our curriculum design, we translate abstract definitions and
+        For our curriculum design, we translated abstract definitions and
         biological processes into engaging concepts{" "}
-        <strong>within the setting of “Fermentation Magic Academy”</strong>,
+        <strong>within the setting of “Fermentation Magic Academy,”</strong>{" "}
         which is tailored to the students' cognitive development. To break down
         cognitive barriers, we designed{" "}
         <strong>three core learning modules.</strong>

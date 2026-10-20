@@ -23,7 +23,7 @@ export function Chapter04PostCardsContent({
       </p>
       <p>
         Inspired by students' enthusiasm for hands-on experiments in previous
-        activities, we decided to solidify our "Lecture + X" pattern enabling
+        activities, we decided to solidify our "Lecture + X" pattern by enabling
         them to witness the process of biomanufacturing firsthand through active
         exploration. Therefore, alongside our theoretical lectures, we
         incorporated a yeast fermentation experiment, transforming the invisible
@@ -43,9 +43,9 @@ export function Chapter04PostCardsContent({
         </strong>
         . Thus, we developed an{" "}
         <strong>
-          interactive webpage “The Atlas of Chinese Fermented Gastronomy”
-        </strong>
-        . Instead of passively introducing various fermentation examples in a
+          interactive webpage, “The Atlas of Chinese Fermented Gastronomy.”
+        </strong>{" "}
+        Instead of passively introducing various fermentation examples in a
         traditional classroom setting,{" "}
         <strong>
           this map hands the initiative of discovery directly over to the
@@ -58,14 +58,12 @@ export function Chapter04PostCardsContent({
           culture.
         </strong>
       </p>
-      <p>
-        <strong>View our presentation!</strong>
-      </p>
       <ResourceCard
         eyebrow="Design presentation"
         title="Fermentation Magic Lab"
         description="The activity design, fermentation experiment, and classroom flow."
         href={`${mediaRoot}/4-2-design-presentation.pdf`}
+        actionLabel="View our presentation!"
       />
       <h4>4.3 Action</h4>
       {actionGallery}
@@ -75,8 +73,8 @@ export function Chapter04PostCardsContent({
         experiments, we were able to see how our activities shaped their
         understanding and the way they engaged with the scientific concepts.{" "}
         <strong>
-          We found that students have evolved from simply viewing the results of
-          fermentation to recognizing its process and principle
+          We found that students have evolved from simply observing the results
+          of fermentation to recognizing the process and underlying principles
         </strong>
         . They grasped that this biological conversion is the exact mechanism
         bringing our rational designs into the real world.
@@ -88,7 +86,7 @@ export function Chapter04PostCardsContent({
         </strong>
       </p>
       <p>
-        By incorporating interactive questioning during the introduction of
+        By incorporating interactive questioning during the introduction of the
         experiment, we encouraged students to apply theoretical knowledge to
         practical steps. Questions like{" "}
         <em>"What happens if we use cold water?"</em> and{" "}
@@ -114,9 +112,9 @@ export function Chapter04PostCardsContent({
           some students spontaneously added sugar back into the mixture to
           observe the subsequent changes.
         </strong>{" "}
-        This reveals that alongside understanding the mechanics of fermentation,
-        they actively adjusted conditions beyond our preset procedures to test
-        and verify the scientific concepts we had delivered.
+        This revealed that alongside understanding the mechanics of
+        fermentation, they actively adjusted conditions beyond our preset
+        procedures to test and verify the scientific concepts we had delivered.
       </p>
       <h4>4.5 Echo</h4>
       <p>
@@ -133,11 +131,11 @@ export function Chapter04PostCardsContent({
         <strong>Reflection:</strong>
       </p>
       <p>
-        This led us to ponder{" "}
+        This led us to ponder:{" "}
         <em>
           “If students were already beginning to modify one condition on their
           own, what else might they explore if they were given the freedom to
-          manipulate more variables involved in fermentation?
+          manipulate more variables involved in fermentation?”
         </em>
       </p>
       <p>

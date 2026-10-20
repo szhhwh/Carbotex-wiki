@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import styles from "../education.module.css";
 import { mediaRoot } from "./EducationAssets";
 import { ResourceCard } from "./EducationMedia";
+import { OverflowHint } from "./InteractionHint";
 
 export function Chapter05PostWorkflowContent({
   actionGallery,
@@ -13,7 +14,7 @@ export function Chapter05PostWorkflowContent({
       <h5 id="chapter-05-2-2">5.2.2 Format Design</h5>
       <p>
         Students have learned experimental principles and procedures from
-        textbooks but have limited opportunities to conduct them in real
+        textbooks but have limited opportunities to conduct them in a real
         laboratory.{" "}
         <strong>We therefore incorporated videos from the internet</strong>,
         including PCR and tensile testing to connect theories with real
@@ -31,12 +32,13 @@ export function Chapter05PostWorkflowContent({
         non-oxidative pathway and the gene we rationally chose to engineer.
         Based on this, we designed an interactive Pitch-Pot Game.
       </p>
-      <p className={styles.tableHint}>
-        The full game design is shown below. On narrow screens the rows wrap so
-        every element and its biological concept stay visible.
-      </p>
+      <OverflowHint targetId="chapter-05-pitch-pot-table">
+        Swipe or scroll horizontally to see every game element and its
+        biological concept.
+      </OverflowHint>
       <div
         className={styles.tableScroller}
+        id="chapter-05-pitch-pot-table"
         role="region"
         aria-label="Biological Pitch-Pot Game design"
         tabIndex={0}
@@ -100,7 +102,7 @@ export function Chapter05PostWorkflowContent({
         simply recalling biological terms, students had to act as metabolic
         engineers.{" "}
         <strong>
-          They needed to strategically apply series of knowledge of carbon
+          They needed to strategically apply a series of knowledge of carbon
           allocation and pathway choice
         </strong>{" "}
         to direct the engineering tool (the red arrows) into the correct pot
@@ -110,9 +112,10 @@ export function Chapter05PostWorkflowContent({
       </p>
       <ResourceCard
         eyebrow="Design presentation"
-        title="The Microscopic Factory of Adhesives"
+        title="Biological Pitch-Pot Game"
         description="Workflow, classroom format, and the biological Pitch-Pot Game."
         href={`${mediaRoot}/5-2-design-presentation.pdf`}
+        actionLabel="View our presentation!"
       />
       <h4>5.3 Action</h4>
       {actionGallery}
@@ -120,9 +123,13 @@ export function Chapter05PostWorkflowContent({
       <p>
         We observed that when students received a red arrow representing a gene
         overexpression tool, they paused to think before making their next
-        decision. This behavior suggests that they are actively drawing on and
-        connecting their prior knowledge to analyze possible modification
-        pathways. More importantly, this deliberate “targeting”{" "}
+        decision. This behavior{" "}
+        <strong>
+          suggested that they are actively drawing on and connecting their prior
+          knowledge
+        </strong>{" "}
+        to analyze possible modification pathways. More importantly, this
+        deliberate “targeting”{" "}
         <strong>
           vividly demonstrates their understanding of the concept of directional
           modification in synthetic biology.
@@ -136,7 +143,7 @@ export function Chapter05PostWorkflowContent({
         After watching videos,{" "}
         <strong>
           some students expressed interest in trying the experiments shown in
-          those themselves
+          the videos themselves
         </strong>
         .
       </p>

@@ -1,20 +1,19 @@
-import styles from "../education.module.css";
 import { ChapterMeta } from "./ChapterMeta";
 import { media } from "./EducationAssets";
 import { ChapterGallery } from "./EducationMedia";
+import { ObjectiveStatement } from "./ObjectiveStatement";
+import { WonderQuestion } from "./WonderQuestion";
 
 export function Chapter07Content() {
   return (
     <>
-      <ChapterMeta kind="audience">
+      <ChapterMeta emphasizeValue kind="audience">
         Children in under-resourced regions
       </ChapterMeta>
       <h4>7.1 Wonder</h4>
-      <p>
-        <strong>
-          ·Why do we reach out to children in underdeveloped regions?
-        </strong>
-      </p>
+      <WonderQuestion>
+        Why did we reach out to children in underdeveloped regions?
+      </WonderQuestion>
       <p>
         Our commitment to social responsibility initially centered on
         cultivating ethical stewardship among future innovators. Across local
@@ -25,12 +24,12 @@ export function Chapter07Content() {
         However, reflecting on our earlier outreach,{" "}
         <strong>
           we realized that discussing the social impact of technology relies on
-          familiar exposure to modern science and technology that children in
-          economically underserved regions rarely had the chance to access
+          prior exposure to modern science and technology that children in
+          underserved regions often lack
         </strong>
         . Furthermore, in regions with diverse linguistic and cultural
         backgrounds, differences between learners' everyday languages and the
-        language of instruction may create additional barriers to engage,{" "}
+        language of instruction may create additional barriers to engagement,{" "}
         <strong>
           leaving them disconnected from science and its potential for
           responsible innovation, let alone taking an active part in future
@@ -41,20 +40,19 @@ export function Chapter07Content() {
         Therefore, we{" "}
         <strong>
           organized an educational outreach team and provided science education
+          to children in Luchun County, Yunnan Province, China, where some
+          ethnic minority communities still speak local languages,
         </strong>{" "}
-        to economically underdeveloped regions in China where{" "}
-        <strong>ethnic minorities speak their own languages</strong>{" "}
-        <strong>in Luchun County, Yunnan Province</strong>, aiming to expand
-        local children's access to science and try to help them transition from{" "}
-        <strong>passive observers</strong> of technological change into{" "}
-        <strong>voices capable of shaping the future.</strong>
+        aiming to expand local children's access to science and try to help them
+        transition from <strong>passive observers</strong> of technological
+        change into <strong>voices capable of shaping the future.</strong>
       </p>
       <h4>7.2 Explore Objective-driven Design</h4>
-      <p>
+      <ObjectiveStatement>
         <strong>Objective:</strong> To ensure that science education is
         genuinely accessible to ethnic minority children and ignite their
         curiosity to explore science in the future.
-      </p>
+      </ObjectiveStatement>
       <p>
         In Luchun County, children from different backgrounds may grow up{" "}
         <strong>speaking local languages in their daily lives</strong>, while
@@ -108,7 +106,9 @@ export function Chapter07Content() {
           build their confidence in speaking Mandarin and strengthen their
           reading comprehension
         </strong>{" "}
-        <strong>to better understand scientific knowledge</strong>
+        <strong>
+          so that they could better understand scientific knowledge.
+        </strong>
       </p>
       <p>
         <strong>
@@ -130,21 +130,12 @@ export function Chapter07Content() {
         principles intuitive and observable, seeking to{" "}
         <strong>spark children's curiosity</strong> about the ocean and
         encourage them to{" "}
-        <strong>discover the magic of life science and natural world</strong>.
+        <strong>discover the wonders of life science and natural world</strong>.
       </p>
-      <div className={styles.classroomNote}>
-        <strong>Marine Creature Social Media Feed</strong>
-        <span>
-          Interactive classroom segment presented live during the outreach
-          lesson. A standalone feed or recording was not included in the source
-          materials supplied for this wiki page.
-        </span>
-      </div>
       <h4>7.3 Action</h4>
-      <p>
-        <strong>Figure 7-11. Record of our Mandarin Support activities</strong>
-      </p>
       <ChapterGallery
+        caption="Record of our Mandarin Support activities"
+        captionPrefix="Figure 7-11."
         images={[
           media(
             "chapter-07-1",
@@ -172,12 +163,11 @@ export function Chapter07Content() {
             "Luchun County outreach 5",
           ),
         ]}
-        label="Chapter 07 Mandarin support activity photographs"
+        label="Record of our Mandarin Support activities"
       />
-      <p>
-        <strong>Figure 12-14. Record of our interactive marine class</strong>
-      </p>
       <ChapterGallery
+        caption="Record of our interactive marine class"
+        captionPrefix="Figure 12-14."
         images={[
           media(
             "chapter-07-6",
@@ -195,13 +185,10 @@ export function Chapter07Content() {
             "Luchun County outreach 8",
           ),
         ]}
-        label="Chapter 07 interactive marine class photographs"
+        label="Record of our interactive marine class"
       />
       <h4>7.4 Verify</h4>
-      <h5>
-        7.4.1{" "}
-        <strong>Verified Shift: From hesitation to confident expression</strong>
-      </h5>
+      <h5>7.4.1 Verified Shift: From hesitation to confident expression</h5>
       <p>
         <strong>(1) From Our Team's Perspective</strong>
       </p>
@@ -249,8 +236,8 @@ export function Chapter07Content() {
           reflected in their growing willingness to participate
         </strong>
         . Rather than simply listening, they eagerly raised their hands, shared
-        their thoughts in Mandarin, and asked questions such as how deep-sea
-        creatures survive without sunlight.
+        their thoughts in Mandarin, and asked questions about how deep-sea
+        creatures survive even without sunlight.
       </p>
       <p>
         This suggested that targeted language support, paired with interactive
@@ -291,8 +278,8 @@ export function Chapter07Content() {
       <p>
         <strong>Evolution:</strong> We partnered with{" "}
         <strong>our university's volunteer corps</strong> to{" "}
-        <strong>institutionalize an annual teaching baton</strong>, ensuring
-        successive cohorts return each year to keep this educational bond alive.
+        <strong>establish an annual teaching baton</strong>, ensuring successive
+        cohorts return each year to keep this educational bond alive.
       </p>
     </>
   );

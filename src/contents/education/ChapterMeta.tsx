@@ -4,9 +4,11 @@ import styles from "../education.module.css";
 export function ChapterMeta({
   kind,
   children,
+  emphasizeValue = false,
 }: {
   kind: "audience" | "activity";
   children: ReactNode;
+  emphasizeValue?: boolean;
 }) {
   return (
     <p
@@ -20,7 +22,13 @@ export function ChapterMeta({
         {kind === "audience" ? "Audience" : "Activity"}
       </span>
       <span className={styles.srOnly}>: </span>
-      <span className={styles.chapterMetaValue}>{children}</span>
+      <span
+        className={`${styles.chapterMetaValue} ${
+          emphasizeValue ? styles.chapterMetaValueEmphasized : ""
+        }`}
+      >
+        {children}
+      </span>
     </p>
   );
 }

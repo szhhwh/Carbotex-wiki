@@ -10,7 +10,7 @@ export function Chapter06VerifyContent() {
         make a final decision regarding the future of β-17. They could choose
         among three options: redesign, release, or destroy. Notably,{" "}
         <strong>
-          audience from all four rounds favored the redesign approach
+          audiences from all four rounds favored the redesign approach
         </strong>{" "}
         and selected correct strategies from the provided choices.
       </p>
@@ -19,7 +19,7 @@ export function Chapter06VerifyContent() {
       </p>
       <p>
         This demonstrated that, through the previous stages of investigation and
-        relevant biological concepts acquirement,{" "}
+        relevant biological concepts acquisition,{" "}
         <strong>
           participants recognized that outstanding performance alone is not
           sufficient for engineered strains applied to society. Ensuring
