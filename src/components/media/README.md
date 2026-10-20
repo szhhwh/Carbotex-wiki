@@ -4,6 +4,44 @@ Both components accept `MediaImage[]`, using the same image properties as
 `Figure`: `src`, `alt`, caption, native dimensions or a display ratio, responsive
 sources, and failure fallback. Assets must use the team's iGEM hosting.
 
+## Figure and interpreting text
+
+Use `FigureWithText` when a compact data figure and the paragraph that
+interprets it should form one reading unit. On wide screens they sit side by
+side; below 1180px the layout stacks with the caption still attached to the
+figure. Alternate `mediaPosition="end"` with the default `"start"` to avoid a
+run of identical image-left layouts. Set `compactMedia` for especially square
+figures, or `stacked` when the pair is nested inside `FigurePair`.
+
+```tsx
+import { FigureWithText } from "../components/media/FigureWithText";
+
+<FigureWithText
+  src="https://static.igem.wiki/teams/6147/wiki/example.avif"
+  intrinsicWidth={1200}
+  intrinsicHeight={1000}
+  alt="Example data chart"
+  captionPrefix="Figure 1."
+  caption="Example result."
+>
+  <p>The paragraph describing and interpreting the chart.</p>
+</FigureWithText>;
+```
+
+Use `FigurePair` for two compact figures that benefit from direct comparison.
+Put only the figures in the pair; keep the explanatory prose in its normal
+document order after the pair.
+
+```tsx
+import { FigurePair } from "../components/media/FigurePair";
+
+<FigurePair>
+  <Figure {...leftFigure} />
+  <Figure {...rightFigure} />
+</FigurePair>;
+<p>Interpretation of both figures.</p>;
+```
+
 ```tsx
 import { ImageGallery } from "../components/media/ImageGallery";
 import { ImageCarousel } from "../components/media/ImageCarousel";

@@ -1,18 +1,40 @@
 .panel {
-  --references-ink: var(--article-ink, #173d32);
-  --references-green: var(--article-green, #21694d);
-  --references-muted: var(--article-muted, #527066);
+  --references-cream: #fbf0dd;
+  --references-yellow: #ffc647;
+  --references-card-yellow: #ffe7b6;
+  --references-ink: #003f34;
+  --references-green: var(--article-heading, #007c60);
+  --references-navy: #1f315f;
+  --references-display: var(
+    --hardware-display,
+    Impact,
+    "Arial Narrow",
+    sans-serif
+  );
+  --references-body: var(
+    --hardware-body,
+    "Trebuchet MS",
+    "Fira Sans",
+    sans-serif
+  );
+  --references-text: var(--article-text, clamp(1rem, 1.65vw, 1.3125rem));
   width: 100%;
+  /* Make the plain reference panel explicit instead of relying on Collapse. */
+  border: 0;
+  color: var(--references-ink);
+  font-family: var(--references-body);
+  font-size: var(--references-text);
 }
 
 .heading {
-  color: #164936;
-  font-family:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  font-size: clamp(2.4rem, 4.3vw, 4.2rem);
+  color: var(--references-green);
+  font-family: var(--references-display);
+  font-size: clamp(2rem, 3.45vw, 3.5rem);
+  font-style: normal;
   font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 1.08;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-wrap: pretty;
 }
 
 .panel .heading {
@@ -25,15 +47,21 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1.2rem;
-  padding: 0.15rem 0 1.55rem;
+  min-height: 2.75rem;
+  padding: 0;
+  text-align: left;
+}
+
+.panel .heading > button:focus-visible {
+  border-radius: 0.5rem;
+  outline: 3px solid var(--references-navy);
+  outline-offset: 4px;
 }
 
 .header {
   display: flex;
   min-width: 0;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 1.5rem;
   text-align: left;
 }
 
@@ -45,28 +73,14 @@
   transition: color 180ms ease;
 }
 
-.panel .heading > button:hover .title {
-  color: var(--references-green);
-}
-
-.meta {
-  flex: 0 0 auto;
-  color: var(--references-muted);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.45;
-  text-align: right;
-}
-
 .indicatorFace {
   display: grid;
   width: 2.65rem;
   height: 2.65rem;
+  border: 2px solid var(--references-ink);
   border-radius: 50%;
-  background: #e6eedc;
-  color: var(--references-green);
+  background: var(--references-card-yellow);
+  color: var(--references-navy);
   place-items: center;
   transition:
     background-color 180ms ease,
@@ -74,87 +88,94 @@
     transform 180ms ease;
 }
 
-.panel:not(.open) .heading > button:hover .indicatorFace {
-  background: #dbe7d5;
-  transform: translateY(1px);
-}
-
 .open .indicatorFace {
-  background: var(--references-green);
-  color: #fbfaf4;
-}
-
-.open .heading > button:hover .indicatorFace {
-  background: #1b5f45;
-  color: #fff;
+  background: var(--references-navy);
+  border-color: var(--references-navy);
+  color: var(--references-cream);
 }
 
 .panel .content > div {
-  padding: 1.55rem 0 0.25rem;
+  padding: 1.25rem 0 0.25rem;
+}
+
+.contentInner {
+  min-width: 0;
+}
+
+.intro {
+  margin: 0 0 1.5rem;
+  color: var(--references-ink);
+  font-size: 1em;
+  line-height: 1.65;
 }
 
 .panel .list {
   display: grid;
-  gap: 0.85rem;
+  gap: clamp(1.1rem, 2vw, 1.5rem);
   min-width: 0;
   margin: 0;
-  padding: 0 0 0 2.15rem;
-  color: #43594d;
+  padding: 0;
+  list-style: none;
+  color: var(--references-ink);
   line-height: 1.65;
 }
 
 .panel .entry {
+  display: grid;
   min-width: 0;
+  grid-template-columns: minmax(2.75rem, max-content) minmax(0, 1fr);
+  gap: 0.75rem;
   margin: 0;
-  padding: 0.45rem 0.2rem 0.55rem 0.7rem;
-  border-bottom: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 1em;
+  line-height: 1.65;
   overflow-wrap: anywhere;
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 2rem);
 }
 
-.panel .entry::marker {
-  color: #78602e;
-  font-family: Georgia, serif;
-  font-size: 1.02em;
+.entryIndex {
+  min-width: 0;
+  color: var(--references-ink);
+  font-weight: 700;
+  overflow-wrap: normal;
+  text-align: end;
+  white-space: nowrap;
 }
 
-.panel .entry:target,
-.panel .entry:focus {
-  border-radius: 0.45rem;
-  background: #f1f4e9;
-  outline: 2px solid transparent;
-  outline-offset: 0.25rem;
+.entryBody {
+  min-width: 0;
 }
 
 .panel .entry a {
-  color: #17664b;
+  color: var(--references-navy);
   overflow-wrap: anywhere;
-  text-decoration-color: #baa464;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
 }
 
-.panel .entry :where(div, p, span) {
+.panel .entry :where(div, p) {
   max-width: 100%;
   overflow-wrap: anywhere;
 }
 
-.default {
-  color: var(--references-ink);
+.panel .entry code {
+  color: var(--references-navy);
+}
+
+.panel .entry:target,
+.panel .entry:focus,
+.panel .entry:focus-visible {
+  outline: 3px solid var(--references-ink);
+  outline-offset: -3px;
 }
 
 @media (max-width: 560px) {
   .panel .heading > button {
     gap: 0.9rem;
-    padding-bottom: 1.35rem;
-  }
-
-  .header {
-    display: grid;
-    gap: 0.45rem;
-  }
-
-  .meta {
-    font-size: 0.82rem;
-    text-align: left;
   }
 
   .indicatorFace {
@@ -163,16 +184,40 @@
   }
 
   .panel .content > div {
-    padding-top: 1.25rem;
+    padding-top: 1rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .panel .heading > button:hover .title {
+    color: var(--references-navy);
   }
 
-  .panel .list {
-    padding-left: 1.65rem;
+  .panel:not(.open) .heading > button:hover .indicatorFace {
+    background: var(--references-yellow);
+    transform: translateY(1px);
   }
 
-  .panel .entry {
-    padding-left: 0.5rem;
+  .open .heading > button:hover .indicatorFace {
+    background: var(--references-ink);
+    color: #fff;
   }
+
+  .panel .entry a:hover {
+    color: var(--references-ink);
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

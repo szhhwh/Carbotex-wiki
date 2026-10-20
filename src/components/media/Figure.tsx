@@ -64,6 +64,8 @@ interface FigureBaseProps {
   onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
   /** Lets a containing slideshow pause while the image viewer is open. */
   onPreviewChange?: (open: boolean) => void;
+  /** Tells the shared article shell which component owns the media chrome. */
+  mediaSurface?: "figure" | "gallery" | "carousel";
 }
 
 /** Supply real native dimensions or an intentional, fixed display ratio. */
@@ -105,6 +107,7 @@ export function Figure({
   fallback,
   onError,
   onPreviewChange,
+  mediaSurface = "figure",
 }: FigureProps) {
   const [failed, setFailed] = useState(false);
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
@@ -178,10 +181,14 @@ export function Figure({
       id={id}
       className={clsx(styles.figure, styles[align], className)}
       style={{ width, maxWidth, ...style }}
+      data-media-surface={mediaSurface}
+      data-media-kind="image"
     >
       <div
         className={clsx(styles.media, mediaClassName)}
         style={{ aspectRatio: reservedRatio, maxHeight }}
+        data-media-surface={mediaSurface}
+        data-media-kind="image"
       >
         {sources && sources.length > 0 ? (
           <picture className={styles.picture}>
@@ -212,7 +219,11 @@ export function Figure({
               setPreviewSrc(image?.currentSrc || src);
             }}
           >
-            <span className={styles.previewHint} aria-hidden="true">
+            <span
+              className={styles.previewHint}
+              data-media-preview-hint
+              aria-hidden="true"
+            >
               <Maximize2 size={16} /> View image
             </span>
           </button>
@@ -220,6 +231,7 @@ export function Figure({
         {failed && fallback !== undefined && (
           <div
             className={styles.fallback}
+            data-media-fallback
             role="img"
             aria-label={`${alt} — image unavailable`}
           >
@@ -232,8 +244,6 @@ export function Figure({
           key={src}
           src={previewSrc}
           alt={alt}
-          caption={caption}
-          captionPrefix={captionPrefix}
           onClose={() => setPreviewSrc(null)}
         />
       )}

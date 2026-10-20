@@ -1,10 +1,9 @@
 /**
- * Caption — shared <figcaption> renderer used by Figure and VideoEmbed so
- * caption typography has exactly one source of truth (the design pass tunes
- * one file, not two). Renders nothing when both slots are empty.
+ * Caption — shared renderer used by every media surface so caption typography
+ * has exactly one source of truth. Renders nothing when both slots are empty.
  *
  * Intentionally not exported through any barrel — it is an internal building
- * block for media components; pages should use Figure/VideoEmbed directly.
+ * block for media components and custom media figures.
  */
 import type { ReactNode } from "react";
 import clsx from "clsx";
@@ -15,6 +14,8 @@ export interface CaptionProps {
   children?: ReactNode;
   /** Prefix slot, e.g. `Figure 1.` — styled separately for consistent numbering. */
   prefix?: ReactNode;
+  /** Use a div when the caption is outside a semantic figure element. */
+  as?: "figcaption" | "div";
   className?: string;
 }
 
@@ -23,14 +24,23 @@ function isSlotEmpty(value: ReactNode): boolean {
   return value == null || value === false || value === "";
 }
 
-export function Caption({ children, prefix, className }: CaptionProps) {
+export function Caption({
+  children,
+  prefix,
+  as: Element = "figcaption",
+  className,
+}: CaptionProps) {
   if (isSlotEmpty(children) && isSlotEmpty(prefix)) return null;
   return (
-    <figcaption className={clsx(styles.caption, className)}>
+    <Element className={clsx(styles.caption, className)}>
       {!isSlotEmpty(prefix) && (
-        <span className={styles.captionPrefix}>{prefix}</span>
+        <>
+          <span className={styles.captionPrefix} data-caption-prefix>
+            {prefix}
+          </span>{" "}
+        </>
       )}
       {children}
-    </figcaption>
+    </Element>
   );
 }

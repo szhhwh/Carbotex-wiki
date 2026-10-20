@@ -20,6 +20,7 @@ import {
   useState,
   type CSSProperties,
   type ElementType,
+  type HTMLAttributes,
   type ReactNode,
 } from "react";
 import type { KatexOptions } from "katex";
@@ -232,6 +233,16 @@ export function MathBlock({
   const katex = useKatex();
   const result = useTex(katex, tex, true, options, fallback !== undefined);
   const eqClass = clsx(styles.eq, scrollable && styles.scrollable, eqClassName);
+  // A scrollable equation is a keyboard-scrollable region (WCAG 2.1.1): make
+  // the container focusable and give it an accessible name. An explicit
+  // `ariaLabel` still wins; otherwise the region describes itself.
+  const scrollProps: HTMLAttributes<HTMLDivElement> = {};
+  if (scrollable) {
+    scrollProps.tabIndex = 0;
+    scrollProps["aria-label"] = ariaLabel ?? "Scrollable equation";
+  } else if (ariaLabel) {
+    scrollProps["aria-label"] = ariaLabel;
+  }
 
   return (
     <div className={clsx(styles.block, className)} style={style}>
@@ -239,14 +250,18 @@ export function MathBlock({
       <div className={styles.row}>
         {result === null ? (
           // Loading placeholder: raw TeX keeps the equation area from collapsing.
-          <div className={eqClass}>{tex}</div>
+          <div className={eqClass} {...scrollProps}>
+            {tex}
+          </div>
         ) : result.failed ? (
-          <div className={eqClass}>{fallback}</div>
+          <div className={eqClass} {...scrollProps}>
+            {fallback}
+          </div>
         ) : (
           <div
             className={eqClass}
             role="math"
-            aria-label={ariaLabel}
+            {...scrollProps}
             dangerouslySetInnerHTML={{ __html: result.html ?? "" }}
           />
         )}

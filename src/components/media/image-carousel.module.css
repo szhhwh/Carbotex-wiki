@@ -1,7 +1,7 @@
 .carousel {
-  --media-green: var(--article-green, #21694d);
-  --media-line: var(--article-line, #d7dfce);
-  --media-paper: var(--article-paper, #fbfaf4);
+  --media-green: var(--article-green, #007c60);
+  --media-line: var(--article-line, #9cd7ca);
+  --media-paper: var(--article-paper, #fbf0dd);
   min-width: 0;
   margin-block: 2.4rem;
 }
@@ -22,7 +22,7 @@
 
 .label {
   color: var(--media-green);
-  font-size: 0.8rem;
+  font-size: 1em;
   font-weight: 700;
   letter-spacing: 0.07em;
 }
@@ -38,7 +38,7 @@
   border-radius: 999px;
   background: var(--media-paper);
   color: var(--media-green);
-  font-size: 0.8rem;
+  font-size: 1em;
   cursor: pointer;
 }
 
@@ -69,9 +69,9 @@
 
 .carousel .frame {
   overflow: hidden;
-  border: 1px solid var(--media-line);
-  border-radius: 1rem;
-  background: #edf2e6;
+  border: clamp(0.4rem, 1.4vw, 0.85rem) solid var(--media-line);
+  border-radius: 2rem;
+  background: var(--hardware-white, #fff);
 }
 
 .carousel .frame img {
@@ -79,13 +79,6 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-}
-
-.carousel .figure figcaption {
-  margin-top: 0.8rem;
-  color: var(--article-muted, #527066);
-  font-size: 0.9rem;
-  line-height: 1.6;
 }
 
 .controls {
@@ -111,7 +104,7 @@
 
 .rotation:hover,
 .arrow:hover:not(:disabled) {
-  background: #e6eedc;
+  background: var(--hardware-pale-yellow, #ffe7b6);
 }
 
 .arrow:disabled {
@@ -143,7 +136,7 @@
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: #b1c3ae;
+  background: var(--hardware-mint, #9cd7ca);
 }
 
 .dot[aria-current="true"] span {
@@ -159,7 +152,7 @@
   justify-content: space-between;
   margin-top: 0.65rem;
   color: var(--article-muted, #527066);
-  font-size: 0.76rem;
+  font-size: 1em;
   line-height: 1.6;
 }
 
@@ -175,9 +168,6 @@
 
 .caption {
   margin-top: 1rem;
-  color: var(--article-muted, #527066);
-  font-size: 0.9rem;
-  line-height: 1.6;
 }
 
 @media (max-width: 600px) {

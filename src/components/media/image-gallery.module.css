@@ -1,7 +1,7 @@
 .gallery {
-  --media-green: var(--article-green, #21694d);
-  --media-line: var(--article-line, #d7dfce);
-  --media-paper: var(--article-paper, #fbfaf4);
+  --media-green: var(--article-green, #007c60);
+  --media-line: var(--article-line, #9cd7ca);
+  --media-paper: var(--article-paper, #fbf0dd);
   --gallery-visible-columns: var(--gallery-columns);
   min-width: 0;
   margin-block: 2.4rem;
@@ -13,7 +13,8 @@
   grid-template-columns: repeat(var(--gallery-visible-columns), minmax(0, 1fr));
   gap: 1.25rem;
   align-items: start;
-  scrollbar-color: #8ba88a #e6eedc;
+  scrollbar-color: var(--hardware-green, #007c60)
+    var(--hardware-pale-yellow, #ffe7b6);
   scrollbar-width: thin;
 }
 
@@ -32,9 +33,9 @@
 
 .gallery .frame {
   overflow: hidden;
-  border: 1px solid var(--media-line);
-  border-radius: 1rem;
-  background: #edf2e6;
+  border: clamp(0.35rem, 1.2vw, 0.7rem) solid var(--media-line);
+  border-radius: 1.75rem;
+  background: var(--hardware-white, #fff);
 }
 
 .gallery .frame img {
@@ -42,13 +43,6 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-}
-
-.gallery .item figcaption {
-  margin-top: 0.65rem;
-  color: var(--article-muted, #527066);
-  font-size: 0.88rem;
-  line-height: 1.6;
 }
 
 .gallery[data-layout="strip"] .track {
@@ -79,7 +73,7 @@
 .controls span {
   margin-right: auto;
   color: var(--article-muted, #527066);
-  font-size: 0.8rem;
+  font-size: 1em;
 }
 
 .controls button {
@@ -96,7 +90,7 @@
 }
 
 .controls button:hover:not(:disabled) {
-  background: #e6eedc;
+  background: var(--hardware-pale-yellow, #ffe7b6);
 }
 
 .controls button:disabled {
@@ -106,9 +100,6 @@
 
 .caption {
   margin-top: 1rem;
-  color: var(--article-muted, #527066);
-  font-size: 0.9rem;
-  line-height: 1.6;
 }
 
 @media (max-width: 900px) {

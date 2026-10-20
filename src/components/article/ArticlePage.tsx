@@ -6,10 +6,19 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ArrowUp, ChevronDown } from "lucide-react";
-import { References } from "./References";
+import { ChevronDown, Image as ImageIcon, List } from "lucide-react";
+import { HardwareWordmark } from "../hardware/HardwareWordmark";
+import { ReferenceOrder, References } from "./References";
 import { Collapse } from "../ui/Collapse";
 import styles from "./article-page.module.css";
+
+export type ArticleTheme = "hardware";
+const DEFAULT_ARTICLE_THEME: ArticleTheme = "hardware";
+
+// Keep legacy content labels aligned with the title used by page routing.
+const DISPLAY_TITLE_ALIASES: Record<string, string> = {
+  Safety: "Safety and Security",
+};
 
 export interface ArticleSection {
   id: string;
@@ -28,104 +37,137 @@ export interface ArticleSubsection {
 
 interface ArticlePageProps {
   title: string;
-  lead: string;
+  lead: ReactNode;
+  /** Optional image shown in the header media slot. */
+  heroImage?: {
+    src: string;
+    alt: string;
+  };
   sections: ArticleSection[];
   /** Render the page's cited sources after every article section. */
   references?: boolean;
+  /** Optional introduction shown above the shared reference list. */
+  referencesIntro?: ReactNode;
+  /** Canonical numbering order for pages with an explicit source list. */
+  referenceOrder?: string[];
   /** Keep the compact table of contents available while reading on mobile. */
   stickyMobileOutline?: boolean;
-}
-
-function FieldIllustration() {
-  return (
-    <svg
-      className={styles.fieldArt}
-      viewBox="0 0 650 500"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="410" cy="154" r="106" fill="#E9D7A0" />
-      <circle cx="410" cy="154" r="132" stroke="#C4B474" strokeWidth="1.5" />
-      <circle
-        cx="410"
-        cy="154"
-        r="151"
-        stroke="#C4B474"
-        strokeWidth="1"
-        strokeDasharray="3 9"
-      />
-      <path
-        d="M2 345C119 279 212 274 317 323C440 382 538 347 650 255V500H2V345Z"
-        fill="#A4C99D"
-      />
-      <path
-        d="M0 393C117 321 233 341 317 380C444 439 565 382 650 316V500H0V393Z"
-        fill="#5B9973"
-      />
-      <path
-        d="M0 446C142 371 255 421 355 447C468 475 564 438 650 389V500H0V446Z"
-        fill="#2B6F55"
-      />
-      <path
-        d="M0 473C160 406 278 463 359 479C465 501 566 475 650 437"
-        stroke="#E2EBCB"
-        strokeOpacity=".68"
-        strokeWidth="2"
-      />
-      <path
-        d="M67 432C184 374 271 395 358 427C463 465 548 425 624 369M116 463C223 419 294 446 370 463C470 486 559 452 648 401"
-        stroke="#D6E5BC"
-        strokeOpacity=".55"
-        strokeWidth="2"
-      />
-      <path
-        d="M489 273V103M489 190C454 174 444 147 440 125C473 130 485 154 489 190ZM489 228C524 210 540 182 542 157C510 166 494 191 489 228Z"
-        stroke="#225C49"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M440 125C467 146 478 162 489 190M542 157C516 183 501 207 489 228"
-        stroke="#225C49"
-        strokeWidth="1.5"
-      />
-      <circle cx="489" cy="96" r="7" fill="#225C49" />
-    </svg>
-  );
+  /** Shared article theme; Hardware is the canonical visual system. */
+  theme?: ArticleTheme;
 }
 
 export function ArticleHero({
   title,
   lead,
+  heroImage,
   headingId,
 }: {
   title: string;
-  lead: string;
+  lead: ReactNode;
+  heroImage?: {
+    src: string;
+    alt: string;
+  };
   headingId?: string;
+  theme?: ArticleTheme;
 }) {
+  const displayTitle = DISPLAY_TITLE_ALIASES[title] ?? title;
+
   return (
     <header className={styles.hero}>
-      <div className={styles.heroInner}>
-        <div className={styles.heroCopy}>
-          <h1 id={headingId} tabIndex={-1}>
-            {title}
-          </h1>
-          <p>{lead}</p>
-        </div>
-        <FieldIllustration />
+      <div
+        className={styles.heroMedia}
+        data-hero-media-slot
+        data-has-image={heroImage ? "true" : undefined}
+        aria-hidden={heroImage ? undefined : "true"}
+      >
+        {heroImage ? (
+          <img
+            className={styles.heroImage}
+            src={heroImage.src}
+            alt={heroImage.alt}
+            decoding="async"
+            fetchPriority="high"
+          />
+        ) : (
+          <span className={styles.heroPlaceholder}>
+            <ImageIcon size={24} aria-hidden="true" />
+            <span>Header image placeholder</span>
+          </span>
+        )}
+      </div>
+      <div
+        className={styles.heroTitleBand}
+        data-compact={displayTitle.length > 18 ? "true" : undefined}
+      >
+        <h1 id={headingId} tabIndex={-1}>
+          {displayTitle === "Hardware" ? (
+            <>
+              <span className={styles.srOnly}>{displayTitle}</span>
+              <span className={styles.heroWordmark} aria-hidden="true">
+                <HardwareWordmark />
+              </span>
+            </>
+          ) : (
+            displayTitle
+          )}
+        </h1>
+        <BubbleCluster />
+      </div>
+      <div className={styles.heroLead} data-article-lead>
+        {lead}
       </div>
     </header>
+  );
+}
+
+function BubbleCluster() {
+  return (
+    <svg
+      className={styles.heroBubbles}
+      viewBox="0 0 380 114"
+      preserveAspectRatio="xMaxYMid slice"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="82" cy="20" r="25" />
+      <circle cx="42" cy="43" r="13" />
+      <circle cx="66" cy="68" r="6.5" />
+      <circle cx="103" cy="69" r="18" />
+      <circle cx="139" cy="86" r="18" />
+      <circle cx="173" cy="73" r="25" />
+      <circle cx="133" cy="42" r="6.5" />
+      <circle cx="173" cy="21" r="9.5" />
+      <circle cx="243" cy="20" r="6.5" />
+      <circle cx="221" cy="48" r="9.5" />
+      <circle cx="220" cy="72" r="12.5" />
+      <circle cx="253" cy="45" r="13" />
+      <circle cx="293" cy="57" r="6.5" />
+      <circle cx="326" cy="77" r="13" />
+      <circle cx="356" cy="67" r="6.5" />
+      <circle cx="259" cy="92" r="18" />
+      <circle cx="236" cy="104" r="13" />
+      <circle cx="200" cy="99" r="6.5" />
+      <circle cx="94" cy="103" r="6.5" />
+      <circle cx="20" cy="94" r="13" />
+      <circle cx="2" cy="79" r="6.5" />
+    </svg>
   );
 }
 
 export function ArticlePage({
   title,
   lead,
+  heroImage,
   sections,
   references = false,
-  stickyMobileOutline = false,
+  referencesIntro,
+  referenceOrder,
+  stickyMobileOutline = true,
+  theme = DEFAULT_ARTICLE_THEME,
 }: ArticlePageProps) {
+  const pageStyles = styles;
   const items = useMemo(
     () => [
       ...sections.map(({ id, title: label, subsections }) => ({
@@ -150,9 +192,58 @@ export function ArticlePage({
   );
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   const [outlineOpen, setOutlineOpen] = useState(false);
+  const [outlineHidden, setOutlineHidden] = useState(false);
   const [marker, setMarker] = useState({ top: 0, height: 0 });
   const listRef = useRef<HTMLOListElement>(null);
   const manualSelectionUntil = useRef(0);
+  const lastScrollTop = useRef(0);
+
+  useEffect(() => {
+    if (!stickyMobileOutline) return;
+
+    let frame = 0;
+    let scrollDirection = 0;
+    let directionalTravel = 0;
+    const mobileQuery = window.matchMedia("(max-width: 900px)");
+    const update = () => {
+      frame = 0;
+      const current = Math.max(window.scrollY, 0);
+      const delta = current - lastScrollTop.current;
+      const nextDirection = Math.sign(delta);
+      lastScrollTop.current = current;
+
+      if (nextDirection !== 0) {
+        if (nextDirection !== scrollDirection) directionalTravel = 0;
+        scrollDirection = nextDirection;
+        directionalTravel += Math.abs(delta);
+      }
+
+      if (!mobileQuery.matches || current < 240 || outlineOpen) {
+        setOutlineHidden(false);
+        directionalTravel = 0;
+      } else if (scrollDirection > 0 && directionalTravel > 40) {
+        setOutlineHidden(true);
+        directionalTravel = 0;
+      } else if (scrollDirection < 0 && directionalTravel > 24) {
+        setOutlineHidden(false);
+        directionalTravel = 0;
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    lastScrollTop.current = window.scrollY;
+    window.addEventListener("scroll", schedule, { passive: true });
+    mobileQuery.addEventListener("change", schedule);
+    update();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      mobileQuery.removeEventListener("change", schedule);
+    };
+  }, [stickyMobileOutline, outlineOpen]);
 
   useEffect(() => {
     const elements = targets
@@ -243,32 +334,54 @@ export function ArticlePage({
 
   return (
     <main
-      className={styles.page}
+      className={pageStyles.page}
+      data-article-theme={theme}
       data-sticky-outline={stickyMobileOutline ? "true" : undefined}
     >
-      <ArticleHero title={title} lead={lead} />
+      {referenceOrder && <ReferenceOrder keys={referenceOrder} />}
+      <ArticleHero
+        title={title}
+        lead={lead}
+        heroImage={heroImage}
+        theme={theme}
+      />
 
-      <div className={styles.readingArea} id="article-body">
-        <aside className={styles.sidebar}>
-          <div className={styles.outline}>
+      <div className={pageStyles.readingArea} id="article-body">
+        <aside className={pageStyles.sidebar}>
+          <div
+            className={pageStyles.outline}
+            data-open={outlineOpen ? "true" : "false"}
+            data-outline={outlineOpen ? "open" : "closed"}
+            data-hidden={outlineHidden && !outlineOpen ? "true" : undefined}
+          >
             <button
-              className={styles.outlineToggle}
+              className={pageStyles.outlineToggle}
               type="button"
+              aria-label="On this page"
               aria-expanded={outlineOpen}
               aria-controls="article-outline"
               onClick={() => setOutlineOpen((open) => !open)}
             >
+              <List
+                className={pageStyles.outlineCompactIcon}
+                size={18}
+                aria-hidden="true"
+              />
               <span>On this page</span>
-              <ChevronDown size={18} />
+              <ChevronDown
+                className={pageStyles.outlineChevron}
+                size={18}
+                aria-hidden="true"
+              />
             </button>
             <nav
               id="article-outline"
-              className={styles.outlineNav}
+              className={pageStyles.outlineNav}
               data-open={outlineOpen}
               aria-label="On this page"
             >
               <span
-                className={styles.activeMarker}
+                className={pageStyles.activeMarker}
                 style={{
                   transform: `translateY(${marker.top}px)`,
                   height: marker.height,
@@ -276,7 +389,7 @@ export function ArticlePage({
                 aria-hidden="true"
               />
               <ol ref={listRef}>
-                {items.map((item, index) => {
+                {items.map((item) => {
                   const { id, label } = item;
                   return (
                     <li key={id}>
@@ -286,13 +399,10 @@ export function ArticlePage({
                         aria-current={activeId === id ? "location" : undefined}
                         onClick={() => selectOutlineTarget(id)}
                       >
-                        <span className={styles.outlineNumber}>
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
                         <span>{label}</span>
                       </a>
                       {"children" in item && item.children?.length ? (
-                        <ol className={styles.subOutline}>
+                        <ol className={pageStyles.subOutline}>
                           {item.children.map((child) => (
                             <li key={child.id}>
                               <a
@@ -314,53 +424,33 @@ export function ArticlePage({
                 })}
               </ol>
             </nav>
-            <button
-              className={styles.backToTop}
-              type="button"
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: window.matchMedia(
-                    "(prefers-reduced-motion: reduce)",
-                  ).matches
-                    ? "auto"
-                    : "smooth",
-                })
-              }
-            >
-              <span className={styles.backToTopIcon} aria-hidden="true">
-                <ArrowUp size={17} strokeWidth={1.8} />
-              </span>
-              <span>Back to top</span>
-            </button>
           </div>
         </aside>
 
-        <article className={styles.articleContent}>
+        <article className={pageStyles.articleContent}>
           {sections.map(
-            ({ id, title: heading, eyebrow, content, subsections }, index) => (
+            ({ id, title: heading, eyebrow, content, subsections }) => (
               <section
-                className={styles.section}
+                className={pageStyles.section}
                 id={id}
                 key={id}
                 aria-labelledby={`${id}-heading`}
               >
-                <div className={styles.sectionHeading}>
-                  <span className={styles.sectionIndex}>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+                <div className={pageStyles.sectionHeading}>
                   <div>
-                    {eyebrow && (
-                      <span className={styles.sectionEyebrow}>{eyebrow}</span>
-                    )}
+                    {eyebrow ? (
+                      <span className={pageStyles.sectionEyebrow}>
+                        {eyebrow}
+                      </span>
+                    ) : null}
                     <h2 id={`${id}-heading`}>{heading}</h2>
                   </div>
                 </div>
-                <div className={styles.prose}>
+                <div className={pageStyles.prose}>
                   {content}
                   {subsections?.map((child) => (
                     <section
-                      className={styles.subsection}
+                      className={pageStyles.subsection}
                       id={child.id}
                       key={child.id}
                       aria-labelledby={`${child.id}-heading`}
@@ -374,8 +464,8 @@ export function ArticlePage({
             ),
           )}
           {references && (
-            <section className={styles.referencesSection} id="references">
-              <References mode="article" />
+            <section className={pageStyles.referencesSection} id="references">
+              <References intro={referencesIntro} />
             </section>
           )}
         </article>
@@ -390,6 +480,7 @@ export function ArticleNote({
 }: {
   label: string;
   children: ReactNode;
+  theme?: ArticleTheme;
 }) {
   return (
     <aside className={styles.note}>
@@ -407,6 +498,7 @@ export function ArticleFramework({
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  theme?: ArticleTheme;
 }) {
   return (
     <Collapse

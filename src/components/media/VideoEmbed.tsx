@@ -37,6 +37,8 @@ export interface VideoEmbedProps {
   controls?: boolean;
   /** iframe `allow` list. Default covers fullscreen + PiP. */
   allow?: string;
+  /** iframe sandbox policy, when the provider supplies one. */
+  sandbox?: string;
   /** Default true. */
   allowFullscreen?: boolean;
   loading?: "lazy" | "eager";
@@ -109,6 +111,7 @@ export function VideoEmbed({
   muted,
   controls = true,
   allow = "fullscreen; picture-in-picture",
+  sandbox,
   allowFullscreen = true,
   loading = "lazy",
   caption,
@@ -133,16 +136,21 @@ export function VideoEmbed({
     <figure
       className={clsx(styles.embed, className)}
       style={{ maxWidth, ...style }}
+      data-media-surface="video"
+      data-media-kind="video"
     >
       <div
         className={clsx(styles.frame, frameClassName)}
         style={{ aspectRatio: ratio }}
+        data-media-surface="video"
+        data-media-kind="video"
       >
         <iframe
           src={embedSrc}
           title={title}
           className={styles.iframe}
           allow={allow}
+          sandbox={sandbox}
           allowFullScreen={allowFullscreen}
           loading={loading}
         />

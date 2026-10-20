@@ -1,18 +1,22 @@
 /*
- * Caption skeleton — the single source of caption typography for all media
- * components (Figure, VideoEmbed). Visual tokens land with the design pass.
+ * Shared caption typography for every media surface. Component styles may
+ * control layout, but caption color and type belong here.
  */
 
 .caption {
   margin-block-start: 0.6rem;
-  font-size: 0.9em;
+  font-family: var(
+    --caption-body,
+    var(--hardware-body, "Trebuchet MS", sans-serif)
+  );
+  font-size: 1em;
   line-height: 1.55;
-  color: var(--text-muted, #5b6470);
+  color: var(--caption-ink, var(--hardware-ink, #003f34));
   text-align: start;
 }
 
 .captionPrefix {
-  font-weight: 600;
+  color: inherit;
+  font-weight: 700;
   margin-inline-end: 0.5ch;
-  color: var(--text-strong, inherit);
 }

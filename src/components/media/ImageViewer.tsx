@@ -1,12 +1,10 @@
 import {
   useCallback,
   useEffect,
-  useId,
   useLayoutEffect,
   useRef,
   useState,
   type PointerEvent,
-  type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import { Minus, Plus, RotateCcw, X } from "lucide-react";
@@ -15,8 +13,6 @@ import styles from "./image-viewer.module.css";
 interface ImageViewerProps {
   src: string;
   alt: string;
-  caption?: ReactNode;
-  captionPrefix?: ReactNode;
   onClose: () => void;
 }
 
@@ -26,13 +22,7 @@ const initialView: View = { scale: 1, x: 0, y: 0 };
 const maxScale = 5;
 
 /** A native modal keeps focus inside the viewer and makes the page inert. */
-export function ImageViewer({
-  src,
-  alt,
-  caption,
-  captionPrefix,
-  onClose,
-}: ImageViewerProps) {
+export function ImageViewer({ src, alt, onClose }: ImageViewerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -42,7 +32,6 @@ export function ImageViewer({
   const [interacting, setInteracting] = useState(false);
   const [closing, setClosing] = useState(false);
   const [failed, setFailed] = useState(false);
-  const hintId = useId();
 
   const updateView = useCallback((next: View) => {
     const stage = stageRef.current;
@@ -177,7 +166,6 @@ export function ImageViewer({
       data-image-viewer
       data-closing={closing || undefined}
       aria-label="Image preview"
-      aria-describedby={hintId}
       onCancel={(event) => {
         event.preventDefault();
         close();
@@ -235,18 +223,6 @@ export function ImageViewer({
       }}
     >
       <section className={styles.panel}>
-        <header className={styles.header}>
-          <button
-            type="button"
-            className={styles.control}
-            onClick={close}
-            aria-label="Close image viewer"
-            title="Close (Esc)"
-            autoFocus
-          >
-            <X size={21} />
-          </button>
-        </header>
         <div
           ref={stageRef}
           className={styles.stage}
@@ -297,10 +273,6 @@ export function ImageViewer({
           )}
         </div>
         <footer className={styles.footer}>
-          <div className={styles.caption}>
-            {captionPrefix && <strong>{captionPrefix} </strong>}
-            {caption || alt}
-          </div>
           <div
             className={styles.toolbar}
             role="group"
@@ -329,7 +301,6 @@ export function ImageViewer({
             >
               <Plus size={20} />
             </button>
-            <span className={styles.divider} />
             <button
               type="button"
               className={styles.control}
@@ -342,11 +313,17 @@ export function ImageViewer({
             >
               <RotateCcw size={19} />
             </button>
+            <button
+              type="button"
+              className={styles.control}
+              onClick={close}
+              aria-label="Close image viewer"
+              title="Close (Esc)"
+              autoFocus
+            >
+              <X size={21} />
+            </button>
           </div>
-          <p className={styles.hint} id={hintId}>
-            Scroll or pinch to zoom · Drag to explore · Double-click to zoom ·
-            Esc to close
-          </p>
         </footer>
       </section>
     </dialog>,

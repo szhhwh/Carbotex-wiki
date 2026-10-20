@@ -10,6 +10,7 @@ import {
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import gsap from "gsap";
 import clsx from "clsx";
+import { Caption } from "./Caption";
 import { Figure } from "./Figure";
 import type { MediaImage } from "./MediaImage";
 import styles from "./image-carousel.module.css";
@@ -23,6 +24,7 @@ export interface ImageCarouselProps {
   loop?: boolean;
   /** One frame ratio for the entire set keeps mixed-size images stable. */
   ratio?: string;
+  captionPrefix?: ReactNode;
   caption?: ReactNode;
   id?: string;
   className?: string;
@@ -35,6 +37,7 @@ export function ImageCarousel({
   interval = 5000,
   loop = true,
   ratio = "4 / 3",
+  captionPrefix,
   caption,
   id,
   className,
@@ -302,6 +305,7 @@ export function ImageCarousel({
               ratio={ratio}
               className={clsx(styles.figure, image.className)}
               mediaClassName={clsx(styles.frame, image.mediaClassName)}
+              mediaSurface="carousel"
               fallback={image.fallback ?? "Image unavailable."}
               onPreviewChange={setPreviewOpen}
             />
@@ -365,7 +369,9 @@ export function ImageCarousel({
             : "Select the image to enlarge."}
         </span>
       </div>
-      {caption && <div className={styles.caption}>{caption}</div>}
+      <Caption as="div" className={styles.caption} prefix={captionPrefix}>
+        {caption}
+      </Caption>
     </div>
   );
 }

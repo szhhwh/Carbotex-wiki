@@ -9,6 +9,7 @@ import {
 } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import clsx from "clsx";
+import { Caption } from "./Caption";
 import { Figure } from "./Figure";
 import type { MediaImage } from "./MediaImage";
 import styles from "./image-gallery.module.css";
@@ -23,6 +24,7 @@ export interface ImageGalleryProps {
   mobileLayout?: "stack" | "swipe";
   /** Optional common display ratio; contain preserves the complete image. */
   ratio?: string;
+  captionPrefix?: ReactNode;
   caption?: ReactNode;
   id?: string;
   className?: string;
@@ -35,6 +37,7 @@ export function ImageGallery({
   columns = 2,
   mobileLayout = "stack",
   ratio,
+  captionPrefix,
   caption,
   id,
   className,
@@ -139,6 +142,7 @@ export function ImageGallery({
               key={image.id ?? `${index}-${image.src}`}
               className={clsx(styles.item, image.className)}
               mediaClassName={clsx(styles.frame, image.mediaClassName)}
+              mediaSurface="gallery"
               fallback={image.fallback ?? "Image unavailable."}
             />
           );
@@ -167,7 +171,9 @@ export function ImageGallery({
           </button>
         </div>
       )}
-      {caption && <div className={styles.caption}>{caption}</div>}
+      <Caption as="div" className={styles.caption} prefix={captionPrefix}>
+        {caption}
+      </Caption>
     </div>
   );
 }

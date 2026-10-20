@@ -1,0 +1,51 @@
+.layout {
+  display: grid;
+  gap: 1.5rem;
+  margin-block: 2.4rem;
+  align-items: start;
+}
+
+.layout > figure.figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.text {
+  min-width: 0;
+}
+
+.text > :first-child {
+  margin-block-start: 0;
+}
+
+.text > :last-child {
+  margin-block-end: 0;
+}
+
+@media (min-width: 1180px) {
+  .layout:not(.stacked) {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .layout:not(.stacked).mediaEnd {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  }
+
+  .layout:not(.stacked).compactMedia {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .layout:not(.stacked).mediaEnd.compactMedia {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  }
+
+  .layout:not(.stacked).mediaEnd > figure.figure {
+    grid-column: 2;
+  }
+
+  .layout:not(.stacked).mediaEnd > .text {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}

@@ -32,6 +32,8 @@ const PageReferencesContext = createContext<PageReferencesContextValue | null>(
 function focusReference(targetId: string) {
   let finished = false;
   let frame = 0;
+  let stableFrames = 0;
+  let lastLayout = "";
 
   const cleanup = () => {
     finished = true;
@@ -56,6 +58,28 @@ function focusReference(targetId: string) {
 
     target.focus({ preventScroll: true });
     if (document.activeElement !== target) {
+      frame = requestAnimationFrame(focusWhenVisible);
+      return;
+    }
+
+    // Opening References changes the document height for several frames.
+    // Wait for the target's layout to settle before calculating scroll.
+    const panel = target.closest<HTMLElement>('[role="region"]');
+    const rect = target.getBoundingClientRect();
+    const layout = [
+      Math.round(rect.top),
+      Math.round(rect.height),
+      Math.round(panel?.getBoundingClientRect().height ?? 0),
+      document.documentElement.scrollHeight,
+    ].join(":");
+    if (layout !== lastLayout) {
+      lastLayout = layout;
+      stableFrames = 0;
+      frame = requestAnimationFrame(focusWhenVisible);
+      return;
+    }
+    stableFrames += 1;
+    if (stableFrames < 3) {
       frame = requestAnimationFrame(focusWhenVisible);
       return;
     }
@@ -174,6 +198,21 @@ export function ReferencesProvider({ children }: { children: ReactNode }) {
 }
 
 /**
+ * Seeds the page's citation numbering without rendering a visible marker.
+ * Use this when a page has an explicit source list whose order differs from
+ * the order in which the first in-text citations appear.
+ */
+export function ReferenceOrder({ keys }: { keys: string[] }) {
+  const context = useContext(PageReferencesContext);
+
+  useLayoutEffect(() => {
+    keys.forEach((key) => context?.register(key));
+  }, [context, keys]);
+
+  return null;
+}
+
+/**
  * In-text citation, e.g. `<Cite k="jinek2012" />` for a single source or
  * `<Cite k={["doudna2014", "jinek2012"]} />` for several at once. Renders as
  * a superscript bracketed number — [1] for one source, [1,3,5-7] for several
@@ -219,7 +258,7 @@ export function Cite({ k }: { k: string | string[] }) {
     }
   }
 
-  return (
+  const citation = (
     <sup className="cite-ref">
       {"["}
       {groups.length === 0 ? (
@@ -229,6 +268,11 @@ export function Cite({ k }: { k: string | string[] }) {
           <span key={group.from}>
             {index > 0 && ","}
             <a
+              aria-label={`Reference ${
+                group.from === group.to
+                  ? group.from
+                  : `${group.from}-${group.to}`
+              }`}
               href={`#ref-${group.from}`}
               onClick={(event) => {
                 if (
@@ -257,20 +301,20 @@ export function Cite({ k }: { k: string | string[] }) {
       {"]"}
     </sup>
   );
+
+  return citation;
 }
 
 /**
- * The current page's reference list. Place once at the bottom of a page
- * component in src/contents/. It shows only the sources cited on that page,
- * numbered by order of first citation, and renders nothing until the page
- * cites at least one source. The list is collapsed by default; following an
- * in-text citation opens it and focuses the matching entry.
+ * The current page's reference list. ArticlePage places it at the bottom of
+ * every page that opts into references. It shows only the sources cited on
+ * that page, numbered by order of first citation, and renders nothing until
+ * the page cites at least one source. The list is collapsed by default;
+ * following an in-text citation opens it and focuses the matching entry.
+ * The heading is fixed to "References" on every page; only the optional
+ * introduction above the list is page-specific.
  */
-export function References({
-  mode = "default",
-}: {
-  mode?: "default" | "article";
-}) {
+export function References({ intro }: { intro?: ReactNode }) {
   const context = useContext(PageReferencesContext);
   const [localOpen, setLocalOpen] = useState(false);
   const keys = context?.keys ?? [];
@@ -279,27 +323,19 @@ export function References({
 
   const isOpen = context?.referencesOpen ?? localOpen;
   const setOpen = context?.setReferencesOpen ?? setLocalOpen;
-  const sourceLabel = keys.length === 1 ? "source" : "sources";
 
-  const content = (
+  return (
     <Collapse
       header={
         <span className={styles.header}>
           <span className={styles.title}>References</span>
-          <span className={styles.meta}>
-            {keys.length} {sourceLabel} cited
-          </span>
         </span>
       }
       open={isOpen}
       onToggle={setOpen}
       headerAs="h2"
       variant="plain"
-      className={clsx(
-        styles.panel,
-        isOpen && styles.open,
-        mode === "default" && styles.default,
-      )}
+      className={clsx(styles.panel, isOpen && styles.open)}
       headerClassName={styles.heading}
       contentClassName={styles.content}
       indicator={
@@ -308,38 +344,38 @@ export function References({
         </span>
       }
     >
-      <ol className={clsx("references-list", styles.list)}>
-        {keys.map((key, index) => {
-          const entry = referenceByKey[key];
-          return entry ? (
-            <li
-              key={key}
-              id={`ref-${index + 1}`}
-              tabIndex={-1}
-              className={styles.entry}
-              dangerouslySetInnerHTML={{ __html: entry.html }}
-            />
-          ) : (
-            <li
-              key={key}
-              id={`ref-${index + 1}`}
-              tabIndex={-1}
-              className={clsx(styles.entry, "text-danger")}
-            >
-              Missing entry &ldquo;{key}&rdquo; — add it to
-              src/data/references.bib.
-            </li>
-          );
-        })}
-      </ol>
+      <div className={styles.contentInner}>
+        {intro ? <p className={styles.intro}>{intro}</p> : null}
+        <ol className={clsx("references-list", styles.list)}>
+          {keys.map((key, index) => {
+            const entry = referenceByKey[key];
+            return (
+              <li
+                key={key}
+                id={`ref-${index + 1}`}
+                tabIndex={-1}
+                className={styles.entry}
+              >
+                <span className={styles.entryIndex}>
+                  <span className={styles.srOnly}>Reference {index + 1}</span>
+                  <span aria-hidden="true">[{index + 1}]</span>
+                </span>
+                {entry ? (
+                  <div
+                    className={styles.entryBody}
+                    dangerouslySetInnerHTML={{ __html: entry.html }}
+                  />
+                ) : (
+                  <div className={clsx(styles.entryBody, "text-danger")}>
+                    Missing entry &ldquo;{key}&rdquo; — add it to
+                    src/data/references.bib.
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </Collapse>
-  );
-
-  if (mode === "article") return content;
-
-  return (
-    <div className="row mt-4">
-      <div className="col">{content}</div>
-    </div>
   );
 }

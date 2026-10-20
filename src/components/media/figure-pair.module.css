@@ -1,0 +1,20 @@
+.pair {
+  display: grid;
+  gap: 2.4rem;
+  margin-block: 2.4rem;
+  align-items: start;
+}
+
+.pair > * {
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
+  margin: 0;
+}
+
+@media (min-width: 1180px) {
+  .pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
