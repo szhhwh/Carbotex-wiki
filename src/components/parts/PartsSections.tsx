@@ -40,7 +40,6 @@ type PartLayout =
   | "regulator"
   | "xylose"
   | "donor"
-  | "construct"
   | "tool";
 
 function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
@@ -71,19 +70,6 @@ function PartBody({ part, layout }: { part: PartRecord; layout: PartLayout }) {
           {type}
           {link}
         </div>
-      </div>
-    );
-  }
-
-  if (layout === "xylose") {
-    return (
-      <div className={styles.partBody}>
-        {title}
-        <div className={styles.partCopy}>
-          {type}
-          {role}
-        </div>
-        {link}
       </div>
     );
   }
@@ -201,24 +187,24 @@ export function MetabolismBoard({ parts }: { parts: PartRecord[] }) {
           <h3 className={styles.groupTitle} id="parts-xylose-group">
             Xylose panel
           </h3>
-          <span className={styles.panelCount}>{panel.length} genes</span>
         </div>
-        <div className={styles.xyloseList}>
+        <ul className={styles.xyloseList}>
           {panel.map((part) => (
-            <PartCard
-              part={part}
-              className={styles.xyloseItem}
-              layout="xylose"
-              key={part.id}
-            />
+            <li className={styles.xyloseListItem} key={part.id}>
+              <PartCard
+                part={part}
+                className={styles.xyloseItem}
+                layout="xylose"
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </div>
   );
 }
 
-/** Donor records use a numbered ledger so source comparisons stay scannable. */
+/** Donor records use ledger rows so source comparisons stay scannable. */
 export function DonorLedger({ parts }: { parts: PartRecord[] }) {
   return (
     <section
@@ -229,18 +215,14 @@ export function DonorLedger({ parts }: { parts: PartRecord[] }) {
         <h3 className={styles.bandTitle} id="parts-pyc-donor-heading">
           PYC donor candidates
         </h3>
-        <span className={styles.bandCount}>{parts.length} records</span>
       </div>
-      <div className={styles.donorLedger}>
+      <ul className={styles.donorLedger}>
         {parts.map((part) => (
-          <PartCard
-            part={part}
-            className={styles.donorRow}
-            layout="donor"
-            key={part.id}
-          />
+          <li className={styles.donorListItem} key={part.id}>
+            <PartCard part={part} className={styles.donorRow} layout="donor" />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
@@ -249,25 +231,21 @@ export function DonorLedger({ parts }: { parts: PartRecord[] }) {
 export function ConstructCatalog({ parts }: { parts: PartRecord[] }) {
   return (
     <section
-      className={styles.constructCatalog}
+      className={styles.donorSection}
       aria-labelledby="parts-construct-index-heading"
     >
-      <div className={styles.catalogHeader}>
-        <h3 className={styles.catalogTitle} id="parts-construct-index-heading">
+      <div className={styles.ledgerHeader}>
+        <h3 className={styles.bandTitle} id="parts-construct-index-heading">
           Expression construct index
         </h3>
-        <span className={styles.bandCount}>{parts.length} designs</span>
       </div>
-      <div className={styles.catalogRows}>
+      <ul className={styles.donorLedger}>
         {parts.map((part) => (
-          <PartCard
-            part={part}
-            className={styles.constructRow}
-            layout="construct"
-            key={part.id}
-          />
+          <li className={styles.donorListItem} key={part.id}>
+            <PartCard part={part} className={styles.donorRow} layout="donor" />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
