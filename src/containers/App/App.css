@@ -27,6 +27,18 @@
   --hardware-navy: #1f315f;
   --hardware-white: #fff;
 
+  /*
+   * Site frame: the single source of the left/right whitespace on content
+   * pages. The navbar bar, article hero and reading grid, team page, 404
+   * panel and footer all size to --site-shell-width; adjust spacing here only.
+   */
+  --site-gutter: clamp(1rem, 2.5vw, 2.5rem);
+  --site-max-width: 120rem;
+  --site-shell-width: min(
+    calc(100% - 2 * var(--site-gutter)),
+    var(--site-max-width)
+  );
+
   /* Text on the wiki's light paper backgrounds; decorative gold stays separate. */
   --text-accent: var(--hardware-brown);
   --scrollbar-track: #f2f2f2;

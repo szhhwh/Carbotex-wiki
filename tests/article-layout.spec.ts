@@ -52,12 +52,13 @@ test("every article page uses the shared reading shell", async ({
         const clientWidth = (main as HTMLElement).clientWidth;
         const mainRect = main.getBoundingClientRect();
         const readingRect = reading.getBoundingClientRect();
-        const expectedWidth =
-          clientWidth <= 560
-            ? clientWidth - 32
-            : clientWidth <= 900
-              ? Math.min(clientWidth - 40, 768)
-              : Math.min(clientWidth * 0.88, 1408);
+        // Resolve the site-wide frame token in the same containing block
+        // instead of duplicating its formula here.
+        const probe = document.createElement("div");
+        probe.style.width = "var(--site-shell-width)";
+        main.append(probe);
+        const expectedWidth = probe.getBoundingClientRect().width;
+        probe.remove();
 
         return {
           hero: rect(hero),

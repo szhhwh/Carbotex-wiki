@@ -7,7 +7,6 @@
   --article-paper: var(--hardware-paper, #fbf0dd);
   --article-line: var(--hardware-mint, #9cd7ca);
   --article-text: clamp(1rem, 1.65vw, 1.3125rem);
-  --article-shell-width: min(88%, 88rem);
   --article-measure: 54rem;
   --article-outline-track: minmax(13.5rem, clamp(13.5rem, 18vw, 17rem));
   --article-column-gap: clamp(2rem, 4vw, 4rem);
@@ -37,7 +36,7 @@
 
 .hero {
   position: relative;
-  width: var(--article-shell-width);
+  width: var(--site-shell-width);
   margin-inline: auto;
   overflow: hidden;
   border-radius: clamp(1.75rem, 4vw, 3rem);
@@ -187,7 +186,7 @@
 
 .readingArea {
   display: grid;
-  width: var(--article-shell-width);
+  width: var(--site-shell-width);
   grid-template-columns:
     var(--article-outline-track)
     minmax(0, var(--article-measure));
@@ -658,7 +657,6 @@
 
 @media (max-width: 900px) {
   .page {
-    --article-shell-width: min(calc(100% - 2.5rem), 48rem);
     --article-reading-space-top: 2rem;
   }
 
@@ -777,10 +775,6 @@
 }
 
 @media (max-width: 560px) {
-  .page {
-    --article-shell-width: calc(100% - 2rem);
-  }
-
   .heroTitleBand {
     height: 6.5rem;
     padding-inline: 1.25rem;

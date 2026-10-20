@@ -15,7 +15,7 @@
 }
 
 .inner {
-  width: min(100% - 5rem, 84rem);
+  width: var(--site-shell-width);
   margin-inline: auto;
 }
 
@@ -313,9 +313,6 @@
 }
 
 @media (max-width: 650px) {
-  .inner {
-    width: calc(100% - 2.5rem);
-  }
   .upper {
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem;

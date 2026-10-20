@@ -27,7 +27,6 @@
   --nav-menu-stroke: #fff;
   --nav-menu-art-column: clamp(9rem, 15vw, 12.4rem);
   --nav-menu-art-height: clamp(8.5rem, 13.2vw, 11.25rem);
-  --nav-gutter: clamp(1.5rem, 4vw, 3rem);
   --nav-display: var(
     --hardware-display,
     Impact,
@@ -61,10 +60,9 @@
   z-index: 1;
   display: flex;
   box-sizing: border-box;
-  width: min(100%, 90rem);
+  width: var(--site-shell-width);
   min-height: calc(var(--nav-height) - 6px);
   margin: 0 auto;
-  padding-inline: var(--nav-gutter);
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
@@ -371,8 +369,8 @@
   .navigation {
     position: absolute;
     top: calc(100% + 0.55rem);
-    right: var(--nav-gutter);
-    left: var(--nav-gutter);
+    right: 0;
+    left: 0;
     max-height: 0;
     overflow: auto;
     border: 1px solid transparent;
