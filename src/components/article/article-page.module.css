@@ -7,7 +7,14 @@
   --article-paper: var(--hardware-paper, #fbf0dd);
   --article-line: var(--hardware-mint, #9cd7ca);
   --article-text: clamp(1rem, 1.65vw, 1.3125rem);
-  --caption-size: var(--article-text);
+  /* Captions are tuned twice: 0.85 of the reading copy on desktop (21px ->
+     17.85px), 0.875 on phones (16px -> 14px). The max() keeps every width in
+     between above the 14px floor asserted by tests/typography.spec.ts. */
+  --caption-scale: 0.85;
+  --caption-size: max(
+    0.875rem,
+    calc(var(--article-text) * var(--caption-scale))
+  );
   --article-measure: 54rem;
   --article-outline-track: minmax(13.5rem, clamp(13.5rem, 18vw, 17rem));
   --article-column-gap: clamp(2rem, 4vw, 4rem);
@@ -32,6 +39,14 @@
   background: var(--article-paper);
   color: var(--article-ink);
   font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+}
+
+/* Phone caption scale: the reading copy already sits at its 16px floor here,
+   so captions hold at 14px instead of shrinking with the desktop ratio. */
+@media (max-width: 640px) {
+  .page {
+    --caption-scale: 0.875;
+  }
 }
 
 .hero {
