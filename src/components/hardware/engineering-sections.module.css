@@ -6,7 +6,6 @@
   --eng-card-mint: var(--hardware-card-mint, #b8e3da);
   --eng-yellow: var(--hardware-yellow, #ffc647);
   --eng-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
-  --eng-paper: var(--hardware-paper, #fbf0dd);
   --eng-white: var(--hardware-white, #fff);
   --eng-body: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
   --eng-display: var(
