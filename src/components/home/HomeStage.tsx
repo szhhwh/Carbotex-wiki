@@ -205,6 +205,27 @@ export function HomeStage({ acts }: { acts: HomeActDef[] }) {
     };
   }, [acts.length, cumulative, lengths, reduced, total]);
 
+  useEffect(() => {
+    const onRequestScrollTop = (event: Event) => {
+      const lenis = lenisRef.current;
+      if (reduced || !lenis) {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      } else {
+        lenis.scrollTo(0);
+      }
+      event.preventDefault();
+    };
+
+    // Document-level ownership survives the HomeStage remount at responsive
+    // breakpoints; each mounted Lenis instance responds to the same request.
+    document.addEventListener("wiki:request-scroll-top", onRequestScrollTop);
+    return () =>
+      document.removeEventListener(
+        "wiki:request-scroll-top",
+        onRequestScrollTop,
+      );
+  }, [reduced]);
+
   return (
     <main
       ref={stageRef}

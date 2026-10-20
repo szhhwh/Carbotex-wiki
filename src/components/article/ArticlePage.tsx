@@ -108,7 +108,9 @@ export function ArticleHero({
     <header className={styles.hero}>
       <div className={styles.heroInner}>
         <div className={styles.heroCopy}>
-          <h1 id={headingId}>{title}</h1>
+          <h1 id={headingId} tabIndex={-1}>
+            {title}
+          </h1>
           <p>{lead}</p>
         </div>
         <FieldIllustration />

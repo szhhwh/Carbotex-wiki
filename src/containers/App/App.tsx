@@ -17,6 +17,7 @@ import {
   RouteScrollManager,
 } from "../../components/routing/RouteScrollManager";
 import { RouteLoadingScreen } from "../../components/routing/RouteLoadingScreen";
+import { BackToTop } from "../../components/navigation/BackToTop";
 import type { PageLayout } from "../../pages";
 
 interface PageRouteProps {
@@ -86,6 +87,7 @@ const App = () => {
       {/* Navigation */}
       <Navbar />
       <RouteLoadingScreen title={title ?? ""} />
+      <BackToTop />
 
       {/* Header and PageContent */}
       <Routes>
