@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { stringToSlug } from "../../utils";
 import {
   FOOTER_CARD_OFFSETS,
+  type FooterCard,
   footerCards,
   getFooterCardIndex,
 } from "./footer-data";
@@ -34,10 +36,51 @@ function useVisibleCardCount() {
   return visibleCount;
 }
 
+function FooterCardContent({ card }: { card: FooterCard }) {
+  const Icon = card.icon;
+
+  return (
+    <>
+      <div className={styles.cardTop}>
+        <span className={styles.cardPage}>{card.page}</span>
+      </div>
+      <div className={styles.illustration}>
+        <Icon aria-hidden="true" strokeWidth={1.35} />
+      </div>
+      <h3>{card.title}</h3>
+      <p>{card.copy}</p>
+      <span className={styles.cardAction} aria-hidden="true">
+        <ArrowUpRight />
+      </span>
+    </>
+  );
+}
+
 export function FooterProjectCarousel() {
-  const { rootRef, trackRef, index, manualMoving, autoRunning, move } =
-    useProjectCarousel(footerCards.length);
+  const {
+    rootRef,
+    trackRef,
+    index,
+    manualMoving,
+    autoRunning,
+    autoPaused,
+    motionReduced,
+    move,
+    toggleAuto,
+    resumeAuto,
+  } = useProjectCarousel(footerCards.length);
   const visibleCount = useVisibleCardCount();
+  const { pathname } = useLocation();
+  const basePath = `/${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`;
+  const routePath = pathname.startsWith(basePath)
+    ? pathname.slice(basePath.length) || "/"
+    : pathname;
+  const isHome = routePath === "/";
+
+  // A pause chosen on an inner page must not alter the home carousel.
+  useEffect(() => {
+    if (isHome) resumeAuto();
+  }, [isHome, resumeAuto]);
 
   return (
     <section
@@ -48,6 +91,28 @@ export function FooterProjectCarousel() {
       <div className={styles.heading}>
         <h2 id="footer-explore-heading">Explore our project</h2>
         <div className={styles.controls}>
+          {!isHome && (
+            <button
+              type="button"
+              aria-label={
+                motionReduced
+                  ? "Automatic rotation disabled because reduced motion is enabled"
+                  : autoPaused
+                    ? "Resume automatic project card rotation"
+                    : "Pause automatic project card rotation"
+              }
+              aria-pressed={autoPaused}
+              data-auto-rotation-control
+              disabled={motionReduced}
+              onClick={toggleAuto}
+            >
+              {autoPaused ? (
+                <Play aria-hidden="true" />
+              ) : (
+                <Pause aria-hidden="true" />
+              )}
+            </button>
+          )}
           <button
             type="button"
             aria-label="Previous project cards"
@@ -80,31 +145,28 @@ export function FooterProjectCarousel() {
           {FOOTER_CARD_OFFSETS.map((offset) => {
             const cardIndex = getFooterCardIndex(index + offset);
             const card = footerCards[cardIndex];
-            const Icon = card.icon;
             const exposed = offset >= -1 && offset <= visibleCount;
             return (
               <Link
                 key={offset}
                 to={card.path}
                 className={styles.card}
-                data-tone={cardIndex % 3}
                 tabIndex={offset >= 0 && offset < visibleCount ? 0 : -1}
                 aria-hidden={!exposed || undefined}
                 inert={!exposed}
-                aria-label={`${card.title} ${card.page}`}
+                aria-label={`Explore ${card.page}: ${card.title}`}
               >
-                <div className={styles.cardTop}>
-                  <span>{card.group}</span>
-                  <ArrowRight className={styles.cardArrow} aria-hidden="true" />
-                </div>
-                <div className={styles.illustration}>
-                  <Icon aria-hidden="true" strokeWidth={1.35} />
-                </div>
-                <h3>{card.title}</h3>
-                <p>{card.copy}</p>
+                <FooterCardContent card={card} />
               </Link>
             );
           })}
+        </div>
+        <div className={styles.measure} aria-hidden="true">
+          {footerCards.map((card) => (
+            <div className={styles.card} key={card.path}>
+              <FooterCardContent card={card} />
+            </div>
+          ))}
         </div>
       </div>
       <span

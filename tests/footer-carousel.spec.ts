@@ -47,6 +47,63 @@ async function readCarousel(viewport: Locator): Promise<CarouselState> {
 }
 
 test.describe("footer project carousel", () => {
+  test("card rotation keeps the footer layout vertically stable", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/ouc-haide/");
+    const viewport = page.locator(CAROUSEL_ID);
+    await viewport.scrollIntoViewIfNeeded();
+    await expect(viewport).toBeVisible();
+
+    const readLayout = () =>
+      viewport.evaluate((element) => {
+        const section = element.closest("section");
+        const lower = section?.parentElement?.nextElementSibling;
+        const track = element.firstElementChild as HTMLElement;
+        if (!section || !lower) {
+          throw new Error("Footer carousel layout is incomplete");
+        }
+
+        return {
+          cardHeights: Array.from(track.children).map(
+            (card) => card.getBoundingClientRect().height,
+          ),
+          lowerOffset:
+            lower.getBoundingClientRect().top -
+            section.getBoundingClientRect().top,
+          sectionHeight: section.getBoundingClientRect().height,
+          trackHeight: track.getBoundingClientRect().height,
+          viewportHeight: element.getBoundingClientRect().height,
+        };
+      });
+
+    const baseline = await readLayout();
+    const next = page.getByRole("button", { name: "Next project cards" });
+
+    for (let step = 0; step < 8; step += 1) {
+      await next.click();
+      await page.waitForTimeout(50);
+      const current = await readLayout();
+
+      expect(
+        Math.abs(current.sectionHeight - baseline.sectionHeight),
+      ).toBeLessThan(0.5);
+      expect(
+        Math.abs(current.viewportHeight - baseline.viewportHeight),
+      ).toBeLessThan(0.5);
+      expect(Math.abs(current.trackHeight - baseline.trackHeight)).toBeLessThan(
+        0.5,
+      );
+      expect(Math.abs(current.lowerOffset - baseline.lowerOffset)).toBeLessThan(
+        0.5,
+      );
+      for (const cardHeight of current.cardHeights) {
+        expect(Math.abs(cardHeight - current.trackHeight)).toBeLessThan(0.5);
+      }
+    }
+  });
+
   test("wheel travel is proportional, responsive and stays inside the carousel", async ({
     page,
   }, testInfo) => {

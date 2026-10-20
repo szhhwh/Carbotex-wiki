@@ -6,13 +6,13 @@ import {
   Dna,
   FlaskConical,
   Gift,
-  GraduationCap,
   Handshake,
-  Lightbulb,
   ListChecks,
+  Puzzle,
   RefreshCw,
   ShieldCheck,
   Sigma,
+  Sprout,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -20,7 +20,6 @@ import Pages from "../../pages";
 
 export interface FooterCard {
   path: string;
-  group: string | undefined;
   page: string | undefined;
   title: string;
   copy: string;
@@ -35,9 +34,9 @@ interface Invitation {
 
 const invitations: Record<string, Invitation> = {
   "/description": {
-    title: "Start with a big question.",
-    copy: "Discover the challenge that set Carbotex in motion.",
-    icon: Lightbulb,
+    title: "From straw to something that sticks.",
+    copy: "Follow our journey of turning agricultural waste into bio-based adhesives.",
+    icon: Sprout,
   },
   "/engineering": {
     title: "A better idea, every cycle.",
@@ -80,28 +79,28 @@ const invitations: Record<string, Invitation> = {
     icon: ShieldCheck,
   },
   "/model": {
-    title: "Give biology a new lens.",
-    copy: "Explore the mathematics behind our biological questions.",
+    title: "Let's solve a sticky mystery.",
+    copy: "See how modeling helps us uncover the chemistry behind our bio-based adhesive.",
     icon: Sigma,
   },
   "/hardware": {
-    title: "Build beyond the bench.",
-    copy: "Discover the physical systems connecting ideas to applications.",
+    title: "Smart tools, smoother science.",
+    copy: "Discover how our hardware brings automation and smarter control to our biomanufacturing process.",
     icon: Cpu,
   },
   "/human-practices": {
-    title: "Listen. Then rethink.",
-    copy: "Meet the perspectives that helped reshape Carbotex.",
+    title: "Every voice leaves a mark.",
+    copy: "Discover how conversations and feedback helped shape the journey of Carbotex.",
     icon: Handshake,
   },
   "/education": {
-    title: "Spark someone's curiosity.",
-    copy: "Explore science through learning, play and participation.",
-    icon: GraduationCap,
+    title: "Curiosity knows no age.",
+    copy: "Explore how we made synthetic biology fun and accessible for all generations.",
+    icon: Puzzle,
   },
   "/members": {
-    title: "Meet the curious minds.",
-    copy: "Get to know the people bringing Carbotex to life.",
+    title: "Meet the minds behind Carbotex.",
+    copy: "Get to know the people, passion, and teamwork bringing our ideas to life.",
     icon: Users,
   },
   "/attributions": {
@@ -119,7 +118,6 @@ export const footerCards: FooterCard[] = Pages.flatMap((section) =>
           ? [
               {
                 path: page.path,
-                group: section.name,
                 page: page.name,
                 ...invitation,
               },

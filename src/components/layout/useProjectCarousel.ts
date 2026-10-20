@@ -11,6 +11,8 @@ const WHEEL_SETTLE_DISTANCE = 0.0005;
 interface CarouselController {
   move: (direction: number) => void;
   rebase: () => void;
+  toggleAuto: () => void;
+  resumeAuto: () => void;
 }
 
 export function useProjectCarousel(count: number) {
@@ -20,6 +22,11 @@ export function useProjectCarousel(count: number) {
   const [index, setIndex] = useState(0);
   const [manualMoving, setManualMoving] = useState(false);
   const [autoRunning, setAutoRunning] = useState(false);
+  const [autoPaused, setAutoPaused] = useState(false);
+  const [motionReduced, setMotionReduced] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const autoPausedRef = useRef(false);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -204,7 +211,12 @@ export function useProjectCarousel(count: number) {
         return;
       }
       const active =
-        visible && !hovered && !focused && !preference.matches && count > 1;
+        visible &&
+        !hovered &&
+        !focused &&
+        !preference.matches &&
+        !autoPausedRef.current &&
+        count > 1;
       setAutoRunning(active);
       if (active && step > 0) {
         if (animation) animation.play();
@@ -290,8 +302,11 @@ export function useProjectCarousel(count: number) {
       hovered = false;
       sync();
     };
-    const onFocus = () => {
-      focused = true;
+    const onFocus = (event: FocusEvent) => {
+      const target = event.target as HTMLElement | null;
+      focused =
+        root.contains(target) &&
+        !target?.closest("[data-auto-rotation-control]");
       sync();
     };
     const onBlur = (event: FocusEvent) => {
@@ -299,6 +314,7 @@ export function useProjectCarousel(count: number) {
       sync();
     };
     const onPreference = () => {
+      setMotionReduced(preference.matches);
       if (preference.matches && !pendingRebase) {
         const previousMode = mode;
         const previousTarget = target;
@@ -320,6 +336,21 @@ export function useProjectCarousel(count: number) {
         }
       }
       sync();
+    };
+
+    const setPaused = (paused: boolean) => {
+      autoPausedRef.current = paused;
+      setAutoPaused(paused);
+      sync();
+    };
+
+    const toggleAuto = () => {
+      if (preference.matches) return;
+      setPaused(!autoPausedRef.current);
+    };
+
+    const resumeAuto = () => {
+      if (autoPausedRef.current) setPaused(false);
     };
     const onWheel = (event: WheelEvent) => {
       if (!hovered || event.ctrlKey || count < 2) return;
@@ -459,7 +490,7 @@ export function useProjectCarousel(count: number) {
       suppressClick = false;
     };
 
-    controllerRef.current = { move, rebase };
+    controllerRef.current = { move, rebase, toggleAuto, resumeAuto };
     measure();
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(viewport);
@@ -512,6 +543,10 @@ export function useProjectCarousel(count: number) {
     index,
     manualMoving,
     autoRunning,
+    autoPaused,
+    motionReduced,
     move: (direction: number) => controllerRef.current?.move(direction),
+    toggleAuto: () => controllerRef.current?.toggleAuto(),
+    resumeAuto: () => controllerRef.current?.resumeAuto(),
   };
 }
