@@ -161,7 +161,7 @@ test.describe("integrated human practices", () => {
     ).toHaveAttribute("alt", /^Stakeholder portrait: /);
   });
 
-  test("stakeholder details expand, receive focus, and return focus", async ({
+  test("stakeholder details open in a modal and return focus", async ({
     page,
   }) => {
     await openIhp(page);
@@ -172,21 +172,193 @@ test.describe("integrated human practices", () => {
     const card = group.locator("article").first();
     const expand = card.locator("button[aria-expanded]").first();
     const details = page.locator("[data-stakeholder-details]");
+    const close = details.getByRole("button", { name: /^Close details/ });
 
     await expect(expand).toHaveAccessibleName(/^View details for /);
     await expect(expand).toHaveAttribute("aria-expanded", "false");
+    await expect(expand).toHaveAttribute("aria-haspopup", "dialog");
     await expect(details).toBeHidden();
 
     await expand.click();
     await expect(expand).toHaveAttribute("aria-expanded", "true");
     await expect(details).toBeVisible();
-    await expect(details).toBeFocused();
+    await expect(details).toHaveAttribute("open", "");
+    await expect(details).toHaveRole("dialog");
+    await expect(close).toBeFocused();
     await expect(expand).toHaveAccessibleName(/^Hide details for /);
 
-    await details.getByRole("button", { name: /^Close details/ }).click();
+    await close.click();
     await expect(expand).toHaveAttribute("aria-expanded", "false");
     await expect(details).toBeHidden();
     await expect(expand).toBeFocused();
+
+    await expand.click();
+    await expect(details).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(details).toBeHidden();
+    await expect(expand).toBeFocused();
+
+    await expand.click();
+    await expect(details).toBeVisible();
+    const storyLink = details.getByRole("link", {
+      name: /Read the full TRACE story/,
+    });
+    const storyHref = await storyLink.getAttribute("href");
+    expect(storyHref).toMatch(/^#ihp-/);
+
+    await storyLink.click();
+    await expect(details).toBeHidden();
+    await expect(page).toHaveURL(new RegExp(`${storyHref}$`));
+    await expect(page.locator(storyHref!)).toBeVisible();
+    await expect
+      .poll(() =>
+        page.locator(storyHref!).evaluate((target) => {
+          const top = target.getBoundingClientRect().top;
+          return top >= 0 && top < window.innerHeight;
+        }),
+      )
+      .toBe(true);
+    await expect(expand).not.toBeFocused();
+  });
+
+  test("stakeholder modal opening does not expose shell overflow", async ({
+    page,
+  }) => {
+    await openIhp(page);
+
+    const overflowingFrames = await page.evaluate(async () => {
+      const samples: number[][] = [];
+      const startedAt = performance.now();
+
+      const sample = () => {
+        const dialog = document.querySelector(
+          "dialog[data-stakeholder-details]",
+        );
+        const scroller = dialog?.querySelector<HTMLElement>(
+          "[data-stakeholder-scroller]",
+        );
+
+        if (dialog && scroller) {
+          samples.push([
+            dialog.scrollWidth - dialog.clientWidth,
+            dialog.scrollHeight - dialog.clientHeight,
+            scroller.scrollWidth - scroller.clientWidth,
+          ]);
+        }
+
+        if (performance.now() - startedAt < 700) requestAnimationFrame(sample);
+      };
+
+      requestAnimationFrame(sample);
+      document
+        .querySelector<HTMLButtonElement>(
+          "#ihp-stakeholder-group-feedstock-and-agricultural-reality article button[aria-expanded]",
+        )
+        ?.click();
+
+      await new Promise((resolve) => setTimeout(resolve, 750));
+      return {
+        overflowingFrames: samples.filter((sizes) =>
+          sizes.some((size) => size > 0),
+        ),
+        pageOverflow:
+          document.documentElement.scrollWidth -
+          document.documentElement.clientWidth,
+      };
+    });
+
+    expect(overflowingFrames.overflowingFrames).toEqual([]);
+    expect(overflowingFrames.pageOverflow).toBeLessThanOrEqual(1);
+  });
+
+  test("stakeholder portraits remain fully visible in cards and dialogs", async ({
+    page,
+  }) => {
+    await openIhp(page);
+
+    const cards = page.locator("[data-stakeholder-card]");
+    const details = page.locator("[data-stakeholder-details]");
+    const cardChecks: Array<Record<string, unknown>> = [];
+    const dialogChecks: Array<Record<string, unknown>> = [];
+
+    await expect(cards).toHaveCount(22);
+
+    for (let index = 0; index < 22; index += 1) {
+      const card = cards.nth(index);
+      await card.scrollIntoViewIfNeeded();
+
+      const cardImage = card.locator("img").first();
+      await cardImage.evaluate(async (image) => {
+        if (!image.complete) {
+          await new Promise((resolve) => {
+            image.addEventListener("load", resolve, { once: true });
+            image.addEventListener("error", resolve, { once: true });
+          });
+        }
+        await image.decode().catch(() => undefined);
+      });
+
+      cardChecks.push(
+        await cardImage.evaluate((image) => {
+          const frame = image.parentElement!.getBoundingClientRect();
+          const box = image.getBoundingClientRect();
+          const style = getComputedStyle(image);
+          return {
+            name: image.alt,
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            objectFit: style.objectFit,
+            withinFrame:
+              box.left >= frame.left - 0.5 &&
+              box.top >= frame.top - 0.5 &&
+              box.right <= frame.right + 0.5 &&
+              box.bottom <= frame.bottom + 0.5,
+          };
+        }),
+      );
+
+      await card.locator("button[aria-expanded]").click();
+      await expect(details).toBeVisible();
+
+      const dialogImage = details.locator("img").first();
+      await dialogImage.evaluate(async (image) => {
+        await image.decode().catch(() => undefined);
+      });
+
+      dialogChecks.push(
+        await dialogImage.evaluate((image) => {
+          const frame = image.parentElement!.getBoundingClientRect();
+          const box = image.getBoundingClientRect();
+          const style = getComputedStyle(image);
+          return {
+            name: image.alt,
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            objectFit: style.objectFit,
+            withinFrame:
+              box.left >= frame.left - 0.5 &&
+              box.top >= frame.top - 0.5 &&
+              box.right <= frame.right + 0.5 &&
+              box.bottom <= frame.bottom + 0.5,
+          };
+        }),
+      );
+
+      await page.keyboard.press("Escape");
+      await expect(details).toBeHidden();
+    }
+
+    expect(cardChecks).toHaveLength(22);
+    expect(dialogChecks).toHaveLength(22);
+    expect(
+      [...cardChecks, ...dialogChecks].filter(
+        (image) =>
+          !image.complete ||
+          Number(image.naturalWidth) <= 0 ||
+          image.objectFit !== "contain" ||
+          image.withinFrame !== true,
+      ),
+    ).toEqual([]);
   });
 
   test("SDG cards flip by keyboard without losing focus", async ({ page }) => {
@@ -485,24 +657,62 @@ test.describe("integrated human practices", () => {
     expect(layout.page).toBeLessThanOrEqual(layout.viewport + 1);
   });
 
-  test("stakeholder navigator uses six columns on desktop", async ({
+  test("stakeholder navigator uses six stage rows on desktop", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop");
     await openIhp(page);
 
     const navigator = page.locator("[data-stakeholder-navigator]");
-    const columns = navigator.locator("[data-stakeholder-columns]");
-    const columnCount = await columns.evaluate(
-      (element) =>
-        getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+    const stages = navigator.locator("[data-stakeholder-stage]");
+    const topSpacing = await navigator.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).marginBlockStart),
+    );
+    const stageColumnCounts = await stages.evaluateAll((elements) =>
+      elements.map(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+      ),
     );
 
-    expect(columnCount).toBe(6);
+    expect(topSpacing).toBeGreaterThanOrEqual(20);
+    expect(stageColumnCounts).toEqual([2, 2, 2, 2, 2, 2]);
     await expect(navigator.locator("[data-stakeholder-card]")).toHaveCount(22);
+    await expect(
+      navigator.getByText("View details", { exact: true }),
+    ).toHaveCount(0);
+    await expect(stages).toHaveCount(6);
     await expect(navigator.locator("[data-stakeholder-heading]")).toHaveCount(
       6,
     );
+    await expect(navigator.locator("[data-stakeholder-heading] p")).toHaveCount(
+      0,
+    );
+    await expect(navigator.getByText(/^\d{2} stakeholders$/)).toHaveCount(0);
+
+    const firstCardGrid = stages.nth(0).locator("[data-stakeholder-card-grid]");
+    const fourPersonCardGrid = stages
+      .nth(2)
+      .locator("[data-stakeholder-card-grid]");
+    const sixPersonCardGrid = stages
+      .nth(4)
+      .locator("[data-stakeholder-card-grid]");
+    const cardColumnCount = (locator: typeof firstCardGrid) =>
+      locator.evaluate(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
+      );
+
+    await expect.poll(() => cardColumnCount(firstCardGrid)).toBe(3);
+    await expect.poll(() => cardColumnCount(fourPersonCardGrid)).toBe(2);
+    await expect.poll(() => cardColumnCount(sixPersonCardGrid)).toBe(3);
+
+    const additionalCard = navigator.locator("[data-additional-collaborators]");
+    const lastCardGrid = stages.nth(5).locator("[data-stakeholder-card-grid]");
+    const lastGridColumns = await cardColumnCount(lastCardGrid);
+
+    expect(lastGridColumns).toBe(3);
+    await expect(additionalCard).toBeVisible();
     for (const title of [
       "Feedstock & Agricultural Reality",
       "Biomanufacturing Pathway",
@@ -529,23 +739,37 @@ test.describe("integrated human practices", () => {
     );
   });
 
-  test("stakeholder navigator uses one column on mobile", async ({
+  test("stakeholder navigator uses one card column on mobile", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "mobile");
     await openIhp(page);
 
     const columnCount = await page
-      .locator("[data-stakeholder-columns]")
+      .locator("[data-stakeholder-card-grid]")
+      .first()
       .evaluate(
         (element) =>
           getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
       );
+    const qibebtTypography = await page
+      .locator("[data-stakeholder-card]")
+      .filter({ hasText: "QIBEBT" })
+      .locator("h4")
+      .evaluate((element) => {
+        const style = getComputedStyle(element);
+        return {
+          family: style.fontFamily,
+          size: Number.parseFloat(style.fontSize),
+        };
+      });
 
     expect(columnCount).toBe(1);
+    expect(qibebtTypography.family.toLowerCase()).not.toContain("impact");
+    expect(qibebtTypography.size).toBeGreaterThanOrEqual(16);
   });
 
-  test("stakeholder navigator reflows to three columns on tablet", async ({
+  test("stakeholder navigator reflows to two card columns on tablet", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop");
@@ -553,13 +777,14 @@ test.describe("integrated human practices", () => {
     await page.setViewportSize({ width: 768, height: 1024 });
 
     const columnCount = await page
-      .locator("[data-stakeholder-columns]")
+      .locator("[data-stakeholder-card-grid]")
+      .first()
       .evaluate(
         (element) =>
           getComputedStyle(element).gridTemplateColumns.split(/\s+/).length,
       );
 
-    expect(columnCount).toBe(3);
+    expect(columnCount).toBe(2);
   });
 
   test("mobile outline opens and navigates to a section", async ({

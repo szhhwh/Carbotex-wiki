@@ -1,5 +1,13 @@
-import { useEffect, useId, useState, type CSSProperties } from "react";
-import { ArrowUpRight, UserRound } from "lucide-react";
+import {
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type AnimationEvent,
+  type CSSProperties,
+} from "react";
+import { createPortal } from "react-dom";
+import { ArrowUpRight, UserRound, X } from "lucide-react";
 import type { IhpStakeholder, IhpStakeholderGroup } from "./ihp-types";
 import { stakeholderGroupId } from "./ihp-links";
 import styles from "./stakeholder-navigator.module.css";
@@ -58,7 +66,7 @@ function stakeholderSlug(stakeholder: IhpStakeholder) {
   return stakeholder.storyHref.replace(/^#/, "");
 }
 
-function storyNumber(value: number) {
+function twoDigit(value: number) {
   return String(value).padStart(2, "0");
 }
 
@@ -66,12 +74,14 @@ function StakeholderCard({
   stakeholder,
   number,
   open,
+  dense,
   onToggle,
   detailsId,
 }: {
   stakeholder: IhpStakeholder;
   number: number;
   open: boolean;
+  dense: boolean;
   onToggle: () => void;
   detailsId: string;
 }) {
@@ -85,10 +95,11 @@ function StakeholderCard({
       className={styles.card}
       aria-labelledby={headingId}
       data-open={open}
+      data-dense={dense}
       data-stakeholder-card
     >
       <span className={styles.cardNumber} aria-hidden="true">
-        {storyNumber(number)}
+        {twoDigit(number)}
       </span>
       <div className={styles.portrait}>
         {failedPortrait === stakeholder.portrait ? (
@@ -113,18 +124,20 @@ function StakeholderCard({
       </div>
       <div className={styles.cardSummary}>
         <h4 id={headingId}>{stakeholder.name}</h4>
-        <button
-          type="button"
-          id={triggerId}
-          className={styles.detailsTrigger}
-          aria-expanded={open}
-          aria-controls={detailsId}
-          onClick={onToggle}
-        >
-          <span>{open ? "Hide details" : "View details"}</span>
-          <span className={styles.srOnly}> for {stakeholder.name}</span>
-        </button>
       </div>
+      <button
+        type="button"
+        id={triggerId}
+        className={styles.cardTrigger}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls={detailsId}
+        onClick={onToggle}
+      >
+        <span className={styles.srOnly}>
+          {open ? "Hide details" : "View details"} for {stakeholder.name}
+        </span>
+      </button>
     </article>
   );
 }
@@ -156,7 +169,7 @@ function AdditionalCollaborators({
             </span>
             <ArrowUpRight
               className={styles.additionalArrow}
-              size={15}
+              size={14}
               aria-hidden="true"
             />
           </a>
@@ -183,23 +196,27 @@ function StakeholderGroupSection({
 }) {
   const id = useId();
   const headingId = `${id}-${index}`;
-  const descriptionId = `${headingId}-description`;
+  const dense = group.stakeholders.length > 4;
+  const cardCount =
+    group.stakeholders.length + (group.additionalCollaborators ? 1 : 0);
 
   return (
     <section
-      className={styles.column}
+      className={styles.stage}
       id={stakeholderGroupId(group.title)}
       aria-labelledby={headingId}
-      aria-describedby={descriptionId}
       style={getGroupTheme(index)}
+      data-stakeholder-stage
     >
       <header className={styles.groupHeading} data-stakeholder-heading>
         <h3 id={headingId}>{group.title}</h3>
-        <p className={styles.srOnly} id={descriptionId}>
-          {group.description}
-        </p>
       </header>
-      <div className={styles.cardStack}>
+      <div
+        className={styles.cardGrid}
+        data-count={cardCount}
+        data-dense={dense}
+        data-stakeholder-card-grid
+      >
         {group.stakeholders.map((stakeholder, stakeholderIndex) => {
           const slug = stakeholderSlug(stakeholder);
           return (
@@ -208,14 +225,152 @@ function StakeholderGroupSection({
               stakeholder={stakeholder}
               number={startNumber + stakeholderIndex}
               open={openStory === slug}
+              dense={dense}
               detailsId={detailsId}
               onToggle={() => onToggle(slug)}
             />
           );
         })}
+        <AdditionalCollaborators group={group} headingId={headingId} />
       </div>
-      <AdditionalCollaborators group={group} headingId={headingId} />
     </section>
+  );
+}
+
+function StakeholderDetailsDialog({
+  detailsId,
+  stakeholder,
+  number,
+  groupIndex,
+  onClose,
+}: {
+  detailsId: string;
+  stakeholder: IhpStakeholder;
+  number: number;
+  groupIndex: number;
+  onClose: (restoreFocus?: boolean) => void;
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closingRef = useRef(false);
+  const restoreFocusRef = useRef(true);
+  const [closing, setClosing] = useState(false);
+  const [failedPortrait, setFailedPortrait] = useState(false);
+  const titleId = `${detailsId}-title`;
+
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    dialog.showModal();
+
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, []);
+
+  const close = (restoreFocus = true) => {
+    const dialog = dialogRef.current;
+    if (!dialog || closingRef.current) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      dialog.close();
+      onClose(restoreFocus);
+      return;
+    }
+
+    closingRef.current = true;
+    restoreFocusRef.current = restoreFocus;
+    setClosing(true);
+  };
+
+  const finishClose = (event: AnimationEvent<HTMLElement>) => {
+    if (!closingRef.current || event.target !== event.currentTarget) return;
+
+    dialogRef.current?.close();
+    onClose(restoreFocusRef.current);
+  };
+
+  return createPortal(
+    <dialog
+      ref={dialogRef}
+      className={styles.detailsDialog}
+      data-closing={closing || undefined}
+      aria-labelledby={titleId}
+      data-stakeholder-details
+      style={getGroupTheme(groupIndex)}
+      onCancel={(event) => {
+        event.preventDefault();
+        close();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) close();
+      }}
+    >
+      <section className={styles.detailsPanel} onAnimationEnd={finishClose}>
+        <button
+          type="button"
+          className={styles.detailsClose}
+          onClick={() => close()}
+          aria-label={`Close details for ${stakeholder.name}`}
+          autoFocus
+        >
+          <X aria-hidden="true" />
+        </button>
+
+        <div className={styles.detailsScroller} data-stakeholder-scroller>
+          <header className={styles.detailsHeader}>
+            <div className={styles.detailsPortrait}>
+              {failedPortrait ? (
+                <span
+                  className={styles.detailsPortraitFallback}
+                  role="img"
+                  aria-label={`Portrait unavailable: ${stakeholder.name}`}
+                >
+                  <UserRound size={38} aria-hidden="true" />
+                </span>
+              ) : (
+                <img
+                  src={stakeholder.portrait}
+                  alt={`Stakeholder portrait: ${stakeholder.name}`}
+                  data-logo={/\.svg(?:[?#]|$)/i.test(stakeholder.portrait)}
+                  decoding="async"
+                  onError={() => setFailedPortrait(true)}
+                />
+              )}
+            </div>
+            <div className={styles.detailsIdentity}>
+              <span className={styles.detailsKicker}>
+                Stakeholder perspective {twoDigit(number)}
+              </span>
+              <h2 id={titleId}>{stakeholder.name}</h2>
+              <p>{stakeholder.identity}</p>
+            </div>
+          </header>
+
+          <dl className={styles.detailsList}>
+            {[
+              ["Why we reached out", stakeholder.why],
+              ["What we heard", stakeholder.heard],
+              ["What we did with it", stakeholder.changed],
+              ["Where it led", stakeholder.led],
+            ].map(([label, value]) => (
+              <div className={styles.detailItem} key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <a
+            href={stakeholder.storyHref}
+            className={styles.storyLink}
+            onClick={() => close(false)}
+          >
+            Read the full TRACE story <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </section>
+    </dialog>,
+    document.body,
   );
 }
 
@@ -253,80 +408,24 @@ export function StakeholderNavigator({
       ? groupStartNumbers[openStory.groupIndex] + expandedIndex
       : null;
 
-  useEffect(() => {
-    if (!openStory) return;
-    const panel = document.getElementById(detailsId);
-    if (!panel) return;
-
-    panel.focus({ preventScroll: true });
-    panel.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-      block: "start",
-    });
-  }, [detailsId, openStory]);
-
-  const closeDetails = () => {
+  const closeDetails = (restoreFocus = true) => {
     const triggerId = openStory
       ? `stakeholder-trigger-${openStory.slug}`
       : undefined;
+    const storyTargetId = expanded?.storyHref.replace(/^#/, "");
     setOpenStory(null);
-    if (triggerId) {
+    if (restoreFocus && triggerId) {
       requestAnimationFrame(() => document.getElementById(triggerId)?.focus());
+    } else if (storyTargetId) {
+      requestAnimationFrame(() =>
+        document.getElementById(storyTargetId)?.focus({ preventScroll: true }),
+      );
     }
   };
 
   return (
     <div className={styles.navigator} data-stakeholder-navigator>
-      <div
-        className={styles.detailsPanel}
-        id={detailsId}
-        role="region"
-        aria-labelledby={`${detailsId}-title`}
-        tabIndex={-1}
-        hidden={!expanded}
-        data-stakeholder-details
-        style={openStory ? getGroupTheme(openStory.groupIndex) : undefined}
-      >
-        {expanded && expandedNumber && (
-          <>
-            <div className={styles.detailsHeading}>
-              <div>
-                <span className={styles.detailsKicker}>
-                  Stakeholder perspective {storyNumber(expandedNumber)}
-                </span>
-                <h4 id={`${detailsId}-title`}>{expanded.name}</h4>
-                <p>{expanded.identity}</p>
-              </div>
-              <button type="button" onClick={closeDetails}>
-                Close
-                <span className={styles.srOnly}>
-                  {" "}
-                  details for {expanded.name}
-                </span>
-              </button>
-            </div>
-            <dl className={styles.detailsList}>
-              {[
-                ["Why we reached out", expanded.why],
-                ["What we heard", expanded.heard],
-                ["What we did with it", expanded.changed],
-                ["Where it led", expanded.led],
-              ].map(([label, value]) => (
-                <div className={styles.detailItem} key={label}>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
-                </div>
-              ))}
-            </dl>
-            <a href={expanded.storyHref} className={styles.storyLink}>
-              Read the full TRACE story <span aria-hidden="true">↓</span>
-            </a>
-          </>
-        )}
-      </div>
-      <div className={styles.columns} data-stakeholder-columns>
+      <div className={styles.stages} data-stakeholder-stages>
         {groups.map((group, index) => (
           <StakeholderGroupSection
             key={group.title}
@@ -345,6 +444,15 @@ export function StakeholderNavigator({
           />
         ))}
       </div>
+      {openStory && expanded && expandedNumber && (
+        <StakeholderDetailsDialog
+          detailsId={detailsId}
+          stakeholder={expanded}
+          number={expandedNumber}
+          groupIndex={openStory.groupIndex}
+          onClose={closeDetails}
+        />
+      )}
     </div>
   );
 }
