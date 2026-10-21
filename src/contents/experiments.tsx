@@ -846,35 +846,30 @@ const sections: ArticleSection[] = [
         content: (
           <>
             <p>
-              The original retention-time and signal coordinates were used for
-              numerical analysis. Each main peak was assigned its own recorded
-              integration interval. A straight baseline connected the measured
-              left and right endpoints; the baseline-subtracted signal was
-              integrated by the signed composite trapezoidal rule using the
-              actual time interval between adjacent observations. Numerical
-              areas were calculated without smoothing, clipping or shifting the
-              original trace.
+              Numerical analysis used the original retention-time and signal
+              coordinates. P1 and P2 were integrated separately, each against a
+              straight baseline joining its measured endpoints. The
+              baseline-subtracted observations were integrated by the signed
+              composite trapezoidal rule using the actual time intervals.
             </p>
             <p>
-              Python and NumPy performed integration. The first principal peak,
-              P1, supplied the malic acid calibration. P2 was integrated
-              separately but excluded from malate quantification because its
-              chemical identity was unassigned. The three standard P1 areas were
-              fitted by unweighted ordinary least-squares linear regression with
-              a free intercept in GraphPad Prism 11.0.1. Sample test-solution
-              concentration was obtained from the fitted equation, with no
-              adjustment of the standard points to change the apparent
-              linearity.
+              For the sample, P1 covered <strong>9.208229–13.808230 min</strong>
+              {", and P2 covered "}
+              <strong>14.608230–18.184900 min</strong>. P1 ended before the
+              small intermediate response around 14.03156 min. This response and
+              all observations outside the two integration intervals were
+              excluded from the quantitative sum.
             </p>
             <p>
-              Concentration calculations use the latest confirmed final
-              preparation volume of 1.60 mL, which includes the 800 μL
-              supernatant, 200 μL sulfuric acid and added water. No further
-              dilution was performed before injection. The concentration in the
-              injected solution is multiplied by 1.60/0.800 = 2 to report malic
-              acid equivalents on the original-supernatant basis. The acid
-              volume is already included in the final volume and is not
-              corrected a second time.
+              Python and NumPy calculated the two baseline-relative areas. For
+              each standard and the sample, the response was{" "}
+              <strong>A_total = A_P1 + A_P2</strong>. The three standard inputs
+              and their previously recorded integration boundaries were retained
+              unchanged. GraphPad Prism 11.0.1 fitted their total areas by
+              unweighted ordinary least-squares linear regression with a freely
+              estimated intercept. Sample concentration was obtained by
+              substituting its measured total area into the fitted equation. The
+              sample was not included as a calibration point.
             </p>
             <ProtocolLinks links={integrationProtocols} />
           </>
