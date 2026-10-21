@@ -111,7 +111,9 @@ test.describe("shared navbar", () => {
     ).toHaveCSS("color", "rgb(80, 173, 136)");
   });
 
-  test("scroll marker tracks progress from left to right", async ({ page }) => {
+  test("scroll marker tracks progress and eats the right-side line", async ({
+    page,
+  }) => {
     await page.goto("/ouc-haide/", { waitUntil: "networkidle" });
 
     const marker = page.locator("[data-nav-scroll-marker]");
@@ -134,10 +136,12 @@ test.describe("shared navbar", () => {
       return {
         fillLeft: fillRect.left,
         fillRight: fillRect.right,
+        fillWidth: fillRect.width,
         markerCenterX: markerRect.left + markerRect.width / 2,
         markerCenterY: markerRect.top + markerRect.height / 2,
         markerLeft: markerRect.left,
         navbarLeft: navbarRect.left,
+        navbarRight: navbarRect.right,
         navbarLineCenterY: navbarRect.bottom - 3,
       };
     });
@@ -147,10 +151,10 @@ test.describe("shared navbar", () => {
       Math.abs(startGeometry!.markerLeft - startGeometry!.navbarLeft),
     ).toBeLessThanOrEqual(1);
     expect(
-      Math.abs(startGeometry!.fillLeft - startGeometry!.navbarLeft),
+      Math.abs(startGeometry!.fillLeft - startGeometry!.markerCenterX),
     ).toBeLessThanOrEqual(1);
     expect(
-      Math.abs(startGeometry!.fillRight - startGeometry!.markerCenterX),
+      Math.abs(startGeometry!.fillRight - startGeometry!.navbarRight),
     ).toBeLessThanOrEqual(1);
     expect(
       Math.abs(startGeometry!.markerCenterY - startGeometry!.navbarLineCenterY),
@@ -200,21 +204,29 @@ test.describe("shared navbar", () => {
     const finalGeometry = await page.evaluate(() => {
       const markerElement = document.querySelector("[data-nav-scroll-marker]");
       const fillElement = document.querySelector("[data-nav-progress-fill]");
-      if (!markerElement || !fillElement) return null;
+      const navbarElement = document.querySelector("header");
+      if (!markerElement || !fillElement || !navbarElement) return null;
 
       const markerRect = markerElement.getBoundingClientRect();
       const fillRect = fillElement.getBoundingClientRect();
 
       return {
         fillRight: fillRect.right,
+        fillLeft: fillRect.left,
+        fillWidth: fillRect.width,
         markerCenterX: markerRect.left + markerRect.width / 2,
+        navbarRight: navbarElement.getBoundingClientRect().right,
       };
     });
 
     expect(finalGeometry).not.toBeNull();
     expect(
-      Math.abs(finalGeometry!.fillRight - finalGeometry!.markerCenterX),
+      Math.abs(finalGeometry!.fillLeft - finalGeometry!.markerCenterX),
     ).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(finalGeometry!.fillRight - finalGeometry!.navbarRight),
+    ).toBeLessThanOrEqual(1);
+    expect(finalGeometry!.fillWidth).toBeLessThan(startGeometry!.fillWidth);
   });
 
   test("stays fixed while scrolling down", async ({ page }) => {

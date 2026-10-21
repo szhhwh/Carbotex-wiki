@@ -37,7 +37,7 @@ export function NavbarScrollProgress() {
       const markerCenter = marker.offsetLeft + marker.offsetWidth / 2 + travel;
 
       marker.style.setProperty("--nav-progress-distance", `${travel}px`);
-      fill.style.setProperty("--nav-progress-fill", `${markerCenter}px`);
+      fill.style.setProperty("--nav-progress-fill-start", `${markerCenter}px`);
     };
 
     const scheduleUpdate = () => {
