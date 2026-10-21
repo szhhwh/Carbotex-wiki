@@ -1010,7 +1010,7 @@ export function Hardware() {
     <ArticlePage
       title="Hardware"
       heroImage={{
-        src: "https://static.igem.wiki/teams/6147/wiki/hd-header-image.avif",
+        src: "https://static.igem.wiki/teams/6147/wiki/hd-header-image-2.avif",
         alt: "Industrial fermentation tanks and stainless-steel piping in a production facility.",
       }}
       sections={sections}
