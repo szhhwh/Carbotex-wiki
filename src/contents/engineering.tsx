@@ -1182,6 +1182,12 @@ export function Engineering() {
   return (
     <ArticlePage
       title="Engineering Success"
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/dbtl.webp",
+        alt: "Illustration of the Design, Build, Test, and Learn engineering cycle with arrows, drafting tools, and engineering icons.",
+        intrinsicWidth: 1672,
+        intrinsicHeight: 941,
+      }}
       sections={isWetLab ? wetEngineeringSections : hardwareSections}
       contentControls={
         <EngineeringModeSwitch value={mode} onChange={selectMode} />
