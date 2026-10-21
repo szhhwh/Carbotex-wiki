@@ -890,13 +890,415 @@
   color: var(--education-green);
 }
 
+.puzzleExplorer {
+  margin-block: var(--article-space-related) 0;
+}
+
+.pageShell .puzzleTagline {
+  margin-block: 0 var(--article-space-label);
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.22rem, 2vw, 1.62rem);
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.pageShell .puzzleTagline strong {
+  color: inherit;
+  font: inherit;
+}
+
+.pageShell .puzzleInstruction {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.48rem;
+  margin-block: 0 var(--article-space-block);
+  padding: 0.48rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--education-green) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(
+    in srgb,
+    var(--education-yellow) 28%,
+    var(--education-paper)
+  );
+  color: var(--education-green);
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.puzzleInstruction svg {
+  flex: none;
+}
+
+.puzzleLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.35rem, 2.6vw, 2.25rem);
+  justify-items: center;
+  align-items: start;
+}
+
+.puzzleBoardColumn {
+  position: relative;
+  top: auto;
+  width: min(100%, 58rem);
+  margin-inline: auto;
+  min-width: 0;
+  padding: clamp(0.4rem, 1vw, 0.6rem);
+  isolation: isolate;
+}
+
+.puzzleBoardColumn::before {
+  position: absolute;
+  z-index: -1;
+  inset: 8% 0;
+  border-radius: 52% 48% 54% 46% / 46% 55% 45% 54%;
+  background:
+    radial-gradient(
+      circle at 52% 48%,
+      color-mix(in srgb, var(--education-card-mint) 58%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      circle at 12% 82%,
+      color-mix(in srgb, var(--education-pale-yellow) 58%, transparent),
+      transparent 42%
+    );
+  content: "";
+  filter: blur(0.35rem);
+}
+
+.puzzleBoard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  touch-action: manipulation;
+}
+
+.puzzlePiece {
+  --selected-x: 0%;
+  --selected-y: 0%;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transform-origin: center;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.72, 0.25, 1),
+    filter 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.puzzlePieceImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  animation: puzzle-piece-assemble 620ms cubic-bezier(0.18, 0.82, 0.24, 1)
+    var(--puzzle-delay, 0ms) both;
+}
+
+/* Map every export onto the overall SVG's coordinates at one shared scale.
+   The 446-unit square starts at (95.98, 0) in the original viewBox. */
+.puzzlePieceTopLeft {
+  --selected-x: -1.2%;
+  --selected-y: -1.2%;
+  top: calc(100% * 4.8 / 446);
+  left: calc(100% * 30 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceTopRight {
+  --selected-x: 1.2%;
+  --selected-y: -1.2%;
+  top: calc(100% * 29.8 / 446);
+  left: calc(100% * 218 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceBottomLeft {
+  --selected-x: -1.2%;
+  --selected-y: 1.2%;
+  top: calc(100% * 192.8 / 446);
+  left: calc(100% * 4.56 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceBottomRight {
+  --selected-x: 1.2%;
+  --selected-y: 1.2%;
+  top: calc(100% * 217.8 / 446);
+  left: calc(100% * 193 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceCenter {
+  /* Keep the circle clickable above the transparent corners of lifted pieces. */
+  z-index: 10;
+  top: calc(100% * 121 / 446);
+  left: calc(100% * 121.52 / 446);
+  width: calc(100% * 204 / 446);
+  height: calc(100% * 204 / 446);
+  border-radius: 50%;
+}
+
+.puzzlePieceCenter .puzzlePieceImage {
+  animation-name: puzzle-center-assemble;
+}
+
+.puzzlePiece[data-lifted="true"] {
+  z-index: 8;
+  transform: translate(var(--selected-x), var(--selected-y));
+  filter: drop-shadow(0 0.55rem 0.55rem rgb(0 63 52 / 13%));
+}
+
+.puzzlePieceCenter[data-lifted="true"] {
+  z-index: 10;
+  transform: scale(1.015);
+  filter: drop-shadow(0 0.7rem 0.6rem rgb(0 63 52 / 16%));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .puzzlePiece:hover {
+    z-index: 8;
+    transform: translate(var(--selected-x), var(--selected-y));
+    filter: drop-shadow(0 0.55rem 0.55rem rgb(0 63 52 / 13%));
+  }
+
+  .puzzlePieceCenter:hover {
+    z-index: 10;
+    transform: scale(1.015);
+  }
+}
+
+.puzzlePiece:focus-visible {
+  z-index: 9;
+  outline: 3px dashed var(--education-green);
+  outline-offset: -3px;
+}
+
+.puzzlePieceCenter:focus-visible {
+  z-index: 11;
+  outline-offset: 0.2rem;
+}
+
+.puzzlePanel {
+  width: 100%;
+  max-width: 54rem;
+  min-width: 0;
+  justify-self: center;
+  padding: clamp(1.1rem, 2.5vw, 1.5rem) 0 0;
+  scroll-margin-top: calc(var(--site-nav-height, 4.5rem) + 1.5rem);
+  border-block-start: 2px solid
+    color-mix(in srgb, var(--education-mint) 72%, transparent);
+  border-inline-start: 0;
+}
+
+.puzzlePanel:focus-visible {
+  border-radius: 0.3rem;
+  outline: 3px solid var(--education-green);
+  outline-offset: 0.35rem;
+}
+
+.puzzlePanelInner {
+  animation: puzzle-panel-reveal 320ms cubic-bezier(0.18, 0.75, 0.25, 1) both;
+}
+
+.pageShell :global(#article-body) article .puzzlePanelTitle {
+  position: relative;
+  width: 100%;
+  margin-block: 0 var(--article-space-related);
+  padding: 0.82rem 0 0;
+  background: transparent;
+  color: var(--education-navy);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: clamp(1.32rem, 1.8vw, 1.62rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.28;
+  text-wrap: balance;
+}
+
+.pageShell :global(#article-body) article .puzzlePanelTitlePrinciple {
+  margin-block: 0 var(--article-space-related);
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(2rem, 3.45vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.puzzlePanelTitle::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.4rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--education-yellow),
+    var(--education-green)
+  );
+  content: "";
+}
+
+.puzzlePanelTitlePrinciple::before {
+  content: none;
+}
+
+.puzzlePanelBody {
+  min-width: 0;
+}
+
+.puzzlePanelBody > :first-child {
+  margin-block-start: 0;
+}
+
+.puzzlePanelAnchor {
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
+.overviewTimeline {
+  --timeline-marker: 2.35rem;
+  position: relative;
+  display: grid;
+  margin-block: var(--article-space-related) 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  counter-reset: overview-timeline;
+}
+
+.overviewTimeline::before {
+  position: absolute;
+  top: 1.18rem;
+  bottom: 1.18rem;
+  left: calc(var(--timeline-marker) / 2 - 1px);
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    var(--education-yellow),
+    var(--education-mint) 48%,
+    var(--education-green)
+  );
+  content: "";
+}
+
+.overviewTimeline > li {
+  position: relative;
+  margin: 0;
+  padding: 0.95rem 0 0.95rem calc(var(--timeline-marker) + 1.15rem);
+  counter-increment: overview-timeline;
+}
+
+.overviewTimeline > li:first-child {
+  padding-block-start: 0;
+}
+
+.overviewTimeline > li:last-child {
+  padding-block-end: 0;
+}
+
+.overviewTimeline > li::before {
+  position: absolute;
+  top: 0.78rem;
+  left: 0;
+  display: grid;
+  width: var(--timeline-marker);
+  height: var(--timeline-marker);
+  border: 4px solid var(--education-paper);
+  border-radius: 50%;
+  background: var(--education-pale-yellow);
+  color: var(--education-navy);
+  content: counter(overview-timeline);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.08rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.overviewTimeline > li:first-child::before {
+  top: -0.18rem;
+}
+
+.overviewTimeline > li:nth-child(4n + 1)::before {
+  background: var(--education-yellow);
+}
+
+.overviewTimeline > li:nth-child(4n + 2)::before {
+  background: var(--education-card-mint);
+}
+
+.overviewTimeline > li:nth-child(4n + 3)::before {
+  background: var(--education-pale-yellow);
+}
+
+.overviewTimeline > li:nth-child(4n)::before {
+  background: color-mix(
+    in srgb,
+    var(--education-card-mint) 68%,
+    var(--hardware-white, #fff)
+  );
+}
+
+.overviewTimeline p {
+  margin-block: 0;
+}
+
+.overviewTimeline p + p {
+  margin-block-start: var(--article-space-label);
+}
+
+@keyframes puzzle-piece-assemble {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes puzzle-center-assemble {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes puzzle-panel-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .weaveLayout {
   display: grid;
   grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: center;
-  margin-block: var(--article-space-feature);
-  padding: clamp(1.25rem, 3vw, 2.2rem);
+  margin-block: var(--article-space-feature) 0;
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
   border: 0;
   border-radius: var(--education-radius);
   background: transparent;
@@ -2234,6 +2636,47 @@
     --education-h6-size: 1.06rem;
   }
 
+  .puzzleExplorer {
+    margin-block-start: var(--article-space-topic);
+  }
+
+  .pageShell .puzzleTagline {
+    font-size: 1.12rem;
+  }
+
+  .pageShell .puzzleInstruction {
+    align-items: flex-start;
+    border-radius: 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .puzzleBoardColumn {
+    padding: 0.4rem;
+  }
+
+  .pageShell :global(#article-body) article .puzzlePanelTitle {
+    font-size: 1.24rem;
+    line-height: 1.32;
+  }
+
+  .pageShell :global(#article-body) article .puzzlePanelTitlePrinciple {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  .overviewTimeline {
+    --timeline-marker: 2.05rem;
+  }
+
+  .overviewTimeline > li {
+    padding-inline-start: calc(var(--timeline-marker) + 0.85rem);
+  }
+
+  .overviewTimeline > li::before {
+    border-width: 3px;
+    font-size: 0.98rem;
+  }
+
   .magicCardFlipped,
   .magicCardFlipped .magicCardInner {
     min-height: 36rem;
@@ -2324,6 +2767,15 @@
 }
 
 @media (max-width: 330px) {
+  .puzzleBoardColumn {
+    padding: 0;
+  }
+
+  .pageShell .puzzleInstruction {
+    padding: 0.48rem 0.62rem;
+    font-size: 0.82rem;
+  }
+
   .weavePanel {
     height: 28rem;
   }
