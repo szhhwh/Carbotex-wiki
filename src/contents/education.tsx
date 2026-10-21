@@ -1513,18 +1513,17 @@ const sections: ArticleSection[] = [
                 {...chapter06Figure6Composite}
                 caption={
                   <>
-                    <strong>Record of the Activity:</strong>
-                    <br />
-                    (A) Participants read the{" "}
-                    <strong>Initial Investigation Dossier</strong> to understand
-                    the background of the case; (B) Participants examined the
-                    displayed samples to determine whether they were the real{" "}
-                    <strong>β-17</strong>; (C) Participants obtained the genetic
-                    dossier through the card game; (D) Participants identified
-                    the problem with <strong>β-17</strong> through the RNA
-                    deduction worksheet; (E) Participants conducted a simulated
-                    safe experiment to search for the suspect; (F) Participants
-                    made their final decision; (G){" "}
+                    <strong>Record of the Activity:</strong> (A) Participants
+                    read the <strong>Initial Investigation Dossier</strong> to
+                    understand the background of the case; (B) Participants
+                    examined the displayed samples to determine whether they
+                    were the real <strong>β-17</strong>; (C) Participants
+                    obtained the genetic dossier through the card game; (D)
+                    Participants identified the problem with{" "}
+                    <strong>β-17</strong> through the RNA deduction worksheet;
+                    (E) Participants conducted a simulated safe experiment to
+                    search for the suspect; (F) Participants made their final
+                    decision; (G){" "}
                     <strong>
                       A Player from the previous round served as MC
                     </strong>{" "}

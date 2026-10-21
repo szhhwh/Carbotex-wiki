@@ -22,6 +22,7 @@ export function ChapterGallery({
       className={styles.actionGallery}
       images={images}
       label={label}
+      showSlideCaptions={false}
     />
   );
 }
