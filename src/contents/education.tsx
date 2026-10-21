@@ -1060,7 +1060,7 @@ const milestones: Array<[string, string, ReactNode]> = [
         </strong>
       </p>
       <div
-        className={`${styles.milestoneCards} ${styles.milestoneCardsStacked}`}
+        className={`${styles.milestoneCards} ${styles.milestoneCardsHorizontal}`}
       >
         <MilestoneStaticCard
           step="Initial design: scene one"
@@ -1346,7 +1346,9 @@ function IterationExplorer({ describedBy }: { describedBy?: string }) {
         {columns.map(([title, body]) => (
           <article key={title}>
             <span>{title}</span>
-            {typeof body === "string" ? <p>{body}</p> : body}
+            <div className={styles.iterationBody}>
+              {typeof body === "string" ? <p>{body}</p> : body}
+            </div>
           </article>
         ))}
       </div>

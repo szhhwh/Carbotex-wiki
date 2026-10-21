@@ -1599,8 +1599,35 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.milestoneCardsStacked {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.milestoneCardsHorizontal {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.milestoneCardsHorizontal > .milestoneStaticCard {
+  display: grid;
+  grid-template-areas:
+    "step detail"
+    "title detail";
+  grid-template-columns: minmax(12.5rem, 0.8fr) minmax(0, 2fr);
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  column-gap: 1rem;
+}
+
+.milestoneCardsHorizontal .milestoneStep {
+  grid-area: step;
+  padding: 1rem 0.75rem 0 1rem;
+}
+
+.milestoneCardsHorizontal .milestoneStaticCard > h6 {
+  grid-area: title;
+  min-height: 0;
+  padding: 0.45rem 0.75rem 1rem 1rem;
+}
+
+.milestoneCardsHorizontal .milestoneStaticCard .milestoneDetail {
+  grid-area: detail;
+  padding: 1rem 1rem 1rem 0;
 }
 
 .milestoneCard {
@@ -1841,10 +1868,6 @@
   padding-top: 0;
 }
 
-.milestoneCardsStacked .milestoneStaticCard > h6 {
-  min-height: 0;
-}
-
 .milestoneChoice {
   margin-block: var(--article-space-block);
   padding: 1.4rem 1.5rem;
@@ -2013,12 +2036,17 @@
 
 .iterationColumns {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   background: transparent;
 }
 
 .iterationColumns article {
+  display: grid;
+  grid-template-areas: "label body";
+  grid-template-columns: minmax(12.5rem, 0.8fr) minmax(0, 2fr);
+  align-items: start;
+  column-gap: 1rem;
   min-height: 12rem;
   padding: 1.25rem;
   border-radius: 1.5rem;
@@ -2034,10 +2062,20 @@
 }
 
 .iterationColumns article > span {
+  grid-area: label;
   display: block;
-  margin-block-end: 0.65rem;
+  margin: 0;
   color: var(--education-navy);
   line-height: 1.4;
+}
+
+.iterationBody {
+  grid-area: body;
+  min-width: 0;
+}
+
+.iterationColumns .iterationBody > :first-child {
+  margin-block-start: 0;
 }
 
 .iterationColumns p {
@@ -2167,10 +2205,14 @@
 @media (min-width: 901px) and (max-width: 1279px) {
   .milestoneCards,
   .milestoneCardsTwo,
-  .milestoneCardsStacked,
+  .milestoneCardsHorizontal,
   .retainedGrid,
   .magicGrid {
     justify-items: center;
+  }
+
+  .milestoneCardsHorizontal {
+    justify-items: stretch;
   }
 
   .magicCard {
@@ -2200,6 +2242,43 @@
   .magicCardFlipped,
   .magicCardFlipped .magicCardInner {
     min-height: 26rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .milestoneCardsHorizontal > .milestoneStaticCard {
+    grid-template-areas:
+      "step"
+      "title"
+      "detail";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .milestoneCardsHorizontal .milestoneStep {
+    padding: 1rem 1rem 0;
+  }
+
+  .milestoneCardsHorizontal .milestoneStaticCard > h6 {
+    padding: 0.45rem 1rem 1rem;
+  }
+
+  .milestoneCardsHorizontal .milestoneStaticCard .milestoneDetail {
+    padding: 0 1rem 1rem;
+  }
+
+  .iterationColumns article {
+    grid-template-areas:
+      "label"
+      "body";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .iterationColumns article > span {
+    margin-block-end: 0.65rem;
+  }
+
+  .iterationColumns .iterationBody > :first-child {
+    margin-block-start: var(--article-space-related);
   }
 }
 
