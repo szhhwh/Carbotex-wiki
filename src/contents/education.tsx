@@ -154,12 +154,7 @@ function WeaveFramework() {
         </div>
       </div>
       <div className={styles.weaveControls}>
-        <InteractionHint id="education-weave-interaction-hint">
-          Follow the five stitches. Each one opens a short account of how the
-          education program moves from intention to iteration.
-        </InteractionHint>
         <div
-          aria-describedby="education-weave-interaction-hint"
           className={styles.weaveTabs}
           role="tablist"
           aria-label="WEAVE stages"
