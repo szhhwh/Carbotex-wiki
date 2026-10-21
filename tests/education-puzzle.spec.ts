@@ -83,8 +83,18 @@ test("switches all five puzzle pieces and preserves timeline structure", async (
   const principleTab = tabs.filter({
     hasText: "Stitching Technique: Our Principle",
   });
+  const principleDisc = principleTab.locator("svg");
+  await expect(principleDisc).toHaveAttribute("viewBox", "0 0 203 203");
+  await expect(principleTab.locator("img")).toHaveCount(0);
+  await expect(principleDisc.locator("image, use, text, style")).toHaveCount(0);
+  await expect(principleDisc).toHaveCSS(
+    "animation-name",
+    /puzzle-center-assemble/,
+  );
   await principleTab.click();
   await expect(principleTab).toHaveAttribute("aria-selected", "true");
+  await expect(principleTab).toHaveAttribute("data-lifted", "true");
+  await expect(principleTab).not.toHaveCSS("transform", "none");
   const principleTitle = panel.getByRole("heading", {
     level: 3,
     name: "Stitching Technique: Our Principle",
@@ -281,7 +291,7 @@ test("keeps puzzle and panel within responsive layouts without overflow", async 
     expect(metrics.panel.top).toBeGreaterThan(metrics.board.bottom);
   }
 
-  await expect(images).toHaveCount(5);
+  await expect(images).toHaveCount(4);
   const imageState = await images.evaluateAll((elements) =>
     elements.map((image) => ({
       complete: (image as HTMLImageElement).complete,
