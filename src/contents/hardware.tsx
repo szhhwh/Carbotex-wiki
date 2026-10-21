@@ -38,7 +38,7 @@ const takeaways: HardwareTakeaway[] = [
     icon: "exchange",
   },
   {
-    metric: "$171.54",
+    metric: "$124.89",
     title: "Built from commercially available parts",
     text: "The complete platform uses off-the-shelf components and a detailed, replicable bill of materials.",
     icon: "cost",
@@ -64,7 +64,7 @@ const componentGroups: CatalogGroup[] = [
     parts: [
       {
         name: "Motor RS-380SA (Peristaltic Pump)",
-        specification: "DC motor, 10 units",
+        specification: "DC motor, 4 units",
         function: "Drives fluid through the column and tubing circuit",
       },
       {
@@ -92,7 +92,7 @@ const componentGroups: CatalogGroup[] = [
     parts: [
       {
         name: "Sodium-Type Cation Exchange Resin",
-        specification: "2 units",
+        specification: "1 units",
         function: "Na⁺ form resin for selective NH₄⁺ capture",
       },
       {
@@ -109,7 +109,7 @@ const componentGroups: CatalogGroup[] = [
     parts: [
       {
         name: "Bambu Lab PLA Basic Filament",
-        specification: "6 spools",
+        specification: "1 spools",
         function: "3D-printed structural housing and custom mounts",
       },
       {
@@ -150,7 +150,7 @@ const componentGroups: CatalogGroup[] = [
     parts: [
       {
         name: "NTC Temperature Sensor",
-        specification: "4 units",
+        specification: "2 units",
         function: "Monitors fermentation broth temperature",
       },
       {
@@ -166,7 +166,7 @@ const componentGroups: CatalogGroup[] = [
       },
       {
         name: "Flexible Liquid-Level Sensor",
-        specification: "5 units",
+        specification: "2 units",
         function: "Detects fluid levels in reservoirs and column",
       },
     ],
@@ -343,7 +343,7 @@ const outlookStages: OutlookStage[] = [
   {
     horizon: "Boundary",
     title: "Real-world application",
-    text: "Our primary use case is laboratory-scale anaerobic fermentation effluent treatment, with automated ammonia-nitrogen removal before downstream aerobic malate biosynthesis. The platform was designed, tested, and validated for this scenario. It addresses a real bottleneck: manual ammonium removal is labor-intensive, inconsistent, and limits throughput in multi-stage fermentation workflows. At $171.54 total, the low-cost, 3D-printed, open-source system is accessible to undergraduate and research laboratories worldwide. Field deployment beyond the laboratory will require pilot-scale validation, long-term stability testing beyond 7 days of continuous operation, and regulatory review. These remain future work rather than current claims.",
+    text: "Our primary use case is laboratory-scale anaerobic fermentation effluent treatment, with automated ammonia-nitrogen removal before downstream aerobic malate biosynthesis. The platform was designed, tested, and validated for this scenario. It addresses a real bottleneck: manual ammonium removal is labor-intensive, inconsistent, and limits throughput in multi-stage fermentation workflows. At $124.89 total, the low-cost, 3D-printed, open-source system is accessible to undergraduate and research laboratories worldwide. Field deployment beyond the laboratory will require pilot-scale validation, long-term stability testing beyond 7 days of continuous operation, and regulatory review. These remain future work rather than current claims.",
   },
 ];
 
@@ -351,9 +351,9 @@ const budgetItems: BudgetItem[] = [
   {
     number: 1,
     name: "Bambu Lab PLA Basic Filament",
-    quantity: 6,
+    quantity: 1,
     unitCost: 7.04,
-    cost: 42.24,
+    cost: 7.04,
     group: "structure",
   },
   {
@@ -399,17 +399,17 @@ const budgetItems: BudgetItem[] = [
   {
     number: 7,
     name: "Cable Ties (3.6 mm × 30 cm)",
-    quantity: 200,
-    unitCost: 0.02,
+    quantity: 1,
+    unitCost: 4,
     cost: 4,
     group: "structure",
   },
   {
     number: 8,
     name: "Foam Adhesive Tape (20 mm × 3 m)",
-    quantity: 2,
+    quantity: 1,
     unitCost: 1.14,
-    cost: 2.28,
+    cost: 1.14,
     group: "structure",
   },
   {
@@ -455,17 +455,17 @@ const budgetItems: BudgetItem[] = [
   {
     number: 14,
     name: "Motor RS-380SA (Peristaltic Pump)",
-    quantity: 10,
+    quantity: 4,
     unitCost: 0.28,
-    cost: 2.8,
+    cost: 1.12,
     group: "fluidic",
   },
   {
     number: 15,
     name: "Sodium-Type Cation Exchange Resin",
-    quantity: 2,
+    quantity: 1,
     unitCost: 2.08,
-    cost: 4.16,
+    cost: 2.08,
     group: "chemistry",
   },
   {
@@ -495,17 +495,17 @@ const budgetItems: BudgetItem[] = [
   {
     number: 19,
     name: "Check Valve (8 mm)",
-    quantity: 20,
+    quantity: 4,
     unitCost: 0.1,
-    cost: 2,
+    cost: 0.4,
     group: "fluidic",
   },
   {
     number: 20,
     name: "Flexible Liquid-Level Sensor",
-    quantity: 5,
+    quantity: 2,
     unitCost: 1.65,
-    cost: 8.25,
+    cost: 3.3,
     group: "sensing",
   },
 ];
@@ -690,7 +690,7 @@ const sections: ArticleSection[] = [
         </p>
         <ComponentCatalog groups={componentGroups} />
         <p>
-          The total hardware cost is <strong>171.54 USD</strong> (detailed
+          The total hardware cost is <strong>124.89 USD</strong> (detailed
           breakdown in the device budget). The complete bill of materials
           ensures that the system can be replicated from commercially available
           components at low cost, supporting the project's goal of accessible,
