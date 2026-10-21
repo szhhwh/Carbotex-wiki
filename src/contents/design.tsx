@@ -865,17 +865,16 @@ const sections: ArticleSection[] = [
               provides the recipient background for subsequent PYC engineering.
             </p>
             <p>
-              PMA concentration, growth, and sugar consumption are used to
-              evaluate production performance and carbon-source utilization. To
-              examine the transcriptional changes associated with combined
-              overexpression, we use reverse transcription–quantitative
-              polymerase chain reaction (RT-qPCR) to compare unmodified A08 with
-              OE-XlnR+AraR. The measured targets are the
-              xylose-metabolism-related genes <em>XYR</em>, <em>XDH</em>,{" "}
-              <em>XKI</em>, and <em>XI</em>, together with the PMA synthase gene{" "}
-              <em>PMA</em>. Relative transcript levels are normalized to the
-              reference gene <em>actin</em>, with A08 serving as the comparison
-              baseline.
+              PMA concentration and growth are used to evaluate production
+              performance and carbon-source utilization. To examine the
+              transcriptional changes associated with combined overexpression,
+              we use reverse transcription–quantitative polymerase chain
+              reaction (RT-qPCR) to compare unmodified A08 with OE-XlnR+AraR.
+              The measured targets are the xylose-metabolism-related genes{" "}
+              <em>XYR</em>, <em>XDH</em>, <em>XKI</em>, and <em>XI</em>,
+              together with the PMA synthase gene <em>PMA</em>. Relative
+              transcript levels are normalized to the reference gene{" "}
+              <em>actin</em>, with A08 serving as the comparison baseline.
             </p>
           </>
         ),
