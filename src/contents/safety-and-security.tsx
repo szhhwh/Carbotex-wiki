@@ -1,9 +1,10 @@
 import {
-  ArticleNote,
   ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
 import { Cite } from "../components/article/References";
+import { Figure } from "../components/media/Figure";
+import { FigurePair } from "../components/media/FigurePair";
 
 // ArticlePage owns the visual sequence numbers for top-level sections. Keep
 // source heading prefixes out of titles so the outline stays consistent.
@@ -32,14 +33,12 @@ const sections: ArticleSection[] = [
           laboratory access qualification examination before undertaking
           laboratory work.
         </p>
-        <ArticleNote label="Our approach">
-          <p>
-            These measures help ensure that our experiments are conducted safely
-            and provide a sound basis for project implementation. We aim to
-            carry out rigorous research and to develop practices that may inform
-            safety management in future synthetic biology projects.
-          </p>
-        </ArticleNote>
+        <p>
+          These measures help ensure that our experiments are conducted safely
+          and provide a sound basis for project implementation. We aim to carry
+          out rigorous research and to develop practices that may inform safety
+          management in future synthetic biology projects.
+        </p>
       </>
     ),
   },
@@ -82,15 +81,15 @@ const sections: ArticleSection[] = [
           <Cite k={["zhou2024melanin", "dailin2023pullulan"]} />. However,
           opportunistic infections caused by this species have been reported in
           humans, including catheter-related bloodstream infection{" "}
-          <Cite k="yamamoto2022catheter" />. Skin and soft-tissue infection in
-          an immunocompetent host has also been reported. Patel et al. noted
-          that the species is more commonly an opportunistic fungus in
-          immunocompromised hosts <Cite k="patel2025skin" />. In our
-          experiments, <em>Escherichia coli</em> DH5α was used as a cloning
-          host. DH5α is a commonly used competent strain for molecular cloning
-          and is included on the approved-organism whitelist. During
-          experimental work and management, our team will follow BSL-1
-          laboratory procedures to control potential risks.
+          <Cite k="yamamoto2022catheter" /> and skin and soft-tissue infection
+          in an immunocompetent host. Patel et al. noted that the species is
+          more commonly an opportunistic fungus in immunocompromised hosts{" "}
+          <Cite k="patel2025skin" />. In our experiments,{" "}
+          <em>Escherichia coli</em> DH5α was used as a cloning host. DH5α is a
+          commonly used competent strain for molecular cloning and is included
+          on the approved-organism whitelist. During experimental work and
+          management, our team will follow BSL-1 laboratory procedures to
+          control potential risks.
         </p>
       </>
     ),
@@ -138,11 +137,25 @@ const sections: ArticleSection[] = [
         </p>
         <p>
           In addition, the project uses a closed, staged biomanufacturing
-          process. All <em>Aureobasidium melanogenum</em> A08 fermentations are
-          conducted in controlled equipment, with no environmental release of
-          the engineered microorganism. Cultures and spent fermentation broth
-          are inactivated before disposal, and waste is transferred through
-          university-authorized channels <Cite k="ouchazardouswaste" />.
+          process. All Aureobasidium melanogenum A08 fermentations are conducted
+          in controlled equipment, with no environmental release of the
+          engineered microorganism. Cultures and spent fermentation broth are
+          inactivated before disposal, and waste is transferred through
+          university-authorized channels <Cite k="ouchazardouswaste" />. Table 1
+          summarizes the biosafety control strategies applied in this project.
+        </p>
+        <Figure
+          src="https://static.igem.wiki/teams/6147/wiki/wet-safety/safety-table1-strategies.avif"
+          alt="Table 1. Biosafety control strategies applied in this project"
+          intrinsicWidth={2480}
+          intrinsicHeight={2000}
+          captionPrefix="Table 1."
+          caption="Biosafety control strategies applied in this project"
+          fallback={<p>Image unavailable.</p>}
+        />
+        <p>
+          Each strategy is described in the Project Design Safety and Laboratory
+          Safety sections.
         </p>
         <p>
           Safety is a prerequisite for the practical application of
@@ -150,16 +163,16 @@ const sections: ArticleSection[] = [
           First, PMA has good biocompatibility and is non-immunogenic;
           biosynthetically produced PMA has been reported to exhibit
           biocompatibility comparable to, or better than, chemically synthesized
-          PMA, supporting its potential as a biocompatible and environmentally
-          favorable material{" "}
-          <Cite k={["zhang2021pmananoplatform", "qi2022highmwpolymalate"]} />.
-          Dopamine is also an endogenous compound in the human body, and PMA
-          functionalized with dopamine through amide bonds showed no
-          cytotoxicity <Cite k="Tang2020PMLADA" />. Second, the adhesive uses
-          biodegradable PMA as its polymer backbone, allowing gradual
-          degradation and metabolism in vivo and potentially reducing the risks
-          of persistent residues and inflammation associated with long-term
-          implantation. Taken together, the reported biocompatibility,
+          PMA{" "}
+          <Cite k={["zhang2021pmananoplatform", "qi2022highmwpolymalate"]} />
+          , supporting its potential as a biocompatible and environmentally
+          favorable material. Dopamine is also an endogenous compound in the
+          human body, and PMA functionalized with dopamine through amide bonds
+          showed no cytotoxicity <Cite k="Tang2020PMLADA" />. Second, the
+          adhesive uses biodegradable PMA as its polymer backbone, allowing
+          gradual degradation and metabolism in vivo and potentially reducing
+          the risks of persistent residues and inflammation associated with
+          long-term implantation. Taken together, the reported biocompatibility,
           biodegradability, and lack of cytotoxicity provide a basis for further
           investigating PMA–DA in underwater applications and biomedical uses
           such as tissue adhesion.
@@ -191,17 +204,28 @@ const sections: ArticleSection[] = [
         id: "access-and-training",
         title: "Access and Training",
         content: (
-          <p>
-            Laboratory access is limited to personnel with a current access
-            qualification <Cite k="ouc2024safetyaccess" />. Before entering the
-            laboratory, team members complete the university's safety-access
-            training and examination. They also undertake online
-            virtual-simulation training, which allows them to practice
-            procedures and instrument use without handling biological materials.
-            Before an unfamiliar procedure, the responsible supervisor provides
-            task- and instrument-specific instruction; members work under
-            supervision when warranted.
-          </p>
+          <>
+            <p>
+              Laboratory access is limited to personnel with a current access
+              qualification <Cite k="ouc2024safetyaccess" />. Before entering
+              the laboratory, team members complete the university's
+              safety-access training and examination. They also undertake online
+              virtual-simulation training, which allows them to practice
+              procedures and instrument use without handling biological
+              materials. Before an unfamiliar procedure, the responsible
+              supervisor provides task- and instrument-specific instruction;
+              members work under supervision when warranted.
+            </p>
+            <Figure
+              src="https://static.igem.wiki/teams/6147/wiki/wet-safety/biosafety-test-of-the-virtual-simulation-laboratory-management-platform-of-ocean-university-of-china.avif"
+              alt="Figure 1. Biosafety assessment on the Ocean University of China virtual simulation laboratory management platform"
+              intrinsicWidth={1104}
+              intrinsicHeight={553}
+              captionPrefix="Figure 1."
+              caption="Biosafety assessment on the Ocean University of China virtual simulation laboratory management platform"
+              fallback={<p>Image unavailable.</p>}
+            />
+          </>
         ),
       },
       {
@@ -213,8 +237,8 @@ const sections: ArticleSection[] = [
               Before each activity, the operator identifies hazards associated
               with the materials, equipment, energy sources, and anticipated
               waste streams; reviews the applicable procedures and safety data
-              sheets (SDSs); and confirms the locations of emergency equipment
-              and exits <Cite k="oucchemicalsds" />. Personal protective
+              sheets (SDSs) <Cite k="oucchemicalsds" />; and confirms the
+              locations of emergency equipment and exits. Personal protective
               equipment is selected for the specific task rather than applied as
               a fixed checklist. A lab coat and closed-toe footwear are the
               baseline; eye, hand, and other protection is matched to splash,
@@ -246,6 +270,15 @@ const sections: ArticleSection[] = [
               puncture-resistant containers and are never left on benches or
               discarded as ordinary waste.
             </p>
+            <Figure
+              src="https://static.igem.wiki/teams/6147/wiki/wet-safety/laboratory-gas-pressure-regulating-device-and-safe-operating-procedure.avif"
+              alt="Figure 2. Laboratory gas pressure regulating device and its safe operating procedure"
+              intrinsicWidth={1108}
+              intrinsicHeight={831}
+              captionPrefix="Figure 2."
+              caption="Laboratory gas pressure regulating device and its safe operating procedure"
+              fallback={<p>Image unavailable.</p>}
+            />
           </>
         ),
       },
@@ -274,18 +307,41 @@ const sections: ArticleSection[] = [
         id: "incident-response",
         title: "Incident and Near-Miss Response",
         content: (
-          <p>
-            Team members know how to raise an alarm, evacuate, contact the
-            laboratory supervisor, and obtain medical or professional emergency
-            support. In an incident, near miss, or unsafe condition, the
-            immediate priorities are to stop work, protect people, warn those
-            nearby, isolate the hazard only when it is safe to do so, and report
-            promptly. Medical assessment or professional response must not be
-            delayed to finish an experiment or attempt a response beyond one's
-            training. The university requires laboratories to establish
-            accident-prevention measures and emergency plans appropriate to the
-            waste they generate <Cite k="ouchazardouswaste" />.
-          </p>
+          <>
+            <p>
+              Team members know how to raise an alarm, evacuate, contact the
+              laboratory supervisor, and obtain medical or professional
+              emergency support. In an incident, near miss, or unsafe condition,
+              the immediate priorities are to stop work, protect people, warn
+              those nearby, isolate the hazard only when it is safe to do so,
+              and report promptly. Medical assessment or professional response
+              must not be delayed to finish an experiment or attempt a response
+              beyond one's training. The university requires laboratories to
+              establish accident-prevention measures and emergency plans
+              appropriate to the waste they generate{" "}
+              <Cite k="ouchazardouswaste" />.
+            </p>
+            <FigurePair>
+              <Figure
+                src="https://static.igem.wiki/teams/6147/wiki/wet-safety/laboratory-fire-evacuation-diagram.avif"
+                alt="Figure 3. Laboratory fire evacuation diagram"
+                intrinsicWidth={1107}
+                intrinsicHeight={1476}
+                captionPrefix="Figure 3."
+                caption="Laboratory fire evacuation diagram"
+                fallback={<p>Image unavailable.</p>}
+              />
+              <Figure
+                src="https://static.igem.wiki/teams/6147/wiki/wet-safety/national-laws-for-project-compliance.avif"
+                alt="Figure 4. National laws relevant to the compliance of this project"
+                intrinsicWidth={1012}
+                intrinsicHeight={1373}
+                captionPrefix="Figure 4."
+                caption="National laws relevant to the compliance of this project"
+                fallback={<p>Image unavailable.</p>}
+              />
+            </FigurePair>
+          </>
         ),
       },
     ],
