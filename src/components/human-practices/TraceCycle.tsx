@@ -165,7 +165,10 @@ export function TraceCycleProvider({ children }: { children: ReactNode }) {
       scrollTarget();
       focusTarget();
     });
-    const settleTimer = window.setTimeout(focusTarget, 350);
+    const settleTimer = window.setTimeout(() => {
+      scrollTarget();
+      focusTarget();
+    }, 350);
     const observer =
       root?.hasAttribute("inert") && fragment.target.isConnected
         ? new MutationObserver(() => {
