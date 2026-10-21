@@ -361,7 +361,7 @@ test.describe("integrated human practices", () => {
     ).toEqual([]);
   });
 
-  test("SDG cards flip by keyboard without losing focus", async ({ page }) => {
+  test("SDG cards stay compact and flip by keyboard", async ({ page }) => {
     await openIhp(page, "#ihp-trace-10");
 
     const cards = page.locator('section[aria-label="Three SDG lenses"]');
@@ -370,6 +370,39 @@ test.describe("integrated human practices", () => {
     const firstButton = buttons.first();
 
     await expect(buttons).toHaveCount(3);
+    const closedCards = await cards.locator("article").evaluateAll((articles) =>
+      articles.map((card) => {
+        const front = card.querySelector<HTMLElement>(
+          'span[aria-hidden="false"]',
+        );
+        const icon = front?.querySelector("img");
+        const action = front?.querySelector<HTMLElement>('[class*="action"]');
+        if (!front || !icon || !action) {
+          throw new Error("SDG card front is incomplete");
+        }
+
+        const cardRect = card.getBoundingClientRect();
+        const frontRect = front.getBoundingClientRect();
+        const iconRect = icon.getBoundingClientRect();
+        const actionRect = action.getBoundingClientRect();
+        return {
+          height: cardRect.height,
+          contentInside:
+            iconRect.top >= frontRect.top - 0.5 &&
+            iconRect.bottom <= frontRect.bottom + 0.5 &&
+            actionRect.top >= frontRect.top - 0.5 &&
+            actionRect.bottom <= frontRect.bottom + 0.5,
+        };
+      }),
+    );
+    const rootFontSize = await page.evaluate(() =>
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize),
+    );
+    expect(Math.max(...closedCards.map((card) => card.height))).toBeLessThan(
+      22 * rootFontSize,
+    );
+    expect(closedCards.every((card) => card.contentInside)).toBe(true);
+
     await expect(firstButton).toHaveAttribute("aria-pressed", "false");
     await firstButton.press("Enter");
 
