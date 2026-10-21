@@ -38,6 +38,8 @@ export interface ArticleSubsection {
 interface HeroImage {
   src: string;
   alt: string;
+  intrinsicWidth?: number;
+  intrinsicHeight?: number;
   /** Optional surface color visible through transparent image pixels. */
   backgroundColor?: string;
   /** Optional fit mode for preserving artwork bounds inside the media slot. */
@@ -87,8 +89,14 @@ export function ArticleHero({
         data-has-image={heroImage ? "true" : undefined}
         aria-hidden={heroImage ? undefined : "true"}
         style={
-          heroImage?.backgroundColor
-            ? { backgroundColor: heroImage.backgroundColor }
+          heroImage
+            ? {
+                backgroundColor: heroImage.backgroundColor,
+                aspectRatio:
+                  heroImage.intrinsicWidth && heroImage.intrinsicHeight
+                    ? `${heroImage.intrinsicWidth} / ${heroImage.intrinsicHeight}`
+                    : undefined,
+              }
             : undefined
         }
       >
@@ -97,6 +105,8 @@ export function ArticleHero({
             className={styles.heroImage}
             src={heroImage.src}
             alt={heroImage.alt}
+            width={heroImage.intrinsicWidth}
+            height={heroImage.intrinsicHeight}
             decoding="async"
             fetchPriority="high"
             style={

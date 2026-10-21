@@ -16,7 +16,11 @@ import {
 import { Caption } from "../components/media/Caption";
 import { Figure } from "../components/media/Figure";
 import { ACTIVITIES } from "./activityCatalog";
-import { media, mediaRoot } from "./education/EducationAssets";
+import {
+  educationImageDimensions,
+  media,
+  mediaRoot,
+} from "./education/EducationAssets";
 import {
   ChapterGallery,
   ResourceLibrary,
@@ -588,6 +592,16 @@ function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
   const [activeId, setActiveId] = useState("adhesives");
   const active =
     workflowNodes.find(([id]) => id === activeId) ?? workflowNodes[0];
+  const imageFile = active[3];
+  const imageDimensions = imageFile
+    ? educationImageDimensions(imageFile)
+    : undefined;
+
+  if (imageFile && !imageDimensions) {
+    throw new Error(
+      `Missing Education workflow image dimensions for ${imageFile}`,
+    );
+  }
 
   return (
     <div
@@ -626,12 +640,13 @@ function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
       <div className={styles.workflowPanel}>
         <div className={styles.panelReveal} key={active[0]}>
           <h6>{active[1]}</h6>
-          {active[3] && (
+          {imageFile && imageDimensions && (
             <Figure
               alt={`${active[1]} activity design`}
               className={styles.workflowFigure}
-              ratio="16 / 9"
-              src={`${mediaRoot}/${active[3]}`}
+              intrinsicWidth={imageDimensions[0]}
+              intrinsicHeight={imageDimensions[1]}
+              src={`${mediaRoot}/${imageFile}`}
               fallback={<span>Image unavailable.</span>}
             />
           )}
@@ -1948,6 +1963,8 @@ export function Education() {
         heroImage={{
           src: "https://static.igem.wiki/teams/6147/wiki/education/edu-igem-collagen.webp",
           alt: "Collage of OUC-Haide education activities and participants around the WEAVE programme mark.",
+          intrinsicWidth: 5760,
+          intrinsicHeight: 4320,
         }}
         sections={activeSections}
         contentControls={

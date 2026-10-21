@@ -51,8 +51,8 @@ export function FooterLogoLockup({
         <img
           className={styles.adelaideMark}
           src="https://static.igem.wiki/teams/6147/wiki/fronted-resource/adelaide-university-transparent.svg"
-          width="318"
-          height="216"
+          width="484"
+          height="132"
           alt="The University of Adelaide"
           loading="lazy"
           decoding="async"

@@ -1111,6 +1111,8 @@ export function Experiments() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-experiments.avif",
         alt: "Illustration of microscopes, laboratory instruments, and gel electrophoresis.",
+        intrinsicWidth: 4000,
+        intrinsicHeight: 1334,
         backgroundColor: "#e7f2f4",
         objectFit: "contain",
       }}

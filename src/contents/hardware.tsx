@@ -1012,6 +1012,8 @@ export function Hardware() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/hd-header-image-2.avif",
         alt: "Industrial fermentation tanks and stainless-steel piping in a production facility.",
+        intrinsicWidth: 1920,
+        intrinsicHeight: 1280,
       }}
       sections={sections}
       references

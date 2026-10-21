@@ -82,7 +82,7 @@ export const teamMembers: TeamMember[] = [
     name: "Yueyang Sun",
     major: "Instructor",
     roles: ["instructor"],
-    image: "https://static.igem.wiki/teams/6147/wiki/team/syy.avif",
+    image: "https://static.igem.wiki/teams/6147/wiki/team/syyy.avif",
     facts: [
       {
         question: "Special Thanks To",

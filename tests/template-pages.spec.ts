@@ -4,14 +4,17 @@ const templatePages = [
   {
     path: "/contribution",
     title: "Contribution",
+    heroRatio: 1069 / 400,
   },
   {
     path: "/experiments",
     title: "Experiments",
+    heroRatio: 4000 / 1334,
   },
   {
     path: "/attributions",
     title: "Attributions",
+    heroRatio: 1069 / 400,
   },
 ] as const;
 
@@ -47,7 +50,7 @@ test.describe("template article pages", () => {
           const rect = element.getBoundingClientRect();
           return rect.width / rect.height;
         });
-        expect(heroRatio).toBeCloseTo(1069 / 400, 2);
+        expect(heroRatio).toBeCloseTo(templatePage.heroRatio, 2);
 
         const titleBandAlignment = await hero.evaluate((element) => {
           const mediaRect = element.getBoundingClientRect();

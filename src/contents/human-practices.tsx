@@ -63,6 +63,8 @@ export function HumanPractices() {
           heroImage={{
             src: "https://static.igem.wiki/teams/6147/wiki/igem-collage-1.webp",
             alt: "Collage of OUC-Haide team members during stakeholder meetings, laboratory work, and iGEM presentations.",
+            intrinsicWidth: 1706,
+            intrinsicHeight: 1279,
           }}
           sections={sections}
           references

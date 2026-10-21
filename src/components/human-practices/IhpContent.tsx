@@ -1,4 +1,5 @@
 import { Children, Fragment, isValidElement, type ReactNode } from "react";
+import { ihpImageDimensions } from "../../data/ihp-image-dimensions";
 import { Caption } from "../media/Caption";
 import { Figure } from "../media/Figure";
 import { ImageGallery } from "../media/ImageGallery";
@@ -109,6 +110,16 @@ function traceStageSummary(stages: IhpTracePart["stages"]) {
   );
 }
 
+function mediaSizing(src: string, fallbackRatio: string) {
+  const dimensions = ihpImageDimensions(src);
+  return dimensions
+    ? {
+        intrinsicWidth: dimensions[0],
+        intrinsicHeight: dimensions[1],
+      }
+    : { ratio: fallbackRatio };
+}
+
 interface IhpPartsProps {
   parts: IhpPart[];
   groups: IhpStakeholderGroup[];
@@ -159,7 +170,7 @@ export function IhpParts({
                 key={`figure-${index}`}
                 src={part.src}
                 alt={part.alt}
-                ratio={part.ratio}
+                {...mediaSizing(part.src, part.ratio)}
                 caption={part.caption}
                 frame={part.frame}
                 captionPrefix={
@@ -180,13 +191,13 @@ export function IhpParts({
                 key={`gallery-${index}`}
                 images={part.images.map((image, imageIndex) => ({
                   ...image,
+                  ...mediaSizing(image.src, part.ratio),
                   alt:
                     (altCounts.get(image.alt) ?? 0) > 1
                       ? `${image.alt.replace(/[.\s]+$/, "")}. Photograph ${
                           imageIndex + 1
                         } of ${part.images.length}.`
                       : image.alt,
-                  ratio: part.ratio,
                 }))}
                 label={part.caption || "Project evidence"}
                 columns={part.columns}

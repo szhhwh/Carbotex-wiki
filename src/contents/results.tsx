@@ -145,7 +145,6 @@ const sections: ArticleSection[] = [
                 src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig04-pma-titer-xylose-concentration.avif"
                 intrinsicWidth={1218}
                 intrinsicHeight={1004}
-                ratio="1 / 1"
                 alt="PMA titer at six xylose concentrations from 80 to 180 grams per litre"
                 captionPrefix="Figure 4."
                 caption="PMA titer across xylose concentrations."
@@ -156,7 +155,6 @@ const sections: ArticleSection[] = [
                 src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig05-pma-titer-glucose-xylose-ratio.avif"
                 intrinsicWidth={825}
                 intrinsicHeight={956}
-                ratio="1 / 1"
                 alt="PMA titer across different glucose and xylose mixture ratios"
                 captionPrefix="Figure 5."
                 caption="PMA titer across glucose/xylose ratios."
@@ -812,6 +810,8 @@ export function Results() {
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-results.avif",
         alt: "Illustration of chromatograms, bar charts, and gel electrophoresis results.",
+        intrinsicWidth: 4000,
+        intrinsicHeight: 1334,
         backgroundColor: "#e7f2f4",
         objectFit: "contain",
       }}

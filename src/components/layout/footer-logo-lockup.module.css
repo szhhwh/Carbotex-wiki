@@ -62,9 +62,8 @@
 .adelaideMark {
   flex: 0 0 100%;
   width: 100%;
-  height: 4rem;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
+  aspect-ratio: 484 / 132;
   filter: brightness(0);
   opacity: 0.82;
 }
@@ -98,10 +97,6 @@
     width: 4.5rem;
     height: 4.5rem;
     transform: translateY(-0.18rem);
-  }
-
-  .adelaideMark {
-    height: 3.5rem;
   }
 }
 

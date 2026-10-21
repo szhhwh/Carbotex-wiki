@@ -52,7 +52,8 @@ const sections: ArticleSection[] = [
           alt="Example free energy profile along a pulling coordinate"
           caption="Example free energy profile from Heidelberg 2025; shown here only to preview image and caption layout."
           captionPrefix="Figure 1."
-          ratio="16 / 9"
+          intrinsicWidth={758}
+          intrinsicHeight={519}
           maxWidth="720px"
         />
       </>
