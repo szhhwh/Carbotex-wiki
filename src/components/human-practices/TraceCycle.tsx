@@ -165,7 +165,7 @@ export function TraceCycleProvider({ children }: { children: ReactNode }) {
       scrollTarget();
       focusTarget();
     });
-    const focusTimer = window.setTimeout(focusTarget, 350);
+    const settleTimer = window.setTimeout(focusTarget, 350);
     const observer =
       root?.hasAttribute("inert") && fragment.target.isConnected
         ? new MutationObserver(() => {
@@ -181,7 +181,7 @@ export function TraceCycleProvider({ children }: { children: ReactNode }) {
 
     return () => {
       cancelAnimationFrame(frame);
-      window.clearTimeout(focusTimer);
+      window.clearTimeout(settleTimer);
       observer?.disconnect();
     };
   }, [location.hash, openCycles]);
