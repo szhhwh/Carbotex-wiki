@@ -580,14 +580,8 @@ export const ihpSections: IhpSectionContent[] = [
                     <strong>{"Stakeholder Ecosystem Map:"}</strong>
                   </em>
                   {
-                    " Building on our Stakeholder Matrix, we visualized interconnected stakeholder perspectives surrounding Carbotex: "
+                    " Building on our Stakeholder Matrix, we visualized and summarized interconnected stakeholder perspectives surrounding Carbotex."
                   }
-                  <strong>
-                    {
-                      "Feedstock & Agriculture, Biomanufacturing & Research, Materials & Applications, Industry & Scale-up, Sustainability, Policy & Governance, and Society, Communication & Peer Community"
-                    }
-                  </strong>
-                  {"."}
                 </p>
                 <p>
                   {"By placing "}
@@ -602,7 +596,7 @@ export const ihpSections: IhpSectionContent[] = [
           {
             kind: "figure",
             src: "https://static.igem.wiki/teams/6147/wiki/mapmap.svg",
-            alt: "Carbotex stakeholder ecosystem map showing stakeholder perspectives surrounding the TRACE framework.",
+            alt: "Carbotex stakeholder ecosystem map showing six stakeholder perspectives surrounding the TRACE framework.",
             ratio: "1482 / 1024",
             caption: "Carbotex stakeholder ecosystem centered on TRACE.",
             figureNumber: 3,
