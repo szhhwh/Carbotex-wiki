@@ -91,8 +91,8 @@ const sections: ArticleSection[] = [
           sensitivity with homologous isozyme-group knockouts across 1,102
           candidate enzyme groups isolated cytosolic{" "}
           <strong>pyruvate carboxylase (PYC)</strong> as the sole
-          non-compensable bottleneck (overexpression Rank #4, slope{" "}
-          <MathInline tex="0.687" />; knockout Rank #1,{" "}
+          non-compensable bottleneck (overexpression Rank 4, slope{" "}
+          <MathInline tex="0.687" />; knockout Rank 1,{" "}
           <MathInline tex={String.raw`-58.6\%`} /> flux loss), guiding wet-lab
           strain construction.
         </p>

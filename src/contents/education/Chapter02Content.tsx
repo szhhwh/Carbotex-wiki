@@ -19,12 +19,12 @@ export function Chapter02Content() {
         <strong>
           To clearly explain the core technical principles to the public
         </strong>
-        , we started from our wet-lab experiments. In our project, poly (malic
-        acid) (PMLA) serves as a crucial bridge connecting "agricultural waste
+        , we started from our wet-lab experiments. In our project, poly(malic
+        acid) (PMA) serves as a crucial bridge connecting "agricultural waste
         upcycling" with "subsequent material construction”. Therefore, the first
         step in biomanufacturing is selecting a chassis cell that meets
         production demands. For instance, the A08 strain chosen for our project
-        was selected because of its natural capacity to synthesize PMLA, laying
+        was selected because of its natural capacity to synthesize PMA, laying
         the foundation for our subsequent engineering.
       </p>
       <p>

@@ -1714,107 +1714,6 @@ const sections: ArticleSection[] = [
               }
             />
 
-            <ArticleFramework title="Three-Tier Clustering Hyperparameter Sensitivity & the 17 Single-Gene Essential Clusters">
-              <figure className={tableStyles.tableFigure}>
-                <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
-                  ↔ Scroll horizontally to view all columns.
-                </p>
-                <div
-                  className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
-                  role="region"
-                  aria-label="Metabolic model data table"
-                  tabIndex={0}
-                >
-                  <table>
-                    <thead>
-                      <tr>
-                        <th scope="col">Clustering Tier</th>
-                        <th scope="col">E-value Cutoff</th>
-                        <th scope="col">Sequence Identity</th>
-                        <th scope="col">Bidirectional Coverage</th>
-                        <th scope="col">Total Proteome Clusters</th>
-                        <th scope="col">
-                          Representative Candidate Group (<code>C_00083</code>)
-                          Clustering &amp; FSEOF Slope
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <strong>Loose Tier</strong>
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`E \le 10^{-10}`} />
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`\ge 50\%`} />
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`\ge 70\%`} />
-                        </td>
-                        <td>10,816 clusters</td>
-                        <td>
-                          Co-clustered; FSEOF slope{" "}
-                          <MathInline tex={String.raw`\beta_f = 0.6867`} />{" "}
-                          unchanged
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Default Tier · Adopted</strong>
-                        </td>
-                        <td>
-                          <strong>
-                            <MathInline tex={String.raw`E \le 10^{-10}`} />
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            <MathInline tex={String.raw`\ge 70\%`} />
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            <MathInline tex={String.raw`\ge 80\%`} />
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>11,453 clusters</strong>
-                        </td>
-                        <td>
-                          <strong>
-                            Co-clustered as <code>FAM04209</code> (
-                            <code>ANV006176</code> + <code>ANV019425</code>,
-                            98.1% identity, 100% coverage)
-                          </strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Strict Tier</strong>
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`E \le 10^{-10}`} />
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`\ge 80\%`} />
-                        </td>
-                        <td>
-                          <MathInline tex={String.raw`\ge 90\%`} />
-                        </td>
-                        <td>11,963 clusters</td>
-                        <td>
-                          Co-clustered; FSEOF slope{" "}
-                          <MathInline tex={String.raw`\beta_f = 0.6867`} />{" "}
-                          unchanged
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </figure>
-            </ArticleFramework>
           </>
         ),
       },
@@ -1885,7 +1784,7 @@ const sections: ArticleSection[] = [
                         />{" "}
                         and max PMA flux{" "}
                         <MathInline
-                          tex={String.raw`v_{\text{PMLA}}^{\max} = 1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
+                          tex={String.raw`v_{\text{PMA}}^{\max} = 1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />
                         .
                       </td>
@@ -1920,7 +1819,7 @@ const sections: ArticleSection[] = [
                       <td>
                         Steps enforced PMA lower bound across 10 levels (9% to
                         90% of{" "}
-                        <MathInline tex={String.raw`v_{\text{PMLA}}^{\max}`} />:{" "}
+                        <MathInline tex={String.raw`v_{\text{PMA}}^{\max}`} />:{" "}
                         <MathInline tex={String.raw`0.135 \to 1.350`} />
                         ), maximizing biomass and solving pFBA at each step.
                       </td>
@@ -1960,7 +1859,7 @@ const sections: ArticleSection[] = [
             </figure>
 
             <MathBlock
-              tex={String.raw`\beta_r = \frac{\left\lvert v_r^{(10)} \right\rvert - \left\lvert v_r^{(1)} \right\rvert}{v_{\text{PMLA}}^{(10)} - v_{\text{PMLA}}^{(1)}}, \qquad \beta_g = \frac{1}{\lvert \mathcal{R}_g \rvert} \sum_{r \in \mathcal{R}_g} \beta_r, \qquad \beta_f = \max_{g \in \mathcal{G}_f} \beta_g, \qquad \Delta Y_f = \frac{v_{\text{PMLA}}^{\text{KO}(f)} - v_{\text{PMLA}}^{\max}}{v_{\text{PMLA}}^{\max}} \times 100\%`}
+              tex={String.raw`\beta_r = \frac{\left\lvert v_r^{(10)} \right\rvert - \left\lvert v_r^{(1)} \right\rvert}{v_{\text{PMA}}^{(10)} - v_{\text{PMA}}^{(1)}}, \qquad \beta_g = \frac{1}{\lvert \mathcal{R}_g \rvert} \sum_{r \in \mathcal{R}_g} \beta_r, \qquad \beta_f = \max_{g \in \mathcal{G}_f} \beta_g, \qquad \Delta Y_f = \frac{v_{\text{PMA}}^{\text{KO}(f)} - v_{\text{PMA}}^{\max}}{v_{\text{PMA}}^{\max}} \times 100\%`}
             />
           </>
         ),
@@ -2261,12 +2160,12 @@ const sections: ArticleSection[] = [
               </strong>
               —ranking{" "}
               <strong>
-                #4 in overexpression sensitivity (
+                Rank 4 in overexpression sensitivity (
                 <MathInline tex={String.raw`\beta_f = 0.687`} />)
               </strong>{" "}
               and{" "}
               <strong>
-                #1 in candidate joint-knockout PMA reduction (
+                Rank 1 in candidate joint-knockout PMA reduction (
                 <MathInline tex={String.raw`-58.6\%`} />, dropping max specific
                 PMA flux from <MathInline tex={String.raw`1.500`} /> to{" "}
                 <MathInline
@@ -2275,7 +2174,7 @@ const sections: ArticleSection[] = [
                 )
               </strong>
               . By contrast, although <code>cyMDH</code> (<code>FAM06110</code>)
-              ranks #1 in FSEOF slope (
+              ranks 1st in FSEOF slope (
               <MathInline tex={String.raw`\beta_f = 1.013`} />
               ), its joint deletion reduces max PMA flux by only{" "}
               <MathInline tex={String.raw`4.7\%`} /> because cross-compartment

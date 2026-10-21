@@ -1084,7 +1084,7 @@ export const modelEngineeringSections: ArticleSection[] = [
               <>
                 <p>
                   In downstream EDC/NHS coupling of A08-fermented PMA with
-                  dopamine, wet-lab conjugation peaked at{" "}
+                  dopamine, published grafted dopamine content peaked at{" "}
                   <strong>21.3 wt% at equimolar 1.00</strong> but{" "}
                   <strong>dropped to 19.2 wt% at 1.25</strong>{" "}
                   <Cite k="Tang2020PMLADA" />. Conventional collision-frequency
