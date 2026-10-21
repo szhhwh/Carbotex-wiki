@@ -209,39 +209,6 @@ function WeaveFramework() {
   );
 }
 
-function EvolutionLinks() {
-  return (
-    <div className={styles.evolutionRail}>
-      <p className={styles.evolutionLead}>
-        Echo carries the thread forward into later activities.
-      </p>
-      <div className={styles.evolutionGrid}>
-        <a href="#chapter-06-3-1">
-          <span>Evolution I</span>
-          <strong>
-            <em>17-C: The Lab Mystery</em> Escape-room Challenge
-          </strong>
-          <small>
-            Concept cheat-cards turn explanation into investigation.
-          </small>
-        </a>
-        <a href="#chapter-02-2">
-          <span>Evolution II</span>
-          <strong>Hands-on clay modeling</strong>
-          <small>Lecture becomes explanation plus creation.</small>
-        </a>
-        <a href="#chapter-05-2-2">
-          <span>Evolution III</span>
-          <strong>
-            <em>The Microscopic Factory of Adhesives</em>
-          </strong>
-          <small>Laboratory images make research processes concrete.</small>
-        </a>
-      </div>
-    </div>
-  );
-}
-
 const magicCards: Array<{
   front: string;
   backTitle: string;
@@ -1435,7 +1402,6 @@ const sections: ArticleSection[] = [
       <>
         <PrincipleIntroContent />
         <WeaveFramework />
-        <EvolutionLinks />
       </>
     ),
   },

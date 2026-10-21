@@ -867,13 +867,6 @@
   text-transform: none;
 }
 
-.evolutionLead {
-  margin-block: 0 var(--article-space-related);
-  color: var(--education-ink);
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
 .pageShell .interactionHint {
   display: flex;
   width: fit-content;
@@ -1154,66 +1147,6 @@
 
 .workflowPanel :is(p, ul):last-child {
   margin-block-end: 0;
-}
-
-.evolutionRail {
-  margin-block: var(--article-space-feature);
-}
-
-.evolutionGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
-}
-
-.evolutionGrid a {
-  position: relative;
-  display: flex;
-  min-height: 11rem;
-  flex-direction: column;
-  padding: 1.4rem;
-  border: 0;
-  border-radius: var(--education-radius);
-  background: var(--education-card-mint);
-  color: var(--education-ink);
-  text-decoration: none;
-  transition:
-    transform 220ms ease,
-    background 220ms ease;
-}
-
-.evolutionGrid a:nth-child(2) {
-  background: var(--education-pale-yellow);
-}
-
-.evolutionGrid a:nth-child(3) {
-  background: var(--education-yellow);
-}
-
-.evolutionGrid a:hover {
-  background: var(--education-yellow);
-  transform: translateY(-0.25rem);
-}
-
-.evolutionGrid span {
-  color: var(--education-navy);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.evolutionGrid strong {
-  margin-block: var(--article-space-related) var(--article-space-label);
-  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.2;
-}
-
-.evolutionGrid small {
-  color: var(--education-ink);
-  line-height: 1.5;
 }
 
 .magicSection {
@@ -2190,7 +2123,6 @@
     grid-template-columns: 1fr;
   }
 
-  .evolutionGrid,
   .magicGrid {
     grid-template-columns: 1fr;
   }
