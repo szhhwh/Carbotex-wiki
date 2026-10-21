@@ -849,15 +849,15 @@ const milestones: Array<[string, string, ReactNode]> = [
       >
         <path
           className={styles.choiceLine}
-          d="M150 0C150 38 300 38 300 72"
+          d="M150 0C150 38 300 38 300 80"
           vectorEffect="non-scaling-stroke"
         />
         <path
           className={styles.choiceLine}
-          d="M450 0C450 38 300 38 300 72"
+          d="M450 0C450 38 300 38 300 80"
           vectorEffect="non-scaling-stroke"
         />
-        <circle className={styles.choiceNode} cx="300" cy="74" r="5" />
+        <circle className={styles.choiceNode} cx="300" cy="74" r="6" />
       </svg>
       <div className={styles.milestoneChoice}>
         <span>Our choice</span>
@@ -1309,8 +1309,10 @@ function IterationExplorer({ describedBy }: { describedBy?: string }) {
         role="tabpanel"
       >
         {columns.map(([title, body]) => (
-          <article key={title}>
-            <span>{title}</span>
+          <article className={styles.iterationCard} key={title}>
+            <header className={styles.iterationCardHeader}>
+              <h6>{title}</h6>
+            </header>
             <div className={styles.iterationBody}>
               {typeof body === "string" ? <p>{body}</p> : body}
             </div>
