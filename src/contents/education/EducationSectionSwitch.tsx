@@ -21,28 +21,24 @@ export function EducationSectionSwitch({
   onChange: (mode: EducationSectionMode) => void;
 }) {
   return (
-    <div className={styles.frame}>
-      <div
-        className={styles.switch}
-        role="group"
-        aria-label="Education sections"
-        data-active={value}
-        data-education-section-switch
-      >
-        {sections.map((section) => (
-          <button
-            className={styles.button}
-            type="button"
-            key={section.value}
-            aria-pressed={value === section.value}
-            aria-controls="article-body"
-            data-section={section.value}
-            onClick={() => onChange(section.value)}
-          >
-            <span>{section.label}</span>
-          </button>
-        ))}
-      </div>
+    <div
+      className={styles.switch}
+      role="group"
+      aria-label="Education sections"
+      data-education-section-switch
+    >
+      {sections.map((section) => (
+        <button
+          className={styles.button}
+          type="button"
+          key={section.value}
+          aria-pressed={value === section.value}
+          aria-controls="article-body"
+          onClick={() => onChange(section.value)}
+        >
+          <span>{section.label}</span>
+        </button>
+      ))}
     </div>
   );
 }

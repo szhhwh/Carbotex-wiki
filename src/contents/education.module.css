@@ -1,4 +1,5 @@
 .pageShell {
+  --article-controls-gap: clamp(1.15rem, 2.2vw, 1.65rem);
   --education-ink: var(--hardware-ink, #003f34);
   --education-muted: var(--hardware-ink, #003f34);
   --education-green: var(--hardware-green, #007c60);

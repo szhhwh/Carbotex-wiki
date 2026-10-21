@@ -1,18 +1,13 @@
-.frame {
+.switch {
   --education-switch-ink: var(--education-navy, #1f315f);
   --education-switch-rule: var(--education-royal, #2f52a1);
   --education-switch-paper: var(--hardware-white, #fff);
   --education-switch-accent: var(--education-yellow, #ffc647);
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.switch {
   display: grid;
   width: min(100%, 68rem);
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.65rem, 1.35vw, 1rem);
+  margin-inline: auto;
 }
 
 .button {
@@ -75,7 +70,7 @@
 .button[aria-pressed="true"] {
   border-color: var(--education-switch-ink);
   background: var(--education-switch-ink);
-  color: var(--hardware-white, #fff);
+  color: var(--education-switch-paper);
   box-shadow: 0.35rem 0.35rem 0
     color-mix(in srgb, var(--education-switch-accent) 76%, transparent);
 }
@@ -83,11 +78,6 @@
 .button[aria-pressed="true"]::after {
   opacity: 1;
   transform: scaleX(1);
-}
-
-.button:focus-visible {
-  outline: 3px solid var(--education-green, #007c60);
-  outline-offset: 4px;
 }
 
 @media (max-width: 900px) {
@@ -115,12 +105,5 @@
   .button::after {
     right: 0.7rem;
     left: 0.7rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .button,
-  .button::after {
-    transition: none;
   }
 }

@@ -194,11 +194,11 @@
 .contentControls {
   width: var(--site-shell-width);
   margin-inline: auto;
-  padding-top: var(--article-reading-space-top);
+  padding-top: var(--article-controls-gap, var(--article-reading-space-top));
 }
 
 .contentControls + .readingArea {
-  padding-top: clamp(1.15rem, 2.2vw, 1.65rem);
+  padding-top: var(--article-controls-gap, clamp(1.15rem, 2.2vw, 1.65rem));
 }
 
 .readingArea[data-content-transition="true"] {

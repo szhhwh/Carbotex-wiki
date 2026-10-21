@@ -97,6 +97,23 @@ test("switches content, outline, and references between Education sections", asy
 test("keeps the switch legible and responsive", async ({ page }) => {
   const switcher = await openEducation(page);
   const buttons = switcher.getByRole("button");
+  const spacing = await switcher.evaluate((element) => {
+    const contentControls = element.parentElement;
+    const hero = contentControls?.previousElementSibling;
+    const readingArea = document.getElementById("article-body");
+    if (!hero || !readingArea) {
+      throw new Error("Education layout landmarks are missing");
+    }
+
+    return {
+      above:
+        element.getBoundingClientRect().top -
+        hero.getBoundingClientRect().bottom,
+      below: Number.parseFloat(getComputedStyle(readingArea).paddingTop),
+    };
+  });
+  expect(Math.abs(spacing.above - spacing.below)).toBeLessThan(1);
+
   const typography = await buttons.evaluateAll((elements) =>
     elements.map((element) => ({
       fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
