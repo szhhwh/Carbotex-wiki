@@ -235,11 +235,12 @@ function StakeholderDetailsDialog({
   stakeholder: IhpStakeholder;
   number: number;
   groupIndex: number;
-  onClose: (restoreFocus?: boolean) => void;
+  onClose: (restoreFocus?: boolean, storyTarget?: string) => void;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closingRef = useRef(false);
   const restoreFocusRef = useRef(true);
+  const storyTargetRef = useRef<string | undefined>(undefined);
   const [closing, setClosing] = useState(false);
   const [failedPortrait, setFailedPortrait] = useState(false);
   const titleId = `${detailsId}-title`;
@@ -255,18 +256,19 @@ function StakeholderDetailsDialog({
     };
   }, []);
 
-  const close = (restoreFocus = true) => {
+  const close = (restoreFocus = true, storyTarget?: string) => {
     const dialog = dialogRef.current;
     if (!dialog || closingRef.current) return;
 
+    closingRef.current = true;
+    restoreFocusRef.current = restoreFocus;
+    storyTargetRef.current = storyTarget;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       dialog.close();
-      onClose(restoreFocus);
+      onClose(restoreFocus, storyTarget);
       return;
     }
 
-    closingRef.current = true;
-    restoreFocusRef.current = restoreFocus;
     setClosing(true);
   };
 
@@ -274,7 +276,7 @@ function StakeholderDetailsDialog({
     if (!closingRef.current || event.target !== event.currentTarget) return;
 
     dialogRef.current?.close();
-    onClose(restoreFocusRef.current);
+    onClose(restoreFocusRef.current, storyTargetRef.current);
   };
 
   return createPortal(
@@ -350,7 +352,17 @@ function StakeholderDetailsDialog({
           <a
             href={stakeholder.storyHref}
             className={styles.storyLink}
-            onClick={() => close(false)}
+            onClick={(event) => {
+              if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+              )
+                return;
+              event.preventDefault();
+              close(false, stakeholder.storyHref);
+            }}
           >
             Read the full TRACE story <span aria-hidden="true">↓</span>
           </a>
@@ -395,18 +407,22 @@ export function StakeholderNavigator({
       ? groupStartNumbers[openStory.groupIndex] + expandedIndex
       : null;
 
-  const closeDetails = (restoreFocus = true) => {
+  const closeDetails = (restoreFocus = true, storyTarget?: string) => {
     const triggerId = openStory
       ? `stakeholder-trigger-${openStory.slug}`
       : undefined;
-    const storyTargetId = expanded?.storyHref.replace(/^#/, "");
     setOpenStory(null);
-    if (restoreFocus && triggerId) {
+    if (storyTarget) {
+      requestAnimationFrame(() => {
+        const sameTarget = window.location.hash === storyTarget;
+        window.location.hash = storyTarget;
+        const target = document.getElementById(storyTarget.replace(/^#/, ""));
+        // An unchanged fragment does not trigger the route scroll manager.
+        if (sameTarget) target?.scrollIntoView({ block: "start" });
+        target?.focus({ preventScroll: true });
+      });
+    } else if (restoreFocus && triggerId) {
       requestAnimationFrame(() => document.getElementById(triggerId)?.focus());
-    } else if (storyTargetId) {
-      requestAnimationFrame(() =>
-        document.getElementById(storyTargetId)?.focus({ preventScroll: true }),
-      );
     }
   };
 
