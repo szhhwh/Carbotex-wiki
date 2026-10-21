@@ -13,6 +13,7 @@ export interface IhpFigurePart {
   alt: string;
   ratio: string;
   caption?: string;
+  captionAlign?: "center";
   figureNumber?: number;
   frame?: "none";
 }

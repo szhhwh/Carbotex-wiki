@@ -539,6 +539,7 @@ export const ihpSections: IhpSectionContent[] = [
             alt: "TRACE framework showing Trigger, Reach Out, Analyze, Change, and Evaluate in relation to the Carbotex DBTL process.",
             ratio: "740 / 500",
             caption: "TRACE and the DBTL cycle.",
+            captionAlign: "center",
             figureNumber: 1,
             frame: "none",
           },

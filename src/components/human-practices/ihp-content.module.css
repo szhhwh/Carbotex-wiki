@@ -6,6 +6,10 @@
   margin-bottom: 0;
 }
 
+.centeredCaption.centeredCaption {
+  text-align: center;
+}
+
 :global(#article-body) .markdown h4,
 :global(#article-body) .markdown h5,
 :global(#article-body) .markdown h6 {

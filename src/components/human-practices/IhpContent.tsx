@@ -172,6 +172,11 @@ export function IhpParts({
                 {...mediaSizing(part.src, part.ratio)}
                 caption={part.caption}
                 frame={part.frame}
+                captionClassName={
+                  part.captionAlign === "center"
+                    ? styles.centeredCaption
+                    : undefined
+                }
                 captionPrefix={
                   part.figureNumber ? (
                     <>Figure {part.figureNumber}.</>
