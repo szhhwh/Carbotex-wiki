@@ -12,7 +12,6 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
 import { ArticleHero } from "../article/ArticlePage";
-import { Caption } from "../media/Caption";
 import { MemberPortrait } from "./MemberPortrait";
 import { MemberProfileDialog } from "./MemberProfileDialog";
 import {
@@ -166,7 +165,6 @@ function StaticMemberCard({
 export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
   const networkRef = useRef<HTMLElement>(null);
   const [activeMember, setActiveMember] = useState<TeamMember | null>(null);
-  const [photoFailed, setPhotoFailed] = useState(false);
   const gradientPrefix = useId().replace(/:/g, "");
 
   const networkHeight = getNetworkHeight(members.length);
@@ -412,39 +410,23 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
 
   return (
     <main className={`${styles.page} ${styles.theme}`}>
-      <ArticleHero title="Meet Our Team" headingId="members-heading" />
+      <ArticleHero
+        title="Meet Our Team"
+        headingId="members-heading"
+        heroImage={{
+          src: groupPhoto,
+          alt: "The OUC-Haide team gathered together on a staircase.",
+          intrinsicWidth: 1792,
+          intrinsicHeight: 1008,
+          objectFit: "contain",
+          backgroundColor: "#dce6e7",
+        }}
+      />
 
       <section className={styles.intro} aria-labelledby="team-intro-heading">
         <h2 id="team-intro-heading" className={styles.srOnly}>
           About OUC-Haide
         </h2>
-        <figure className={styles.groupPhotoFrame}>
-          {photoFailed ? (
-            <div className={styles.photoFallback} role="status">
-              The team banner could not be loaded.
-            </div>
-          ) : (
-            <img
-              className={styles.groupPhoto}
-              src={groupPhoto}
-              alt="The OUC-Haide team gathered together on a staircase."
-              loading="eager"
-              decoding="async"
-              onError={() => setPhotoFailed(true)}
-            />
-          )}
-          <Caption className={styles.photoCaption}>
-            <span>OUC-HAIDE / TEAM 2026</span>
-            <span className={styles.captionBubbles} aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </span>
-          </Caption>
-        </figure>
-
         <div className={styles.introContent}>
           <div className={styles.introCopy}>
             <p>

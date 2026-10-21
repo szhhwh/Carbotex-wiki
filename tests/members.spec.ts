@@ -52,24 +52,11 @@ test.describe("team members page", () => {
 
     await expect(page.locator("#members-heading")).toHaveText("Meet Our Team");
     await expect(page.locator("[data-hero-media-slot]")).toBeVisible();
-    await expect(page.locator("[data-hero-media-slot]")).toContainText(
-      "Header image placeholder",
-    );
-    const heroComesBeforePhoto = await page.evaluate(() => {
-      const hero = document
-        .querySelector<HTMLElement>("[data-hero-media-slot]")
-        ?.getBoundingClientRect();
-      const photo = document
-        .querySelector<HTMLElement>("figure")
-        ?.getBoundingClientRect();
-      if (!hero || !photo) return false;
-      return hero.bottom <= photo.top;
-    });
-    expect(heroComesBeforePhoto).toBe(true);
-    await expect(page.locator("figure img")).toHaveAttribute(
+    await expect(page.locator("[data-hero-media-slot] img")).toHaveAttribute(
       "alt",
       /OUC-Haide team/,
     );
+    await expect(page.locator("figure")).toHaveCount(0);
     await expect(page.locator("article")).toHaveCount(18);
     await expect(page.locator("article").first()).toContainText("Guanglei Liu");
     await expect(page.locator("article").first()).toContainText("Primary PI");
@@ -147,28 +134,32 @@ test.describe("team members page", () => {
         const media = document
           .querySelector<HTMLElement>("[data-hero-media-slot]")
           ?.getBoundingClientRect();
-        const photo = document
-          .querySelector<HTMLElement>("figure")
+        const image = document
+          .querySelector<HTMLImageElement>("[data-hero-media-slot] img")
           ?.getBoundingClientRect();
 
         return {
           overflow:
             document.documentElement.scrollWidth -
             document.documentElement.clientWidth,
-          placeholder: document.querySelector("[data-hero-media-slot]")
-            ?.textContent,
+          heroImage: Boolean(
+            document.querySelector<HTMLImageElement>(
+              "[data-hero-media-slot] img",
+            ),
+          ),
           mediaWidth: media?.width ?? 0,
-          photoWidth: photo?.width ?? 0,
-          photoTop: photo?.top ?? 0,
-          mediaBottom: media?.bottom ?? 0,
+          imageWidth: image?.width ?? 0,
+          imageHeight: image?.height ?? 0,
+          imageRatio: image ? image.width / image.height : 0,
         };
       });
 
       expect(layout.overflow).toBeLessThanOrEqual(1);
-      expect(layout.placeholder).toContain("Header image placeholder");
+      expect(layout.heroImage).toBeTruthy();
       expect(layout.mediaWidth).toBeGreaterThan(0);
-      expect(layout.photoWidth).toBeGreaterThan(0);
-      expect(layout.photoTop).toBeGreaterThanOrEqual(layout.mediaBottom);
+      expect(layout.imageWidth).toBeGreaterThan(0);
+      expect(layout.imageHeight).toBeGreaterThan(0);
+      expect(layout.imageRatio).toBeCloseTo(1792 / 1008, 2);
       await expect(page.locator("article")).toHaveCount(18);
     }
   });
