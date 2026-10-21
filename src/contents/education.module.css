@@ -896,86 +896,6 @@
   color: var(--education-green);
 }
 
-.activityTimeline {
-  position: relative;
-  display: grid;
-  gap: 0.5rem;
-  margin-block: var(--article-space-feature);
-  padding: clamp(1rem, 2.5vw, 1.5rem);
-  border-radius: var(--education-radius);
-  background: var(--education-card-mint);
-}
-
-.timelineRule {
-  position: absolute;
-  top: 2.25rem;
-  right: calc(clamp(1rem, 2.5vw, 1.5rem) + 1.21rem);
-  bottom: 2.25rem;
-  width: 3px;
-  border-radius: 999px;
-  background: var(--education-navy);
-  opacity: 0.35;
-}
-
-.timelineItem {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-  align-items: center;
-  min-height: 5.6rem;
-  padding: 1rem 1.1rem;
-  border-radius: 1.35rem;
-  background: var(--hardware-white, #fff);
-  color: var(--education-ink);
-  text-decoration: none;
-  transition:
-    background-color 220ms ease,
-    transform 220ms ease;
-}
-
-.timelineItem:nth-of-type(even) {
-  background: var(--education-pale-yellow);
-}
-
-.timelineItem::before {
-  position: absolute;
-  top: 50%;
-  right: 0.86rem;
-  width: 0.7rem;
-  height: 0.7rem;
-  border: 2px solid var(--education-card-mint);
-  border-radius: 50%;
-  background: var(--education-green);
-  content: "";
-  transform: translate(50%, -50%);
-}
-
-.timelineItem:hover {
-  background: var(--education-yellow);
-  transform: translateX(0.25rem);
-}
-
-.timelineItem:hover::before {
-  background: var(--education-navy);
-}
-
-.timelineItem em {
-  display: block;
-  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
-  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.15;
-}
-
-.timelineItem small {
-  display: block;
-  margin-block-start: var(--article-space-label);
-  color: var(--education-ink);
-  font-size: 0.95rem;
-}
-
 .weaveLayout {
   display: grid;
   grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
@@ -2382,18 +2302,6 @@
 
   .pageShell :where(th, td) {
     padding: 0.55rem 0.45rem;
-  }
-
-  .timelineItem {
-    gap: 0.65rem;
-  }
-
-  .timelineRule {
-    right: 1.77rem;
-  }
-
-  .timelineItem::before {
-    right: 0.42rem;
   }
 
   .weaveShape {

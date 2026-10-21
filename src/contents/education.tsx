@@ -49,33 +49,6 @@ import { ObjectiveStatement } from "./education/ObjectiveStatement";
 import { PrincipleIntroContent } from "./education/PrincipleIntroContent";
 import styles from "./education.module.css";
 
-const chapterLinks = [
-  ["chapter-01", "Mapping the Blueprint", "The Public"],
-  ["chapter-02", "Unlocking Cellular Systems", "Kindergarten Children"],
-  ["chapter-03", "Rewriting Biological Parts", "Primary school students"],
-  ["chapter-04", "Natural Living Factories", "Primary school students"],
-  [
-    "chapter-05",
-    "Tracing Back from Downstream Processing",
-    "High School Students",
-  ],
-  [
-    "chapter-06",
-    "Innovate for Shared Society",
-    "Children within the community, High school students, College students, Team members",
-  ],
-  [
-    "chapter-07",
-    "Empowering Future Voices",
-    "Children in under-resourced regions",
-  ],
-  [
-    "chapter-08",
-    "Bringing Synbio and Biomanufacturing Closer",
-    "The General Public",
-  ],
-];
-
 function moveTabFocus(
   event: KeyboardEvent<HTMLButtonElement>,
   setActiveIndex: (index: number) => void,
@@ -124,22 +97,6 @@ function trapDialogFocus(event: KeyboardEvent<HTMLDialogElement>) {
     event.preventDefault();
     first.focus();
   }
-}
-
-function ActivityTimeline() {
-  return (
-    <nav className={styles.activityTimeline} aria-label="Education activities">
-      <div className={styles.timelineRule} aria-hidden="true" />
-      {chapterLinks.map(([id, title, audience]) => (
-        <a className={styles.timelineItem} href={`#${id}`} key={id}>
-          <span>
-            <em>{title}</em>
-            <small>{audience}</small>
-          </span>
-        </a>
-      ))}
-    </nav>
-  );
 }
 
 const weaveStages = [
@@ -1467,12 +1424,7 @@ const sections: ArticleSection[] = [
         id: "overview-public-understanding",
         title:
           "Building Public Understanding for Synthetic biology and Biomanufacturing",
-        content: (
-          <>
-            <OverviewPublicUnderstanding />
-            <ActivityTimeline />
-          </>
-        ),
+        content: <OverviewPublicUnderstanding />,
       },
     ],
   },
