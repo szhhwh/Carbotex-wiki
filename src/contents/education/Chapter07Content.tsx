@@ -47,7 +47,7 @@ export function Chapter07Content() {
         transition from <strong>passive observers</strong> of technological
         change into <strong>voices capable of shaping the future.</strong>
       </p>
-      <h4>7.2 Explore Objective-driven Design</h4>
+      <h4>7.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
         <strong>Objective:</strong> To ensure that science education is
         genuinely accessible to ethnic minority children and ignite their

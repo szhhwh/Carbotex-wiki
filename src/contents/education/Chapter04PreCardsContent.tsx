@@ -38,7 +38,7 @@ export function Chapter04PreCardsContent() {
           tangible things in real life through their invisible hard work.
         </strong>
       </p>
-      <h4>4.2 Explore Objective-driven Design</h4>
+      <h4>4.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
         <strong>
           Objective: To demystify fermentation as a dynamic microbial process,

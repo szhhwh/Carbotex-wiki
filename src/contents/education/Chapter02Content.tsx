@@ -83,7 +83,7 @@ export function Chapter02Content() {
         2.2 Activity I: Cell Town Adventure—How Parts Work Together Within a
         Cell
       </h4>
-      <h5>2.2.1 Explore Objective-based Design</h5>
+      <h5>2.2.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
         <strong>Objective I: Understanding Cellular Components</strong>
       </ObjectiveStatement>

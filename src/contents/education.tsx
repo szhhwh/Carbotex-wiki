@@ -1383,7 +1383,7 @@ const sections: ArticleSection[] = [
               6.3 Activity II: 17-C: The Lab Mystery Escape-room Challenge
             </h4>
             <ChapterMeta kind="audience">High school students</ChapterMeta>
-            <h5 id="chapter-06-3-1">6.3.1 Explore Objective-driven Design</h5>
+            <h5 id="chapter-06-3-1">6.3.1 Explore Objective-Driven Design</h5>
             <div className={styles.designIntro}>
               <ObjectiveStatement>
                 <strong>Objective:</strong> We aimed to help them understand

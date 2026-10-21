@@ -48,7 +48,7 @@ export function Chapter06SdgsContent() {
         </strong>
         .
       </p>
-      <h5>6.4.1 Explore Objective-driven Design</h5>
+      <h5>6.4.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
         <strong>Objective:</strong> Our goal was to engage both{" "}
         <strong>our peers and us</strong> as future scientists in reflecting on

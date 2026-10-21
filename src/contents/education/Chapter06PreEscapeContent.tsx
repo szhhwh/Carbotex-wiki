@@ -57,7 +57,7 @@ export function Chapter06PreEscapeContent() {
         <strong>“Cultural Heritage in Paper, Green Future in Action”</strong>
       </p>
       <ChapterMeta kind="audience">Children in the local community</ChapterMeta>
-      <h5>6.2.1 Explore Objective-driven Design</h5>
+      <h5>6.2.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
         <strong>
           Objective: Recognizing the Positive Role of Technology in Society
