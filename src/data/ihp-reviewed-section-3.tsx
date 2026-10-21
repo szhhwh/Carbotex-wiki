@@ -329,13 +329,15 @@ export const ihpReviewedSection3: IhpSectionContent = {
               ],
             },
           ],
+          outro: [
+            label(
+              "3.3.4 Commercialization Outlook — Toward Practical Applications",
+            ),
+            rich(
+              "Building on our material experiments and exchanges with researchers, industry representatives, and the iGEM community, we developed a preliminary commercialization outlook for Carbotex.\n\nRather than assuming a single application, we identified several directions worth investigating, including moisture-exposed bonding, functional surface interfaces, and longer-term biological-interface research.\n\nOur proposed development pathway focuses on **identifying specific user needs, validating reproducible material performance, and assessing manufacturing, economic, environmental, and safety requirements**.\n\nThese directions remain opportunities for future research rather than established commercial applications.\n\nWe have summarized the potential application scenarios, their necessary validation steps, and our proposed development roadmap in a separate document.\n\n**[Explore Our Carbotex Commercialization Outlook (PDF) →](https://static.igem.wiki/teams/6147/wiki/carbotex-commercialization-outlook-final.pdf)**\n\n**For Carbotex, the goal is not simply to transform agricultural straw into an adhesive, but to explore how that material could eventually meet real needs through responsible and practical innovation.**\n\nAs these potential applications develop, ensuring the safety of both the production process and the resulting material will become increasingly important. We address these responsibilities in [Section 3.4 — From Biosafety to Product Responsibility](#section-3-4).",
+            ),
+          ],
         },
-        label(
-          "3.3.4 Commercialization Outlook — Toward Practical Applications",
-        ),
-        rich(
-          "Building on our material experiments and exchanges with researchers, industry representatives, and the iGEM community, we developed a preliminary commercialization outlook for Carbotex.\n\nRather than assuming a single application, we identified several directions worth investigating, including moisture-exposed bonding, functional surface interfaces, and longer-term biological-interface research.\n\nOur proposed development pathway focuses on **identifying specific user needs, validating reproducible material performance, and assessing manufacturing, economic, environmental, and safety requirements**.\n\nThese directions remain opportunities for future research rather than established commercial applications.\n\nWe have summarized the potential application scenarios, their necessary validation steps, and our proposed development roadmap in a separate document.\n\n**[Explore Our Carbotex Commercialization Outlook (PDF) →](https://static.igem.wiki/teams/6147/wiki/carbotex-commercialization-outlook-final.pdf)**\n\n**For Carbotex, the goal is not simply to transform agricultural straw into an adhesive, but to explore how that material could eventually meet real needs through responsible and practical innovation.**\n\nAs these potential applications develop, ensuring the safety of both the production process and the resulting material will become increasingly important. We address these responsibilities in [Section 3.4 — From Biosafety to Product Responsibility](#section-3-4).",
-        ),
       ],
     },
     {
@@ -450,13 +452,15 @@ export const ihpReviewedSection3: IhpSectionContent = {
               ],
             },
           ],
+          outro: [
+            label(
+              "3.4.6 Future Outlook — Making Safety Part of Practical Application",
+            ),
+            rich(
+              "Moving forward, we aim to strengthen safety considerations throughout the Carbotex production pathway.\n\nFor our engineered strains, this includes improving genetic records and developing more targeted biosafety assessments. For material preparation, we plan to further examine purification performance and potential residual components. For future applications, we hope to conduct more systematic material characterization and safety evaluations according to specific use requirements.\n\nWe will also continue emphasizing laboratory safety education and responsible experimental practices across the team.\n\n**Ultimately, our goal is not only to develop a promising bio-based adhesive, but also to establish a responsible pathway from biological production to practical application.**\n\nFor Carbotex, responsible innovation means considering not only what our technology can achieve, but also how safely and thoughtfully it can be developed and used.",
+            ),
+          ],
         },
-        label(
-          "3.4.6 Future Outlook — Making Safety Part of Practical Application",
-        ),
-        rich(
-          "Moving forward, we aim to strengthen safety considerations throughout the Carbotex production pathway.\n\nFor our engineered strains, this includes improving genetic records and developing more targeted biosafety assessments. For material preparation, we plan to further examine purification performance and potential residual components. For future applications, we hope to conduct more systematic material characterization and safety evaluations according to specific use requirements.\n\nWe will also continue emphasizing laboratory safety education and responsible experimental practices across the team.\n\n**Ultimately, our goal is not only to develop a promising bio-based adhesive, but also to establish a responsible pathway from biological production to practical application.**\n\nFor Carbotex, responsible innovation means considering not only what our technology can achieve, but also how safely and thoughtfully it can be developed and used.",
-        ),
       ],
     },
   ],

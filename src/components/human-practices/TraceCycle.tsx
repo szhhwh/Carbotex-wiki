@@ -215,6 +215,7 @@ export function TraceCycle({
   triggerSummary,
   impactSummary,
   stages,
+  outro,
   renderParts,
 }: {
   number: number;
@@ -222,6 +223,7 @@ export function TraceCycle({
   triggerSummary?: string;
   impactSummary?: string;
   stages: Array<{ stage: TraceStageId; label?: string; parts: IhpPart[] }>;
+  outro?: IhpPart[];
   renderParts: (parts: IhpPart[]) => ReactNode;
 }) {
   const byId = new Map(stages.map((stage) => [stage.stage, stage]));
@@ -341,6 +343,9 @@ export function TraceCycle({
               );
             })}
           </ol>
+          {outro?.length ? (
+            <div className={styles.cycleOutro}>{renderParts(outro)}</div>
+          ) : null}
         </div>
       </div>
     </section>

@@ -275,6 +275,7 @@ export function IhpParts({
                   ) ?? traceStageSummary(part.stages)
                 }
                 stages={part.stages}
+                outro={part.outro}
                 renderParts={renderParts}
               />
             );

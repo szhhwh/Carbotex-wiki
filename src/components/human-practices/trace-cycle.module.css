@@ -263,6 +263,15 @@
   margin-bottom: 0;
 }
 
+.cycleOutro {
+  margin: 0 1.35rem 1.4rem 3.7rem;
+  padding-top: 0.4rem;
+}
+
+.cycleOutro > :first-child {
+  margin-top: 0;
+}
+
 @media (max-width: 640px) {
   .cycleHeader {
     padding: 0.95rem 0.9rem 1rem 1.1rem;
@@ -321,6 +330,11 @@
 
   .stageBody {
     padding: 0.2rem 0 0.7rem;
+  }
+
+  .cycleOutro {
+    margin: 0 0.9rem 1.15rem 2.35rem;
+    padding-top: 0.25rem;
   }
 }
 

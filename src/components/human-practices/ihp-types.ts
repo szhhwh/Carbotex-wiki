@@ -61,6 +61,8 @@ export interface IhpTracePart {
     label?: string;
     parts: IhpPart[];
   }>;
+  /** Content shown after the TRACE stages, still inside the collapsible panel. */
+  outro?: IhpPart[];
 }
 
 export interface IhpRelatedPart {
