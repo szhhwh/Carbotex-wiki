@@ -198,10 +198,11 @@ const sections: ArticleSection[] = [
               </div>
               <ul>
                 <li>
-                  Within these stages, detailed checkpoints cover design review,
-                  build verification, seed preparation, fermentation, assay,
-                  analysis, and decision logging. The workflow advances along
-                  allowed paths only after researcher approval; rejection
+                  These six high-level stages summarize the 13 granular workflow
+                  states implemented in the state machine (covering design
+                  review, build verification, seed preparation, fermentation,
+                  assay, analysis, and decision logging). The workflow advances
+                  along allowed paths only after researcher approval; rejection
                   retains the current stage.
                 </li>
               </ul>
@@ -504,7 +505,7 @@ const sections: ArticleSection[] = [
               unified action–observation agent loop <Cite k="Yao2023ReAct" />{" "}
               across Web UI, CLI, and API surfaces (Figure 6).
             </p>
-            <ArticleFramework title="Five Core Plugin Modules & Cordis Integration Comparison">
+            <ArticleFramework title="Four Default Core Plugins, Optional Education Extension & Cordis Integration Comparison">
               <div
                 className={tableStyles.tableScroller}
                 role="region"
@@ -574,7 +575,8 @@ const sections: ArticleSection[] = [
                     </tr>
                     <tr>
                       <td>
-                        <strong>Education</strong>
+                        <strong>Education</strong>{" "}
+                        <small>(optional extension)</small>
                       </td>
                       <td>
                         Attributed outreach case cards, audience resource
@@ -1516,16 +1518,6 @@ const sections: ArticleSection[] = [
                 lesson plans.
               </li>
               <li>
-                <strong>How Other iGEM Teams Can Reuse WetFlow</strong>: Any
-                iGEM team working on a different organism, metabolic pathway, or
-                biomaterial can use our open-source WetFlow package (released
-                under the Apache-2.0 License), create a project, and import their
-                own SOPs, literature notes, and measurement tables to immediately
-                use Europe PMC / arXiv / NCBI GEO search, unit-validated
-                experiment records, and
-                modular modeling plugins.
-              </li>
-              <li>
                 <strong>From Adhesive Formulation to the MD Module</strong>: The
                 high-feed dopamine decline bridges WetFlow and our molecular
                 simulations—our team synthesis uses a 1:1 dopamine-to-carboxyl
@@ -1538,6 +1530,15 @@ const sections: ArticleSection[] = [
                 <Link to="/model/md">Molecular Dynamics Simulation module</Link>{" "}
                 presents the full all-atom trajectories and geometric analysis
                 of how excess dopamine behaves around activated PMA.
+              </li>
+              <li>
+                <strong>How Other iGEM Teams Can Reuse WetFlow</strong>: Any
+                iGEM team working on a different organism, metabolic pathway, or
+                biomaterial can use our open-source WetFlow package (released
+                under the Apache-2.0 License), create a project, and import their
+                own SOPs, literature notes, and measurement tables to immediately
+                use Europe PMC / arXiv / NCBI GEO search, unit-validated
+                experiment records, and modular modeling plugins.
               </li>
             </ul>
           </>

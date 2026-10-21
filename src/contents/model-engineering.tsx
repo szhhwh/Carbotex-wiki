@@ -500,7 +500,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                   <div
                     className={tableStyles.tableScroller}
                     role="region"
-                    aria-label="Three metabolic control regimes resolved by dual-metric screening across 1,102 candidate isozyme groups."
+                    aria-label="Four metabolic control regimes resolved by dual-metric screening across 1,102 candidate isozyme groups."
                     tabIndex={0}
                   >
                     <table>
@@ -723,9 +723,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                     <div>
                       <strong>Researcher-gated workflow state machine</strong>
                       <p>
-                        Across the six experimental stages (Design through
-                        Decide), state transitions pause as pending proposals
-                        until explicitly approved by a researcher.
+                        Across the six high-level experimental stages
+                        (summarizing the 13 granular workflow states from Design
+                        through Decide), state transitions pause as pending
+                        proposals until explicitly approved by a researcher.
                       </p>
                     </div>
                   </li>
@@ -811,8 +812,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                         reference protocol <Cite k="Tang2020PMLADA" /> and
                         achieved 28/30 (93.3%) benchmark accuracy with zero
                         execution failures, outperforming the OpenCode baseline
-                        at 21/30 (70.0%) under the identical model backend
-                        (Tab.2).
+                        at 21/30 (70.0%) when both systems ran the recorded{" "}
+                        <code>DeepSeek Flash</code> model within their
+                        respective native tool environments (Tab.2).
                       </p>
                     </div>
                   </li>
@@ -1217,10 +1219,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Between molar ratios 1.00 and 1.25, total close-contact
                         encounters remained nearly unchanged, yet
                         orientation-compatible contacts dropped nearly five-fold
-                        from 25.2% to 5.2% as 82.7% of close contacts at 1.25
-                        shifted into the{" "}
+                        from 25.2% to 5.2%, with 82.7% (382/462) of close-contact
+                        pair-frames at 1.25 populating the{" "}
                         <MathInline tex={String.raw`<60^\circ`} /> shallow
-                        side-on regime (Img.9A–D).
+                        side-on regime in the 3–5 ns window (Img.9A–D).
                       </p>
                     </div>
                   </li>

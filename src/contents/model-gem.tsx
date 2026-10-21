@@ -816,9 +816,10 @@ const sections: ArticleSection[] = [
             <ul>
               <li>
                 <strong>Multi-Lineage OrthoDB Completeness</strong>: Evaluated
-                via compleasm <Cite k="huang2023compleasm" /> and BUSCO{" "}
-                <Cite k="manni2021busco" /> against OrthoDB v10 conserved
-                single-copy benchmark sets across three taxonomic levels (Figure
+                via compleasm v0.2.9 <Cite k="huang2023compleasm" /> using
+                BUSCO-standard single-copy completeness categories{" "}
+                <Cite k="manni2021busco" /> against OrthoDB v10 benchmark sets
+                across three taxonomic levels (Figure
                 5, left), the predicted A08 proteome achieved{" "}
                 <strong>99.61%</strong> completeness in Eukaryota (255 markers),{" "}
                 <strong>96.70%</strong> in Fungi (758 markers), and{" "}
@@ -1553,7 +1554,11 @@ const sections: ArticleSection[] = [
               </li>
             </ul>
             <p>
-              The finalized A08 GEM comprises{" "}
+              Combining the 3,500-reaction initial draft with the 15
+              compartment-calibrated reactions (3,515), 11{" "}
+              <code>tblastn</code>-recovered and 21 gap-filled reactions
+              (3,547), and the 2 PMA polymerization and demand reactions yields
+              the finalized A08 GEM comprising{" "}
               <strong>
                 3,549 reactions, 2,951 compartmentalized metabolites, and 2,481
                 GPR-referenced gene entries

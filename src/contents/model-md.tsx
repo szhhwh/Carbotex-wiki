@@ -856,8 +856,9 @@ const sections: ArticleSection[] = [
                 : Across the five archived main-model trajectories, expanding
                 the analysis window from{" "}
                 <MathInline tex={String.raw`3\text{–}5\text{ ns}`} /> to the
-                full <MathInline tex={String.raw`1\text{–}5\text{ ns}`} />{" "}
-                production run preserves the higher compatible-contact count at
+                wider <MathInline tex={String.raw`1\text{–}5\text{ ns}`} />{" "}
+                analysis window (4,000 frames) preserves the higher
+                compatible-contact count at
                 feed 1.00 relative to feed 1.25 (Figure 6A). Splitting the
                 trajectory into non-overlapping{" "}
                 <MathInline tex={String.raw`1\text{ ns}`} /> blocks shows that

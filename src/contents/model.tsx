@@ -175,8 +175,8 @@ export function Model() {
   return (
     <ArticlePage
       title="Model"
-      titleId="pane-overview"
-      intro={<span id="body-overview-en" />}
+      titleId="model-overview"
+      intro={<span id="body-overview-en"><span id="pane-overview" /></span>}
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/model-header/hero-model-overview.avif",
         alt: "MODEL",
