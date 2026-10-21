@@ -583,43 +583,30 @@ const sections: ArticleSection[] = [
         content: (
           <>
             <p>
-              Successive rounds of strain engineering generally require the
-              continued use of selectable markers for selection. Because the
-              number of available selectable markers is limited, and repeated
-              use of the same marker can create difficulties in both selection
-              and genetic background, we introduced Cre–lox-mediated marker
-              recycling. We therefore incorporate Cre–lox-mediated marker
-              recycling into the expression and knockout designs. The selectable
-              cassette supports the initial recovery of transformants and can
-              subsequently be removed while retaining the intended genetic
-              modification, allowing the same marker to be reused in another
-              engineering round. This approach has been demonstrated for
-              sequential gene deletion and expression in{" "}
-              <em>Aureobasidium melanogenum</em> <Cite k="zhang2019crelox" />.
+              To enable the reuse of selectable markers in successive
+              engineering cycles, we incorporated Cre–lox-mediated marker
+              recycling into our plasmid designs. This strategy has been
+              previously demonstrated for sequential gene deletion and
+              expression in <em>Aureobasidium melanogenum</em>{" "}
+              <Cite k="zhang2019crelox" />. As shown in Figures 5 and 6, the
+              directly oriented mutant lox sites (lox71 and lox66) flank the
+              selection cassettes. Cre recombinase catalyzes DNA strand
+              cleavage and exchange between these paired sites{" "}
+              <Cite k="hoess1985cremechanism" />. This recombination excises
+              the marker cassette (NAT or HPT) and leaves a double-mutant lox72
+              scar in the genome, which has reduced responsiveness to Cre and
+              minimizes unwanted recombination in future cycles{" "}
+              <Cite k="yan2008lox" />.
             </p>
             <p>
-              Cre is a site-specific DNA recombinase that recognizes lox sites.
-              A canonical loxP site is 34 base pairs (bp) long and contains two
-              13-bp Cre-binding inverted repeats separated by an asymmetric 8-bp
-              spacer. The spacer defines the orientation of the site. Cre brings
-              two sites together and catalyzes DNA strand cleavage, exchange,
-              and rejoining within their spacers{" "}
-              <Cite k="hoess1985cremechanism" />. In our constructs, the two
-              complete lox sites point in the same direction and flank the
-              selectable interval. Following genomic integration, Cre-mediated
-              recombination can excise this interval as circular DNA and
-              reconnect the genomic sequences on either side.
-            </p>
-            <p>
-              Our designs use lox71 and lox66, which carry mutations in opposite
-              Cre-binding arms. With the arrangement used in these constructs,
-              recombination is expected to retain the double-mutant lox72 site
-              in the genome and generate a wild-type loxP site on the excised
-              circle. The reduced responsiveness of lox72 to Cre is useful for
-              successive engineering rounds because it lowers the likelihood of
-              recombination involving previously used sites. However, lox72
-              retains residual recombination activity and is not considered
-              completely inactive <Cite k="yan2008lox" />.
+              <strong>Design Status:</strong> While the backbones containing the
+              sequenced lox71/66 sites have been successfully constructed, and
+              the Cre recombinase sequence was prepared and submitted as a
+              biological part, the in vivo Cre-mediated marker excision assay
+              (e.g., PCR amplification and sequencing of the excision junction)
+              has not yet been performed due to project timeline constraints.
+              This section presents the validated theoretical design framework
+              intended for future sequential engineering in A08.
             </p>
             <DiagramFigure
               id="design-figure-5"
