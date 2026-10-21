@@ -9,15 +9,18 @@ import {
 } from "react";
 import { MousePointerClick } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import inclusiveAccessImage from "../../assets/education/puzzle/inclusive-access.svg";
-import publicUnderstandingImage from "../../assets/education/puzzle/public-understanding.svg";
-import socialResponsibilityImage from "../../assets/education/puzzle/social-responsibility.svg";
-import translatingImage from "../../assets/education/puzzle/translating.svg";
+import { staticHomeAsset } from "../../utils/staticAsset";
 import { Cite } from "../../components/article/References";
 import styles from "../education.module.css";
 import { PrincipleDisc } from "./PrincipleDisc";
 import { PrincipleIntroContent } from "./PrincipleIntroContent";
 import { WeaveFramework } from "./WeaveFramework";
+
+/** Uploaded puzzle discs: flat files in the wiki's home/ upload folder. */
+const inclusiveAccessImage = staticHomeAsset("inclusive-access.svg");
+const publicUnderstandingImage = staticHomeAsset("public-understanding.svg");
+const socialResponsibilityImage = staticHomeAsset("social-responsibility.svg");
+const translatingImage = staticHomeAsset("translating.svg");
 
 export function OverviewIntro() {
   return (

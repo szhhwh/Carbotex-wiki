@@ -1,0 +1,84 @@
+/* Illustrated home canvas (hero → P5): one artboard of 1366 × 5063 pt,
+   scaled to the viewport width (--u px per pt) under a sticky viewport. */
+
+.wrapper {
+  position: relative;
+  background: #fbf0dd;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100lvh;
+  overflow: hidden;
+  background: #fbf0dd;
+}
+
+.canvas {
+  --u: 1px;
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(5063 * var(--u));
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Every artwork, layer and text sits on the artboard by its pt rectangle. */
+.box {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  max-width: none;
+  pointer-events: none;
+}
+
+.visible {
+  overflow: visible;
+}
+
+.interactive {
+  pointer-events: auto;
+}
+
+.sky {
+  background: #c1f4d3;
+}
+
+.paper {
+  background: #fbf0dd;
+}
+
+/* Live text of the canvas (SVG text, so baselines match the artboard). */
+.text {
+  overflow: visible;
+  font-family:
+    "Noto Sans SC Variable", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  pointer-events: auto;
+  user-select: text;
+}
+
+.display {
+  font-family: var(--hardware-display);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    will-change: auto;
+  }
+}

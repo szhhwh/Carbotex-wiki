@@ -68,6 +68,7 @@ test("every article page uses the shared reading shell", async ({
           reading: rect(reading),
           article: rect(article),
           expectedWidth,
+          articleMaxWidth: getComputedStyle(article).maxWidth,
           insetDelta:
             readingRect.left -
             mainRect.left -
@@ -92,6 +93,14 @@ test("every article page uses the shared reading shell", async ({
         1,
       );
       expect(layout.insetDelta, `${route} reading centering`).toBeCloseTo(0, 1);
+      expect(
+        layout.article.width,
+        `${route} article width`,
+      ).toBeLessThanOrEqual(
+        layout.articleMaxWidth === "none"
+          ? Number.POSITIVE_INFINITY
+          : Number.parseFloat(layout.articleMaxWidth),
+      );
       expect(
         layout.article.left + layout.article.width,
         `${route} article stays within the reading area`,

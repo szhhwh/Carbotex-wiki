@@ -109,7 +109,7 @@ const Pages: (Page | Folder)[] = [
     folder: [
       {
         name: "Description",
-        title: "Project Description",
+        title: "Description",
         path: "/description",
         component: Description,
         layout: "article",

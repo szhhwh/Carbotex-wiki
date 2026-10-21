@@ -5,15 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "codegen": "node scripts/codegen.mjs",
+    "codegen:check": "node scripts/codegen.mjs --check",
+    "build": "yarn codegen && tsc && vite build",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write \"**/*.{ts,tsx,md,json,css}\"",
     "preview": "vite preview",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --grep-invert @performance",
     "test:e2e:perf": "playwright test tests/fermentation-map.performance.spec.ts"
   },
   "dependencies": {
     "@fatso83/retry-dynamic-import": "2.3.0",
+    "@fontsource-variable/noto-sans-sc": "5.3.1",
     "@fontsource-variable/noto-serif-sc": "5.3.1",
     "bootstrap": "^5.3.8",
     "clsx": "^2.1.1",

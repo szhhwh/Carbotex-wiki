@@ -64,7 +64,7 @@ test.describe("back to top", () => {
     await expect(page.locator("#opening-screen")).toHaveCount(0);
 
     await page.evaluate(() => {
-      const stage = document.querySelector<HTMLElement>("[data-home-stage]");
+      const stage = document.querySelector<HTMLElement>("[data-home-canvas]");
       if (stage) {
         window.scrollTo({
           top: Math.min(stage.offsetHeight - window.innerHeight, 1600),

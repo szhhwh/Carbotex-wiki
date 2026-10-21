@@ -53,6 +53,7 @@ export async function openWiki(page: Page) {
     "true",
     { timeout: 30_000 },
   );
+  await expect(page.locator("#opening-screen")).toHaveCount(0);
   return {
     frame,
     map: frame.locator("#china-map"),

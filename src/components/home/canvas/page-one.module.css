@@ -1,0 +1,124 @@
+.page {
+  display: contents;
+}
+
+.band {
+  overflow: visible;
+}
+
+.headline {
+  letter-spacing: 0;
+  pointer-events: auto;
+}
+
+.smoke {
+  overflow: visible;
+  opacity: 0.95;
+}
+
+.puff,
+.puffSlow,
+.puffFast {
+  stroke-dasharray: 260 170;
+  animation: smoke-flow 18s linear infinite;
+}
+
+.puffSlow {
+  stroke-dasharray: 420 120;
+  animation-duration: 26s;
+}
+
+.puffFast {
+  stroke-dasharray: 160 240;
+  animation-duration: 12s;
+}
+
+@keyframes smoke-flow {
+  to {
+    stroke-dashoffset: -860;
+  }
+}
+
+.sceneLayer {
+  overflow: visible;
+}
+
+.fire image {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  40% {
+    transform: scale(1.01, 1.035);
+  }
+
+  100% {
+    transform: scale(0.995, 0.985);
+  }
+}
+
+.earth {
+  animation: earth-spin 110s linear infinite;
+  will-change: transform;
+}
+
+@keyframes earth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: center / 100% 100% no-repeat;
+  color: #0a473b;
+  font-family: var(--hardware-display);
+  font-size: calc(24 * var(--u));
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.25s ease;
+
+  & span {
+    transform: translateY(calc(1.2 * var(--u)));
+  }
+
+  &:hover {
+    transform: translateY(calc(-3 * var(--u))) scale(1.06);
+    filter: drop-shadow(0 calc(4 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 0.25));
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &[data-active] {
+    filter: drop-shadow(0 0 calc(8 * var(--u)) rgb(105 228 170 / 0.85));
+  }
+
+  &:focus-visible {
+    outline: calc(3 * var(--u)) solid #ffc647;
+    outline-offset: calc(3 * var(--u));
+    border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .earth,
+  .fire image,
+  .puff,
+  .puffSlow,
+  .puffFast {
+    animation: none;
+  }
+}

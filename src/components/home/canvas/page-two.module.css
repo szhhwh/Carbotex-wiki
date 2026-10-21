@@ -1,0 +1,74 @@
+.tag {
+  cursor: ns-resize;
+  touch-action: none;
+  outline: none;
+  transition: filter 0.3s ease;
+
+  & img,
+  & svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    filter: drop-shadow(0 calc(3 * var(--u)) calc(8 * var(--u)) rgb(188 156 117 / 0.55));
+  }
+
+  &:focus-visible {
+    outline: calc(2 * var(--u)) dashed #bc9c75;
+    outline-offset: calc(2 * var(--u));
+    border-radius: calc(20 * var(--u));
+  }
+}
+
+.tagText {
+  animation: nudge 2.8s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+
+  80% {
+    transform: translateY(calc(2.5 * var(--u)));
+  }
+
+  90% {
+    transform: translateY(calc(-1.5 * var(--u)));
+  }
+}
+
+.group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  will-change: transform;
+}
+
+.ring {
+  will-change: transform;
+}
+
+.data {
+  transform-box: fill-box;
+
+  & [data-label] {
+    transform-box: fill-box;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagText {
+    animation: none;
+  }
+}

@@ -11,7 +11,7 @@ test.describe("hardware page", () => {
     const total = budget.locator("[data-budget-total]");
     const status = budget.getByRole("status");
 
-    await expect(total).toHaveAttribute("data-budget-total", "171.54");
+    await expect(total).toHaveAttribute("data-budget-total", "124.89");
     await expect(items).toHaveCount(20);
     await expect(status).toHaveText(
       "Showing 20 of 20 items for all subsystems",
@@ -25,7 +25,7 @@ test.describe("hardware page", () => {
       budget.getByRole("button", { name: /^Sensing/ }),
     ).toHaveAttribute("aria-pressed", "true");
     await expect(budget.locator("[data-budget-visible-total]")).toHaveText(
-      "$36.75",
+      "$31.80",
     );
 
     await budget.getByRole("button", { name: /^All/ }).click();
@@ -35,7 +35,7 @@ test.describe("hardware page", () => {
       "Showing 20 of 20 items for all subsystems",
     );
     await expect(budget.locator("[data-budget-visible-total]")).toHaveText(
-      "$171.54",
+      "$124.89",
     );
   });
 

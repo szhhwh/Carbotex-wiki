@@ -18,8 +18,10 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
 ## Commands
 
 - `yarn dev` — dev server (base path `/ouc-haide/`)
-- `yarn build` — `tsc && vite build`; type-check + bundle, must pass before
-  committing
+- `yarn codegen` — regenerate derived TypeScript from source assets
+- `yarn codegen:check` — verify generated files are current without writing
+- `yarn build` — `yarn codegen && tsc && vite build`; generate, type-check and
+  bundle, must pass before committing
 - `yarn lint` — eslint (`--max-warnings 0`, zero tolerance)
 - `yarn format` — prettier across the project
 - `git commit` is intercepted by the Claude Code PreToolUse hook, which runs

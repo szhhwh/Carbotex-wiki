@@ -298,7 +298,7 @@ test("home remains scrollable after the opening releases interaction", async ({
 }) => {
   await page.goto("/ouc-haide/", { waitUntil: "domcontentloaded" });
   await expect(page.locator(opening)).toHaveCount(0);
-  await expect(page.locator("[data-home-stage]")).toBeVisible();
+  await expect(page.locator("[data-home-canvas]")).toBeVisible();
   await expect(page.locator(root)).not.toHaveAttribute("inert");
   await page.mouse.wheel(0, 500);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(0);

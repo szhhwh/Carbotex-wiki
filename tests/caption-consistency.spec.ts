@@ -21,6 +21,10 @@ const CAPTION_ROUTES = [
   "education",
 ];
 
+function captionRoute(route: string) {
+  return `/ouc-haide/${route}${route === "education" ? "#activities" : ""}`;
+}
+
 const TYPOGRAPHY_PROPERTIES = [
   "fontFamily",
   "fontSize",
@@ -31,6 +35,7 @@ const TYPOGRAPHY_PROPERTIES = [
   "color",
   "textTransform",
 ] as const;
+const CAPTION_ALIGNMENTS = new Set(["start", "center"]);
 
 async function settlePage(page: import("@playwright/test").Page) {
   await page.locator("#article-body").waitFor();
@@ -52,7 +57,7 @@ test("every caption shares one typography signature across the wiki", async ({
   const groups = new Map<string, string[]>();
 
   for (const route of CAPTION_ROUTES) {
-    await page.goto(`/ouc-haide/${route}`);
+    await page.goto(captionRoute(route));
     await settlePage(page);
 
     const captions = await page.evaluate((properties) => {
@@ -65,6 +70,7 @@ test("every caption shares one typography signature across the wiki", async ({
             style: Object.fromEntries(
               properties.map((property) => [property, computed[property]]),
             ),
+            textAlign: computed.textAlign,
             borderTopWidth: computed.borderTopWidth,
           };
         });
@@ -75,6 +81,10 @@ test("every caption shares one typography signature across the wiki", async ({
         caption.borderTopWidth,
         `${route}: "${caption.text}" draws a caption rule`,
       ).toBe("0px");
+      expect(
+        CAPTION_ALIGNMENTS.has(caption.textAlign),
+        `${route}: "${caption.text}" uses an unsupported alignment`,
+      ).toBe(true);
 
       const signature = JSON.stringify(caption.style);
       const members = groups.get(signature) ?? [];
@@ -93,4 +103,31 @@ test("every caption shares one typography signature across the wiki", async ({
       )
       .join("\n")}`,
   ).toBe(1);
+});
+
+test("education chapter galleries caption their figures", async ({ page }) => {
+  await page.goto(captionRoute("education"));
+  await settlePage(page);
+
+  const prefixes = await page.evaluate(() =>
+    [...document.querySelectorAll("[data-caption] [data-caption-prefix]")].map(
+      (element) => (element.textContent ?? "").trim(),
+    ),
+  );
+
+  expect(prefixes).toEqual(
+    expect.arrayContaining(["Figure 5.", "Figure 7-11.", "Figure 12-14."]),
+  );
+
+  // No hand-written figure captions may survive outside the shared component.
+  const strays = await page.evaluate(() =>
+    [...document.querySelectorAll("#article-body p, #article-body strong")]
+      .filter((element) => {
+        if (element.closest("[data-caption]")) return false;
+        return /^Figure\s[\d-]+\./.test((element.textContent ?? "").trim());
+      })
+      .map((element) => (element.textContent ?? "").trim().slice(0, 60)),
+  );
+
+  expect(strays).toEqual([]);
 });

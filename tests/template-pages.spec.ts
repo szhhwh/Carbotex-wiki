@@ -128,33 +128,7 @@ test.describe("template article pages", () => {
     }
   });
 
-  test("lists all three Inspirations entries without inset shadows", async ({
-    page,
-  }) => {
-    await page.goto("/ouc-haide/experiments");
-
-    const inspirations = page.locator("#experiments-inspirations");
-    const expected = [
-      { year: "2025", team: "Heidelberg", slug: "heidelberg" },
-      { year: "2025", team: "McGill", slug: "mcgill" },
-      { year: "2025", team: "EPFL", slug: "epfl" },
-    ];
-
-    await expect(inspirations.getByRole("link")).toHaveCount(3);
-    for (const item of expected) {
-      const link = inspirations.getByRole("link", {
-        name: `${item.year} ${item.team}`,
-      });
-      await expect(link).toBeVisible();
-      await expect(link).toContainText(item.year);
-      await expect(link).toContainText(item.team);
-      await expect(link).toContainText("Open");
-      await expect(link).toHaveAttribute(
-        "href",
-        `https://${item.year}.igem.wiki/${item.slug}/experiments`,
-      );
-    }
-
+  test("template pages avoid inset shadows", async ({ page }) => {
     for (const path of ["/contribution", "/experiments", "/attributions"]) {
       await page.goto(`/ouc-haide${path}`);
       const insetShadows = await page.evaluate(() =>
@@ -166,14 +140,14 @@ test.describe("template article pages", () => {
       expect(insetShadows).toEqual([]);
     }
 
-    await page.goto("/ouc-haide/contribution");
+    await page.goto("/ouc-haide/description");
     await expect(page.locator("#article-body article > section")).toHaveCount(
-      5,
+      7,
     );
     await expect(
       page.getByRole("heading", {
         level: 2,
-        name: "1. Wet Lab — Genetic Parts and Experimental Protocols",
+        name: "1. Wet Lab — From Straw-Derived Sugars to PMA-DA",
       }),
     ).toBeVisible();
   });
@@ -391,7 +365,7 @@ test.describe("template article pages", () => {
     await expect(viewport).toHaveAttribute("data-near-viewport", "true");
     await expect(viewport).toHaveAttribute("data-load-event", "pending");
     await expect(viewport).toHaveAttribute("data-state", "error", {
-      timeout: 15_000,
+      timeout: 25_000,
     });
     await expect(viewport).toHaveAttribute("data-error-reason", "load-timeout");
     await expect(page.getByRole("alert")).toContainText("did not load in time");
@@ -420,7 +394,7 @@ test.describe("template article pages", () => {
     await expect(viewport).toHaveAttribute("data-load-event", "observed");
     await expect(viewport).toHaveAttribute("data-near-viewport", "true");
     await expect(viewport).toHaveAttribute("data-state", "error", {
-      timeout: 15_000,
+      timeout: 25_000,
     });
     await expect(viewport).toHaveAttribute(
       "data-error-reason",

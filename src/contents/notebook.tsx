@@ -607,14 +607,6 @@ const septemberEntries: NotebookEntry[] = [
     content: (
       <>
         <p>
-          PMA concentration was compared among the combined-engineering strains
-          under the recorded fermentation conditions. The three SC measurements
-          were 26, 26, and 24 g/L, giving a mean of 25.33 g/L. The corresponding
-          WT measurements were 19, 20, and 19 g/L, giving a mean of 19.33 g/L.
-          The increase calculated from these group means was approximately
-          31.0%.
-        </p>
-        <p>
           SC had the highest recorded mean among the tested donor groups and was
           selected as the best-performing combination in this comparison.
         </p>

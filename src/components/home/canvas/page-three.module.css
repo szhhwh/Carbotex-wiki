@@ -1,0 +1,142 @@
+/* P3: the yeast inspects the straw and gets an idea. */
+
+.shade {
+  mix-blend-mode: multiply;
+}
+
+.sugar {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: bob 3.4s ease-in-out infinite;
+}
+
+.ip {
+  --in: 0;
+  opacity: var(--in);
+  transform-origin: 30% 95%;
+  translate: calc((1 - var(--in)) * 90 * var(--u)) 0;
+  animation: peer 4.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.question {
+  --k: 0;
+  overflow: visible;
+  opacity: var(--k);
+  transform-origin: 40% 100%;
+  scale: calc(0.4 + 0.6 * var(--k));
+  rotate: calc((1 - var(--k)) * -25deg);
+
+  & g {
+    transform-box: fill-box;
+  }
+
+  & path,
+  & circle {
+    animation: wiggle 2.6s ease-in-out infinite;
+    transform-origin: 20px 70px;
+    transform-box: view-box;
+  }
+}
+
+/* Positioned wrappers spanning the canvas, so children keep artboard
+   coordinates while the wrapper fades as a whole. */
+.bulb,
+.pill {
+  --k: 0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--k);
+}
+
+.bulbArt {
+  transform-origin: 50% 80%;
+  scale: calc(0.5 + 0.5 * var(--k));
+  animation: flicker 1.8s ease-in-out infinite;
+}
+
+.bulbGlow {
+  overflow: visible;
+  scale: calc(0.4 + 0.8 * var(--k));
+  animation: glow 1.8s ease-in-out infinite;
+}
+
+.pill {
+  translate: calc((1 - var(--k)) * -40 * var(--u)) 0;
+}
+
+.pillBox {
+  border-radius: calc(33.4 * var(--u));
+  background: rgb(234 206 162 / 40%);
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(12deg);
+  }
+}
+
+@keyframes peer {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  35% {
+    transform: rotate(-3deg) translateY(-2px);
+  }
+
+  70% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  45% {
+    filter: brightness(1.18) drop-shadow(0 0 6px #ffd166);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sugar,
+  .ip,
+  .question path,
+  .question circle,
+  .bulbArt,
+  .bulbGlow {
+    animation: none;
+  }
+}

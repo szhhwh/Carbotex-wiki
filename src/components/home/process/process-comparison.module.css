@@ -1,0 +1,198 @@
+/*
+ * P10: comparison cards. Section geometry is in design px × --u (1920-wide
+ * artboard); card internals are in card px × --cu (536-wide card), so the
+ * cards keep their composition when they stack on narrow screens.
+ */
+.comparison {
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  background: #fef0dd;
+  color: #194524;
+  font-family:
+    "Noto Sans SC Variable",
+    "Noto Sans SC",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.inner {
+  --u: calc(100cqw / 1920);
+  position: relative;
+  padding: calc(108 * var(--u)) 0 calc(44 * var(--u));
+
+  @container (max-width: 819px) {
+    padding: 56px 0 64px;
+  }
+}
+
+.lineWave {
+  position: absolute;
+  top: calc(330 * var(--u));
+  left: calc(-190 * var(--u));
+  z-index: 0;
+  display: block;
+  width: calc(2298 * var(--u));
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+
+  @container (max-width: 819px) {
+    top: 34%;
+    left: -70%;
+    width: 240%;
+  }
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  width: calc(1700 * var(--u));
+  margin: 0 auto;
+  font-size: max(15px, calc(34 * var(--u)));
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+
+  @container (max-width: 819px) {
+    width: min(88%, 32rem);
+    font-size: 16px;
+  }
+}
+
+.cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: calc(44 * var(--u));
+  justify-content: center;
+  margin: calc(68 * var(--u)) 0 0;
+  padding: 0;
+  list-style: none;
+
+  @container (max-width: 819px) {
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+    margin-top: 32px;
+  }
+}
+
+.cardSlot {
+  width: calc(536.15 * var(--u));
+
+  @container (max-width: 819px) {
+    width: min(86%, 360px);
+  }
+}
+
+.card {
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 536.15 / 805.77;
+  border-radius: 8.19% / 5.45%;
+  background: url("https://static.igem.wiki/teams/6147/wiki/home/card.svg")
+    center / 100% 100% no-repeat;
+  box-shadow: 0 6px 18px rgb(25 69 36 / 0.07);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+
+  &:hover {
+    box-shadow: 0 22px 44px rgb(25 69 36 / 0.2);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+.cardBody {
+  --cu: calc(100cqw / 536.15);
+  position: absolute;
+  inset: 0;
+}
+
+.cardTitle {
+  position: absolute;
+  top: calc(74 * var(--cu));
+  left: 0;
+  width: 100%;
+  margin: 0;
+  font-size: calc(56 * var(--cu));
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.points {
+  position: absolute;
+  top: calc(596 * var(--cu));
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  font-size: calc(33 * var(--cu));
+  line-height: calc(44 * var(--cu));
+  white-space: nowrap;
+  list-style: none;
+  transform: translateX(-50%);
+
+  & li::before {
+    content: "• ";
+  }
+
+  & strong {
+    font-weight: 700;
+  }
+}
+
+.art {
+  position: absolute;
+  top: calc(var(--y) * var(--cu));
+  left: calc(var(--x) * var(--cu));
+  display: block;
+  width: calc(var(--w) * var(--cu));
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+
+  & img,
+  & svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.drawn {
+  overflow: visible;
+}
+
+/* Light band (arrow) / flash (check) clipped to the icon's own silhouette. */
+.shine {
+  position: absolute;
+  inset: 0;
+  mask: var(--shine-mask) center / 100% 100% no-repeat;
+}
+
+.arrowShine {
+  background: linear-gradient(
+    to top,
+    transparent 0 38%,
+    rgb(214 245 205 / 0.95) 50%,
+    transparent 62% 100%
+  );
+  background-position: 50% 0%;
+  background-size: 100% 300%;
+}
+
+.checkShine {
+  background: #e9f9e1;
+  opacity: 0;
+}

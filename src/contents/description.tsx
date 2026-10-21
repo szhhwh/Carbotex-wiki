@@ -683,7 +683,7 @@ const sections: ArticleSection[] = [
 export function Description() {
   return (
     <ArticlePage
-      title="Carbotex: From Agricultural Straw to a Bio-Based Adhesive"
+      title="Description"
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/description.webp",
         alt: "Smoke rising from a burning crop field.",

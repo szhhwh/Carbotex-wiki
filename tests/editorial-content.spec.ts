@@ -4,6 +4,7 @@ import { expect, test, type Page } from "@playwright/test";
 const articleRoutes = ["/design", "/results", "/protocols", "/notebook"];
 const sourceThreeLineHeadings = new Set([
   "1.3 HPLC quantification of malic acid equivalents in acid-hydrolysed PMA",
+  "Concentration and functionalization-series comparisons",
 ]);
 const protocol19ASourceUrl =
   "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-en.pdf";

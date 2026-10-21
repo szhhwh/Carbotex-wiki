@@ -34,18 +34,18 @@ test.describe("integrated human practices", () => {
       exact: true,
     });
     const cycle12Descriptors = [
-      "From Material Development to Practical Application",
-      "Exploring Commercialization Challenges at CCiC",
-      "From Production Cost to Material Value",
-      "Integrating Commercial Considerations into Technical Development",
-      "Balancing Material Innovation with Manufacturing Feasibility",
+      "3.3.1 Understanding Upstream Production Costs",
+      "3.3.2 Preliminary Material-Cost Analysis",
+      "3.3.3 Identifying Application-Specific Value",
+      "3.3.4 Commercialization Outlook — Toward Practical Applications",
     ];
     const cycle13Descriptors = [
-      "When Material Development Raises New Safety Questions",
-      "A New Perspective from Grand APiC",
-      "Following Safety Through the Production Pathway",
-      "Bringing Safety into Project Development",
-      "Extending Responsibility Beyond the Laboratory",
+      "3.4.1 Responding to the Judges' Question",
+      "3.4.2 Managing Engineered A08 and Its Genetic Elements",
+      "3.4.3 From Fermentation Broth to Adhesive: Why Purification Matters",
+      "3.4.4 From Adhesive Performance to Application Safety",
+      "3.4.5 From Safety Awareness to Laboratory Practice",
+      "3.4.6 Future Outlook — Making Safety Part of Practical Application",
     ];
     for (const descriptor of cycle12Descriptors) {
       await expect(cycle12).toContainText(descriptor);
@@ -55,7 +55,7 @@ test.describe("integrated human practices", () => {
     }
     await expect(
       page.getByRole("region", { name: "TRACE cycle 1", exact: true }),
-    ).not.toContainText("From Material Development to Practical Application");
+    ).not.toContainText("3.3.1 Understanding Upstream Production Costs");
     const descriptorPlacement = await page.evaluate(
       ({ cycle12, cycle13 }) => {
         const descriptors = [...cycle12, ...cycle13];
@@ -101,7 +101,7 @@ test.describe("integrated human practices", () => {
     ).toHaveCount(1);
     await expect(
       page.locator("#ihp-biological-system h4").filter({
-        hasText: /^Defining the Carbon Destination$/,
+        hasText: /^2\.2\.1 Defining the Carbon Destination$/,
       }),
     ).toHaveCount(1);
     await expect(page.locator("#ihp-collaborators-title")).toBeVisible();
@@ -158,7 +158,7 @@ test.describe("integrated human practices", () => {
           "#ihp-stakeholder-group-feedstock-and-agricultural-reality img",
         )
         .first(),
-    ).toHaveAttribute("alt", /^Stakeholder portrait: /);
+    ).toHaveAttribute("alt", /^Stakeholder portrait — /);
   });
 
   test("stakeholder details open in a modal and return focus", async ({
@@ -757,12 +757,10 @@ test.describe("integrated human practices", () => {
     await expect.poll(() => cardColumnCount(fourPersonCardGrid)).toBe(2);
     await expect.poll(() => cardColumnCount(sixPersonCardGrid)).toBe(3);
 
-    const additionalCard = navigator.locator("[data-additional-collaborators]");
     const lastCardGrid = stages.nth(5).locator("[data-stakeholder-card-grid]");
     const lastGridColumns = await cardColumnCount(lastCardGrid);
 
-    expect(lastGridColumns).toBe(3);
-    await expect(additionalCard).toBeVisible();
+    expect(lastGridColumns).toBe(2);
     for (const title of [
       "Feedstock & Agricultural Reality",
       "Biomanufacturing Pathway",
@@ -776,16 +774,20 @@ test.describe("integrated human practices", () => {
       ).toBeVisible();
     }
     await expect(navigator).toContainText(
-      "Qingdao Institute of Bioenergy and Bioprocess Technology (QIBEBT)",
+      "Qingdao Institute of Bioenergy and Bioprocess Technology, Chinese Academy of Sciences (QIBEBT)",
     );
     await expect(
-      navigator.getByRole("heading", {
-        name: "Additional iGEM Teams & Collaborators",
+      page.getByRole("heading", {
+        name: "Additional Teams & Collaborators",
       }),
     ).toBeVisible();
-    await expect(navigator).toContainText("Prof. Ning Yan");
-    await expect(navigator).toContainText(
-      "Artistic Guidance & Science Communication",
+    await expect(page.locator("#ihp-collaborators-title")).toContainText(
+      "Additional Teams & Collaborators",
+    );
+    const ningYan = page.getByRole("link", { name: /^Prof\. Ning Yan/ });
+    await expect(ningYan).toBeVisible();
+    await expect(ningYan).toContainText(
+      "Professional artistic feedback for Carbotex's original science-communication song.",
     );
   });
 
