@@ -750,9 +750,9 @@ const sections: ArticleSection[] = [
         <MediaPair>
           <Figure
             id="hardware-figure-4-2"
-            src="https://static.igem.wiki/teams/6147/wiki/fluid-simulation-contour.avif"
-            intrinsicWidth={825}
-            intrinsicHeight={477}
+            src="https://static.igem.wiki/teams/6147/wiki/fluid-optimization.avif"
+            intrinsicWidth={819}
+            intrinsicHeight={514}
             alt="Fluid simulation contour showing velocity distribution"
             captionPrefix="Figure 4-2."
             caption="Fluid Residual Plot"
@@ -760,9 +760,9 @@ const sections: ArticleSection[] = [
           />
           <Figure
             id="hardware-figure-4-3"
-            src="https://static.igem.wiki/teams/6147/wiki/fig3-cycle2-cfd.avif"
-            intrinsicWidth={2304}
-            intrinsicHeight={1728}
+            src="https://static.igem.wiki/teams/6147/wiki/fluid-simulation-contour.avif"
+            intrinsicWidth={825}
+            intrinsicHeight={477}
             alt="Fluid simulation contour showing velocity distribution"
             captionPrefix="Figure 4-3."
             caption="Fluid Simulation Contour"
