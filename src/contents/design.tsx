@@ -1375,7 +1375,7 @@ const sections: ArticleSection[] = [
                   </td>
                   <td>
                     Construct and strain identity, PMA concentration under
-                    matched conditions, and biomass.
+                    matched conditions.
                   </td>
                   <td>
                     Select a better-performing tested combination;
@@ -1391,11 +1391,10 @@ const sections: ArticleSection[] = [
                   </td>
                   <td>
                     Material and joint testing, formulation comparisons,
-                    underwater performance, cellular responses, and aqueous
-                    stability.
+                    underwater performance, and cellular responses.
                   </td>
                   <td>
-                    Select formulations and define evidence-supported
+                    Select formulations and envision evidence-supported
                     application directions.
                   </td>
                 </tr>
