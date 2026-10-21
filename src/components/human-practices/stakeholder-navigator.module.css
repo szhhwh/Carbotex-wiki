@@ -48,6 +48,7 @@
   padding: clamp(0.82rem, 1.7cqi, 1.12rem);
   overflow: hidden;
   flex-direction: column;
+  justify-content: center;
   border-radius: clamp(0.78rem, 1.55cqi, 1rem);
   background: var(--group-accent);
   box-shadow:
