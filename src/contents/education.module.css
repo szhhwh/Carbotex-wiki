@@ -84,7 +84,7 @@
   letter-spacing: 0;
   line-height: 1.18;
   overflow-wrap: anywhere;
-  text-wrap: balance;
+  text-wrap: wrap;
 }
 
 .pageShell .objectiveStatement :where(strong, b) {
@@ -1342,7 +1342,7 @@
   margin-block-start: var(--article-space-related);
   padding: 0.65rem 0.8rem;
   border-top: 0;
-  background: var(--hardware-white, #fff);
+  background: transparent;
   color: var(--education-navy);
   cursor: pointer;
   font-size: 0.92rem;
