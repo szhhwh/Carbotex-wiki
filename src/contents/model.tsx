@@ -12,8 +12,9 @@ const sections: ArticleSection[] = [
       <>
         <p>
           To turn agricultural straw sugars into a dopamine-functionalized
-          poly(β-L-malic acid) (PMLA–DA) underwater bioadhesive, our dry-lab
-          framework resolves three core questions along the biomanufacturing
+          poly(β-L-malic acid) (PMLA, or PMA; PMA–DA) underwater bioadhesive,
+          our dry-lab framework resolves three core questions along the
+          biomanufacturing
           chain: <strong>which gene limits PMLA synthesis in an unannotated fungus</strong>,{" "}
           <strong>how to prevent protocol and measurement errors across multi-stage experiments</strong>, and{" "}
           <strong>why excess dopamine dosing lowers polymer grafting efficiency</strong>.
@@ -62,7 +63,7 @@ const sections: ArticleSection[] = [
                 </strong>
                 <span className={styles.hubDesc}>
                   Explicit-solvent all-atom simulations of pre-reaction
-                  PMLA–dopamine coupling across five ratios
+                  PMA–dopamine coupling across five ratios
                 </span>
               </div>
               <span className={styles.hubCta}>
@@ -134,11 +135,11 @@ const sections: ArticleSection[] = [
   {
     id: "ov-en-sec-4",
     title:
-      "3. All-Atom Molecular Dynamics (MD) Simulation of PMLA–Dopamine Coupling",
+      "3. All-Atom Molecular Dynamics (MD) Simulation of PMA–Dopamine Coupling",
     content: (
       <>
         <p>
-          In downstream EDC/NHS coupling of PMLA with dopamine, published
+          In downstream EDC/NHS coupling of PMA with dopamine, published
           grafted dopamine content peaks at an equimolar{" "}
           <strong>1.00:1 molar ratio (21.3 wt%)</strong> but drops to{" "}
           <strong>19.2 wt%</strong> at <strong>1.25:1</strong>. Using

@@ -134,7 +134,7 @@ const sections: ArticleSection[] = [
                 : Each of the five main-model systems contains a single{" "}
                 <MathInline tex={String.raw`\sim 12\text{ kDa}`} />{" "}
                 <MathInline tex={String.raw`\beta`} />
-                -PMLA chain (103 repeat units, 104 initial carboxyl groups) with{" "}
+                -PMA chain (103 repeat units, 104 initial carboxyl groups) with{" "}
                 <strong>
                   50% (52 sites) represented as activated NHS esters
                 </strong>
@@ -183,7 +183,7 @@ const sections: ArticleSection[] = [
                       </td>
                       <td>
                         Single <MathInline tex={String.raw`\beta`} />
-                        -PMLA chain: 103 repeat units, 104 initial carboxyl
+                        -PMA chain: 103 repeat units, 104 initial carboxyl
                         groups
                       </td>
                       <td>

@@ -98,8 +98,9 @@ export const modelEngineeringSections: ArticleSection[] = [
         <p>
           Engineering the non-model black yeast{" "}
           <em>Aureobasidium melanogenum</em> A08 to convert agricultural straw
-          sugars into poly(β-L-malic acid) (PMLA) and conjugating it with
-          dopamine (DA) into an underwater bioadhesive (PMLA–DA) exposed three
+          sugars into poly(β-L-malic acid) (PMLA, or PMA) and conjugating it
+          with dopamine (DA) into an underwater bioadhesive (PMA–DA) exposed
+          three
           methodological bottlenecks: unannotated fungal genetics with extensive
           paralog redundancy, error-prone multi-stage laboratory record
           management, and unobservable pre-reaction polymer–dopamine coupling
@@ -139,7 +140,7 @@ export const modelEngineeringSections: ArticleSection[] = [
             "Establish a two-channel reconstruction and proteome-wide localization calibration method to eliminate template-induced pathway breaks in non-model fungi",
             "Formulate an isozyme-group orthogonal screening paradigm (FSEOF push × joint group-knockout essentiality) to isolate true metabolic bottlenecks amidst paralog compensation",
             "Enforce service-layer guardrails and hot-swappable Cordis domain plugins in WetFlow so experimental safety and specialized extensions never corrupt core laboratory records",
-            "Decouple spatial proximity from nucleophilic attack orientation via all-atom MD to formulate a testable pre-reaction hypothesis for PMLA–DA formulation",
+            "Decouple spatial proximity from nucleophilic attack orientation via all-atom MD to formulate a testable pre-reaction hypothesis for PMA–DA formulation",
           ]}
         />
         <p>
@@ -641,7 +642,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                 <p>
                   When we deployed general-purpose coding agents (OpenCode and
                   Claude Code) to coordinate A08
-                  fermentation and PMLA–DA synthesis records, we uncovered a
+                  fermentation and PMA–DA synthesis records, we uncovered a
                   structural limitation of prompt-only LLM workflows: conversational
                   instructions cannot prevent an agent from mixing SOPs across
                   projects, overwriting wet-lab measurements with literature
@@ -797,7 +798,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </strong>
                       <p>
                         WetFlow cleanly separated our wet lab&apos;s rapid
-                        PMLA–DA schedule from Tang et al.&apos;s literature
+                        PMA–DA schedule from Tang et al.&apos;s literature
                         reference protocol <Cite k="Tang2020PMLADA" /> and
                         achieved 28/30 (93.3%) benchmark accuracy with zero
                         execution failures, outperforming the OpenCode baseline
@@ -900,11 +901,11 @@ export const modelEngineeringSections: ArticleSection[] = [
               <>
                 <p>
                   As our formulation and education teams requested specialized
-                  capabilities—auditing multi-ratio PMLA–DA coupling summaries
+                  capabilities—auditing multi-ratio PMA–DA coupling summaries
                   and generating primary-school outreach lesson plans—hardcoding
                   task-specific scripts into the core workbench risked
                   duplicating database connections and polluting global state.
-                  Drawing on DSH and the Cordis dependency-injection framework{" "}
+                  Built on the Cordis dependency-injection framework{" "}
                   <Cite k="Shi2026Cordis" />
                   , we designed a microkernel-and-plugin methodology: each
                   domain workflow mounts as an isolated, hot-swappable plugin
@@ -1033,7 +1034,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                   window to hands-on Action while keeping Verify and Echo as
                   post-class assessment modules. With upstream strain design and
                   midstream workflow architecture complete, Cycle 5 turned to
-                  downstream PMLA–DA conjugation.
+                  downstream PMA–DA conjugation.
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -1082,7 +1083,7 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  In downstream EDC/NHS coupling of A08-fermented PMLA with
+                  In downstream EDC/NHS coupling of A08-fermented PMA with
                   dopamine, wet-lab conjugation peaked at{" "}
                   <strong>21.3 wt% at equimolar 1.00</strong> but{" "}
                   <strong>dropped to 19.2 wt% at 1.25</strong>{" "}

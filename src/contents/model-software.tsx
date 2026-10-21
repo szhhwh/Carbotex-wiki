@@ -1297,8 +1297,9 @@ const sections: ArticleSection[] = [
                 30-question biological evidence development benchmark
               </strong>{" "}
               (built from synthetic test documents kept separate from real
-              wet-lab records; per-item prompts are not distributed in the
-              public bundle) to compare the full <strong>WetFlow</strong>{" "}
+              wet-lab records; the public bundle includes all 30 benchmark
+              questions and all 66 initial and wording-clarified prompt-response
+              records) to compare the full <strong>WetFlow</strong>{" "}
               configuration against the general coding agent{" "}
               <strong>OpenCode</strong> baseline setup (both running{" "}
               <code>DeepSeek Flash</code> within their respective native tool
@@ -1458,8 +1459,10 @@ const sections: ArticleSection[] = [
                   questions were built from four synthetic experimental
                   documents (a literature excerpt, a fermentation batch record,
                   an instrument export, and a laboratory SOP; all numbers are
-                  standalone software-test data, and per-item prompts belong to
-                  the internal development test set). Each system was required
+                  standalone software-test data, and the public bundle includes
+                  all 30 benchmark questions together with all 66 raw and
+                  wording-clarified prompt-response records). Each system was
+                  required
                   to output <code>SUPPORT</code>, <code>REFUTE</code>, or{" "}
                   <code>NEI</code> on the first line; missing labels and
                   execution failures counted as errors against a fixed
@@ -1497,9 +1500,9 @@ const sections: ArticleSection[] = [
           <>
             <ul>
               <li>
-                <strong>Summary of Contributions</strong>: Inspired by DSH and
-                built on the Cordis plugin framework{" "}
-                <Cite k="Shi2026Cordis" />, WetFlow unifies project-scoped
+                <strong>Summary of Contributions</strong>: Built on the Cordis
+                plugin framework <Cite k="Shi2026Cordis" />, WetFlow unifies
+                project-scoped
                 retrieval, unit-checked measurement logging, researcher stage
                 approval, and hot-swappable scientific plugins into a single
                 biological research workbench. In our adhesive project, it
@@ -1519,8 +1522,8 @@ const sections: ArticleSection[] = [
                 >
                   https://github.com/OUC-haide/wetflow
                 </a>{" "}
-                , released under the WetFlow Non-Commercial Reciprocal License
-                1.0), create a project, and import their own SOPs, literature
+                , released under the Apache-2.0 License), create a project, and
+                import their own SOPs, literature
                 notes, and measurement tables to immediately use Europe PMC /
                 arXiv / NCBI GEO search, unit-validated experiment records, and
                 modular modeling plugins.
