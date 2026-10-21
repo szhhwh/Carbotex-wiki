@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowDownRight, ArrowUpRight, X } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ActivityViewer } from "../components/activities/ActivityViewer";
 import {
   ArticlePage,
@@ -38,6 +38,10 @@ import { Chapter08Content } from "./education/Chapter08Content";
 import { ChapterMeta } from "./education/ChapterMeta";
 import { InteractionHint } from "./education/InteractionHint";
 import { ResourceReuseContent } from "./education/ResourceReuseContent";
+import {
+  EducationSectionSwitch,
+  type EducationSectionMode,
+} from "./education/EducationSectionSwitch";
 import {
   OverviewInclusiveAccess,
   OverviewIntro,
@@ -1713,31 +1717,247 @@ const sections: ArticleSection[] = [
   },
 ];
 
+const educationSections: Record<EducationSectionMode, ArticleSection[]> = {
+  overview: sections.filter(({ id }) => ["overview", "principle"].includes(id)),
+  activity: sections.filter(({ id }) => id === "activities"),
+  "resource-reuse": sections.filter(({ id }) => id === "resource-reuse"),
+  conclusion: sections.filter(({ id }) => id === "conclusion"),
+};
+
+const educationSectionModes = Object.keys(
+  educationSections,
+) as EducationSectionMode[];
+
+const overviewReferenceOrder = ["hibino2019ambiguity", "jin2024drivers"];
+const activityReferenceOrder = ["piaget1964", "sweeney2012"];
+
+const educationSectionIds = new Map<string, EducationSectionMode>();
+for (const [mode, modeSections] of Object.entries(educationSections) as Array<
+  [EducationSectionMode, ArticleSection[]]
+>) {
+  modeSections.forEach((section) => {
+    educationSectionIds.set(section.id, mode);
+    section.subsections?.forEach((subsection) => {
+      educationSectionIds.set(subsection.id, mode);
+    });
+  });
+}
+
+function targetEducationMode(targetId: string): EducationSectionMode | null {
+  if (targetId === "references" || /^ref-\d+$/.test(targetId)) return null;
+
+  const directMode = educationSectionIds.get(targetId);
+  if (directMode) return directMode;
+
+  if (targetId.endsWith("-heading")) {
+    const baseId = targetId.slice(0, -"-heading".length);
+    if (baseId.startsWith("chapter-")) return "activity";
+    const headingMode = educationSectionIds.get(baseId);
+    if (headingMode) return headingMode;
+  }
+
+  return targetId.startsWith("chapter-") ? "activity" : null;
+}
+
+function educationModeFromHash(hash: string): EducationSectionMode | null {
+  let targetId = hash.startsWith("#") ? hash.slice(1) : hash;
+  try {
+    targetId = decodeURIComponent(targetId);
+  } catch {
+    return null;
+  }
+  return targetEducationMode(targetId);
+}
+
+function isEducationSectionMode(value: unknown): value is EducationSectionMode {
+  return educationSectionModes.some((mode) => mode === value);
+}
+
+function initialEducationMode(): EducationSectionMode {
+  const storedMode =
+    window.history.state?.educationMode ??
+    window.history.state?.usr?.educationMode;
+  if (isEducationSectionMode(storedMode)) return storedMode;
+
+  return educationModeFromHash(window.location.hash) ?? "overview";
+}
+
 export function Education() {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<EducationSectionMode>(initialEducationMode);
+  const pendingTargetId = useRef<string | null>(null);
+  const pendingFocusId = useRef<string | null>(null);
   const selected = ACTIVITIES.find(
     (activity) => activity.id === searchParams.get("activity"),
   );
+  const activeSections = educationSections[mode];
+  const hasReferences = mode === "overview" || mode === "activity";
+  const activeReferenceOrder =
+    mode === "overview"
+      ? overviewReferenceOrder
+      : mode === "activity"
+        ? activityReferenceOrder
+        : undefined;
 
   useEffect(() => {
     if (selected) window.scrollTo(0, 0);
   }, [selected]);
 
+  useEffect(() => {
+    const nextMode = educationModeFromHash(location.hash);
+    if (!nextMode) {
+      if (!location.hash && !selected) {
+        setMode((current) => (current === "overview" ? current : "overview"));
+      }
+      return;
+    }
+    setMode((current) => (current === nextMode ? current : nextMode));
+  }, [location.hash, selected]);
+
+  useEffect(() => {
+    if (window.history.state?.educationMode === mode) return;
+    window.history.replaceState(
+      { ...window.history.state, educationMode: mode },
+      "",
+      window.location.href,
+    );
+  }, [mode]);
+
+  useEffect(() => {
+    const targetId = pendingTargetId.current;
+    if (!targetId) return;
+    pendingTargetId.current = null;
+    void navigate(
+      {
+        search: window.location.search,
+        hash: `#${targetId}`,
+      },
+      {
+        state: {
+          ...(window.history.state?.usr ?? {}),
+          educationMode: mode,
+        },
+      },
+    );
+  }, [mode, navigate]);
+
+  useEffect(() => {
+    const targetId = pendingFocusId.current;
+    if (!targetId || location.hash !== `#${targetId}`) return;
+
+    let frame = 0;
+    const focusTarget = () => {
+      const target = document.getElementById(targetId);
+      if (!target) {
+        frame = requestAnimationFrame(focusTarget);
+        return;
+      }
+
+      const hadTabIndex = target.hasAttribute("tabindex");
+      if (!hadTabIndex) target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+      if (!hadTabIndex) {
+        target.addEventListener(
+          "blur",
+          () => target.removeAttribute("tabindex"),
+          { once: true },
+        );
+      }
+      pendingFocusId.current = null;
+    };
+
+    frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(focusTarget);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location.hash, mode]);
+
+  useEffect(() => {
+    const followEducationAnchor = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const anchor =
+        event.target instanceof Element
+          ? event.target.closest<HTMLAnchorElement>("a[href]")
+          : null;
+      if (!anchor?.closest("[data-education-page]")) return;
+
+      const url = new URL(anchor.href, window.location.href);
+      if (
+        !url.hash ||
+        url.origin !== window.location.origin ||
+        url.pathname !== window.location.pathname ||
+        url.search !== window.location.search
+      ) {
+        return;
+      }
+
+      let targetId = url.hash.slice(1);
+      try {
+        targetId = decodeURIComponent(targetId);
+      } catch {
+        return;
+      }
+
+      const targetMode = targetEducationMode(targetId);
+      if (!targetMode || targetMode === mode) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      pendingTargetId.current = targetId;
+      pendingFocusId.current = targetId;
+      setMode(targetMode);
+    };
+
+    // Listen on window capture so RouteScrollManager does not try to resolve
+    // a chapter anchor before the newly selected mode has rendered it.
+    window.addEventListener("click", followEducationAnchor, true);
+    return () =>
+      window.removeEventListener("click", followEducationAnchor, true);
+  }, [mode]);
+
   if (selected) {
     return <ActivityViewer activity={selected} key={selected.id} />;
   }
 
+  const selectMode = (nextMode: EducationSectionMode) => {
+    if (nextMode === mode) return;
+    setMode(nextMode);
+    const sectionId = educationSections[nextMode][0].id;
+    window.history.replaceState(
+      { ...window.history.state, educationMode: nextMode },
+      "",
+      `${window.location.pathname}${window.location.search}#${sectionId}`,
+    );
+  };
+
   return (
-    <div className={styles.pageShell}>
+    <div className={styles.pageShell} data-education-page>
       <ArticlePage
         heroImage={{
           src: "https://static.igem.wiki/teams/6147/wiki/education/edu-igem-collagen.webp",
           alt: "Collage of OUC-Haide education activities and participants around the WEAVE programme mark.",
         }}
-        sections={sections}
+        sections={activeSections}
+        contentControls={
+          <EducationSectionSwitch value={mode} onChange={selectMode} />
+        }
+        contentKey={mode}
         stickyMobileOutline
         title="Education"
-        references
+        references={hasReferences}
+        referenceOrder={activeReferenceOrder}
       />
     </div>
   );

@@ -20,6 +20,7 @@ interface PageReferencesContextValue {
   /** Citation keys in order of first appearance on the current page. */
   keys: string[];
   register: (key: string) => void;
+  replaceKeys: (keys: string[]) => void;
   referencesOpen: boolean;
   setReferencesOpen: (open: boolean) => void;
   revealReference: (targetId: string) => void;
@@ -108,10 +109,25 @@ export function ReferencesProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
   const cancelFocus = useRef<(() => void) | null>(null);
   const [keys, setKeys] = useState<string[]>([]);
+  const keysRef = useRef(keys);
+  keysRef.current = keys;
   const [referencesOpen, setReferencesOpen] = useState(false);
   const register = useCallback((key: string) => {
     setKeys((previous) =>
       previous.includes(key) ? previous : [...previous, key],
+    );
+  }, []);
+  const replaceKeys = useCallback((nextKeys: string[]) => {
+    const currentKeys = keysRef.current;
+    const isDifferent =
+      currentKeys.length !== nextKeys.length ||
+      currentKeys.some((key, index) => key !== nextKeys[index]);
+    if (currentKeys.length > 0 && isDifferent) cancelFocus.current?.();
+    setKeys((previous) =>
+      previous.length === nextKeys.length &&
+      previous.every((key, index) => key === nextKeys[index])
+        ? previous
+        : nextKeys,
     );
   }, []);
   const revealReference = useCallback((targetId: string, updateHash = true) => {
@@ -184,11 +200,12 @@ export function ReferencesProvider({ children }: { children: ReactNode }) {
     () => ({
       keys,
       register,
+      replaceKeys,
       referencesOpen,
       setReferencesOpen,
       revealReference,
     }),
-    [keys, register, referencesOpen, revealReference],
+    [keys, register, replaceKeys, referencesOpen, revealReference],
   );
   return (
     <PageReferencesContext.Provider value={value}>
@@ -200,14 +217,17 @@ export function ReferencesProvider({ children }: { children: ReactNode }) {
 /**
  * Seeds the page's citation numbering without rendering a visible marker.
  * Use this when a page has an explicit source list whose order differs from
- * the order in which the first in-text citations appear.
+ * the order in which the first in-text citations appear. Replacing rather than
+ * appending also isolates references when one route switches between content
+ * modes, such as Education or Engineering.
  */
 export function ReferenceOrder({ keys }: { keys: string[] }) {
   const context = useContext(PageReferencesContext);
+  const replaceKeys = context?.replaceKeys;
 
   useLayoutEffect(() => {
-    keys.forEach((key) => context?.register(key));
-  }, [context, keys]);
+    replaceKeys?.(keys);
+  }, [keys, replaceKeys]);
 
   return null;
 }
