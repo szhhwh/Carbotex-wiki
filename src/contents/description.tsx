@@ -106,5 +106,17 @@ const sections: ArticleSection[] = [
 ];
 
 export function Description() {
-  return <ArticlePage title="Description" sections={sections} references />;
+  return (
+    <ArticlePage
+      title="Description"
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/description.webp",
+        alt: "Smoke rising from a burning crop field.",
+        intrinsicWidth: 3128,
+        intrinsicHeight: 1700,
+      }}
+      sections={sections}
+      references
+    />
+  );
 }
