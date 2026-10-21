@@ -39,7 +39,9 @@ export const chapter01Figure4Composite = {
   id: "chapter-01-figure-4",
   src: `${mediaRoot}/1-4-2-figure-4.avif`,
   alt: "Figure 4 composite: A, changes in understanding before and after the lecture; B, audience-reported learning outcomes; C, perceived contributions of synthetic biology.",
-  ratio: "1366 / 768",
+  // Crop the source's vertical whitespace while keeping all three panels visible.
+  ratio: "1366 / 400",
+  objectFit: "cover" as const,
 };
 
 export const chapter02ActivityTwo: MediaImage[] = [
