@@ -223,13 +223,6 @@
   .cls29 {
     opacity: 0.5;
   }
-
-  .up {
-    fill: #f45d5d;
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 90px;
-    font-weight: 700;
-  }
 }
 
 @media (max-width: 640px) {
