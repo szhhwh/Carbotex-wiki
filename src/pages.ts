@@ -5,82 +5,61 @@ export type PageLayout = "fullscreen" | "article";
 
 // Keep route metadata immediately available to the Navbar. Each page module is
 // fetched only when its route is rendered.
-const Home = lazyWithRetry(() =>
-  import("./contents/home.tsx").then(({ Home }) => ({ default: Home })),
+const Home = lazyWithRetry(() => import("./contents/home.tsx"), "Home");
+const Description = lazyWithRetry(
+  () => import("./contents/description.tsx"),
+  "Description",
 );
-const Description = lazyWithRetry(() =>
-  import("./contents/description.tsx").then(({ Description }) => ({
-    default: Description,
-  })),
+const Engineering = lazyWithRetry(
+  () => import("./contents/engineering.tsx"),
+  "Engineering",
 );
-const Engineering = lazyWithRetry(() =>
-  import("./contents/engineering.tsx").then(({ Engineering }) => ({
-    default: Engineering,
-  })),
+const Parts = lazyWithRetry(() => import("./contents/parts.tsx"), "Parts");
+const Contribution = lazyWithRetry(
+  () => import("./contents/contribution.tsx"),
+  "Contribution",
 );
-const Parts = lazyWithRetry(() =>
-  import("./contents/parts.tsx").then(({ Parts }) => ({ default: Parts })),
+const Design = lazyWithRetry(() => import("./contents/design.tsx"), "Design");
+const Experiments = lazyWithRetry(
+  () => import("./contents/experiments.tsx"),
+  "Experiments",
 );
-const Contribution = lazyWithRetry(() =>
-  import("./contents/contribution.tsx").then(({ Contribution }) => ({
-    default: Contribution,
-  })),
+const Protocols = lazyWithRetry(
+  () => import("./contents/protocols.tsx"),
+  "Protocols",
 );
-const Design = lazyWithRetry(() =>
-  import("./contents/design.tsx").then(({ Design }) => ({ default: Design })),
+const Notebook = lazyWithRetry(
+  () => import("./contents/notebook.tsx"),
+  "Notebook",
 );
-const Experiments = lazyWithRetry(() =>
-  import("./contents/experiments.tsx").then(({ Experiments }) => ({
-    default: Experiments,
-  })),
+const Results = lazyWithRetry(
+  () => import("./contents/results.tsx"),
+  "Results",
 );
-const Protocols = lazyWithRetry(() =>
-  import("./contents/protocols.tsx").then(({ Protocols }) => ({
-    default: Protocols,
-  })),
+const SafetyAndSecurity = lazyWithRetry(
+  () => import("./contents/safety-and-security.tsx"),
+  "SafetyAndSecurity",
 );
-const Notebook = lazyWithRetry(() =>
-  import("./contents/notebook.tsx").then(({ Notebook }) => ({
-    default: Notebook,
-  })),
+const Model = lazyWithRetry(() => import("./contents/model.tsx"), "Model");
+const Hardware = lazyWithRetry(
+  () => import("./contents/hardware.tsx"),
+  "Hardware",
 );
-const Results = lazyWithRetry(() =>
-  import("./contents/results.tsx").then(({ Results }) => ({
-    default: Results,
-  })),
+const HumanPractices = lazyWithRetry(
+  () => import("./contents/human-practices.tsx"),
+  "HumanPractices",
 );
-const SafetyAndSecurity = lazyWithRetry(() =>
-  import("./contents/safety-and-security.tsx").then(
-    ({ SafetyAndSecurity }) => ({ default: SafetyAndSecurity }),
-  ),
+const Education = lazyWithRetry(
+  () => import("./contents/education.tsx"),
+  "Education",
 );
-const Model = lazyWithRetry(() =>
-  import("./contents/model.tsx").then(({ Model }) => ({ default: Model })),
+const Members = lazyWithRetry(
+  () => import("./contents/members.tsx"),
+  "Members",
 );
-const Hardware = lazyWithRetry(() =>
-  import("./contents/hardware.tsx").then(({ Hardware }) => ({
-    default: Hardware,
-  })),
-);
-const HumanPractices = lazyWithRetry(() =>
-  import("./contents/human-practices.tsx").then(({ HumanPractices }) => ({
-    default: HumanPractices,
-  })),
-);
-const Education = lazyWithRetry(() =>
-  import("./contents/education.tsx").then(({ Education }) => ({
-    default: Education,
-  })),
-);
-const Members = lazyWithRetry(() =>
-  import("./contents/members.tsx").then(({ Members }) => ({
-    default: Members,
-  })),
-);
-const Attributions = lazyWithRetry(() =>
-  import("./contents/attributions.tsx").then(({ Attributions }) => ({
-    default: Attributions,
-  })),
+const Attributions = lazyWithRetry(
+  () => import("./contents/attributions.tsx"),
+  "Attributions",
 );
 
 interface Base {

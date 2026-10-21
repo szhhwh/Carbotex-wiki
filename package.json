@@ -13,6 +13,7 @@
     "test:e2e:perf": "playwright test tests/fermentation-map.performance.spec.ts"
   },
   "dependencies": {
+    "@fatso83/retry-dynamic-import": "2.3.0",
     "@fontsource-variable/noto-serif-sc": "5.3.1",
     "bootstrap": "^5.3.8",
     "clsx": "^2.1.1",

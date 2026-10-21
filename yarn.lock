@@ -784,6 +784,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fatso83/retry-dynamic-import@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@fatso83/retry-dynamic-import@npm:2.3.0"
+  dependencies:
+    react: "npm:> 16.6.0"
+  dependenciesMeta:
+    react:
+      optional: true
+  checksum: 10c0/b0fe31a873e7648aeece37cf1643a7c40c719026212fe761a22c891e1deeb80474933f2a1a6bb6416d262cbab123ba0b7b5632af3e76ec62ad83b17133c2f3e7
+  languageName: node
+  linkType: hard
+
 "@fontsource-variable/noto-serif-sc@npm:5.3.1":
   version: 5.3.1
   resolution: "@fontsource-variable/noto-serif-sc@npm:5.3.1"
@@ -3660,6 +3672,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react@npm:> 16.6.0":
+  version: 19.3.1
+  resolution: "react@npm:19.3.1"
+  checksum: 10c0/f0ed036d1223562c09c8347858ca712733ea6e27a30db709ee9c3f3f176d3e9e767afce735d59956addf3d030102e256bba82dea635fc1bdb0e01107e98fef10
+  languageName: node
+  linkType: hard
+
 "react@npm:^19.2.0":
   version: 19.2.6
   resolution: "react@npm:19.2.6"
@@ -3925,6 +3944,7 @@ __metadata:
   resolution: "team-slug@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.36.0"
+    "@fatso83/retry-dynamic-import": "npm:2.3.0"
     "@fontsource-variable/noto-serif-sc": "npm:5.3.1"
     "@playwright/test": "npm:1.64.1"
     "@types/node": "npm:^22.18.0"

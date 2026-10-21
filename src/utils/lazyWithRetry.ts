@@ -1,42 +1,28 @@
+import { dynamicImportWithRetry } from "@fatso83/retry-dynamic-import";
 import { lazy, type ComponentType } from "react";
 
-const MAX_ATTEMPTS = 3;
-const RETRY_DELAY_MS = 250;
+type RouteModule = Record<string, unknown>;
 
-function isRetryableImportError(error: unknown) {
-  const message = error instanceof Error ? error.message : String(error);
-  return /failed to fetch dynamically imported module|importing a module script failed|error loading dynamically imported module|chunkloaderror|loading chunk/i.test(
-    message,
-  );
-}
-
-function wait(milliseconds: number) {
-  return new Promise<void>((resolve) => {
-    window.setTimeout(resolve, milliseconds);
-  });
+function selectComponent(module: RouteModule, exportName: string) {
+  const component = module[exportName];
+  if (typeof component !== "function") {
+    throw new TypeError(`Missing route component export: ${exportName}`);
+  }
+  return { default: component as ComponentType };
 }
 
 /**
- * Give transient route-chunk failures a few chances before the error boundary
- * takes over. A failed dynamic import can succeed on a subsequent request when
- * the first request was interrupted by a slow or unstable connection.
+ * React.lazy caches a failed module import. The package-backed helper retries
+ * the failed route chunk with a cache-busting URL so a transient CDN request
+ * failure can recover without trapping the route in the error boundary.
  */
-export function lazyWithRetry(load: () => Promise<{ default: ComponentType }>) {
-  return lazy(async () => {
-    let lastError: unknown;
-
-    for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
-      try {
-        return await load();
-      } catch (error) {
-        lastError = error;
-        if (!isRetryableImportError(error) || attempt === MAX_ATTEMPTS - 1) {
-          throw error;
-        }
-        await wait(RETRY_DELAY_MS * 2 ** attempt);
-      }
-    }
-
-    throw lastError;
-  });
+export function lazyWithRetry<Module extends RouteModule>(
+  load: () => Promise<Module>,
+  exportName: keyof Module & string,
+) {
+  return lazy(() =>
+    dynamicImportWithRetry(load).then((module) =>
+      selectComponent(module, exportName),
+    ),
+  );
 }
