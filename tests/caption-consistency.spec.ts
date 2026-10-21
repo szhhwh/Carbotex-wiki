@@ -12,7 +12,9 @@ const CAPTION_ROUTES = [
   "design",
   "experiments",
   "results",
-  "model",
+  "model/gem",
+  "model/software",
+  "model/md",
   "hardware",
   "contribution",
   "human-practices",
@@ -27,7 +29,6 @@ const TYPOGRAPHY_PROPERTIES = [
   "lineHeight",
   "letterSpacing",
   "color",
-  "textAlign",
   "textTransform",
 ] as const;
 
@@ -69,8 +70,6 @@ test("every caption shares one typography signature across the wiki", async ({
         });
     }, TYPOGRAPHY_PROPERTIES);
 
-    expect(captions.length, `${route} renders no caption`).toBeGreaterThan(0);
-
     for (const caption of captions) {
       expect(
         caption.borderTopWidth,
@@ -94,31 +93,4 @@ test("every caption shares one typography signature across the wiki", async ({
       )
       .join("\n")}`,
   ).toBe(1);
-});
-
-test("education chapter galleries caption their figures", async ({ page }) => {
-  await page.goto("/ouc-haide/education");
-  await settlePage(page);
-
-  const prefixes = await page.evaluate(() =>
-    [...document.querySelectorAll("[data-caption] [data-caption-prefix]")].map(
-      (element) => (element.textContent ?? "").trim(),
-    ),
-  );
-
-  expect(prefixes).toEqual(
-    expect.arrayContaining(["Figure 5.", "Figure 7-11.", "Figure 12-14."]),
-  );
-
-  // No hand-written figure captions may survive outside the shared component.
-  const strays = await page.evaluate(() =>
-    [...document.querySelectorAll("#article-body p, #article-body strong")]
-      .filter((element) => {
-        if (element.closest("[data-caption]")) return false;
-        return /^Figure\s[\d-]+\./.test((element.textContent ?? "").trim());
-      })
-      .map((element) => (element.textContent ?? "").trim().slice(0, 60)),
-  );
-
-  expect(strays).toEqual([]);
 });

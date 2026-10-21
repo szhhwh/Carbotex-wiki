@@ -79,7 +79,7 @@ export function CycleJourney({ items }: { items: CycleSummaryItem[] }) {
       aria-label="Engineering cycle shortcuts"
     >
       <span className={styles.journeyLabel}>DBTL cycle map</span>
-      <ol className={styles.journeyTrack}>
+      <ol className={styles.journeyTrack} data-cols={items.length}>
         {items.map((item) => (
           <li key={item.id}>
             <a href={`#${item.id}`}>
