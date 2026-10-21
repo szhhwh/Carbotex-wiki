@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   ArticlePage,
   type ArticleSection,
@@ -26,6 +27,10 @@ import {
 } from "../components/hardware/WetEngineeringCycle";
 import engineeringStyles from "../components/hardware/engineering.module.css";
 import { Figure } from "../components/media/Figure";
+import {
+  modelEngineeringReferenceOrder,
+  modelEngineeringSections,
+} from "./model-engineering";
 
 const cycleSummaries: CycleSummaryItem[] = [
   {
@@ -1155,27 +1160,88 @@ const wetEngineeringIds = new Set(
   wetEngineeringSections.map((section) => section.id),
 );
 
-function initialEngineeringMode(): EngineeringMode {
-  const hash = window.location.hash.slice(1);
-  return wetEngineeringIds.has(hash) ||
-    hash === "references" ||
-    /^ref-\d+$/.test(hash)
+function engineeringModeFromLocation(
+  search: string,
+  hash: string,
+): EngineeringMode {
+  const explicitMode = new URLSearchParams(search).get("mode");
+  if (
+    explicitMode === "model" ||
+    explicitMode === "hardware" ||
+    explicitMode === "wetlab"
+  ) {
+    return explicitMode;
+  }
+  const target = hash.slice(1);
+  if (target.startsWith("dbtl-en-")) return "model";
+  return wetEngineeringIds.has(target) ||
+    target.startsWith("wet-engineering-") ||
+    target === "references" ||
+    /^ref-\d+$/.test(target)
     ? "wetlab"
     : "hardware";
 }
 
 export function Engineering() {
-  const [mode, setMode] = useState<EngineeringMode>(initialEngineeringMode);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const mode = engineeringModeFromLocation(location.search, location.hash);
   const isWetLab = mode === "wetlab";
+  const isModel = mode === "model";
+
+  // Keep native fragment links and browser history in sync with Router navigation.
+  useEffect(() => {
+    const syncHash = () => {
+      navigate(
+        `${location.pathname}${window.location.search}${window.location.hash}`,
+        { replace: true, preventScrollReset: true },
+      );
+    };
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, [location.pathname, navigate]);
+
+  useEffect(() => {
+    if (!isModel) return;
+    const params = new URLSearchParams(location.search);
+    params.set("mode", "model");
+    let hash = location.hash;
+    if (hash === "#dbtl-en-references") hash = "#references";
+    const reference = hash.match(/^#dbtl-en-ref-(\d+)$/);
+    if (
+      reference &&
+      Number(reference[1]) >= 1 &&
+      Number(reference[1]) <= modelEngineeringReferenceOrder.length
+    ) {
+      hash = `#ref-${Number(reference[1])}`;
+    }
+    const search = `?${params.toString()}`;
+    if (search !== location.search || hash !== location.hash) {
+      navigate(
+        { pathname: location.pathname, search, hash },
+        { replace: true, preventScrollReset: true },
+      );
+    }
+  }, [isModel, location.pathname, location.search, location.hash, navigate]);
+
   const selectMode = (nextMode: EngineeringMode) => {
     if (nextMode === mode) return;
-    setMode(nextMode);
+    const params = new URLSearchParams(location.search);
+    if (nextMode === "model") params.set("mode", "model");
+    else params.delete("mode");
     const sectionId =
-      nextMode === "wetlab" ? "wet-engineering" : "engineering-overview";
-    window.history.replaceState(
-      window.history.state,
-      "",
-      `${window.location.pathname}${window.location.search}#${sectionId}`,
+      nextMode === "model"
+        ? "dbtl-en-overview"
+        : nextMode === "wetlab"
+          ? "wet-engineering"
+          : "engineering-overview";
+    navigate(
+      {
+        pathname: location.pathname,
+        search: params.toString(),
+        hash: `#${sectionId}`,
+      },
+      { replace: true, preventScrollReset: true },
     );
   };
 
@@ -1188,13 +1254,26 @@ export function Engineering() {
         intrinsicWidth: 1672,
         intrinsicHeight: 941,
       }}
-      sections={isWetLab ? wetEngineeringSections : hardwareSections}
+      sections={
+        isModel
+          ? modelEngineeringSections
+          : isWetLab
+            ? wetEngineeringSections
+            : hardwareSections
+      }
       contentControls={
         <EngineeringModeSwitch value={mode} onChange={selectMode} />
       }
       contentKey={mode}
-      references={isWetLab}
-      referenceOrder={isWetLab ? wetEngineeringReferenceOrder : undefined}
+      references={isWetLab || isModel}
+      referencesAnchorId={isModel ? "dbtl-en-references" : undefined}
+      referenceOrder={
+        isModel
+          ? modelEngineeringReferenceOrder
+          : isWetLab
+            ? wetEngineeringReferenceOrder
+            : []
+      }
       stickyMobileOutline
     />
   );

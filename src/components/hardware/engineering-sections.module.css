@@ -199,6 +199,10 @@
   list-style: none;
 }
 
+.journeyTrack[data-cols="5"] {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .journeyTrack li {
   min-width: 0;
   margin: 0;
@@ -760,7 +764,8 @@
     border-left: 0;
   }
 
-  .journeyTrack {
+  .journeyTrack,
+  .journeyTrack[data-cols="5"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -808,7 +813,8 @@
     grid-template-columns: 1fr;
   }
 
-  .journeyTrack {
+  .journeyTrack,
+  .journeyTrack[data-cols="5"] {
     grid-template-columns: 1fr;
   }
 

@@ -56,6 +56,20 @@ for web development.
 5. Once you are done, save the changes by **committing** them to the _main branch_ of the repository
 6. An automated script will build, test and deploy your wiki to the iGEM server
 
+## Model content
+
+The Model overview is at `/model`, with dedicated `/model/gem`,
+`/model/software`, and `/model/md` pages. Their content lives in
+`src/contents/model*.tsx` and uses the shared article, figure, caption,
+math, and citation components.
+
+Model DBTL cycles are available in the existing Engineering page via
+`/engineering?mode=model#dbtl-en-overview`. The mode selector also retains
+Hardware and Wet Lab; the query parameter preserves Model mode when a
+citation link is reloaded. Bibliography changes belong in
+`src/data/references.bib`; regenerate the derived reference data with
+`node scripts/generate-references.mjs`.
+
 ## About This Template
 
 ### Files

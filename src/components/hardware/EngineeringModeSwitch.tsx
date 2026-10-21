@@ -1,7 +1,7 @@
-import { Cpu, FlaskConical, type LucideIcon } from "lucide-react";
+import { Cpu, FlaskConical, Network, type LucideIcon } from "lucide-react";
 import styles from "./engineering.module.css";
 
-export type EngineeringMode = "hardware" | "wetlab";
+export type EngineeringMode = "hardware" | "wetlab" | "model";
 
 const modes: Array<{
   value: EngineeringMode;
@@ -10,6 +10,7 @@ const modes: Array<{
 }> = [
   { value: "hardware", label: "Hardware", icon: Cpu },
   { value: "wetlab", label: "Wet Lab", icon: FlaskConical },
+  { value: "model", label: "Model", icon: Network },
 ];
 
 export function EngineeringModeSwitch({
@@ -24,12 +25,19 @@ export function EngineeringModeSwitch({
       <div
         className={styles.modeSwitch}
         role="group"
+        style={{
+          gridTemplateColumns: `repeat(${modes.length}, minmax(0, 1fr))`,
+        }}
         aria-label="Engineering pathway"
         data-active={value}
         data-engineering-mode-switch
       >
         <span
           className={styles.modeIndicator}
+          style={{
+            width: `calc((100% - var(--mode-switch-pad) * 2) / ${modes.length})`,
+            transform: `translateX(${modes.findIndex((mode) => mode.value === value) * 100}%)`,
+          }}
           data-mode-indicator
           aria-hidden="true"
         />
@@ -40,6 +48,11 @@ export function EngineeringModeSwitch({
             <button
               className={styles.modeButton}
               type="button"
+              style={{
+                flexWrap: "wrap",
+                columnGap: "0.3rem",
+                rowGap: "0.25rem",
+              }}
               key={mode.value}
               aria-pressed={value === mode.value}
               aria-controls="article-body"
