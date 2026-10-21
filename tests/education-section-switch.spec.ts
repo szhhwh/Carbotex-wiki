@@ -23,10 +23,12 @@ test("switches content, outline, and references between Education sections", asy
   await expect(overview).toHaveAttribute("aria-pressed", "true");
   await expect(overview).toHaveAttribute("aria-controls", "article-body");
   await expect(page.locator("#overview")).toBeVisible();
-  await expect(page.locator("#principle")).toBeVisible();
+  await expect(page.locator("#overview-tapestry")).toBeVisible();
+  await expect(page.locator("#principle")).toHaveCount(0);
   await expect(page.locator("#activities")).toHaveCount(0);
   await expect(outline.locator('a[href="#overview"]')).toHaveCount(1);
-  await expect(outline.locator('a[href="#principle"]')).toHaveCount(1);
+  await expect(outline.locator('a[href="#overview-tapestry"]')).toHaveCount(1);
+  await expect(outline.locator('a[href="#principle"]')).toHaveCount(0);
   await expect(outline.locator('a[href="#activities"]')).toHaveCount(0);
   await expect(
     page.locator("#article-body article > section").last(),
