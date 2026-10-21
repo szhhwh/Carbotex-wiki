@@ -50,27 +50,27 @@ const sections: ArticleSection[] = [
             </p>
             <ol className={styles.moduleRoute}>
               <li>
-                <strong>Saccharification Module</strong>
+                <strong>Saccharification Module:</strong>{" "}
                 <span className={styles.moduleCopy}>
                   Releases fermentable sugars from straw
                 </span>
               </li>
               <li>
-                <strong>Xylose Module</strong>
+                <strong>Xylose Module:</strong>{" "}
                 <span className={styles.moduleCopy}>
                   Improves the chassis's use of mixed sugars in the corn-stover
                   hydrolysate supplied by the preceding module.
                 </span>
               </li>
               <li>
-                <strong>PYC Module</strong>
+                <strong>PYC Module:</strong>{" "}
                 <span className={styles.moduleCopy}>
                   Tests genes encoding pyruvate carboxylase (PYC) to enhance
                   malate precursor supply for poly(malic acid) (PMA) production.
                 </span>
               </li>
               <li>
-                <strong>Adhesive Module</strong>
+                <strong>Adhesive Module:</strong>{" "}
                 <span className={styles.moduleCopy}>
                   Converts PMA into a functional adhesive material
                 </span>
@@ -590,11 +590,11 @@ const sections: ArticleSection[] = [
               expression in <em>Aureobasidium melanogenum</em>{" "}
               <Cite k="zhang2019crelox" />. As shown in Figures 5 and 6, the
               directly oriented mutant lox sites (lox71 and lox66) flank the
-              selection cassettes. Cre recombinase catalyzes DNA strand
-              cleavage and exchange between these paired sites{" "}
-              <Cite k="hoess1985cremechanism" />. This recombination excises
-              the marker cassette (NAT or HPT) and leaves a double-mutant lox72
-              scar in the genome, which has reduced responsiveness to Cre and
+              selection cassettes. Cre recombinase catalyzes DNA strand cleavage
+              and exchange between these paired sites{" "}
+              <Cite k="hoess1985cremechanism" />. This recombination excises the
+              marker cassette (NAT or HPT) and leaves a double-mutant lox72 scar
+              in the genome, which has reduced responsiveness to Cre and
               minimizes unwanted recombination in future cycles{" "}
               <Cite k="yan2008lox" />.
             </p>
