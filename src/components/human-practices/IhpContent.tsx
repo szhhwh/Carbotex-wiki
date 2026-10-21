@@ -12,6 +12,7 @@ import { MetricBand } from "./MetricBand";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { RelatedWorkCard } from "./RelatedWorkCard";
 import { SdgFlipCards } from "./SdgFlipCards";
+import { StakeholderMatrix } from "./StakeholderMatrix";
 import { StakeholderNavigator } from "./StakeholderNavigator";
 import { TraceCycle } from "./TraceCycle";
 import type {
@@ -330,6 +331,8 @@ export function IhpParts({
             );
           case "decisions":
             return <DecisionCards key="decisions" />;
+          case "stakeholder-matrix":
+            return <StakeholderMatrix key="stakeholder-matrix" />;
           case "navigator":
             return <StakeholderNavigator groups={groups} key="navigator" />;
           case "collaborators":

@@ -572,6 +572,9 @@ export const ihpSections: IhpSectionContent[] = [
             figureNumber: 2,
           },
           {
+            kind: "stakeholder-matrix",
+          },
+          {
             kind: "content",
             inline: false,
             content: (
