@@ -745,8 +745,9 @@ const sections: ArticleSection[] = [
               Free dopamine readily autoxidises to quinones and reactive oxygen
               species (ROS) that damage proteins, lipids and DNA and induce
               apoptosis; in PMA–DA, dopamine is amide-linked to the PMA backbone
-              and is no longer free, which is expected to reduce this risk{" "}
-              <Cite k="tang2020pmadaadhesive" />. To test this, we evaluated the
+              and is no longer free, which we hypothesized would support good
+              cytocompatibility. Following the L929 MTT assay precedent of Tang
+              et al. <Cite k="tang2020pmadaadhesive" />, we evaluated the
               cytocompatibility of PMA–DA prepared at DA:COOH feed ratios of
               25%–125% with L929 mouse fibroblasts. At 24, 48 and 72 h, relative
               viability of all treatment groups remained within approximately

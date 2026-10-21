@@ -49,12 +49,11 @@ export function Chapter02Content() {
         <strong>
           Research on cognitive development provides the developmental context
           <Cite k="piaget1964" />. Research on early childhood systems thinking
-          indicates that young children are at a golden stage for developing
-          'part-connection-whole' cognitive relationships
-          <Cite k="sweeney2012" />.
+          shows that young children can already begin grasping
+          'part-connection-whole' relationships <Cite k="sweeney2012" />.
         </strong>{" "}
-        Thus, interpreting the cell as a “coordinated system” not only perfectly
-        aligns with the cognitive foundation of this age group, but also
+        Thus, interpreting the cell as a “coordinated system” aligns well with
+        the cognitive foundation of this age group and
         provides an opportunity to cultivate their early systems thinking while
         sparking their biological enlightenment.
       </p>

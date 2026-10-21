@@ -27,12 +27,11 @@ export function OverviewIntro() {
         carbon streams into bio-based adhesives. As this technology moves from
         laboratories into everyday life, public understanding and participation
         become increasingly important. A Japanese survey found that{" "}
-        <strong>78.9% </strong>of respondents held intermediate attitudes toward
-        synthetic biology,{" "}
+        <strong>78.9% </strong>of respondents held intermediate attitudes
+        (neutral, ambivalent, or non-attitude) toward synthetic biology{" "}
         <strong>
-          meaning many people reserve judgment until sufficient supporting
-          reasons become available
-          <Cite k="hibino2019ambiguity" />
+          <Cite k="hibino2019ambiguity" />, suggesting that public outreach can
+          provide clearer context for informed judgment
         </strong>
         . Meanwhile, a Chinese study found that public attitudes{" "}
         <strong>

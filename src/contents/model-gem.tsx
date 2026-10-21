@@ -1301,10 +1301,11 @@ const sections: ArticleSection[] = [
                 <MathInline tex={String.raw`\text{mTP} = 0.998`} />
                 ), whereas{" "}
                 <strong>
-                  <code>cyMDH</code> has no mitochondrial transit peptide (
+                  <code>cyMDH</code> is predicted by TargetP 2.0 to lack a
+                  mitochondrial transit peptide (
                   <MathInline tex={String.raw`\text{noTP} = 0.985`} />,{" "}
                   <MathInline tex={String.raw`\text{mTP} = 0.006`} />) and is
-                  assigned primarily to the cytosol by DeepLoc 2.1 (
+                  predicted primarily in the cytosol by DeepLoc 2.1 (
                   <MathInline tex={String.raw`0.806/0.221`} />)
                 </strong>{" "}
                 alongside cytosolic <code>PYC</code>.
@@ -1664,13 +1665,14 @@ const sections: ArticleSection[] = [
                 <Cite k="buchfink2021diamond" /> alignment across the 20,089 A08
                 proteins (<MathInline tex={String.raw`E \le 10^{-10}`} />,
                 sequence identity <MathInline tex={String.raw`\ge 70\%`} />{" "}
-                providing a safety margin above the{" "}
-                <MathInline tex={String.raw`>60\%`} /> threshold required for{" "}
-                <MathInline tex={String.raw`\ge 90\%`} /> four-digit EC
-                conservation <Cite k="Tian2003Enzyme" />, and bidirectional
-                coverage <MathInline tex={String.raw`\ge 80\%`} /> ensuring
-                full-length domain architecture consistency{" "}
-                <Cite k="buchfink2021diamond" />) grouped the proteome into{" "}
+                adopted as a conservative heuristic above the{" "}
+                <MathInline tex={String.raw`>60\%`} /> global-identity
+                reference for <MathInline tex={String.raw`\ge 90\%`} />{" "}
+                four-digit EC conservation <Cite k="Tian2003Enzyme" />, and
+                bidirectional coverage{" "}
+                <MathInline tex={String.raw`\ge 80\%`} /> to favor full-length
+                alignment coverage <Cite k="buchfink2021diamond" />) grouped
+                the proteome into{" "}
                 <strong>11,453 homologous clusters</strong>, of which{" "}
                 <strong>1,333 clusters</strong> mapped into the finalized GEM.
               </li>
@@ -1732,7 +1734,9 @@ const sections: ArticleSection[] = [
               <MathInline tex={String.raw`\alpha = 0.999999`} />){" "}
               <Cite k="lewis2010pfba" />, 10-step FSEOF scanning{" "}
               <Cite k="choi2010fseof" />, and homologous-group joint knockout
-              simulations <Cite k="qi2022highmwpolymalate" /> under standard
+              simulations (motivated by multi-copy isozyme redundancy in{" "}
+              <em>A. melanogenum</em> <Cite k="qi2022highmwpolymalate" />)
+              under standard
               minimal medium (D-glucose uptake bound{" "}
               <MathInline
                 tex={String.raw`1.0\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
@@ -1831,8 +1835,7 @@ const sections: ArticleSection[] = [
                     </tr>
                     <tr>
                       <td>
-                        <strong>Homologous-Group Joint Knockout</strong>{" "}
-                        <Cite k="qi2022highmwpolymalate" />
+                        <strong>Homologous-Group Joint Knockout</strong>
                       </td>
                       <td>
                         Simultaneously zeroes all member genes{" "}
@@ -2181,9 +2184,10 @@ const sections: ArticleSection[] = [
               malate routes buffer the terminal reduction step. Controlling the
               C3-to-C4 anaplerotic entry that fixes{" "}
               <MathInline tex={String.raw`\text{HCO}_3^-`} /> onto pyruvate to
-              form cytosolic oxaloacetate, <code>PYC</code> is thus confirmed at
-              the whole-network level as the primary target for PMA
-              overproduction <Cite k="feng2018pycmodel" />.
+              form cytosolic oxaloacetate, <code>PYC</code> is thus identified
+              in our A08 GEM screen as the primary target for PMA
+              overproduction, consistent with prior <em>Aureobasidium</em>{" "}
+              pathway-flux modeling <Cite k="feng2018pycmodel" />.
             </p>
             <Figure
               src="https://static.igem.wiki/teams/6147/wiki/model/04-candidate-family-funnel-and-pyc-dual-rankings.svg"
@@ -2402,8 +2406,8 @@ const sections: ArticleSection[] = [
                           v2.0 <Cite k="almagro2019targetp2" />
                         </td>
                         <td>
-                          Whole-proteome localization prediction and N-terminal
-                          transit peptide verification
+                          Whole-proteome localization and N-terminal transit
+                          peptide prediction
                         </td>
                       </tr>
                       <tr>

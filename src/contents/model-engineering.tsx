@@ -345,9 +345,11 @@ export const modelEngineeringSections: ArticleSection[] = [
                         <MathInline
                           tex={String.raw`1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />{" "}
-                        (Img.2, right), while passing MEMOTE{" "}
-                        <Cite k="Lieven2020MEMOTE" /> and <em>S. pombe</em>{" "}
-                        knockout benchmarks <Cite k="Kim2010Spombe" />.
+                        (Img.2, right), and was evaluated with MEMOTE{" "}
+                        (59.7% weighted score) <Cite k="Lieven2020MEMOTE" /> and{" "}
+                        <em>S. pombe</em> knockout viability labels (77.1%
+                        accuracy, 87.6% viable specificity){" "}
+                        <Cite k="Kim2010Spombe" />.
                       </p>
                     </div>
                   </li>
@@ -474,8 +476,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                         <MathInline tex={String.raw`\beta_f`} />) with a joint
                         group-knockout solver that disables all paralogs in a
                         cluster simultaneously to measure PMA flux drop{" "}
-                        <MathInline tex={String.raw`\Delta Y_f`} />{" "}
-                        <Cite k="feng2018pycmodel" />.
+                        <MathInline tex={String.raw`\Delta Y_f`} /> (building on
+                        prior <em>Aureobasidium</em> pathway-flux modeling{" "}
+                        <Cite k="feng2018pycmodel" />).
                       </p>
                     </div>
                   </li>
@@ -1099,13 +1102,15 @@ export const modelEngineeringSections: ArticleSection[] = [
                   <Cite k="Tang2020PMLADA" /> (whereas our wet-lab team
                   synthesized broth-derived PMA–DA at a 1:1 baseline ratio).
                   Conventional collision-frequency intuition cannot explain why
-                  adding more nucleophile lowers
-                  yield, because amide bond formation requires not just spatial
-                  proximity (
-                  <MathInline tex={String.raw`d_{\text{N–C}} < 4\text{ Å}`} />)
-                  but also a Bürgi–Dunitz nucleophilic attack angle near{" "}
+                  adding more nucleophile lowers product dopamine content:
+                  motivated by Bürgi–Dunitz nucleophilic attack geometry near{" "}
                   <MathInline tex={String.raw`107^\circ`} />{" "}
-                  <Cite k="Rodriguez2023Approach" />. We therefore designed an
+                  <Cite k="Rodriguez2023Approach" />, our pre-reaction analysis
+                  evaluates both spatial proximity (using a{" "}
+                  <MathInline tex={String.raw`d_{\text{N–C}} < 4\text{ Å}`} />{" "}
+                  contact cutoff) and approach orientation (
+                  <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />).
+                  We therefore designed an
                   explicit-solvent all-atom MD methodology that decouples{" "}
                   <strong>spatial encounter frequency</strong> from{" "}
                   <strong>reaction-compatible orientation</strong> across five

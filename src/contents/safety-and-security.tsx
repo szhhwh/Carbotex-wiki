@@ -167,8 +167,10 @@ const sections: ArticleSection[] = [
           <Cite k={["zhang2021pmananoplatform", "qi2022highmwpolymalate"]} />
           , supporting its potential as a biocompatible and environmentally
           favorable material. Dopamine is also an endogenous compound in the
-          human body, and PMA functionalized with dopamine through amide bonds
-          showed no cytotoxicity <Cite k="Tang2020PMLADA" />. Second, the
+          human body, and chemically synthesized PMLA functionalized with
+          dopamine through amide bonds showed no significant cytotoxicity in
+          L929 fibroblast MTT assays up to 2 mg/mL <Cite k="Tang2020PMLADA" />.
+          Second, the
           adhesive uses biodegradable PMA as its polymer backbone, allowing
           gradual degradation and metabolism in vivo and potentially reducing
           the risks of persistent residues and inflammation associated with

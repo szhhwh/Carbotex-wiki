@@ -1098,12 +1098,13 @@ const wetEngineeringSections: ArticleSection[] = [
           from our lab's strain collection and established its cultivation and
           identification protocols. The raw corn-stover hydrolysate from Yajun
           Liu's lab connected our chassis to real agricultural waste. Because
-          this crude hydrolysate contains inhibitors that would stop
-          fermentation in its tracks, we couldn't just use it directly. We
-          engineered a downstream conditioning process—using activated carbon
-          adsorption, ion exchange, and vacuum concentration—to standardize the
-          sugar load to 140 g/L. This gave us a clean, reproducible feedstock
-          for A08. <Cite k="liu2023cornbioconversion" />
+          this crude hydrolysate contains fermentation inhibitors that can
+          impair microbial conversion, we couldn&apos;t just use it directly.
+          Adapting the published conditioning workflow{" "}
+          <Cite k="liu2023cornbioconversion" />—using activated carbon
+          adsorption, ion exchange, and vacuum concentration—we standardized the
+          sugar load to 140 g/L to obtain a clean, reproducible feedstock for
+          A08.
         </p>
         <p>
           A08 grew fine on glucose, xylose, and arabinose, but we quickly
