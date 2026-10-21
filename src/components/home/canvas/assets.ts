@@ -5,12 +5,13 @@ import type { ArtKey } from "../geometry";
 /**
  * Artwork that used to live in `src/assets/home/<key>.svg` is uploaded flat
  * into the wiki's `home/` folder, so its URL is the file name alone. Two
- * source folders shared the file name `thermocellum.svg`; the upload kept them
- * apart with a folder prefix, listed here.
+ * source folders shared the file name `thermocellum.svg`; the iGEM uploader
+ * renames the folder prefix `home__<artboard>__<name>` to `home-<artboard>-<name>`,
+ * listed here.
  */
 const UPLOAD_NAME_OVERRIDES: Record<string, string> = {
-  "p4/thermocellum": "home__p4__thermocellum.svg",
-  "p7/thermocellum": "home__p7__thermocellum.svg",
+  "p4/thermocellum": "home-p4-thermocellum.svg",
+  "p7/thermocellum": "home-p7-thermocellum.svg",
 };
 
 /** URL of the uploaded artwork for `<key>.svg` (key: `<folder>/<file name>`). */

@@ -18,7 +18,7 @@ import styles from "./process-stage.module.css";
 const haystacksUrl = staticHomeAsset("haystacks.svg");
 const hillsUrl = staticHomeAsset("hills.svg");
 /** Two source folders used this name; the upload prefixed the folder. */
-const thermocellumUrl = staticHomeAsset("home__p7__thermocellum.svg");
+const thermocellumUrl = staticHomeAsset("home-p7-thermocellum.svg");
 const bubbles1Url = staticHomeAsset("bubbles-1.svg");
 const bubbles2Url = staticHomeAsset("bubbles-2.svg");
 const bubbles3Url = staticHomeAsset("bubbles-3.svg");
