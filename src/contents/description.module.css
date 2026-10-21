@@ -1,0 +1,62 @@
+.mediaFeature {
+  display: grid;
+  grid-template-areas: "figure copy";
+  grid-template-columns: minmax(13rem, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: center;
+  margin-block: 0;
+}
+
+.mediaFeature[data-image-position="right"] {
+  grid-template-areas: "copy figure";
+  grid-template-columns: minmax(0, 1.18fr) minmax(13rem, 0.82fr);
+}
+
+.mediaCopy {
+  grid-area: copy;
+  min-width: 0;
+}
+
+.mediaCopy > :first-child {
+  margin-block-start: 0;
+}
+
+.mediaCopy > :last-child {
+  margin-block-end: 0;
+}
+
+.mediaFigure {
+  grid-area: figure;
+  width: 100%;
+  max-width: 21rem;
+  margin: 0;
+}
+
+.mediaFeature:not([data-image-position="right"]) .mediaFigure {
+  justify-self: start;
+}
+
+.mediaFeature[data-image-position="right"] .mediaFigure {
+  justify-self: end;
+}
+
+.mediaCanvas {
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .mediaFeature,
+  .mediaFeature[data-image-position="right"] {
+    grid-template-areas:
+      "copy"
+      "figure";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mediaFigure,
+  .mediaFeature:not([data-image-position="right"]) .mediaFigure,
+  .mediaFeature[data-image-position="right"] .mediaFigure {
+    max-width: 24rem;
+    justify-self: center;
+  }
+}
