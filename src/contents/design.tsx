@@ -279,9 +279,9 @@ const sections: ArticleSection[] = [
             </div>
             <DiagramFigure
               id="design-figure-2"
-              src="https://static.igem.wiki/teams/6147/wiki/wet-design/rdna.avif"
-              intrinsicWidth={3141}
-              intrinsicHeight={2541}
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/rdnanew.svg"
+              intrinsicWidth={1010}
+              intrinsicHeight={565}
               alt="Circular map of the pNAT-LoxP-rDNA plasmid showing the expression cassette, NAT marker, lox sites, bacterial elements, and 18S and 26S rDNA homology regions."
               captionPrefix="Figure 2."
               caption="pNAT-LoxP-rDNA"
@@ -345,9 +345,9 @@ const sections: ArticleSection[] = [
             </dl>
             <DiagramFigure
               id="design-figure-3"
-              src="https://static.igem.wiki/teams/6147/wiki/wet-design/fl4a-hpt-loxp.avif"
-              intrinsicWidth={2541}
-              intrinsicHeight={2500}
+              src="https://static.igem.wiki/teams/6147/wiki/wet-design/fl4a-hpt-loxp2.svg"
+              intrinsicWidth={1010}
+              intrinsicHeight={565}
               alt="Circular map of the fl4a-hpt-loxp knockout backbone showing the HPT cassette, lox sites, bacterial elements, and multiple cloning sites for introducing homology arms."
               captionPrefix="Figure 3."
               caption="fl4a-hpt-loxp"
