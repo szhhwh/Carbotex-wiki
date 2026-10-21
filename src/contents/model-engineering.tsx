@@ -1231,14 +1231,21 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Local side-on trapping versus bulk aggregation
                       </strong>
                       <p>
-                        Conformational and angular-projection analysis
-                        (Img.10A–B) showed that at 1.25, higher amine–carbonyl
-                        hydrogen-bond candidate geometry (32.9% vs. 17.5%) and a
-                        sign-reversed catechol-OH Lennard-Jones angular
-                        projection oppose rotation into the{" "}
+                        Representative 3D conformational poses (Img.10A–B) and
+                        local interaction statistics (Img.10C–D) showed that at
+                        1.25, dopamine shifts from an open attack pose (
+                        <MathInline tex={String.raw`112.1^\circ`} />) to a
+                        side-on pose (<MathInline tex={String.raw`46.3^\circ`} />
+                        ), while a sign-reversed catechol-OH Lennard-Jones
+                        angular projection (
+                        <MathInline
+                          tex={String.raw`+6.54 \to -5.73\text{ kJ}\cdot\text{mol}^{-1}\cdot\text{rad}^{-1}`}
+                        />
+                        ) and higher amine–carbonyl hydrogen-bond candidate
+                        geometry (32.9% vs. 17.5%) oppose rotation into the{" "}
                         <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />{" "}
-                        attack window, whereas bulk dopamine self-clustering and
-                        site saturation remained negligible within this
+                        attack window, whereas bulk dopamine self-clustering
+                        (~4.5%) and site saturation remained low within this
                         single-trajectory classical window.
                       </p>
                     </div>
@@ -1351,6 +1358,38 @@ export const modelEngineeringSections: ArticleSection[] = [
                           tex={String.raw`d_{\text{N–C}}\approx 3.8\text{ Å}`}
                         />
                         , <MathInline tex={String.raw`46.3^\circ`} />){" "}
+                      </>
+                    }
+                  />
+                </FigurePair>
+                <FigurePair>
+                  <Figure
+                    src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-5-b.svg"
+                    alt="Functional-group Lennard-Jones generalized angular projections in shallow-angle contacts"
+                    intrinsicWidth={385}
+                    intrinsicHeight={303}
+                    captionPrefix="Img.10C"
+                    caption={
+                      <>
+                        {" "}
+                        Functional-group Lennard-Jones generalized angular
+                        projections in shallow-angle contacts (
+                        <MathInline tex={String.raw`<60^\circ`} />){" "}
+                      </>
+                    }
+                  />
+                  <Figure
+                    src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-5-d.svg"
+                    alt="Local amine-carbonyl H-bond candidate fraction and bulk dopamine self-clustering"
+                    intrinsicWidth={385}
+                    intrinsicHeight={303}
+                    captionPrefix="Img.10D"
+                    caption={
+                      <>
+                        {" "}
+                        Local amine–carbonyl H-bond candidate fraction and bulk
+                        dopamine self-clustering at molar ratios 1.00 and
+                        1.25{" "}
                       </>
                     }
                   />
