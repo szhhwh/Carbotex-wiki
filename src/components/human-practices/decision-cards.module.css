@@ -7,8 +7,8 @@
 .entry {
   --decision-accent: var(--hardware-yellow, #ffc647);
   display: grid;
-  grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1fr);
-  gap: 0.75rem 1.5rem;
+  grid-template-columns: minmax(11rem, 0.34fr) minmax(0, 1fr);
+  gap: 1rem clamp(1rem, 1.5vw, 1.5rem);
   min-width: 0;
   padding: 1.25rem 0 1.5rem clamp(1rem, 2vw, 1.35rem);
   border-left: 0.45rem solid var(--decision-accent);
@@ -24,16 +24,45 @@
   --decision-accent: var(--hardware-pale-yellow, #ffe7b6);
 }
 
-.area {
+.areaBlock {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.areaIndex {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  color: var(--hardware-green, #007c60);
+  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+.areaIndex::after {
+  width: 2.75rem;
+  height: 2px;
+  background: var(--decision-accent);
+  content: "";
+}
+
+.entry .area {
   align-self: start;
+  min-width: 0;
   margin: 0;
   color: var(--hardware-green, #007c60);
   font-family: var(--hardware-display, Impact, sans-serif);
-  font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+  font-size: clamp(1.5rem, 1.9vw, 1.9rem);
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 1.05;
+  line-height: 1;
+  overflow-wrap: break-word;
   text-wrap: balance;
+  hyphens: auto;
 }
 
 .shift {
@@ -116,7 +145,21 @@
     padding-right: 0.25rem;
   }
 
-  .area,
+  .areaBlock {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.65rem;
+    align-items: start;
+  }
+
+  .areaIndex {
+    padding-top: 0.25rem;
+  }
+
+  .areaIndex::after {
+    display: none;
+  }
+
+  .areaBlock,
   .shift,
   .entry p,
   .entry > a {

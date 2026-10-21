@@ -47,13 +47,18 @@ const DECISIONS = [
 export function DecisionCards() {
   return (
     <div className={styles.list}>
-      {DECISIONS.map((decision) => (
+      {DECISIONS.map((decision, index) => (
         <article
           className={styles.entry}
           data-decision-card
           key={decision.area}
         >
-          <h3 className={styles.area}>{decision.area}</h3>
+          <div className={styles.areaBlock}>
+            <span className={styles.areaIndex} aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3 className={styles.area}>{decision.area}</h3>
+          </div>
           <div className={styles.shift}>
             <span>{decision.from}</span>
             <ArrowRight size={18} aria-hidden="true" />

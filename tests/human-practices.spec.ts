@@ -493,6 +493,7 @@ test.describe("integrated human practices", () => {
 
     const viewports = [
       { width: 1440, height: 1000 },
+      { width: 1024, height: 900 },
       { width: 768, height: 900 },
       { width: 390, height: 844 },
     ];
@@ -508,12 +509,20 @@ test.describe("integrated human practices", () => {
           cards.map((card) => {
             const body = card.querySelector("p");
             const cta = card.querySelector(":scope > a");
-            if (!body || !cta) return null;
+            const area = card.querySelector("h3");
+            const shift = area?.parentElement?.nextElementSibling;
+            if (!body || !cta || !area || !shift) return null;
             const bodyBox = body.getBoundingClientRect();
             const ctaBox = cta.getBoundingClientRect();
+            const areaBox = area.getBoundingClientRect();
+            const shiftBox = shift.getBoundingClientRect();
             return {
               bodyWidth: bodyBox.width,
               ctaHeight: ctaBox.height,
+              areaOverflow: area.scrollWidth - area.clientWidth,
+              areaOverlapsShift:
+                Math.abs(areaBox.top - shiftBox.top) < 6 &&
+                areaBox.right > shiftBox.left,
               overlaps: !(
                 ctaBox.right <= bodyBox.left ||
                 ctaBox.left >= bodyBox.right ||
@@ -534,6 +543,14 @@ test.describe("integrated human practices", () => {
           card?.ctaHeight,
           `${viewport.width}px CTA height`,
         ).toBeGreaterThanOrEqual(44);
+        expect(
+          card?.areaOverflow,
+          `${viewport.width}px decision-area overflow`,
+        ).toBeLessThanOrEqual(1);
+        expect(
+          card?.areaOverlapsShift,
+          `${viewport.width}px decision-area overlap`,
+        ).toBe(false);
         expect(card?.overlaps, `${viewport.width}px CTA overlap`).toBe(false);
       }
     }
