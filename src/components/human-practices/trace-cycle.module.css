@@ -207,18 +207,10 @@
   scroll-margin-top: calc(var(--site-nav-height, 4.5rem) + 5.75rem);
 }
 
-/*
- * The stage artwork is a wide banner with the stage name baked into the
- * pixels; that lettering is low contrast, so the image is now purely
- * decorative and clipped down to its leading "badge" so no washed-out
- * wordmark shows through. The readable name is `.stageLabel`.
- */
 .stageHeading img {
   flex: 0 0 auto;
   width: 2.4rem;
-  height: 2rem;
-  object-fit: cover;
-  object-position: left center;
+  height: auto;
 }
 
 .stageLabel {
@@ -321,11 +313,6 @@
 
   .stageHeading {
     padding: 0.2rem 0 0.45rem;
-  }
-
-  .stageHeading img {
-    width: 2.2rem;
-    height: 1.85rem;
   }
 
   .stageBody {

@@ -17,43 +17,31 @@ const STAGES: Array<{
   id: TraceStageId;
   label: string;
   icon: string;
-  iconWidth: number;
-  iconHeight: number;
 }> = [
   {
     id: "trigger",
     label: "Trigger",
-    icon: "https://static.igem.wiki/teams/6147/wiki/01-trigger.svg",
-    iconWidth: 219,
-    iconHeight: 69.75,
+    icon: "https://static.igem.wiki/teams/6147/wiki/t.svg",
   },
   {
     id: "reach-out",
     label: "Reach Out",
-    icon: "https://static.igem.wiki/teams/6147/wiki/02-reach-out.svg",
-    iconWidth: 219,
-    iconHeight: 64.75,
+    icon: "https://static.igem.wiki/teams/6147/wiki/r.svg",
   },
   {
     id: "analyze",
     label: "Analyze",
-    icon: "https://static.igem.wiki/teams/6147/wiki/03-analyze.svg",
-    iconWidth: 220.25,
-    iconHeight: 63,
+    icon: "https://static.igem.wiki/teams/6147/wiki/a.svg",
   },
   {
     id: "change",
     label: "Change",
-    icon: "https://static.igem.wiki/teams/6147/wiki/04-change.svg",
-    iconWidth: 219,
-    iconHeight: 65,
+    icon: "https://static.igem.wiki/teams/6147/wiki/c.svg",
   },
   {
     id: "evaluate",
     label: "Evaluate",
-    icon: "https://static.igem.wiki/teams/6147/wiki/05-evaluate.svg",
-    iconWidth: 219,
-    iconHeight: 63.25,
+    icon: "https://static.igem.wiki/teams/6147/wiki/e.svg",
   },
 ];
 
@@ -336,8 +324,6 @@ export function TraceCycle({
                       src={stage.icon}
                       alt=""
                       aria-hidden="true"
-                      width={stage.iconWidth}
-                      height={stage.iconHeight}
                       loading="lazy"
                       decoding="async"
                     />
