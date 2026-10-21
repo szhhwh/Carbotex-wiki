@@ -631,8 +631,7 @@ const septemberEntries: NotebookEntry[] = [
           Cells were removed from PMA-containing fermentation broth before
           adhesive preparation. Routine batches used 200 mL broth, and a larger
           batch used 1 L. We used 200 mL of fermentation broth for the first
-          time, and the concentration of the product in it was 24.53347864
-          mg/mL.
+          time, and the concentration of the product in it was 25.81 g/L.
         </p>
         <p>
           Reagent inputs were calculated from the estimated molar amount of PMA
