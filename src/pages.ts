@@ -1,82 +1,83 @@
-import { lazy, type ComponentType } from "react";
+import { type ComponentType } from "react";
+import { lazyWithRetry } from "./utils/lazyWithRetry";
 
 export type PageLayout = "fullscreen" | "article";
 
 // Keep route metadata immediately available to the Navbar. Each page module is
 // fetched only when its route is rendered.
-const Home = lazy(() =>
+const Home = lazyWithRetry(() =>
   import("./contents/home.tsx").then(({ Home }) => ({ default: Home })),
 );
-const Description = lazy(() =>
+const Description = lazyWithRetry(() =>
   import("./contents/description.tsx").then(({ Description }) => ({
     default: Description,
   })),
 );
-const Engineering = lazy(() =>
+const Engineering = lazyWithRetry(() =>
   import("./contents/engineering.tsx").then(({ Engineering }) => ({
     default: Engineering,
   })),
 );
-const Parts = lazy(() =>
+const Parts = lazyWithRetry(() =>
   import("./contents/parts.tsx").then(({ Parts }) => ({ default: Parts })),
 );
-const Contribution = lazy(() =>
+const Contribution = lazyWithRetry(() =>
   import("./contents/contribution.tsx").then(({ Contribution }) => ({
     default: Contribution,
   })),
 );
-const Design = lazy(() =>
+const Design = lazyWithRetry(() =>
   import("./contents/design.tsx").then(({ Design }) => ({ default: Design })),
 );
-const Experiments = lazy(() =>
+const Experiments = lazyWithRetry(() =>
   import("./contents/experiments.tsx").then(({ Experiments }) => ({
     default: Experiments,
   })),
 );
-const Protocols = lazy(() =>
+const Protocols = lazyWithRetry(() =>
   import("./contents/protocols.tsx").then(({ Protocols }) => ({
     default: Protocols,
   })),
 );
-const Notebook = lazy(() =>
+const Notebook = lazyWithRetry(() =>
   import("./contents/notebook.tsx").then(({ Notebook }) => ({
     default: Notebook,
   })),
 );
-const Results = lazy(() =>
+const Results = lazyWithRetry(() =>
   import("./contents/results.tsx").then(({ Results }) => ({
     default: Results,
   })),
 );
-const SafetyAndSecurity = lazy(() =>
+const SafetyAndSecurity = lazyWithRetry(() =>
   import("./contents/safety-and-security.tsx").then(
     ({ SafetyAndSecurity }) => ({ default: SafetyAndSecurity }),
   ),
 );
-const Model = lazy(() =>
+const Model = lazyWithRetry(() =>
   import("./contents/model.tsx").then(({ Model }) => ({ default: Model })),
 );
-const Hardware = lazy(() =>
+const Hardware = lazyWithRetry(() =>
   import("./contents/hardware.tsx").then(({ Hardware }) => ({
     default: Hardware,
   })),
 );
-const HumanPractices = lazy(() =>
+const HumanPractices = lazyWithRetry(() =>
   import("./contents/human-practices.tsx").then(({ HumanPractices }) => ({
     default: HumanPractices,
   })),
 );
-const Education = lazy(() =>
+const Education = lazyWithRetry(() =>
   import("./contents/education.tsx").then(({ Education }) => ({
     default: Education,
   })),
 );
-const Members = lazy(() =>
+const Members = lazyWithRetry(() =>
   import("./contents/members.tsx").then(({ Members }) => ({
     default: Members,
   })),
 );
-const Attributions = lazy(() =>
+const Attributions = lazyWithRetry(() =>
   import("./contents/attributions.tsx").then(({ Attributions }) => ({
     default: Attributions,
   })),

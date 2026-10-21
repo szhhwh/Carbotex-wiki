@@ -267,6 +267,32 @@ test("failed application download offers a visible reload action", async ({
   await expect(page.locator(opening)).toHaveAttribute("data-state", "playing");
 });
 
+test("retries a transient lazy route download before showing an error", async ({
+  page,
+}) => {
+  let attempts = 0;
+  await page.route("**/src/contents/human-practices.tsx*", async (route) => {
+    attempts += 1;
+    if (attempts === 1) {
+      await route.abort();
+      return;
+    }
+    await route.continue();
+  });
+
+  await page.goto("/ouc-haide/human-practices", {
+    waitUntil: "domcontentloaded",
+  });
+  await expect(page.locator("[data-route-error]")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", {
+      name: "Integrated Human Practices",
+      exact: true,
+    }),
+  ).toBeVisible();
+  expect(attempts).toBeGreaterThanOrEqual(2);
+});
+
 test("home remains scrollable after the opening releases interaction", async ({
   page,
 }) => {
