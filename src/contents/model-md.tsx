@@ -18,53 +18,6 @@ const sections: ArticleSection[] = [
     title: "Overview & Research Question",
     content: (
       <>
-        <div className={sharedStyles.takeawayGrid}>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>5 Feeds · 50% NHS</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Explicit-Solvent All-Atom OpenMM Systems
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Models a ~12 kDa β-PMLA chain (52 NHS ester sites) across
-              0.25–1.25 DA:COOH feeds (25 ns core trajectories; 9 systems / 41
-              ns total plan).
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>25.2% → 5.2%</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Compatible Contacts Plunge at 1.25 Feed
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Between feeds 1.00 and 1.25, close contacts (&lt;4 Å) remain
-              similar (485 vs. 462), but Bürgi–Dunitz-compatible contacts
-              (95°–125°) drop from 122 to 24.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>+6.54 → −5.73</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Catechol-OH LJ Angular Torque Reversal
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              At 1.25 feed, catechol torque reverses sign (kJ·mol<sup>−1</sup>
-              ·rad<sup>−1</sup>) while H-bond candidates nearly double (17.5% →
-              32.9%), holding dopamine side-on (&lt;60°).
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>1:1 Equimolar</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Mechanistic Reference for Adhesive Synthesis
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Rationalizes the experimental product wt% peak at 1.00 feed (21.3
-              wt% vs. 19.2 wt% at 1.25) while bounding sensitivity to assumed
-              activation density.
-            </p>
-          </article>
-        </div>
-
         <p>
           Dopamine (DA) functionalization is the key chemical step that turns
           poly(malic acid) (PMA) fermented by <em>Aureobasidium melanogenum</em>{" "}

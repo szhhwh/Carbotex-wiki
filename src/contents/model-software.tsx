@@ -19,52 +19,6 @@ const sections: ArticleSection[] = [
     title: "Overview & Architecture",
     content: (
       <>
-        <div className={sharedStyles.takeawayGrid}>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>3 Safeguards</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Project Isolation, Unit Checks &amp; Stage Approval
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Enforces active-project SOP scoping, physical-unit validation
-              before measurement writes, and researcher approval across 6 stages
-              (13 checkpoints).
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>26 ↔ 35 ↔ 37</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Hot-Swappable Cordis Plugin Architecture
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Dynamically mounts and disposes Modeling (9 tools) and Education
-              (2 WEAVE tools) plugins on a shared Evidence store with zero
-              session disruption.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>28 / 30 (93.3%)</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Biological Evidence Judgment Benchmark
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Outperforms the OpenCode baseline (21/30, 70.0%) with zero
-              execution failures on our 30-item synthetic biological evidence
-              benchmark.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>30-Min Action</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Adhesive Synthesis &amp; WEAVE Outreach
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Unifies 5-step PMLA–DA protocol tracking, multi-feed MD summary
-              auditing (<code>md_compare_feeds</code>), Monod kinetics, and
-              primary-school DNA lesson briefs.
-            </p>
-          </article>
-        </div>
         <p>
           As agents increasingly assist wet-lab research, we found that
           conventional Coding Agents designed primarily for programming tasks

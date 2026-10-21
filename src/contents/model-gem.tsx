@@ -52,54 +52,6 @@ const sections: ArticleSection[] = [
     title: "Overview & Technical Route",
     content: (
       <>
-        <div className={sharedStyles.takeawayGrid}>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>20,089 Proteins</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              De Novo ANNEVO Proteome (99.82% OrthoDB)
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Selected across a 13-fungus benchmark (~10× faster than Tiberius),
-              recovering 99.82% Dothideomycetes core markers with zero missing
-              fungal/eukaryotic genes.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>3,549 Reactions</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              14-Compartment Calibrated A08 GEM
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Combines PLM homology mapping, four-tool consensus enzyme
-              annotation, DeepLoc 2.1 + TargetP 2.0 localization calibration,
-              and minimal-medium gap-filling.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>15 Calibrated</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Cytosolic Reductive Malate Pathway Restored
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Rescues cytosolic <code>cyMDH</code> from template mitochondrial
-              mis-assignment, eliminating a 1.29 mmol·gDW<sup>−1</sup>·h
-              <sup>−1</sup> detour and raising max PMLA flux to 1.500.
-            </p>
-          </article>
-          <article className={sharedStyles.takeawayCard}>
-            <div className={sharedStyles.takeawayMetric}>PYC (−58.6% KO)</div>
-            <h4 className={sharedStyles.takeawaySub}>
-              Sole Dual-Optimal Anaplerotic Target
-            </h4>
-            <p className={sharedStyles.takeawayDesc}>
-              Among 1,102 non-essential homologous enzyme groups, cytosolic{" "}
-              <code>PYC</code> (<code>FAM04209</code>) uniquely combines FSEOF
-              Rank #4 (β<sub>f</sub> = 0.687) with Candidate KO Rank #1
-              (−58.6%).
-            </p>
-          </article>
-        </div>
-
         <p>
           Poly(malic acid) (PMLA) is a biodegradable biopolyester polymerized
           from L-malate monomers. Our team uses the industrial black yeast{" "}
