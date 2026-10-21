@@ -25,6 +25,8 @@ export interface ArticleSection {
   title: string;
   eyebrow?: string;
   content: ReactNode;
+  /** Hide the visible section heading while keeping the section landmark. */
+  showHeading?: boolean;
   /** Direct child headings, rendered automatically after the section content. */
   subsections?: ArticleSubsection[];
 }
@@ -50,7 +52,13 @@ interface ArticlePageProps {
   title: string;
   /** Optional image shown in the header media slot. */
   heroImage?: HeroImage;
+  /** Hide the hero media slot while keeping the yellow title band. */
+  showHeroMedia?: boolean;
   sections: ArticleSection[];
+  /** Hide the shared outline for pages that do not need in-page navigation. */
+  showOutline?: boolean;
+  /** Expand the article to the full site shell width. */
+  fullWidth?: boolean;
   /** Render the page's cited sources after every article section. */
   references?: boolean;
   /** Optional additional hash target at the start of the references section. */
@@ -73,55 +81,62 @@ export function ArticleHero({
   title,
   heroImage,
   headingId,
+  showMedia = true,
 }: {
   title: string;
   heroImage?: HeroImage;
   headingId?: string;
   theme?: ArticleTheme;
+  showMedia?: boolean;
 }) {
   const displayTitle = DISPLAY_TITLE_ALIASES[title] ?? title;
 
   return (
-    <header className={styles.hero}>
-      <div
-        className={styles.heroMedia}
-        data-hero-media-slot
-        data-has-image={heroImage ? "true" : undefined}
-        aria-hidden={heroImage ? undefined : "true"}
-        style={
-          heroImage
-            ? {
-                backgroundColor: heroImage.backgroundColor,
-                aspectRatio:
-                  heroImage.intrinsicWidth && heroImage.intrinsicHeight
-                    ? `${heroImage.intrinsicWidth} / ${heroImage.intrinsicHeight}`
-                    : undefined,
+    <header
+      className={styles.hero}
+      data-has-media={showMedia ? "true" : "false"}
+    >
+      {showMedia ? (
+        <div
+          className={styles.heroMedia}
+          data-hero-media-slot
+          data-has-image={heroImage ? "true" : undefined}
+          aria-hidden={heroImage ? undefined : "true"}
+          style={
+            heroImage
+              ? {
+                  backgroundColor: heroImage.backgroundColor,
+                  aspectRatio:
+                    heroImage.intrinsicWidth && heroImage.intrinsicHeight
+                      ? `${heroImage.intrinsicWidth} / ${heroImage.intrinsicHeight}`
+                      : undefined,
+                }
+              : undefined
+          }
+        >
+          {heroImage ? (
+            <img
+              className={styles.heroImage}
+              src={heroImage.src}
+              alt={heroImage.alt}
+              width={heroImage.intrinsicWidth}
+              height={heroImage.intrinsicHeight}
+              decoding="async"
+              fetchPriority="high"
+              style={
+                heroImage.objectFit
+                  ? { objectFit: heroImage.objectFit }
+                  : undefined
               }
-            : undefined
-        }
-      >
-        {heroImage ? (
-          <img
-            className={styles.heroImage}
-            src={heroImage.src}
-            alt={heroImage.alt}
-            width={heroImage.intrinsicWidth}
-            height={heroImage.intrinsicHeight}
-            decoding="async"
-            fetchPriority="high"
-            style={
-              heroImage.objectFit
-                ? { objectFit: heroImage.objectFit }
-                : undefined
-            }
-          />
-        ) : (
-          <span className={styles.heroPlaceholder}>
-            <ImageIcon size={24} aria-hidden="true" />
-            <span>Header image placeholder</span>
-          </span>
-        )}
-      </div>
+            />
+          ) : (
+            <span className={styles.heroPlaceholder}>
+              <ImageIcon size={24} aria-hidden="true" />
+              <span>Header image placeholder</span>
+            </span>
+          )}
+        </div>
+      ) : null}
       <div
         className={styles.heroTitleBand}
         data-compact={displayTitle.length > 18 ? "true" : undefined}
@@ -182,7 +197,10 @@ function BubbleCluster() {
 export function ArticlePage({
   title,
   heroImage,
+  showHeroMedia = true,
   sections,
+  showOutline = true,
+  fullWidth = false,
   references = false,
   referencesAnchorId,
   referencesIntro,
@@ -246,7 +264,7 @@ export function ArticlePage({
   }, [contentKey, items]);
 
   useEffect(() => {
-    if (!stickyMobileOutline) return;
+    if (!showOutline || !stickyMobileOutline) return;
 
     let frame = 0;
     let scrollDirection = 0;
@@ -290,9 +308,11 @@ export function ArticlePage({
       window.removeEventListener("scroll", schedule);
       mobileQuery.removeEventListener("change", schedule);
     };
-  }, [stickyMobileOutline, outlineOpen]);
+  }, [outlineOpen, showOutline, stickyMobileOutline]);
 
   useEffect(() => {
+    if (!showOutline) return;
+
     const elements = targets
       .map(({ id }) => document.getElementById(id))
       .filter((target): target is HTMLElement => Boolean(target));
@@ -333,7 +353,7 @@ export function ArticlePage({
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, [targets]);
+  }, [showOutline, targets]);
 
   useEffect(() => {
     const refreshAfterScroll = () => {
@@ -345,6 +365,8 @@ export function ArticlePage({
   }, []);
 
   useLayoutEffect(() => {
+    if (!showOutline) return;
+
     const list = listRef.current;
     if (!list) return;
     const updateMarker = () => {
@@ -377,7 +399,7 @@ export function ArticlePage({
     const resizeObserver = new ResizeObserver(updateMarker);
     resizeObserver.observe(list);
     return () => resizeObserver.disconnect();
-  }, [activeId, outlineOpen]);
+  }, [activeId, outlineOpen, showOutline]);
 
   const selectOutlineTarget = (id: string) => {
     manualSelectionUntil.current = performance.now() + 1000;
@@ -389,10 +411,16 @@ export function ArticlePage({
     <main
       className={pageStyles.page}
       data-article-theme={theme}
+      data-full-width={fullWidth ? "true" : undefined}
       data-sticky-outline={stickyMobileOutline ? "true" : undefined}
     >
       {referenceOrder && <ReferenceOrder keys={referenceOrder} />}
-      <ArticleHero title={title} heroImage={heroImage} theme={theme} />
+      <ArticleHero
+        title={title}
+        heroImage={heroImage}
+        showMedia={showHeroMedia}
+        theme={theme}
+      />
 
       {contentControls ? (
         <div className={pageStyles.contentControls}>{contentControls}</div>
@@ -402,111 +430,128 @@ export function ArticlePage({
         className={pageStyles.readingArea}
         id="article-body"
         key={contentKey}
+        data-show-outline={showOutline ? "true" : "false"}
         data-content-transition={contentKey === undefined ? undefined : "true"}
       >
-        <aside className={pageStyles.sidebar}>
-          <div
-            className={pageStyles.outline}
-            data-open={outlineOpen ? "true" : "false"}
-            data-outline={outlineOpen ? "open" : "closed"}
-            data-hidden={outlineHidden && !outlineOpen ? "true" : undefined}
-          >
-            <button
-              className={pageStyles.outlineToggle}
-              type="button"
-              aria-label="On this page"
-              aria-expanded={outlineOpen}
-              aria-controls="article-outline"
-              onClick={() => setOutlineOpen((open) => !open)}
+        {showOutline ? (
+          <aside className={pageStyles.sidebar}>
+            <div
+              className={pageStyles.outline}
+              data-open={outlineOpen ? "true" : "false"}
+              data-outline={outlineOpen ? "open" : "closed"}
+              data-hidden={outlineHidden && !outlineOpen ? "true" : undefined}
             >
-              <List
-                className={pageStyles.outlineCompactIcon}
-                size={18}
-                aria-hidden="true"
-              />
-              <span>On this page</span>
-              <ChevronDown
-                className={pageStyles.outlineChevron}
-                size={18}
-                aria-hidden="true"
-              />
-            </button>
-            <nav
-              id="article-outline"
-              className={pageStyles.outlineNav}
-              data-open={outlineOpen}
-              aria-label="On this page"
-            >
-              <span
-                className={pageStyles.activeMarker}
-                style={{
-                  transform: `translate(${marker.left}px, ${marker.top}px)`,
-                  width: marker.width,
-                  height: marker.height,
-                }}
-                aria-hidden="true"
-              />
-              <ol ref={listRef}>
-                {items.map((item) => {
-                  const { id, label } = item;
-                  return (
-                    <li key={id}>
-                      <a
-                        href={`#${id}`}
-                        data-section={id}
-                        aria-current={activeId === id ? "location" : undefined}
-                        data-active-parent={
-                          activeParentId === id ? "true" : undefined
-                        }
-                        onClick={() => selectOutlineTarget(id)}
-                      >
-                        <span>{label}</span>
-                      </a>
-                      {"children" in item && item.children?.length ? (
-                        <ol className={pageStyles.subOutline}>
-                          {item.children.map((child) => (
-                            <li key={child.id}>
-                              <a
-                                href={`#${child.id}`}
-                                data-section={child.id}
-                                aria-current={
-                                  activeId === child.id ? "location" : undefined
-                                }
-                                onClick={() => selectOutlineTarget(child.id)}
-                              >
-                                {child.label}
-                              </a>
-                            </li>
-                          ))}
-                        </ol>
-                      ) : null}
-                    </li>
-                  );
-                })}
-              </ol>
-            </nav>
-          </div>
-        </aside>
+              <button
+                className={pageStyles.outlineToggle}
+                type="button"
+                aria-label="On this page"
+                aria-expanded={outlineOpen}
+                aria-controls="article-outline"
+                onClick={() => setOutlineOpen((open) => !open)}
+              >
+                <List
+                  className={pageStyles.outlineCompactIcon}
+                  size={18}
+                  aria-hidden="true"
+                />
+                <span>On this page</span>
+                <ChevronDown
+                  className={pageStyles.outlineChevron}
+                  size={18}
+                  aria-hidden="true"
+                />
+              </button>
+              <nav
+                id="article-outline"
+                className={pageStyles.outlineNav}
+                data-open={outlineOpen}
+                aria-label="On this page"
+              >
+                <span
+                  className={pageStyles.activeMarker}
+                  style={{
+                    transform: `translate(${marker.left}px, ${marker.top}px)`,
+                    width: marker.width,
+                    height: marker.height,
+                  }}
+                  aria-hidden="true"
+                />
+                <ol ref={listRef}>
+                  {items.map((item) => {
+                    const { id, label } = item;
+                    return (
+                      <li key={id}>
+                        <a
+                          href={`#${id}`}
+                          data-section={id}
+                          aria-current={
+                            activeId === id ? "location" : undefined
+                          }
+                          data-active-parent={
+                            activeParentId === id ? "true" : undefined
+                          }
+                          onClick={() => selectOutlineTarget(id)}
+                        >
+                          <span>{label}</span>
+                        </a>
+                        {"children" in item && item.children?.length ? (
+                          <ol className={pageStyles.subOutline}>
+                            {item.children.map((child) => (
+                              <li key={child.id}>
+                                <a
+                                  href={`#${child.id}`}
+                                  data-section={child.id}
+                                  aria-current={
+                                    activeId === child.id
+                                      ? "location"
+                                      : undefined
+                                  }
+                                  onClick={() => selectOutlineTarget(child.id)}
+                                >
+                                  {child.label}
+                                </a>
+                              </li>
+                            ))}
+                          </ol>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ol>
+              </nav>
+            </div>
+          </aside>
+        ) : null}
 
         <article className={pageStyles.articleContent}>
           {sections.map(
-            ({ id, title: heading, eyebrow, content, subsections }) => (
+            ({
+              id,
+              title: heading,
+              eyebrow,
+              content,
+              showHeading = true,
+              subsections,
+            }) => (
               <section
                 className={pageStyles.section}
                 id={id}
                 key={id}
-                aria-labelledby={`${id}-heading`}
+                aria-label={showHeading ? undefined : heading}
+                aria-labelledby={showHeading ? `${id}-heading` : undefined}
               >
-                <div className={pageStyles.sectionHeading}>
-                  <div>
-                    {eyebrow ? (
-                      <span className={pageStyles.sectionEyebrow}>
-                        {eyebrow}
-                      </span>
-                    ) : null}
-                    <h2 id={`${id}-heading`}>{heading}</h2>
+                {showHeading ? (
+                  <div className={pageStyles.sectionHeading}>
+                    <div>
+                      {eyebrow ? (
+                        <span className={pageStyles.sectionEyebrow}>
+                          {eyebrow}
+                        </span>
+                      ) : null}
+                      <h2 id={`${id}-heading`}>{heading}</h2>
+                    </div>
                   </div>
-                </div>
+                ) : null}
                 <div className={pageStyles.prose}>
                   {content}
                   {subsections?.map((child) => (

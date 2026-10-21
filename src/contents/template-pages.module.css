@@ -1,6 +1,5 @@
 .requirementCard,
-.promptCard,
-.formCard {
+.promptCard {
   position: relative;
   padding: clamp(1.5rem, 3.2vw, 2.25rem);
   overflow: hidden;
@@ -9,8 +8,7 @@
 }
 
 .requirementCard::before,
-.promptCard::before,
-.formCard::before {
+.promptCard::before {
   position: absolute;
   inset: 0 0 auto;
   height: 0.55rem;
@@ -26,11 +24,6 @@
 .promptCard {
   margin-block: 1.8rem;
   background: var(--hardware-pale-yellow);
-}
-
-.formCard {
-  margin-block: 1.8rem;
-  background: var(--hardware-card-mint);
 }
 
 .requirementCard :where(p, a),
@@ -90,25 +83,45 @@
   content: "";
 }
 
+.attributionForm {
+  position: relative;
+  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(0.55rem, 1vw, 0.75rem)
+    clamp(0.55rem, 1vw, 0.75rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hardware-green) 22%, transparent);
+  border-radius: clamp(1.15rem, 2.4vw, 1.65rem);
+  background: var(--hardware-white);
+}
+
+/* Keep the title-card accent, but let the embedded white form own the surface. */
+.attributionForm::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: clamp(0.28rem, 0.58vw, 0.38rem);
+  background: var(--hardware-yellow);
+  content: "";
+  pointer-events: none;
+}
+
 .attributionFrame {
   display: block;
   min-height: 13.5rem;
   border: 0;
-  border-radius: 1rem;
   background: var(--hardware-white);
   color-scheme: light;
 }
 
 .attributionViewport[data-frame-focused="true"] {
   outline: 3px solid var(--hardware-green);
-  outline-offset: 4px;
+  outline-offset: -3px;
 }
 
 .attributionViewport {
   position: relative;
   min-height: 13.5rem;
-  overflow: visible;
-  border-radius: 1rem;
+  overflow: hidden;
+  border-radius: clamp(0.75rem, 1.4vw, 0.95rem);
 }
 
 .attributionLoading,
@@ -132,7 +145,6 @@
 }
 
 .attributionError {
-  border: 2px dashed color-mix(in srgb, var(--hardware-ink) 40%, transparent);
   background: var(--hardware-pale-yellow);
 }
 
@@ -183,9 +195,12 @@
 
 @media (max-width: 560px) {
   .requirementCard,
-  .promptCard,
-  .formCard {
+  .promptCard {
     padding: 1.35rem 1.15rem 1.2rem;
+    border-radius: 1.15rem;
+  }
+
+  .attributionForm {
     border-radius: 1.15rem;
   }
 
@@ -207,7 +222,7 @@
 @media (forced-colors: active) {
   .requirementCard,
   .promptCard,
-  .formCard,
+  .attributionForm,
   .checklist li {
     border: 1px solid CanvasText; /* taste-skill-ignore */
   }

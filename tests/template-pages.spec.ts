@@ -4,22 +4,24 @@ const templatePages = [
   {
     path: "/contribution",
     title: "Contribution",
+    hasHeroMedia: true,
     heroRatio: 1069 / 400,
   },
   {
     path: "/experiments",
     title: "Experiments",
+    hasHeroMedia: true,
     heroRatio: 4000 / 1334,
   },
   {
     path: "/attributions",
     title: "Attributions",
-    heroRatio: 1069 / 400,
+    hasHeroMedia: false,
   },
 ] as const;
 
 test.describe("template article pages", () => {
-  test("keeps every article hero title and media visible at three widths", async ({
+  test("keeps every article title band visible at three widths", async ({
     page,
   }) => {
     for (const viewport of [
@@ -41,25 +43,79 @@ test.describe("template article pages", () => {
         ).toBeVisible();
 
         const hero = page.locator("[data-hero-media-slot]");
-        await expect(hero).toBeVisible();
-        await expect(hero.locator(":scope > img, :scope > span")).toHaveCount(
-          1,
-        );
-
-        const heroRatio = await hero.evaluate((element) => {
-          const rect = element.getBoundingClientRect();
-          return rect.width / rect.height;
-        });
-        expect(heroRatio).toBeCloseTo(templatePage.heroRatio, 2);
-
-        const titleBandAlignment = await hero.evaluate((element) => {
-          const mediaRect = element.getBoundingClientRect();
-          const bandRect = element.nextElementSibling!.getBoundingClientRect();
-          return Math.abs(
-            mediaRect.bottom - (bandRect.top + bandRect.height / 2),
+        if (templatePage.hasHeroMedia) {
+          await expect(hero).toBeVisible();
+          await expect(hero.locator(":scope > img, :scope > span")).toHaveCount(
+            1,
           );
-        });
-        expect(titleBandAlignment).toBeLessThanOrEqual(1);
+
+          const heroRatio = await hero.evaluate((element) => {
+            const rect = element.getBoundingClientRect();
+            return rect.width / rect.height;
+          });
+          expect(heroRatio).toBeCloseTo(templatePage.heroRatio, 2);
+
+          const titleBandAlignment = await hero.evaluate((element) => {
+            const mediaRect = element.getBoundingClientRect();
+            const bandRect =
+              element.nextElementSibling!.getBoundingClientRect();
+            return Math.abs(
+              mediaRect.bottom - (bandRect.top + bandRect.height / 2),
+            );
+          });
+          expect(titleBandAlignment).toBeLessThanOrEqual(1);
+        } else {
+          await expect(hero).toHaveCount(0);
+          await expect(page.locator("main > header")).toHaveAttribute(
+            "data-has-media",
+            "false",
+          );
+          await expect(page.getByText("Header image placeholder")).toHaveCount(
+            0,
+          );
+          await expect(page.locator("#article-outline")).toHaveCount(0);
+          await expect(
+            page.getByRole("navigation", { name: "On this page" }),
+          ).toHaveCount(0);
+          await expect(
+            page.getByRole("heading", {
+              level: 2,
+              name: "iGEM Attributions Form",
+            }),
+          ).toHaveCount(0);
+          await expect(
+            page.locator("main[data-article-theme]"),
+          ).toHaveAttribute("data-full-width", "true");
+
+          const titleBandAlignment = await page
+            .locator("main > header")
+            .evaluate((element) => {
+              const heroRect = element.getBoundingClientRect();
+              const bandRect =
+                element.lastElementChild!.getBoundingClientRect();
+              return {
+                top: Math.abs(heroRect.top - bandRect.top),
+                height: Math.abs(heroRect.height - bandRect.height),
+              };
+            });
+          expect(titleBandAlignment.top).toBeLessThanOrEqual(1);
+          expect(titleBandAlignment.height).toBeLessThanOrEqual(1);
+
+          const articleWidth = await page
+            .locator("#article-body")
+            .evaluate((element) => {
+              const reading = element.getBoundingClientRect();
+              const article = element
+                .querySelector("article")!
+                .getBoundingClientRect();
+              return {
+                left: Math.abs(reading.left - article.left),
+                width: Math.abs(reading.width - article.width),
+              };
+            });
+          expect(articleWidth.left).toBeLessThanOrEqual(1);
+          expect(articleWidth.width).toBeLessThanOrEqual(1);
+        }
 
         expect(
           await page.evaluate(

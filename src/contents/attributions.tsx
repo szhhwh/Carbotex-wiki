@@ -219,9 +219,11 @@ export function Attributions() {
     {
       id: "attribution-form",
       title: "iGEM Attributions Form",
+      showHeading: false,
       content: (
-        <div className={styles.formCard}>
-          {/*
+        <>
+          <div className={styles.attributionForm}>
+            {/*
             ====================================================================
             == VERY IMPORTANT                                                 ==
             ====================================================================
@@ -229,55 +231,61 @@ export function Attributions() {
             TEAM WILL BE DISPLAYED ON THIS PAGE. DO NOT REMOVE IT, OTHERWISE
             YOU RISK OF NOT MEETING BRONZE MEDAL CRITERION #2
           */}
-          <div
-            ref={viewportRef}
-            className={styles.attributionViewport}
-            data-state={frameState.phase}
-            data-load-event={frameState.loadEvents > 0 ? "observed" : "pending"}
-            data-load-events={frameState.loadEvents}
-            data-near-viewport={frameNearViewport ? "true" : "false"}
-            data-frame-focused={frameFocused ? "true" : "false"}
-            data-error-reason={
-              frameState.phase === "error" ? frameState.errorReason : undefined
-            }
-          >
-            <iframe
-              ref={frameRef}
-              className={styles.attributionFrame}
-              style={{
-                width: "100%",
-                height: frameHeight ? `${frameHeight}px` : undefined,
-              }}
-              id="igem-attribution-form"
-              title="iGEM Attributions Form"
-              src={attributionsUrl}
-              aria-busy={frameState.phase === "loading"}
-              aria-hidden={frameInteractive ? undefined : true}
-              tabIndex={frameInteractive ? 0 : -1}
-              onLoad={() => dispatchFrameEvent({ type: "load-observed" })}
-              onError={() => dispatchFrameEvent({ type: "load-error" })}
-              onFocus={() => setFrameFocused(frameInteractive)}
-              onBlur={() => setFrameFocused(false)}
-            />
-            {frameState.phase === "loading" && (
-              <div
-                className={styles.attributionLoading}
-                role="status"
-                aria-live="polite"
-              >
-                <span
-                  className={styles.attributionSpinner}
-                  aria-hidden="true"
-                />
-                <span>Loading the attributions form...</span>
-              </div>
-            )}
-            {frameState.phase === "error" && errorCopy && (
-              <div className={styles.attributionError} role="alert">
-                <strong>{errorCopy.title}</strong>
-                <span>{errorCopy.detail}</span>
-              </div>
-            )}
+            <div
+              ref={viewportRef}
+              className={styles.attributionViewport}
+              data-state={frameState.phase}
+              data-load-event={
+                frameState.loadEvents > 0 ? "observed" : "pending"
+              }
+              data-load-events={frameState.loadEvents}
+              data-near-viewport={frameNearViewport ? "true" : "false"}
+              data-frame-focused={frameFocused ? "true" : "false"}
+              data-error-reason={
+                frameState.phase === "error"
+                  ? frameState.errorReason
+                  : undefined
+              }
+            >
+              <iframe
+                ref={frameRef}
+                className={styles.attributionFrame}
+                style={{
+                  width: "100%",
+                  height: frameHeight ? `${frameHeight}px` : undefined,
+                }}
+                id="igem-attribution-form"
+                title="iGEM Attributions Form"
+                src={attributionsUrl}
+                aria-busy={frameState.phase === "loading"}
+                aria-hidden={frameInteractive ? undefined : true}
+                tabIndex={frameInteractive ? 0 : -1}
+                onLoad={() => dispatchFrameEvent({ type: "load-observed" })}
+                onError={() => dispatchFrameEvent({ type: "load-error" })}
+                onFocus={() => setFrameFocused(frameInteractive)}
+                onBlur={() => setFrameFocused(false)}
+              />
+              {frameState.phase === "loading" && (
+                <div
+                  className={styles.attributionLoading}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <span
+                    className={styles.attributionSpinner}
+                    aria-hidden="true"
+                  />
+                  <span>Loading the attributions form...</span>
+                </div>
+              )}
+              {frameState.phase === "error" && errorCopy && (
+                <div className={styles.attributionError} role="alert">
+                  <strong>{errorCopy.title}</strong>
+                  <span>{errorCopy.detail}</span>
+                </div>
+              )}
+            </div>
+            {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
           </div>
           <p className={styles.attributionFallback}>
             <span>Having trouble seeing the form?</span>{" "}
@@ -286,15 +294,20 @@ export function Attributions() {
             </a>
             .
           </p>
-          {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
-        </div>
+        </>
       ),
     },
   ];
 
   return (
     <TemplatePageFrame>
-      <ArticlePage title="Attributions" sections={sections} />
+      <ArticlePage
+        title="Attributions"
+        showHeroMedia={false}
+        showOutline={false}
+        fullWidth
+        sections={sections}
+      />
     </TemplatePageFrame>
   );
 }
