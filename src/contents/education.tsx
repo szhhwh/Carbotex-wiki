@@ -456,25 +456,36 @@ const workflowNodes: Array<[string, string, ReactNode, string | undefined]> = [
   ],
 ];
 
-function WorkflowEntryPoint() {
-  return (
-    <div
-      className={styles.workflowEntryPoint}
-      aria-label="Workflow entry point"
-      role="group"
-    >
-      <span>Entry point</span>
-      <div className={styles.workflowEntryLine} aria-hidden="true" />
-      <strong>Final Products: Adhesives</strong>
-    </div>
-  );
-}
+const workflowRingOrder = [0, 4, 3, 2, 1] as const;
 
 function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
-  const [activeId, setActiveId] = useState("adhesives");
-  const active =
-    workflowNodes.find(([id]) => id === activeId) ?? workflowNodes[0];
-  const imageFile = active[3];
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const active = workflowNodes.find(([id]) => id === activeId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openerRef = useRef<HTMLButtonElement | null>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || !activeId) return;
+
+    dialog.showModal();
+
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, [activeId]);
+
+  const openNode = (id: string, opener: HTMLButtonElement) => {
+    openerRef.current = opener;
+    setActiveId(id);
+  };
+
+  const closeDialog = () => {
+    dialogRef.current?.close();
+  };
+
+  const imageFile = active?.[3];
   const imageDimensions = imageFile
     ? educationImageDimensions(imageFile)
     : undefined;
@@ -491,50 +502,90 @@ function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
       className={styles.workflow}
       role="group"
     >
-      <WorkflowEntryPoint />
-      <div className={styles.workflowNodes}>
-        {workflowNodes.map(([id, title], index) => (
-          <button
-            aria-pressed={active[0] === id}
-            className={`${styles.workflowNode} ${active[0] === id ? styles.workflowNodeActive : ""}`}
-            key={id}
-            onClick={() => setActiveId(id)}
-            type="button"
-          >
-            <strong>{title}</strong>
-            <small>
-              {index === 0
-                ? "Why does the material stick?"
-                : index === 1
-                  ? "Who can produce it?"
-                  : index === 2
-                    ? "How can the cell factory improve?"
-                    : index === 3
-                      ? "How does the cell factory produce?"
-                      : "How does the product become usable?"}
-            </small>
-            {index < workflowNodes.length - 1 && (
-              <ArrowDownRight aria-hidden="true" size={18} />
-            )}
-          </button>
-        ))}
-      </div>
-      <div className={styles.workflowPanel}>
-        <div className={styles.panelReveal} key={active[0]}>
-          <h6>{active[1]}</h6>
-          {imageFile && imageDimensions && (
-            <Figure
-              alt={`${active[1]} activity design`}
-              className={styles.workflowFigure}
-              intrinsicWidth={imageDimensions[0]}
-              intrinsicHeight={imageDimensions[1]}
-              src={`${mediaRoot}/${imageFile}`}
-              fallback={<span>Image unavailable.</span>}
-            />
-          )}
-          {active[2]}
+      <div
+        aria-label="Biomanufacturing workflow stages"
+        className={styles.workflowRing}
+        role="group"
+      >
+        <div className={styles.workflowOrbit} aria-hidden="true" />
+        <div className={styles.workflowCore} aria-hidden="true">
+          <span>Entry point</span>
+          <strong>
+            Biomanufacturing
+            <br />
+            workflow
+          </strong>
+        </div>
+        <div className={styles.workflowNodes}>
+          {workflowRingOrder.map((nodeIndex) => {
+            const [id, title] = workflowNodes[nodeIndex];
+            return (
+              <button
+                aria-haspopup="dialog"
+                aria-label={`Open details for ${title}`}
+                className={styles.workflowNode}
+                key={id}
+                onClick={(event) => openNode(id, event.currentTarget)}
+                type="button"
+              >
+                <span>{title}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
+      {active && (
+        <dialog
+          aria-labelledby={titleId}
+          className={styles.workflowDialog}
+          onCancel={(event) => {
+            event.preventDefault();
+            closeDialog();
+          }}
+          onClose={() => {
+            setActiveId(null);
+            openerRef.current?.focus();
+          }}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeDialog();
+          }}
+          onKeyDown={trapDialogFocus}
+          ref={dialogRef}
+        >
+          <div className={styles.workflowDialogInner}>
+            <header className={styles.workflowDialogHeader}>
+              <div>
+                <span className={styles.workflowDialogEyebrow}>
+                  Workflow stage
+                </span>
+                <h2 id={titleId}>{active[1]}</h2>
+              </div>
+              <button
+                aria-label="Close workflow stage"
+                className={styles.workflowDialogClose}
+                onClick={closeDialog}
+                type="button"
+                autoFocus
+              >
+                <X aria-hidden="true" size={20} />
+              </button>
+            </header>
+            <div className={styles.workflowDialogDetail}>
+              {imageFile && imageDimensions && (
+                <Figure
+                  alt={`${active[1]} activity design`}
+                  className={styles.workflowDialogFigure}
+                  intrinsicWidth={imageDimensions[0]}
+                  intrinsicHeight={imageDimensions[1]}
+                  src={`${mediaRoot}/${imageFile}`}
+                  fallback={<span>Image unavailable.</span>}
+                />
+              )}
+              {active[2]}
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 }
@@ -798,15 +849,15 @@ const milestones: Array<[string, string, ReactNode]> = [
       >
         <path
           className={styles.choiceLine}
-          d="M150 0C150 38 300 38 300 72"
+          d="M150 0C150 38 300 38 300 80"
           vectorEffect="non-scaling-stroke"
         />
         <path
           className={styles.choiceLine}
-          d="M450 0C450 38 300 38 300 72"
+          d="M450 0C450 38 300 38 300 80"
           vectorEffect="non-scaling-stroke"
         />
-        <circle className={styles.choiceNode} cx="300" cy="74" r="5" />
+        <circle className={styles.choiceNode} cx="300" cy="74" r="6" />
       </svg>
       <div className={styles.milestoneChoice}>
         <span>Our choice</span>
@@ -1036,7 +1087,15 @@ const milestones: Array<[string, string, ReactNode]> = [
       </p>
       <p>
         (Resources for Scenario 3 and Scenario 4 can be accessed through our
-        partner’s wiki, Qingdao Academy)
+        partner’s wiki,{" "}
+        <a
+          href="https://2026.igem.wiki/qingdaoacademy/contribution"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Qingdao Academy
+        </a>
+        )
       </p>
       <ResourceLibrary
         groups={milestoneResourceGroups}
@@ -1250,8 +1309,10 @@ function IterationExplorer({ describedBy }: { describedBy?: string }) {
         role="tabpanel"
       >
         {columns.map(([title, body]) => (
-          <article key={title}>
-            <span>{title}</span>
+          <article className={styles.iterationCard} key={title}>
+            <header className={styles.iterationCardHeader}>
+              <h6>{title}</h6>
+            </header>
             <div className={styles.iterationBody}>
               {typeof body === "string" ? <p>{body}</p> : body}
             </div>
@@ -1386,12 +1447,10 @@ const sections: ArticleSection[] = [
             <h5 id="chapter-06-3-1">6.3.1 Explore Objective-Driven Design</h5>
             <div className={styles.designIntro}>
               <ObjectiveStatement>
-                <strong>Objective:</strong> We aimed to help them understand
+                <strong>Objective</strong>: We aimed to help them understand
                 that technological development requires not only high
-                performance but also{" "}
-                <strong>careful consideration of potential risks</strong> and{" "}
-                <strong>responsible decision-making</strong> before practical
-                deployment.
+                performance but also careful consideration of potential risks
+                and responsible decision-making before practical deployment.
               </ObjectiveStatement>
               <p>
                 <strong>Design:</strong> Across{" "}
@@ -1454,18 +1513,17 @@ const sections: ArticleSection[] = [
                 {...chapter06Figure6Composite}
                 caption={
                   <>
-                    <strong>Record of the Activity:</strong>
-                    <br />
-                    (A) Participants read the{" "}
-                    <strong>Initial Investigation Dossier</strong> to understand
-                    the background of the case; (B) Participants examined the
-                    displayed samples to determine whether they were the real{" "}
-                    <strong>β-17</strong>; (C) Participants obtained the genetic
-                    dossier through the card game; (D) Participants identified
-                    the problem with <strong>β-17</strong> through the RNA
-                    deduction worksheet; (E) Participants conducted a simulated
-                    safe experiment to search for the suspect; (F) Participants
-                    made their final decision; (G){" "}
+                    <strong>Record of the Activity:</strong> (A) Participants
+                    read the <strong>Initial Investigation Dossier</strong> to
+                    understand the background of the case; (B) Participants
+                    examined the displayed samples to determine whether they
+                    were the real <strong>β-17</strong>; (C) Participants
+                    obtained the genetic dossier through the card game; (D)
+                    Participants identified the problem with{" "}
+                    <strong>β-17</strong> through the RNA deduction worksheet;
+                    (E) Participants conducted a simulated safe experiment to
+                    search for the suspect; (F) Participants made their final
+                    decision; (G){" "}
                     <strong>
                       A Player from the previous round served as MC
                     </strong>{" "}

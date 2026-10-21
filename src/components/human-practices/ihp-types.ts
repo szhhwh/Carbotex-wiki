@@ -83,6 +83,7 @@ export interface IhpContentPart {
 export type IhpSpecialPartKind =
   | "epigraph"
   | "decisions"
+  | "stakeholder-matrix"
   | "navigator"
   | "collaborators"
   | "sdg-cards"

@@ -12,6 +12,40 @@
   font-family: var(--parts-body);
 }
 
+.collectionCta {
+  /* Article prose colors links through this inherited token. */
+  --article-link: var(--hardware-white, #fff);
+  display: flex;
+  width: fit-content;
+  min-height: 3.25rem;
+  margin-block-end: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1.05rem;
+  border: 1px solid var(--hardware-green, #007c60);
+  border-radius: 0.7rem;
+  background: var(--hardware-green, #007c60);
+  color: var(--hardware-white, #fff);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.collectionCta svg {
+  flex: 0 0 auto;
+  transition: transform 160ms ease;
+}
+
+.collectionCta:focus-visible {
+  outline: 3px solid var(--hardware-ink, #183d34);
+  outline-offset: 3px;
+}
+
 .partsGrid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -118,16 +152,32 @@
     background: #e2eee8;
     color: #003f34;
   }
+
+  .collectionCta:hover {
+    border-color: var(--hardware-ink, #003f34);
+    background: var(--hardware-ink, #003f34);
+  }
+
+  .collectionCta:hover svg {
+    transform: translate(2px, -2px);
+  }
 }
 
 @media (max-width: 560px) {
   .partCard {
     padding: 1rem 1rem 1rem 1.35rem;
   }
+
+  .collectionCta {
+    width: 100%;
+    padding-inline: 1rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .registryLink {
+  .registryLink,
+  .collectionCta,
+  .collectionCta svg {
     transition: none;
   }
 }
@@ -139,5 +189,13 @@
 
   .registryLink:focus-visible {
     outline-color: Highlight;
+  }
+
+  .collectionCta {
+    --article-link: ButtonText;
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    outline: 1px solid ButtonText;
   }
 }

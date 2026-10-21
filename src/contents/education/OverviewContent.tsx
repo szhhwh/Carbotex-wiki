@@ -10,12 +10,12 @@ import {
 import { MousePointerClick } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import inclusiveAccessImage from "../../assets/education/puzzle/inclusive-access.svg";
-import principleImage from "../../assets/education/puzzle/principle.svg";
 import publicUnderstandingImage from "../../assets/education/puzzle/public-understanding.svg";
 import socialResponsibilityImage from "../../assets/education/puzzle/social-responsibility.svg";
 import translatingImage from "../../assets/education/puzzle/translating.svg";
 import { Cite } from "../../components/article/References";
 import styles from "../education.module.css";
+import { PrincipleDisc } from "./PrincipleDisc";
 import { PrincipleIntroContent } from "./PrincipleIntroContent";
 import { WeaveFramework } from "./WeaveFramework";
 
@@ -74,7 +74,7 @@ type PuzzlePiece = {
   id: PuzzlePieceId;
   label: string;
   className: string;
-  image: string;
+  image?: string;
   title: string;
   content: ReactNode;
   anchorId?: string;
@@ -333,7 +333,6 @@ const puzzlePieces: PuzzlePiece[] = [
     id: "principle",
     label: "Stitching Technique: Our Principle",
     className: styles.puzzlePieceCenter,
-    image: principleImage,
     title: "Stitching Technique: Our Principle",
     content: (
       <>
@@ -444,15 +443,19 @@ export function OverviewTapestry() {
                   tabIndex={isActive ? 0 : -1}
                   type="button"
                 >
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    className={styles.puzzlePieceImage}
-                    draggable="false"
-                    height="223"
-                    src={piece.image}
-                    width="223"
-                  />
+                  {piece.id === "principle" ? (
+                    <PrincipleDisc className={styles.puzzlePieceImage} />
+                  ) : (
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      className={styles.puzzlePieceImage}
+                      draggable="false"
+                      height="223"
+                      src={piece.image}
+                      width="223"
+                    />
+                  )}
                   <span className={styles.srOnly}>{piece.label}</span>
                 </button>
               );

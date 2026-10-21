@@ -4,9 +4,9 @@ const GALLERY = '[aria-roledescription="carousel"]:has([data-focus-slide])';
 
 /** Late image loads shift the page, so settle the scroll position repeatedly. */
 async function openGallery(page: Page, nth = 0): Promise<Locator> {
-  await page.goto("/ouc-haide/education");
+  await page.goto("/ouc-haide/education#activities");
   const gallery = page.locator(GALLERY).nth(nth);
-  await gallery.waitFor({ state: "attached" });
+  await gallery.waitFor({ state: "attached", timeout: 10_000 });
   for (let attempt = 0; attempt < 4; attempt += 1) {
     await gallery.evaluate((element) =>
       element.scrollIntoView({ block: "center", behavior: "instant" }),
@@ -117,4 +117,23 @@ test("hidden slides are removed from assistive technology and tab order", async 
   await expect(gallery.locator('[data-focus-slide][tabindex="0"]')).toHaveCount(
     1,
   );
+});
+
+test("chapter galleries omit per-slide captions but keep set captions", async ({
+  page,
+}) => {
+  await page.goto("/ouc-haide/education#activities");
+
+  const stickyMagicGallery = page.getByRole("region", {
+    name: "Chapter 02 Sticky Magic activity photographs",
+  });
+  await expect(stickyMagicGallery).toBeVisible();
+  await expect(stickyMagicGallery.locator("[data-caption]")).toHaveCount(0);
+
+  const dnaGallery = page.getByRole("region", {
+    name: "Records of our DNA learning activity",
+  });
+  const dnaCaption = dnaGallery.locator("[data-caption]");
+  await expect(dnaCaption).toHaveCount(1);
+  await expect(dnaCaption).toContainText("Figure 5.");
 });

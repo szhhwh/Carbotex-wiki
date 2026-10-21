@@ -53,6 +53,11 @@ export interface CollapseProps {
   headerAs?: ElementType;
   /** Custom indicator node (the wrapper rotates with the panel); `false` hides it. Default: chevron. */
   indicator?: ReactNode | false;
+  /** Optional visible action copy beside the indicator, keyed by panel state. */
+  actionLabel?: {
+    open: ReactNode;
+    closed: ReactNode;
+  };
   indicatorPosition?: "end" | "start";
   /** Tween duration in seconds; `0` = instant. Default 0.35. */
   duration?: number;
@@ -75,6 +80,7 @@ export function Collapse({
   disabled = false,
   headerAs,
   indicator,
+  actionLabel,
   indicatorPosition = "end",
   duration = 0.35,
   id,
@@ -180,6 +186,16 @@ export function Collapse({
       {indicator === undefined ? <ChevronDown size={18} /> : indicator}
     </span>
   );
+  const affordanceNode = actionLabel ? (
+    <span className={styles.actionAffordance} aria-hidden="true">
+      <span className={styles.actionLabel}>
+        {isOpen ? actionLabel.open : actionLabel.closed}
+      </span>
+      {indicatorNode}
+    </span>
+  ) : (
+    indicatorNode
+  );
 
   return (
     <div
@@ -198,9 +214,9 @@ export function Collapse({
           disabled={disabled}
           onClick={requestToggle}
         >
-          {indicatorPosition === "start" && indicatorNode}
+          {indicatorPosition === "start" && affordanceNode}
           <span className={styles.headerText}>{header}</span>
-          {indicatorPosition === "end" && indicatorNode}
+          {indicatorPosition === "end" && affordanceNode}
         </button>
       </Heading>
       <div

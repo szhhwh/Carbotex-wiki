@@ -211,16 +211,20 @@ test.describe("hardware page", () => {
     await page.goto("/ouc-haide/hardware");
 
     const videos = page.locator("iframe[title^='HARDWARE video']");
-    await expect(videos).toHaveCount(2);
+    await expect(videos).toHaveCount(3);
     await expect(videos.nth(0)).toHaveAttribute(
       "src",
-      /video\.igem\.org\/videos\/embed\/qTd67URK3G5zPEptrTrRsQ/,
+      /video\.igem\.org\/videos\/embed\/ubESaqv73Qm43HDvR4biio/,
     );
     await expect(videos.nth(1)).toHaveAttribute(
       "src",
+      /video\.igem\.org\/videos\/embed\/qTd67URK3G5zPEptrTrRsQ/,
+    );
+    await expect(videos.nth(2)).toHaveAttribute(
+      "src",
       /video\.igem\.org\/videos\/embed\/u6pTEWPWtHFk3WeDh5oU8t/,
     );
-    for (const video of [videos.nth(0), videos.nth(1)]) {
+    for (const video of [videos.nth(0), videos.nth(1), videos.nth(2)]) {
       await expect(video).toHaveAttribute(
         "sandbox",
         "allow-same-origin allow-scripts allow-popups allow-forms",

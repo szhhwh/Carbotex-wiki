@@ -7,6 +7,11 @@ import { sdgsWorkshopGuide } from "./EducationFigures";
 import { ObjectiveStatement } from "./ObjectiveStatement";
 import { WonderQuestion } from "./WonderQuestion";
 
+const detailsActionLabel = {
+  closed: "Show details",
+  open: "Hide details",
+};
+
 export function Chapter06SdgsContent() {
   return (
     <>
@@ -50,16 +55,13 @@ export function Chapter06SdgsContent() {
       </p>
       <h5>6.4.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
-        <strong>Objective:</strong> Our goal was to engage both{" "}
-        <strong>our peers and us</strong> as future scientists in reflecting on
-        the intersection of biology and social responsibility in addressing
-        real-world societal needs. Through the workshop focused on the
-        Sustainable Development Goals (SDGs), we aimed to enhance our ability to{" "}
-        <strong>
-          conduct evidence-based analysis, critically evaluate information, and
-          make responsible decisions
-        </strong>
-        . By doing so, we seek to propose viable biotechnology innovations that
+        <strong>Objective</strong>: Our goal was to engage both our peers and us
+        as future scientists in reflecting on the intersection of biology and
+        social responsibility in addressing real-world societal needs. Through
+        the workshop focused on the Sustainable Development Goals (SDGs), we
+        aimed to enhance our ability to conduct evidence-based analysis,
+        critically evaluate information, and make responsible decisions. By
+        doing so, we seek to propose viable biotechnology innovations that
         contribute positively to sustainable development and social well-being.
       </ObjectiveStatement>
       <p>
@@ -155,6 +157,7 @@ export function Chapter06SdgsContent() {
         <strong>socially responsible perspective</strong>.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Read our peers' feedback"
         headerAs="h6"
@@ -198,6 +201,7 @@ export function Chapter06SdgsContent() {
         and social responsibility had evolved.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Read our members' reflections"
         headerAs="h6"
@@ -228,7 +232,7 @@ export function Chapter06SdgsContent() {
       <h6>Art Gallery</h6>
       <ResourceCard
         eyebrow="Verification III · Poster output"
-        title="SDG workshop poster gallery"
+        title="SDGs-based workshop poster gallery"
         href={`${mediaRoot}/6-4-3-art-gallery.pdf`}
       />
       <h4>6.5 Echo</h4>

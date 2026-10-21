@@ -21,6 +21,8 @@ export interface ImageFocusGalleryProps {
   caption?: ReactNode;
   /** Prefix slot, e.g. `Figure 5.` */
   captionPrefix?: ReactNode;
+  /** Show each image's caption when the gallery has no set-level caption. */
+  showSlideCaptions?: boolean;
   id?: string;
   className?: string;
 }
@@ -62,6 +64,7 @@ export function ImageFocusGallery({
   label,
   caption,
   captionPrefix,
+  showSlideCaptions = true,
   id,
   className,
 }: ImageFocusGalleryProps) {
@@ -76,9 +79,10 @@ export function ImageFocusGallery({
   );
   const count = images.length;
   const active = Math.min(current, Math.max(0, count - 1));
-  // A set-level caption wins; otherwise the centred image's own caption is
-  // shown, so per-image notes are not silently dropped.
-  const activeCaption = caption ?? images[active]?.caption;
+  // Set-level captions always render; per-slide notes are opt-in.
+  const activeCaption = showSlideCaptions
+    ? (caption ?? images[active]?.caption)
+    : caption;
 
   useEffect(() => {
     if (!focusAfterMove.current) return;

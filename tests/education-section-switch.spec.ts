@@ -23,10 +23,12 @@ test("switches content, outline, and references between Education sections", asy
   await expect(overview).toHaveAttribute("aria-pressed", "true");
   await expect(overview).toHaveAttribute("aria-controls", "article-body");
   await expect(page.locator("#overview")).toBeVisible();
-  await expect(page.locator("#principle")).toBeVisible();
+  await expect(page.locator("#overview-tapestry")).toBeVisible();
+  await expect(page.locator("#principle")).toHaveCount(0);
   await expect(page.locator("#activities")).toHaveCount(0);
   await expect(outline.locator('a[href="#overview"]')).toHaveCount(1);
-  await expect(outline.locator('a[href="#principle"]')).toHaveCount(1);
+  await expect(outline.locator('a[href="#overview-tapestry"]')).toHaveCount(1);
+  await expect(outline.locator('a[href="#principle"]')).toHaveCount(0);
   await expect(outline.locator('a[href="#activities"]')).toHaveCount(0);
   await expect(
     page.locator("#article-body article > section").last(),
@@ -256,4 +258,27 @@ test("preserves the active section for a reloaded citation deep link", async ({
     page.getByRole("button", { name: "References", exact: true }),
   ).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#ref-1")).toBeFocused();
+});
+
+test("shows a clear action label on every education detail collapse", async ({
+  page,
+}) => {
+  await page.goto("/ouc-haide/education#activities");
+  await expect(page.locator("#opening-screen")).toHaveCount(0);
+
+  const titles = [
+    "Scientific Depth details",
+    "Language Style details",
+    "Verification Aids details",
+    "Read our peers' feedback",
+    "Read our members' reflections",
+  ];
+
+  for (const title of titles) {
+    const trigger = page.getByRole("button", { name: title, exact: true });
+    await expect(trigger).toContainText("Show details");
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(trigger).toContainText("Hide details");
+  }
 });

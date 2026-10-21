@@ -223,7 +223,7 @@ const wetEngineeringCycles: WetEngineeringCycleData[] = [
         </a>
         , and{" "}
         <a
-          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/19-new-a-pma-acid-hydrolysis-and-hplc-three-standards-new.pdf"
+          href="https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-en.pdf"
           target="_blank"
           rel="noreferrer"
         >

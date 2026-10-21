@@ -1,3 +1,5 @@
+import styles from "../education.module.css";
+
 export function Chapter06VerifyContent() {
   return (
     <>
@@ -29,13 +31,15 @@ export function Chapter06VerifyContent() {
         are essential safeguards for translating biomanufacturing innovations
         into society and achieving sustainable applications.
       </p>
-      <p>
-        <strong>
-          We believe that future scientists should not only pursue technological
-          breakthroughs but also understand the responsibility behind bringing
-          biological innovations into society.
-        </strong>
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>
+            We believe that future scientists should not only pursue
+            technological breakthroughs but also understand the responsibility
+            behind bringing biological innovations into society.
+          </strong>
+        </p>
+      </div>
     </>
   );
 }

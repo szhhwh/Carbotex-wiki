@@ -84,7 +84,7 @@ export function Chapter02Content() {
       </h4>
       <h5>2.2.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
-        <strong>Objective I: Understanding Cellular Components</strong>
+        <strong>Objective</strong> I: Understanding Cellular Components
       </ObjectiveStatement>
       <p>
         <strong>Design:</strong> To maximize accessibility for children, we
@@ -104,7 +104,7 @@ export function Chapter02Content() {
         </strong>
       </p>
       <ObjectiveStatement>
-        <strong>Objective II: Cultivating Systems Thinking</strong>
+        <strong>Objective</strong> II: Cultivating Systems Thinking
       </ObjectiveStatement>
       <p>
         <strong>Design:</strong> To elevate the learning experience from
@@ -118,10 +118,8 @@ export function Chapter02Content() {
         components.
       </p>
       <ObjectiveStatement>
-        <strong>
-          Objective III: Grasping Concepts via Hands-on Creation &amp;
-          Validating the Iteration
-        </strong>
+        <strong>Objective</strong> III: Grasping Concepts via Hands-on Creation
+        &amp; Validating the Iteration
       </ObjectiveStatement>
       <p>
         <strong>Design:</strong> Based on feedback from our previous outreach, a
@@ -195,16 +193,18 @@ export function Chapter02Content() {
         <strong>successfully built</strong> accurate plant cell models,
         deliberately adding the unique structures.
       </p>
-      <p>
-        <strong>Summary:</strong> This{" "}
-        <strong>spontaneous verbal feedback</strong> and{" "}
-        <strong>task completion</strong> proved that the children had moved
-        beyond simple memorization and{" "}
-        <strong>
-          genuinely understood the content we delivered and actively applied it
-          to a firsthand task.
-        </strong>
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>Summary:</strong> This{" "}
+          <strong>spontaneous verbal feedback</strong> and{" "}
+          <strong>task completion</strong> proved that the children had moved
+          beyond simple memorization and{" "}
+          <strong>
+            genuinely understood the content we delivered and actively applied
+            it to a firsthand task.
+          </strong>
+        </p>
+      </div>
       <ol start={2} type="1">
         <li>
           <p>
@@ -221,16 +221,18 @@ export function Chapter02Content() {
         continued reasoning along this line: "Without energy, the Packaging
         Station wouldn't be able to work either."
       </p>
-      <p>
-        <strong>Summary:</strong> Rather than simply telling them the complete
-        logic, we co-constructed this causal chain with the children.{" "}
-        <strong>
-          Through this shared process, they successfully transitioned from
-          understanding structures in isolation to grasping their
-          interdependency, realizing how a localized change impacts the entire
-          cellular system
-        </strong>
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>Summary:</strong> Rather than simply telling them the complete
+          logic, we co-constructed this causal chain with the children.{" "}
+          <strong>
+            Through this shared process, they successfully transitioned from
+            understanding structures in isolation to grasping their
+            interdependency, realizing how a localized change impacts the entire
+            cellular system
+          </strong>
+        </p>
+      </div>
       <ol start={3} type="1">
         <li>
           <p>
@@ -246,15 +248,17 @@ export function Chapter02Content() {
         components. Instead of passively receiving information, they began to
         learn through creating, explaining, and interacting.
       </p>
-      <p>
-        <strong>
-          Summary: These observations provided initial support for our iterated
-          child-centered design approach.
-        </strong>{" "}
-        The lecture provides the essential knowledge foundation, while the
-        hands-on activity creates an interactive experience aligned with the
-        learning objectives.
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>
+            Summary: These observations provided initial support for our
+            iterated child-centered design approach.
+          </strong>{" "}
+          The lecture provides the essential knowledge foundation, while the
+          hands-on activity creates an interactive experience aligned with the
+          learning objectives.
+        </p>
+      </div>
       <h6>Art Gallery</h6>
       <ChapterGallery
         images={[
@@ -433,10 +437,8 @@ export function Chapter02Content() {
       <h4>2.3 Activity II: The Sticky Magic in Nature</h4>
       <h5>2.3.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
-        <strong>
-          Objective I: Guide kids to recognize that intracellular coordination
-          can give rise to observable functions.
-        </strong>
+        <strong>Objective</strong> I: Guide kids to recognize that intracellular
+        coordination can give rise to observable functions.
       </ObjectiveStatement>
       <p>
         Based on our previous experience, we learned that children build
@@ -457,10 +459,8 @@ export function Chapter02Content() {
         </strong>
       </p>
       <ObjectiveStatement>
-        <strong>
-          Objective II: Help kids recognize how these biological functions apply
-          to reality
-        </strong>
+        <strong>Objective</strong> II: Help kids recognize how these biological
+        functions apply to reality
       </ObjectiveStatement>
       <p>
         <strong>

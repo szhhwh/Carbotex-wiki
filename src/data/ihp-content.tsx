@@ -572,6 +572,9 @@ export const ihpSections: IhpSectionContent[] = [
             figureNumber: 2,
           },
           {
+            kind: "stakeholder-matrix",
+          },
+          {
             kind: "content",
             inline: false,
             content: (
@@ -1551,7 +1554,11 @@ We emphasized PMA titers across different glucose–xylose formulations and incl
                     content: (
                       <p>
                         <strong>
-                          <Link to={"/design#design-xylose-module"}>
+                          <Link
+                            to={
+                              "/results#results-sugar-conditions-and-engineering"
+                            }
+                          >
                             {"Explore the Mixed-Sugar Fermentation Results →"}
                           </Link>
                         </strong>
@@ -1850,7 +1857,7 @@ Together, these comparisons connected regulatory engineering, carbon-source cond
                         <strong>
                           <Link
                             to={
-                              "/design#design-xylose-module-experimental-design"
+                              "/results#results-sugar-conditions-and-engineering"
                             }
                           >
                             {"Explore AraR/XlnR Fermentation and PMA Results →"}
@@ -2059,9 +2066,7 @@ We then compared their PMA production in corn-stover hydrolysate to evaluate whe
                     content: (
                       <p>
                         <strong>
-                          <Link
-                            to={"/design#design-pyc-module-experimental-design"}
-                          >
+                          <Link to={"/results#results-hplc-quantification"}>
                             {"Explore PYC Engineering and PMA Results →"}
                           </Link>
                         </strong>
@@ -2532,11 +2537,7 @@ Further evaluation led us to investigate precursor supply, where PYC engineering
                         </p>
                         <p>
                           <strong>
-                            <Link
-                              to={
-                                "/design#design-adhesive-module-why-dopamine-and-pma"
-                              }
-                            >
+                            <Link to={"/design#design-adhesive-module"}>
                               {"Explore Natural Polymer Modification →"}
                             </Link>
                           </strong>
@@ -2871,7 +2872,7 @@ Further evaluation led us to investigate precursor supply, where PYC engineering
                           <strong>
                             <Link
                               to={
-                                "/design#design-adhesive-module-experimental-design"
+                                "/results#results-mechanical-adhesive-performance"
                               }
                             >
                               {

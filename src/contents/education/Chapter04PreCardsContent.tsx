@@ -40,11 +40,9 @@ export function Chapter04PreCardsContent() {
       </p>
       <h4>4.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
-        <strong>
-          Objective: To demystify fermentation as a dynamic microbial process,
-          demonstrating how these biological factories turn our synthetic
-          "Redesigns" into tangible biomanufacturing solutions.
-        </strong>
+        <strong>Objective</strong>: To demystify fermentation as a dynamic
+        microbial process, demonstrating how these biological factories turn our
+        synthetic "Redesigns" into tangible biomanufacturing solutions.
       </ObjectiveStatement>
       <h5>4.2.1 Content Design</h5>
       <p>

@@ -1,5 +1,4 @@
 import {
-  ArticleNote,
   ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
@@ -797,12 +796,15 @@ const sections: ArticleSection[] = [
           caption="Hardware Diagram"
           fallback={<p>Image unavailable.</p>}
         />
-        <ArticleNote theme="hardware" label="Video 4-1 · upload pending">
-          <p>
-            <strong>Working Condition.</strong> The supplied static MP4 is not
-            yet available from the iGEM host.
-          </p>
-        </ArticleNote>
+        <VideoEmbed
+          src="https://video.igem.org/videos/embed/ubESaqv73Qm43HDvR4biio"
+          title="HARDWARE video 4-1: Fluent System Working Condition (2026)"
+          provider="raw"
+          allow="fullscreen"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          captionPrefix="Video 4-1."
+          caption="Fluent System Working Condition."
+        />
         <h3>4.1 Failure Mode and Safety Design</h3>
         <p>
           To ensure safe unattended operation, we analyzed critical failure

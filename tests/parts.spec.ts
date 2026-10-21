@@ -64,6 +64,21 @@ test.describe("parts page", () => {
     ).toBeVisible();
     await expect(page.locator("[data-part-card]")).toHaveCount(24);
 
+    const collectionCta = page.getByRole("link", {
+      name: "Explore the Registry Collection",
+    });
+    await expect(collectionCta).toBeVisible();
+    await expect(collectionCta).toHaveAttribute(
+      "href",
+      "https://registry.igem.org/collections/4e32e74e-e8d6-4539-8bc4-11eddbf2edf8",
+    );
+    await expect(collectionCta).toHaveAttribute("target", "_blank");
+    await expect(
+      page.locator(
+        "#parts-pentose-regulation [data-registry-collection-cta] + p",
+      ),
+    ).toBeAttached();
+
     const cards = page.locator("[data-part-card]");
     const hrefs = await cards
       .locator("a")

@@ -242,7 +242,7 @@ const protocolGroups: ProtocolGroup[] = [
         summary:
           "Acid hydrolysis of fermentation supernatant and HPLC measurement of malic acid using standards at 1.25, 3.75 and 15 mg/mL for external calibration.",
         pdfUrl:
-          "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-three-standards-en.pdf",
+          "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-en.pdf",
       },
       {
         number: "20",
@@ -250,7 +250,7 @@ const protocolGroups: ProtocolGroup[] = [
         summary:
           "Selection of integration boundaries, construction of endpoint baselines, numerical peak integration, standard-curve fitting and dilution correction for acquired chromatograms.",
         pdfUrl:
-          "https://static.igem.wiki/teams/6147/wiki/wet-protocol/20-hplc-integration-and-malate-calibration-expanded-en.pdf",
+          "https://static.igem.wiki/teams/6147/wiki/wet-protocol/20-hplc-summed-peak-area-calibration-en.pdf",
       },
     ],
   },

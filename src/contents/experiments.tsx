@@ -142,7 +142,7 @@ const hydrolysisProtocols: ProtocolLink[] = [
   {
     number: "19A",
     title: "PMA acid hydrolysis and HPLC with three standards",
-    href: "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19-new-a-pma-acid-hydrolysis-and-hplc-three-standards-new.pdf",
+    href: "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-en.pdf",
   },
 ];
 
@@ -150,7 +150,7 @@ const integrationProtocols: ProtocolLink[] = [
   {
     number: "20",
     title: "HPLC integration and malate calibration",
-    href: "https://static.igem.wiki/teams/6147/wiki/wet-protocol/20-hplc-integration-and-malate-calibration-expanded-en.pdf",
+    href: "https://static.igem.wiki/teams/6147/wiki/wet-protocol/20-hplc-summed-peak-area-calibration-en.pdf",
   },
 ];
 

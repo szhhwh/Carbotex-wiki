@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./parts-sections.module.css";
+
+const REGISTRY_COLLECTION_URL =
+  "https://registry.igem.org/collections/4e32e74e-e8d6-4539-8bc4-11eddbf2edf8";
 
 export interface PartRecord {
   id: string;
@@ -23,6 +27,21 @@ function RegistryLink({ part }: { part: PartRecord }) {
       aria-label={`Open ${part.id} in the iGEM Registry`}
     >
       <span>{part.id}</span>
+    </a>
+  );
+}
+
+export function RegistryCollectionCta() {
+  return (
+    <a
+      className={styles.collectionCta}
+      data-registry-collection-cta
+      href={REGISTRY_COLLECTION_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>Explore the Registry Collection</span>
+      <ArrowUpRight size={19} aria-hidden="true" />
     </a>
   );
 }
