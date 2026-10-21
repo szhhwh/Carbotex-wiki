@@ -2881,41 +2881,43 @@ Further evaluation led us to investigate precursor supply, where PYC engineering
                 ],
               },
             ],
-          },
-          {
-            kind: "related",
-            title: "PMA–DA Molecular Modeling",
-            parts: [
+            outro: [
               {
-                kind: "content",
-                inline: false,
-                content: (
-                  <>
-                    <p>
-                      {
-                        "Our Model team also explored a molecular question raised by published PMA–dopamine chemistry. In the reference study, increasing the dopamine-to-carboxyl feed ratio from 1.00 to 1.25 was accompanied by a decrease in the reported dopamine content of the recovered product. The team used molecular-dynamics simulations to examine how dopamine approached activated PMA sites under different feeding conditions. Under the stated model assumptions, the high-feed comparison showed fewer near-contacts within the selected approach-angle window, despite similar overall near-contact counts."
-                      }
-                    </p>
-                    <p>
-                      {"This work offered a "}
-                      <strong>
-                        {
-                          "possible molecular interpretation of a published trend"
-                        }
-                      </strong>
-                      {
-                        " and suggested questions for later formulation studies. It was a retrospective modeling investigation; it did not measure grafting efficiency in our own PMA-DA samples or determine the team's earlier experimental formulation."
-                      }
-                    </p>
-                    <p>
-                      <strong>
-                        <Link to={"/model#model-overview"}>
-                          {"Explore PMA–DA Molecular Modeling →"}
-                        </Link>
-                      </strong>
-                    </p>
-                  </>
-                ),
+                kind: "related",
+                title: "PMA–DA Molecular Modeling",
+                parts: [
+                  {
+                    kind: "content",
+                    inline: false,
+                    content: (
+                      <>
+                        <p>
+                          {
+                            "Our Model team also explored a molecular question raised by published PMA–dopamine chemistry. In the reference study, increasing the dopamine-to-carboxyl feed ratio from 1.00 to 1.25 was accompanied by a decrease in the reported dopamine content of the recovered product. The team used molecular-dynamics simulations to examine how dopamine approached activated PMA sites under different feeding conditions. Under the stated model assumptions, the high-feed comparison showed fewer near-contacts within the selected approach-angle window, despite similar overall near-contact counts."
+                          }
+                        </p>
+                        <p>
+                          {"This work offered a "}
+                          <strong>
+                            {
+                              "possible molecular interpretation of a published trend"
+                            }
+                          </strong>
+                          {
+                            " and suggested questions for later formulation studies. It was a retrospective modeling investigation; it did not measure grafting efficiency in our own PMA-DA samples or determine the team's earlier experimental formulation."
+                          }
+                        </p>
+                        <p>
+                          <strong>
+                            <Link to={"/model#model-overview"}>
+                              {"Explore PMA–DA Molecular Modeling →"}
+                            </Link>
+                          </strong>
+                        </p>
+                      </>
+                    ),
+                  },
+                ],
               },
             ],
           },
