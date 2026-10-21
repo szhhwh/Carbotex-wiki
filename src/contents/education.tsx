@@ -456,25 +456,36 @@ const workflowNodes: Array<[string, string, ReactNode, string | undefined]> = [
   ],
 ];
 
-function WorkflowEntryPoint() {
-  return (
-    <div
-      className={styles.workflowEntryPoint}
-      aria-label="Workflow entry point"
-      role="group"
-    >
-      <span>Entry point</span>
-      <div className={styles.workflowEntryLine} aria-hidden="true" />
-      <strong>Final Products: Adhesives</strong>
-    </div>
-  );
-}
+const workflowRingOrder = [0, 4, 3, 2, 1] as const;
 
 function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
-  const [activeId, setActiveId] = useState("adhesives");
-  const active =
-    workflowNodes.find(([id]) => id === activeId) ?? workflowNodes[0];
-  const imageFile = active[3];
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const active = workflowNodes.find(([id]) => id === activeId);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openerRef = useRef<HTMLButtonElement | null>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || !activeId) return;
+
+    dialog.showModal();
+
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, [activeId]);
+
+  const openNode = (id: string, opener: HTMLButtonElement) => {
+    openerRef.current = opener;
+    setActiveId(id);
+  };
+
+  const closeDialog = () => {
+    dialogRef.current?.close();
+  };
+
+  const imageFile = active?.[3];
   const imageDimensions = imageFile
     ? educationImageDimensions(imageFile)
     : undefined;
@@ -491,50 +502,90 @@ function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
       className={styles.workflow}
       role="group"
     >
-      <WorkflowEntryPoint />
-      <div className={styles.workflowNodes}>
-        {workflowNodes.map(([id, title], index) => (
-          <button
-            aria-pressed={active[0] === id}
-            className={`${styles.workflowNode} ${active[0] === id ? styles.workflowNodeActive : ""}`}
-            key={id}
-            onClick={() => setActiveId(id)}
-            type="button"
-          >
-            <strong>{title}</strong>
-            <small>
-              {index === 0
-                ? "Why does the material stick?"
-                : index === 1
-                  ? "Who can produce it?"
-                  : index === 2
-                    ? "How can the cell factory improve?"
-                    : index === 3
-                      ? "How does the cell factory produce?"
-                      : "How does the product become usable?"}
-            </small>
-            {index < workflowNodes.length - 1 && (
-              <ArrowDownRight aria-hidden="true" size={18} />
-            )}
-          </button>
-        ))}
-      </div>
-      <div className={styles.workflowPanel}>
-        <div className={styles.panelReveal} key={active[0]}>
-          <h6>{active[1]}</h6>
-          {imageFile && imageDimensions && (
-            <Figure
-              alt={`${active[1]} activity design`}
-              className={styles.workflowFigure}
-              intrinsicWidth={imageDimensions[0]}
-              intrinsicHeight={imageDimensions[1]}
-              src={`${mediaRoot}/${imageFile}`}
-              fallback={<span>Image unavailable.</span>}
-            />
-          )}
-          {active[2]}
+      <div
+        aria-label="Biomanufacturing workflow stages"
+        className={styles.workflowRing}
+        role="group"
+      >
+        <div className={styles.workflowOrbit} aria-hidden="true" />
+        <div className={styles.workflowCore} aria-hidden="true">
+          <span>Entry point</span>
+          <strong>
+            Biomanufacturing
+            <br />
+            workflow
+          </strong>
+        </div>
+        <div className={styles.workflowNodes}>
+          {workflowRingOrder.map((nodeIndex) => {
+            const [id, title] = workflowNodes[nodeIndex];
+            return (
+              <button
+                aria-haspopup="dialog"
+                aria-label={`Open details for ${title}`}
+                className={styles.workflowNode}
+                key={id}
+                onClick={(event) => openNode(id, event.currentTarget)}
+                type="button"
+              >
+                <span>{title}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
+      {active && (
+        <dialog
+          aria-labelledby={titleId}
+          className={styles.workflowDialog}
+          onCancel={(event) => {
+            event.preventDefault();
+            closeDialog();
+          }}
+          onClose={() => {
+            setActiveId(null);
+            openerRef.current?.focus();
+          }}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeDialog();
+          }}
+          onKeyDown={trapDialogFocus}
+          ref={dialogRef}
+        >
+          <div className={styles.workflowDialogInner}>
+            <header className={styles.workflowDialogHeader}>
+              <div>
+                <span className={styles.workflowDialogEyebrow}>
+                  Workflow stage
+                </span>
+                <h2 id={titleId}>{active[1]}</h2>
+              </div>
+              <button
+                aria-label="Close workflow stage"
+                className={styles.workflowDialogClose}
+                onClick={closeDialog}
+                type="button"
+                autoFocus
+              >
+                <X aria-hidden="true" size={20} />
+              </button>
+            </header>
+            <div className={styles.workflowDialogDetail}>
+              {imageFile && imageDimensions && (
+                <Figure
+                  alt={`${active[1]} activity design`}
+                  className={styles.workflowDialogFigure}
+                  intrinsicWidth={imageDimensions[0]}
+                  intrinsicHeight={imageDimensions[1]}
+                  src={`${mediaRoot}/${imageFile}`}
+                  fallback={<span>Image unavailable.</span>}
+                />
+              )}
+              {active[2]}
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 }
