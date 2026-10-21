@@ -31,9 +31,9 @@ export function Chapter05PreWorkflowContent() {
       </p>
       <h4>5.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
-        Objective: This activity aimed to help students better understand their
-        existing knowledge and use it to develop insights into synthetic biology
-        and biomanufacturing.
+        <strong>Objective</strong>: This activity aimed to help students better
+        understand their existing knowledge and use it to develop insights into
+        synthetic biology and biomanufacturing.
       </ObjectiveStatement>
       <h5>
         5.2.1 Content Design: Constructing a loop with emerging existing

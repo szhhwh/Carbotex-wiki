@@ -167,8 +167,8 @@ export function Chapter01Content() {
       </p>
       <h4>1.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement as="h5">
-        Objective I: Making Synthetic Biology Accessible Across Diverse Age
-        Groups
+        <strong>Objective</strong> I: Making Synthetic Biology Accessible Across
+        Diverse Age Groups
       </ObjectiveStatement>
       <p>
         To achieve this goal, we recognized that an effective science outreach
@@ -276,7 +276,8 @@ export function Chapter01Content() {
         .
       </p>
       <ObjectiveStatement as="h5">
-        Objective II: Evaluating Lecture Format Efficacy Across Generations
+        <strong>Objective</strong> II: Evaluating Lecture Format Efficacy Across
+        Generations
       </ObjectiveStatement>
       <p>
         As the first step in our science outreach efforts, we chose in-person

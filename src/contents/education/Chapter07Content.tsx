@@ -49,7 +49,7 @@ export function Chapter07Content() {
       </p>
       <h4>7.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
-        <strong>Objective:</strong> To ensure that science education is
+        <strong>Objective</strong>: To ensure that science education is
         genuinely accessible to ethnic minority children and ignite their
         curiosity to explore science in the future.
       </ObjectiveStatement>

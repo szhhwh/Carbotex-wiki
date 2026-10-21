@@ -77,6 +77,18 @@
 
 .pageShell .objectiveStatement {
   margin-block: var(--article-space-block) var(--article-space-related);
+  color: var(--education-ink);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: var(--article-text);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.62;
+  overflow-wrap: anywhere;
+  text-wrap: wrap;
+}
+
+.pageShell .objectiveStatement :where(strong, b) {
   color: var(--education-royal);
   font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
   font-size: var(--education-h5-size);
@@ -84,13 +96,6 @@
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.18;
-  overflow-wrap: anywhere;
-  text-wrap: wrap;
-}
-
-.pageShell .objectiveStatement :where(strong, b) {
-  color: inherit;
-  font-weight: inherit;
 }
 
 .pageShell h6 {

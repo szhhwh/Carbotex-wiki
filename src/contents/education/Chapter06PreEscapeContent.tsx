@@ -59,9 +59,8 @@ export function Chapter06PreEscapeContent() {
       <ChapterMeta kind="audience">Children in the local community</ChapterMeta>
       <h5>6.2.1 Explore Objective-Driven Design</h5>
       <ObjectiveStatement>
-        <strong>
-          Objective: Recognizing the Positive Role of Technology in Society
-        </strong>
+        <strong>Objective</strong>: Recognizing the Positive Role of Technology
+        in Society
       </ObjectiveStatement>
       <p>
         Aligned with the cognitive level of children, we aimed to help them

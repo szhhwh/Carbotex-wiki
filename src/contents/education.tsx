@@ -1445,12 +1445,10 @@ const sections: ArticleSection[] = [
             <h5 id="chapter-06-3-1">6.3.1 Explore Objective-Driven Design</h5>
             <div className={styles.designIntro}>
               <ObjectiveStatement>
-                <strong>Objective:</strong> We aimed to help them understand
+                <strong>Objective</strong>: We aimed to help them understand
                 that technological development requires not only high
-                performance but also{" "}
-                <strong>careful consideration of potential risks</strong> and{" "}
-                <strong>responsible decision-making</strong> before practical
-                deployment.
+                performance but also careful consideration of potential risks
+                and responsible decision-making before practical deployment.
               </ObjectiveStatement>
               <p>
                 <strong>Design:</strong> Across{" "}

@@ -95,17 +95,11 @@ export function Chapter03Content() {
       </p>
       <h4>3.2 Explore Objective-Driven Design</h4>
       <ObjectiveStatement>
-        <strong>Objective:</strong> To help primary school students 1){" "}
-        <strong>
-          recognize DNA as the carrier of genetic information and understand its
-          basic structure
-        </strong>
-        ; 2){" "}
-        <strong>
-          build an initial understanding of how biological components function
-          and can be redesigned to meet specific needs, a key idea in synthetic
-          biology.
-        </strong>
+        <strong>Objective</strong>: To help primary school students 1) recognize
+        DNA as the carrier of genetic information and understand its basic
+        structure; 2) build an initial understanding of how biological
+        components function and can be redesigned to meet specific needs, a key
+        idea in synthetic biology.
       </ObjectiveStatement>
       <p>
         <strong>For the educational content,</strong> we selected
