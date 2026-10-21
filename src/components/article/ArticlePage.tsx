@@ -50,6 +50,8 @@ interface HeroImage {
 
 interface ArticlePageProps {
   title: string;
+  /** Optional id for the page title heading. */
+  titleId?: string;
   /** Optional image shown in the header media slot. */
   heroImage?: HeroImage;
   /** Hide the hero media slot while keeping the yellow title band. */
@@ -196,6 +198,7 @@ function BubbleCluster() {
 
 export function ArticlePage({
   title,
+  titleId,
   heroImage,
   showHeroMedia = true,
   sections,
@@ -417,6 +420,7 @@ export function ArticlePage({
       {referenceOrder && <ReferenceOrder keys={referenceOrder} />}
       <ArticleHero
         title={title}
+        headingId={titleId}
         heroImage={heroImage}
         showMedia={showHeroMedia}
         theme={theme}

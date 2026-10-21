@@ -9,7 +9,7 @@ import { FigurePair } from "../components/media/FigurePair";
 import { FigureWithText } from "../components/media/FigureWithText";
 import styles from "./results.module.css";
 
-// Content supplied in processed/wetlab_result/wet_results_en.md.
+// Content supplied in processed/wetlab_result/wet_results.md.
 const itsSequence = `>A08_ITS
 CTAAAAAGATTTAAGGGGTGGCTTCAGCGCCCGACCTCCAACCCTTTGTTGTTAAAACTA
 CCTTGTTGCTTTGGCGGGACCGCTCGGTCTCGAGCCGCTGGGGATTCGTCCCAGGCGAGC
@@ -25,12 +25,12 @@ GCATATCAATAAAGCGGAGGA`;
 const sections: ArticleSection[] = [
   {
     id: "results-strain-and-pma",
-    title: "Strain A08 and PMA Production",
+    title: "1 Identification of strain A08 and PMA production",
     content: <></>,
     subsections: [
       {
         id: "results-morphology-phylogeny",
-        title: "Morphology and phylogeny of A08",
+        title: "1.1 Morphology and phylogeny of A08",
         content: (
           <>
             <Figure
@@ -100,7 +100,7 @@ const sections: ArticleSection[] = [
               production and engineering.
             </p>
             <div className={styles.sequenceCard}>
-              <ArticleFramework title="A08 ITS sequence (561 bp)">
+              <ArticleFramework title="ITS sequence of A08 (561 bp, 5′→3′)">
                 <pre
                   className={styles.sequence}
                   role="region"
@@ -116,7 +116,7 @@ const sections: ArticleSection[] = [
       },
       {
         id: "results-sugar-conditions-and-engineering",
-        title: "Sugars, Regulators, and PMA Production",
+        title: "1.2 Sugar conditions, regulator engineering and PMA production",
         content: (
           <>
             <Figure
@@ -196,9 +196,9 @@ const sections: ArticleSection[] = [
             </p>
             <Figure
               id="results-figure-6"
-              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig06-pcr-verification.avif"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig06-pcr-verification-2.avif"
               intrinsicWidth={4000}
-              intrinsicHeight={2370}
+              intrinsicHeight={2406}
               alt="PCR verification gels for XlnR, AraR and PYC overexpression and deletion constructs"
               captionPrefix="Figure 6."
               caption="PCR verification of XlnR-, AraR- and PYC-related constructs. Each panel shows a DNA size marker and the corresponding sample lanes. Arrows indicate the principal bands and the fragment sizes labelled in the figure."
@@ -210,12 +210,12 @@ const sections: ArticleSection[] = [
               and OE-XlnR+AraR lanes each showed a principal band at 2,902 bp;
               the ΔAraR lane showed a principal band at 1,976 bp, and the ΔXlnR
               and ΔXlnR+AraR lanes each showed a principal band at 2,039 bp. For
-              the PYC-related constructs, the OE-AtPYC and OE-YlPYC lanes each
-              showed a clear principal band, labelled 3,676 bp and 4,372 bp,
-              respectively. No control lane (WT or the parental strains OE-AraR
-              and ΔAraR) showed a band of comparable intensity at these
-              positions. These results confirm that the overexpression and
-              deletion constructs were successfully introduced into A08,
+              the PYC-related constructs, the OE-AtPYC, OE-YlPYC and OE-ScPYC
+              lanes each showed a clear principal band, labelled 4,272 bp, 3,845
+              bp and 3,638 bp, respectively. No control lane (WT or the parental
+              strains OE-AraR and ΔAraR) showed a band of comparable intensity
+              at these positions. These results confirm that the overexpression
+              and deletion constructs were successfully introduced into A08,
               providing a reliable strain basis for the subsequent
               growth-phenotype and PMA-production analyses.
             </p>
@@ -414,37 +414,40 @@ const sections: ArticleSection[] = [
         content: (
           <>
             <p>
-              To quantify the fermentation product of the PYC-engineered strain
-              chromatographically, we analysed an acid-hydrolysed broth sample
-              from strain OE-XlnR+AraR+SC(<em>PYC1</em>) (sample 123) by HPLC.
-              Acid hydrolysis releases malic acid monomers from PMA, so malic
-              acid equivalents in the hydrolysate were estimated by external
-              calibration. The hydrolysate was diluted 1:1 before injection;
-              malic acid standards at 1.25, 3.75 and 15 mg/mL were run under the
-              same chromatographic conditions and injection volume.
+              Acid-hydrolysed fermentation broth from OE-XlnR+AraR+SC(pyc1) was
+              analysed by HPLC using DL-malic acid standards at 1.25, 3.75 and
+              15 mg/mL. The standards showed two principal peaks, designated P1
+              and P2. P1 retention times were 10.445, 9.998 and 9.999 min,
+              respectively; the sample showed corresponding peaks at 10.072 and
+              15.962 min. Both peaks were integrated separately, and P1 + P2
+              total area was used consistently for standards and sample,
+              excluding smaller responses outside the selected intervals.
             </p>
             <Figure
               id="results-figure-15"
-              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig15-hplc-chromatograms-integration.avif"
-              intrinsicWidth={3822}
-              intrinsicHeight={2934}
-              alt="HPLC chromatograms of three malic acid standards and acid-hydrolysed sample 123 with two integrated peak regions"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig15-new.avif"
+              intrinsicWidth={1280}
+              intrinsicHeight={996}
+              alt="HPLC chromatograms of three DL-malic acid standards and the acid-hydrolysed sample, with P1 and P2 indicated"
               captionPrefix="Figure 15."
-              caption="Chromatograms of three malic acid standards and acid-hydrolysed sample 123 with separate integration of the two main peaks. Original sampling values are shown with the selected endpoint baselines; first-peak areas are used for calibration and the unassigned second peak is reported separately."
+              caption="Chromatograms of the three DL-malic acid standards and the acid-hydrolysed sample, with P1 and P2 indicated."
               fallback={<p>Image unavailable.</p>}
             />
             <p>
-              First-peak retention times were 10.445, 9.998 and 9.999 min for
-              the three standards and 10.104 min for sample 123, matching the
-              malic acid standard peak, to which the sample peak was assigned.
-              The second main peak near 16 min was integrated separately and
-              excluded from the malic acid calibration.
+              The DL-malic acid standards exhibited two principal peaks,
+              designated P1 and P2. P1 retention times were 10.445, 9.998 and
+              9.999 min for the three standards and 10.072 min for
+              OE-XlnR+AraR+SC(pyc1). The sample also showed a second principal
+              peak at 15.962 min, corresponding to the second-peak region of the
+              standards. Both peaks were integrated separately against their
+              respective endpoint baselines, and their areas were summed for
+              external calibration.
             </p>
             <div className={styles.tableCard}>
               <p id="results-table-1-caption" className={styles.tableCaption}>
-                Table 1. First-peak integration of malic acid standards and
-                calibration residuals (one chromatogram per concentration;
-                residual = observed − fitted).
+                Table 1. Summed peak areas and calibration residuals. Each
+                concentration represents one chromatogram; residual = observed −
+                fitted area.
               </p>
               <p id="results-table-1-hint" className={styles.tableHint}>
                 Swipe horizontally to inspect all values. The first column stays
@@ -461,29 +464,25 @@ const sections: ArticleSection[] = [
                   <thead>
                     <tr>
                       <th scope="col">Standard (mg/mL)</th>
-                      <th scope="col">Integration interval (min)</th>
-                      <th scope="col">First-peak area (mAU·min)</th>
+                      <th scope="col">P1 + P2 area (mAU·min)</th>
                       <th scope="col">Residual (mAU·min)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>1.25</td>
-                      <td>9.465–15.002</td>
-                      <td>35.934</td>
-                      <td>+0.156</td>
+                      <td>44.046</td>
+                      <td>+1.288</td>
                     </tr>
                     <tr>
                       <td>3.75</td>
-                      <td>9.082–14.222</td>
-                      <td>106.986</td>
-                      <td>−0.191</td>
+                      <td>129.580</td>
+                      <td>−1.574</td>
                     </tr>
                     <tr>
                       <td>15</td>
-                      <td>9.022–14.229</td>
-                      <td>428.509</td>
-                      <td>+0.035</td>
+                      <td>529.224</td>
+                      <td>+0.286</td>
                     </tr>
                   </tbody>
                 </table>
@@ -492,42 +491,40 @@ const sections: ArticleSection[] = [
             <FigurePair className={styles.figurePair}>
               <Figure
                 id="results-figure-16"
-                src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig16-hplc-malic-acid-calibration.avif"
-                intrinsicWidth={3822}
-                intrinsicHeight={2934}
-                alt="Calibration plot of malic acid first-peak area against concentration"
+                src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig16-new.avif"
+                intrinsicWidth={2548}
+                intrinsicHeight={1956}
+                alt="External calibration using the summed areas of P1 and P2 from DL-malic acid standards"
                 captionPrefix="Figure 16."
-                caption="Calibration of malic acid first-peak area from the three measured standards (free-intercept ordinary least-squares fit)."
+                caption="External calibration using the summed areas of P1 and P2 from DL-malic acid standards at 1.25, 3.75 and 15 mg/mL."
                 fallback={<p>Image unavailable.</p>}
               />
               <Figure
                 id="results-figure-17"
-                src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig17-hplc-calibration-residuals.avif"
-                intrinsicWidth={3822}
-                intrinsicHeight={2934}
-                alt="Residual plot for the three-point malic acid calibration"
+                src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig17-new.avif"
+                intrinsicWidth={2548}
+                intrinsicHeight={1956}
+                alt="Residuals of the summed-area calibration"
                 captionPrefix="Figure 17."
-                caption="Calibration residuals (observed minus fitted area)."
+                caption="Residuals of the summed-area calibration, calculated as observed minus fitted peak area."
                 fallback={<p>Image unavailable.</p>}
               />
             </FigurePair>
             <p>
-              Peak boundaries were assigned manually at discernible valleys, and
-              each interval was integrated against a straight endpoint baseline
-              by signed composite trapezoids (Python 3.12/NumPy 2.3){" "}
-              <Cite k="NumPy2025" />. Using the actual sampling intervals,
-              without smoothing, alignment or shifting. The three-point
-              calibration was fitted in GraphPad Prism 11 by unweighted,
-              free-intercept ordinary least squares <Cite k="GraphPad_nd" />.
-              This gave A = 28.5597 C + 0.0780 (R² = 0.999999), with residuals
-              within ±0.2 mAU·min, indicating good linearity. The first peak of
-              sample 123 (9.087–11.984 min) had an area of 350.41 mAU·min,
-              corresponding to 12.27 mg/mL malic acid equivalents in the
-              injected solution and 24.53 mg/mL in the hydrolysate before
-              dilution. After acid hydrolysis, the fermentation product of the
-              engineered strain thus released a major component co-eluting with
-              the malic acid standard, providing chromatographic evidence for
-              PMA synthesis.
+              Peak boundaries were selected manually, and each peak was
+              integrated against its own straight endpoint baseline using signed
+              composite trapezoids in Python 3.12/NumPy 2.3, without smoothing
+              or shifting <Cite k="numpytrapezoid" />. Unweighted,
+              free-intercept linear regression in GraphPad Prism 11.0.1 gave A =
+              35.3586C − 1.4401, with R² = 0.999969, where A is summed area and
+              C is standard concentration in mg/mL <Cite k="graphpadols" />.
+            </p>
+            <p>
+              The sample P1 and P2 areas were 372.058 and 82.781 mAU·min, giving
+              a total of 454.839 mAU·min and an injected-solution concentration
+              of 12.90 mg/mL, within the calibration range. Applying the
+              preparation-volume correction of 1.60/0.800 = 2 gave 25.81 g/L
+              malic acid equivalents on the original-supernatant basis.
             </p>
           </>
         ),
@@ -536,22 +533,22 @@ const sections: ArticleSection[] = [
   },
   {
     id: "results-pma-da-bioadhesive",
-    title: "PMA–DA Bioadhesive",
+    title: "2 Module IV results: PMA–DA bioadhesive (6.4)",
     content: <></>,
     subsections: [
       {
         id: "results-functionalisation-material-formation",
-        title: "Functionalisation and material formation",
+        title: "6.4.1 Functionalisation and material formation",
         content: (
           <>
             <p>
               The PMA used to prepare the adhesive had a molecular weight of 390
-              kDa, a high-molecular-weight polymer far above the chemically
+              kDa, a high-molecular-weight polymer above the chemically
               synthesised PMA (about 12 kDa) used by Tang et al.{" "}
-              <Cite k="Tang2020PMLADA" />. Its Mw/Mn was 1.0, and the
-              molecular-weight distribution was narrow. After EDC/NHS-mediated
-              dopamine conjugation, dialysis, casting and freeze-drying, PMA–DA
-              was obtained as a grey, fluffy, sponge-like solid (Figure 18) that
+              <Cite k="tang2020pmadaadhesive" />, with Mw/Mn = 1.0 and a narrow
+              molecular-weight distribution. After EDC/NHS-mediated dopamine
+              conjugation, dialysis, casting and freeze-drying, PMA–DA was
+              obtained as a grey, fluffy, sponge-like solid (Figure 18) that
               could be isolated intact, weighed and handled, demonstrating its
               feasibility as an end-use material. Before use, PMA–DA is
               redissolved in distilled water, typically at about 0.5 g per 1 mL;
@@ -600,17 +597,16 @@ const sections: ArticleSection[] = [
             <p>
               In an underwater test, two glass slides bonded with PMA–DA
               retained high bond strength after immersion in water at room
-              temperature for 24 h and did not separate until day 3, showing
-              that the adhesive layer prevented water ingress into the bonded
-              area over a prolonged period and that PMA–DA has good water
-              resistance and underwater adhesion.
+              temperature for 24 h, showing that the adhesive layer prevented
+              water ingress into the bonded area over a prolonged period and
+              that PMA–DA has good water resistance and underwater adhesion.
             </p>
           </>
         ),
       },
       {
         id: "results-mechanical-adhesive-performance",
-        title: "Mechanical and adhesive performance",
+        title: "6.4.2 Mechanical and adhesive performance",
         content: (
           <>
             <FigureWithText
@@ -629,16 +625,17 @@ const sections: ArticleSection[] = [
               <p>
                 Lap-shear testing was performed on an electronic universal
                 testing machine with reference to ASTM D1002{" "}
-                <Cite k="ASTM2019" />. Maximum lap-shear stress was calculated
-                as the recorded peak load divided by the bonded area recorded by
-                the instrument. In the first round of tests, PMA–DA formed
-                effective bonds on all three substrates: the maximum stress was
-                604.168 kPa on stainless steel and 17.928 kPa on porcine skin, a
-                soft-tissue model, exceeding the 12.7 kPa reported for the
-                catechol-modified PEO hydrogel cP15 on decellularised porcine
-                dermis <Cite k="Barrett2013" />. The highest strength, 12.168
-                MPa, was obtained on glass slides, reflecting a very robust
-                bond.
+                <Cite k="astm2019d1002" />; maximum lap-shear stress was
+                calculated as the recorded peak load divided by the bonded area
+                recorded by the instrument. In the first round of tests, PMA–DA
+                formed effective bonds on all three substrates: the maximum
+                stress was 604.168 kPa on stainless steel and 17.928 kPa on
+                porcine skin, a soft-tissue model, exceeding the 12.7 kPa
+                reported for the catechol-modified PEO hydrogel cP15 on
+                decellularised porcine dermis{" "}
+                <Cite k="barrett2013tissueadhesives" />; the highest strength,
+                12.168 MPa, was obtained on glass slides, reflecting a very
+                robust bond.
               </p>
             </FigureWithText>
             <FigureWithText
@@ -666,30 +663,27 @@ const sections: ArticleSection[] = [
             </FigureWithText>
             <h4 className={styles.subheading}>Effect of concentration.</h4>
             <p>
-              At a dopamine feed ratio of DA:COOH = 100%, we compared five
-              PMA–DA concentrations from 100 to 1000 mg/mL. All three substrates
-              showed the same trend: adhesion strength increased from 100 to 700
-              mg/mL (glass 303 → 640.57 kPa; steel 25 → 56 kPa; porcine skin
-              35.736 → 102 kPa) and decreased at 1000 mg/mL (538, 50 and 81 kPa,
-              respectively). This rise-then-fall trend is consistent with the
-              design: higher concentration supplies more interfacial catechol
-              groups and more entangling polymer chains, increasing both
-              interfacial binding and bulk cohesion, whereas at very high
-              concentration the increased viscosity impairs spreading and
-              wetting, reducing the effective contact area{" "}
+              At a dopamine feed ratio of DA:COOH = 100% and a bonded area of
+              0.5 cm², we compared five PMA–DA concentrations from 100 to 1000
+              mg/mL. All three substrates showed the same trend: adhesion
+              strength increased from 100 to 700 mg/mL (glass 303 → 640.57 kPa;
+              steel 25 → 56 kPa; porcine skin 35.736 → 102 kPa) and decreased at
+              1000 mg/mL (538, 50 and 81 kPa, respectively). This rise-then-fall
+              trend is consistent with the design: higher concentration supplies
+              more interfacial catechol groups and more entangling polymer
+              chains, increasing both interfacial binding and bulk cohesion,
+              whereas at very high concentration the increased viscosity impairs
+              spreading and wetting, reducing the effective contact area{" "}
               <Cite
                 k={[
                   "jenkins2013molecularweight",
                   "siebert2019molecularweight",
-                  "Yu2020",
+                  "yu2020gallol",
                 ]}
               />
               . Within the tested range, 700 mg/mL was therefore the optimal
               concentration. At this concentration, adhesion to porcine skin
-              reached 102 kPa, 5.7-fold the first-round value and above the
-              31–49 kPa reported by Barrett et al. for thermoresponsive
-              mussel-inspired cT tissue adhesives on wet decellularised porcine
-              dermis <Cite k="Barrett2013" />.
+              reached 102 kPa, 5.7-fold the first-round value.
             </p>
             <Figure
               id="results-figure-22"
@@ -704,22 +698,26 @@ const sections: ArticleSection[] = [
             <h4 className={styles.subheading}>Effect of grafting ratio.</h4>
             <p>
               We further compared PMA–DA prepared at DA:COOH feed ratios of 25%,
-              50% and 100% across concentrations. On porcine skin, the 100%
-              group was highest at every matched concentration (e.g., 102, 14.0
-              and 4.4 kPa for 100%, 25% and 50% at 700 mg/mL), and the 25% group
-              (11.2–18.1 kPa) was generally higher than the 50% group (4.4–10.6
-              kPa). On steel, the 100% group was highest at 100–300 mg/mL (39 vs
-              21.4 and 18.5 kPa at 300 mg/mL), whereas at 700 and 1000 mg/mL the
-              50% group gave higher means (60.9±35.2 kPa, n=2; 103.6 kPa) than
-              the 100% group (56 and 50 kPa). On glass, the 100% group was
-              highest at 100–700 mg/mL (640.57 kPa at 700 mg/mL vs 327.1±33.2
-              kPa for 25% and 61.3 kPa for 50%); at 1000 mg/mL the 50% group
+              50% and 100% across concentrations. The bonded area was uniformly
+              0.5 cm². On porcine skin, the 100% group was highest at every
+              matched concentration (e.g., 102, 14.0 and 4.4 kPa for 100%, 25%
+              and 50% at 700 mg/mL), and the 25% group (7.8–18.1 kPa) was higher
+              than the 50% group (4.4–12.7 kPa) at most matched concentrations.
+              On steel, the 100% group was highest at 100–500 mg/mL (45 kPa at
+              500 mg/mL vs 17.6±4.2 kPa for 25% and 11.8±2.3 kPa for 50%),
+              whereas at 700 and 1000 mg/mL the 50% group gave higher means
+              (60.9±35.2 kPa, n=2; 103.6 kPa) than the 100% group (56 and 50
+              kPa). On glass, the 100% group was highest at 100, 300 and 700
+              mg/mL (640.57 kPa at 700 mg/mL vs 327.1±33.2 kPa for 25% and 61.3
+              kPa for 50%), whereas at 500 mg/mL the 25% group averaged
+              448.6±66.4 kPa (n=2), above both the 100% (401.7 kPa) and 50%
+              (137.9±165.9 kPa, n=2) groups; at 1000 mg/mL the 50% group
               averaged 455.1±230.6 kPa (n=4), comparable to the 538 kPa of the
               100% group, with a single-test maximum of 729.4 kPa. Overall, the
               100% dopamine feed ratio gave the highest adhesion on soft tissue
               and under most glass conditions, consistent with catechol-mediated
               interfacial hydrogen bonding, coordination and oxidative
-              crosslinking <Cite k="lee2011musseladhesives" />. On steel, the
+              crosslinking <Cite k="lee2011musseladhesives" />; on steel, the
               50% group reached 103.6 kPa at high concentration, suggesting that
               a moderate catechol density suffices for strong bonding to metal.
               Adhesion of PMA–DA can therefore be tailored to the target
@@ -727,12 +725,12 @@ const sections: ArticleSection[] = [
             </p>
             <Figure
               id="results-figure-23"
-              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig23-lap-shear-grafting-ratio.avif"
+              src="https://static.igem.wiki/teams/6147/wiki/wet-result-20261020/fig23-lap-shear-grafting-ratio-2.avif"
               intrinsicWidth={4000}
               intrinsicHeight={1371}
               alt="Peak lap-shear stress of PMA–DA at three dopamine feed ratios and different concentrations"
               captionPrefix="Figure 23."
-              caption="Peak lap-shear stress of PMA–DA prepared at DA:COOH feed ratios of 25%, 50% and 100% at different concentrations. Bars show means; error bars show sample SD when n ≥ 2; dots are individual tests."
+              caption="Peak lap-shear stress of PMA–DA prepared at DA:COOH feed ratios of 25%, 50% and 100% at different concentrations. Bars show means; error bars show sample SD when n ≥ 2; dots are individual tests; n.t., not tested (the 50% group was not tested at 100 mg/mL)."
               fallback={<p>Image unavailable.</p>}
             />
           </>
@@ -740,15 +738,15 @@ const sections: ArticleSection[] = [
       },
       {
         id: "results-cytocompatibility",
-        title: "Cytocompatibility",
+        title: "6.4.3 Cytocompatibility",
         content: (
           <>
             <p>
               Free dopamine readily autoxidises to quinones and reactive oxygen
               species (ROS) that damage proteins, lipids and DNA and induce
-              apoptosis. In PMA–DA, dopamine is amide-linked to the PMA backbone
+              apoptosis; in PMA–DA, dopamine is amide-linked to the PMA backbone
               and is no longer free, which is expected to reduce this risk{" "}
-              <Cite k="Tang2020PMLADA" />. To test this, we evaluated the
+              <Cite k="tang2020pmadaadhesive" />. To test this, we evaluated the
               cytocompatibility of PMA–DA prepared at DA:COOH feed ratios of
               25%–125% with L929 mouse fibroblasts. At 24, 48 and 72 h, relative
               viability of all treatment groups remained within approximately
@@ -757,8 +755,9 @@ const sections: ArticleSection[] = [
               viability decreased slightly with increasing feed ratio, and the
               125% group was lowest (approximately 85%–91%). All groups remained
               above the 70% viability threshold for cytotoxicity defined in ISO
-              10993-5, indicating good cytocompatibility with no cytotoxicity
-              under the conditions tested <Cite k="ISO2009" />.
+              10993-5 <Cite k="iso2009cytotoxicity" />, indicating good
+              cytocompatibility with no cytotoxicity under the conditions
+              tested.
             </p>
             <Figure
               id="results-figure-24"
@@ -775,7 +774,7 @@ const sections: ArticleSection[] = [
       },
       {
         id: "results-learning-application-scope",
-        title: "Learning and application scope",
+        title: "6.4.4 Learning and application scope",
         content: (
           <p>
             This module converted high-molecular-weight PMA from A08
@@ -790,12 +789,13 @@ const sections: ArticleSection[] = [
             markedly favoured soft-tissue adhesion, and adhesion could be
             tailored to different substrates through formulation. Together,
             these results establish a route from microbial fermentation and
-            product analysis to functional-material validation. Both PMA and
-            dopamine are biocompatible, and catechol groups promote interfacial
-            adhesion in wet environments <Cite k={["Ahn2015", "Ji2016"]} />.
-            PMA–DA is a promising candidate for underwater wound management and
-            soft-tissue adhesion, where formulations can be tuned to balance
-            adhesion with compliance and benign removal <Cite k="Chen2020" />.
+            product analysis to functional-material validation. Because both PMA
+            and dopamine are biocompatible and catechol groups promote
+            interfacial adhesion in wet environments{" "}
+            <Cite k={["ahn2015musseladhesives", "ji2016softtissue"]} />, PMA–DA
+            is a promising candidate for underwater operations and soft-tissue
+            adhesion, where formulations can be tuned to balance adhesion with
+            compliance and benign removal <Cite k="chen2020bioadhesive" />.
           </p>
         ),
       },
@@ -806,7 +806,8 @@ const sections: ArticleSection[] = [
 export function Results() {
   return (
     <ArticlePage
-      title="Results"
+      title="Results — PMA production and PMA–DA bioadhesive"
+      titleId="results-page-title"
       heroImage={{
         src: "https://static.igem.wiki/teams/6147/wiki/wet-header/header-results.avif",
         alt: "Illustration of chromatograms, bar charts, and gel electrophoresis results.",
@@ -817,6 +818,13 @@ export function Results() {
       }}
       sections={sections}
       references
+      referencesIntro={
+        <>
+          Reference entries cited on this page are stored in the accompanying{" "}
+          <code>references.bib</code>; the website generates the reference list
+          automatically from the citation keys.
+        </>
+      }
       stickyMobileOutline
     />
   );
