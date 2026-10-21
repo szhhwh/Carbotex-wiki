@@ -1342,7 +1342,7 @@
   margin-block-start: var(--article-space-related);
   padding: 0.65rem 0.8rem;
   border-top: 0;
-  background: transparent;
+  background: var(--hardware-white, #fff);
   color: var(--education-navy);
   cursor: pointer;
   font-size: 0.92rem;
