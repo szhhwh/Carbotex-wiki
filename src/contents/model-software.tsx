@@ -463,9 +463,10 @@ const sections: ArticleSection[] = [
               <VideoEmbed
                 src="https://video.igem.org/videos/embed/37K7KgMio7nF7yfyv2ezFE"
                 title="OUC-Haide 2026: WetFlow, A PMA–Dopamine Adhesive Case"
+                provider="raw"
                 ratio="16 / 9"
                 allow="fullscreen"
-                sandbox="['allow-same-origin', 'allow-scripts', 'allow-popups', 'allow-forms']"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 captionPrefix="Video 1:"
                 caption={
                   <>
