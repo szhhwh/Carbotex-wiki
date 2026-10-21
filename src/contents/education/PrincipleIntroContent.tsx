@@ -1,19 +1,8 @@
-import { FigureWithText } from "../../components/media/FigureWithText";
-import { mediaRoot } from "./EducationAssets";
+export const weaveVisualCaption = "Visual structure of our principle.";
 
 export function PrincipleIntroContent() {
   return (
-    <FigureWithText
-      alt="Circular Huandaiwen-inspired emblem of interwoven teal, green and gold ribbons, with a microbe, a wheel-like motif, a flowering sprout and a smiling round character woven into the loops."
-      caption="Visual structure of our principle."
-      captionPrefix="Figure 1."
-      compactMedia
-      frame="none"
-      intrinsicHeight={1693}
-      intrinsicWidth={1667}
-      maxWidth="520px"
-      src={`${mediaRoot}/visual-weave.avif`}
-    >
+    <>
       <p>
         To ensure that our educational activities are purposeful, adaptable, and
         continuously refined, we organized them around the{" "}
@@ -32,6 +21,6 @@ export function PrincipleIntroContent() {
         illustrating how insights and reflections flow from one activity into
         the design of the next and into our program.
       </p>
-    </FigureWithText>
+    </>
   );
 }

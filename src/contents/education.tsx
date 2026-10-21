@@ -13,6 +13,7 @@ import {
   ArticlePage,
   type ArticleSection,
 } from "../components/article/ArticlePage";
+import { Caption } from "../components/media/Caption";
 import { Figure } from "../components/media/Figure";
 import { ACTIVITIES } from "./activityCatalog";
 import { media, mediaRoot } from "./education/EducationAssets";
@@ -46,7 +47,10 @@ import {
   OverviewTranslating,
 } from "./education/OverviewContent";
 import { ObjectiveStatement } from "./education/ObjectiveStatement";
-import { PrincipleIntroContent } from "./education/PrincipleIntroContent";
+import {
+  PrincipleIntroContent,
+  weaveVisualCaption,
+} from "./education/PrincipleIntroContent";
 import styles from "./education.module.css";
 
 function moveTabFocus(
@@ -142,17 +146,20 @@ function WeaveFramework() {
 
   return (
     <div className={styles.weaveLayout}>
-      <div className={styles.weaveShape} aria-hidden="true">
-        <span className={`${styles.weaveBand} ${styles.weaveBandOne}`} />
-        <span className={`${styles.weaveBand} ${styles.weaveBandTwo}`} />
-        <span className={`${styles.weaveBand} ${styles.weaveBandThree}`} />
-        <span className={`${styles.weaveBand} ${styles.weaveBandFour}`} />
-        <span className={`${styles.weaveBand} ${styles.weaveBandFive}`} />
-        <div className={styles.weaveCore}>
-          <strong>WEAVE</strong>
-          <small>the thread between activities</small>
+      <figure className={styles.weaveFigure}>
+        <div className={styles.weaveShape}>
+          <img
+            alt="Circular Huandaiwen-inspired emblem of interwoven teal, green and gold ribbons, with a microbe, a wheel-like motif, a flowering sprout and a smiling round character woven into the loops."
+            className={styles.weaveImage}
+            decoding="async"
+            height={1693}
+            loading="lazy"
+            src={`${mediaRoot}/visual-weave.avif`}
+            width={1667}
+          />
         </div>
-      </div>
+        <Caption prefix="Figure 1.">{weaveVisualCaption}</Caption>
+      </figure>
       <div className={styles.weaveControls}>
         <div
           className={styles.weaveTabs}
@@ -181,7 +188,7 @@ function WeaveFramework() {
             </button>
           ))}
         </div>
-        {weaveStages.map(([id, letter, title, question, body]) => (
+        {weaveStages.map(([id, , , question, body]) => (
           <div
             className={styles.weavePanel}
             aria-labelledby={`weave-tab-${id}`}
@@ -191,9 +198,7 @@ function WeaveFramework() {
             key={id}
             role="tabpanel"
           >
-            <span className={styles.panelLetter}>{letter}</span>
-            <div>
-              <h3>{title}</h3>
+            <div className={styles.weavePanelBody}>
               <h4>{question}</h4>
               <p>{body}</p>
             </div>
