@@ -1009,6 +1009,10 @@ export function Hardware() {
   return (
     <ArticlePage
       title="Hardware"
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/hd-header-image.avif",
+        alt: "Industrial fermentation tanks and stainless-steel piping in a production facility.",
+      }}
       sections={sections}
       references
       referencesIntro="The following references informed the design, simulation, and implementation of our hardware platform. Citations are used throughout the text to link specific design decisions to their scientific basis."
