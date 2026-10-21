@@ -1158,10 +1158,11 @@ const sections: ArticleSection[] = [
                   <MathInline tex={String.raw`\to`} /> Echo
                 </strong>
                 ). We specifically fixed an early flaw that split classroom
-                minutes mechanically across all five stages: classroom time (30
-                min) is now allocated exclusively to <code>Action</code>, while{" "}
-                <code>Verify</code> and <code>Echo</code> are marked as awaiting
-                post-class evidence and iteration.
+                minutes mechanically across all five stages: the 30-minute
+                classroom window is now dedicated to full classroom
+                implementation (<code>Action</code>), while <code>Verify</code>{" "}
+                and <code>Echo</code> are marked as awaiting post-class evidence
+                and iteration.
               </li>
               <li>
                 <strong>WetFlow Execution</strong>: Given a request to design a

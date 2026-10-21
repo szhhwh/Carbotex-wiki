@@ -64,7 +64,7 @@ const modelCycleSummaries: CycleSummaryItem[] = [
     title: "Orthogonal Group Screening",
     focus: "Overcome paralog masking in a duplicated genome",
     achievement:
-      "Shifted target screening from individual genes to homologous isozyme groups and intersected FSEOF overexpression push with joint group-knockout essentiality — filtering out bypassable cyMDH (−4.7% loss) and isolating cytosolic PYC (Rank 4 FSEOF, Rank 1 group KO at −58.6% loss) for wet-lab overexpression.",
+      "Shifted target screening from individual genes to homologous isozyme groups and intersected FSEOF overexpression push with joint group-knockout essentiality — filtering out bypassable cyMDH (−4.7% loss) and isolating cytosolic PYC (Rank 4 FSEOF, Rank 1 group KO at −58.6% loss) to provide genome-scale mechanistic support for our PYC overexpression engineering.",
   },
   {
     id: "dbtl-en-c3",
@@ -78,7 +78,7 @@ const modelCycleSummaries: CycleSummaryItem[] = [
     title: "Hot-Swappable Domain Plugins",
     focus: "Decouple specialized analytics from the core host",
     achievement:
-      "Extended the workbench via dependency-injected Cordis plugins that hot-swap cleanly without polluting core state — automating baseline-verified adhesive coupling checks and paragraph-traceable 30-minute WEAVE outreach lesson generation.",
+      "Extended the workbench via dependency-injected Cordis plugins that hot-swap cleanly without polluting core state — automating baseline-verified adhesive coupling checks and source-cited 30-minute WEAVE classroom lesson generation.",
   },
   {
     id: "dbtl-en-c5",
@@ -144,9 +144,8 @@ export const modelEngineeringSections: ArticleSection[] = [
           ]}
         />
         <p>
-          Following the iGEM Design–Build–Test–Learn (DBTL) framework across
-          five iterations, each cycle resolved a distinct methodological
-          failure mode uncovered by the previous step:
+          Organized as five linked DBTL engineering cycles across our dry-lab
+          work, each cycle addressed a distinct methodological challenge:
         </p>
         <CycleJourney items={modelCycleSummaries} />
       </>
@@ -333,7 +332,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Localization calibration restored native cytosolic flux
                       </strong>
                       <p>
-                        Dual-tool localization proved that A08 cyMDH paralogs
+                        Dual-tool localization supported that A08 cyMDH paralogs
                         lack mitochondrial transit peptides and reside in the
                         cytosol. Re-anchoring the 15 calibrated reactions
                         eliminated the{" "}
@@ -490,9 +489,9 @@ export const modelEngineeringSections: ArticleSection[] = [
               <>
                 <p>
                   Evaluating all 1,102 candidate enzyme groups across both
-                  dimensions resolved three distinct metabolic control regimes
-                  and exposed the limitation of single-metric ranking (Tab.1;
-                  Img.3):
+                  dimensions resolved four distinct metabolic control regimes
+                  matching the scatter classification and exposed the limitation
+                  of single-metric ranking (Tab.1; Img.3):
                 </p>
                 <figure className={tableStyles.tableFigure}>
                   <div
@@ -537,17 +536,34 @@ export const modelEngineeringSections: ArticleSection[] = [
                         </tr>
                         <tr>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            Glycolytic &amp; PPP enzymes
+                            Upper Glycolysis &amp; PPP (PFK, FBA, G6PDH, PGL,
+                            RPI, RPE)
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            Non-monotonic
+                            Non-monotonic (NA)
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
                             −23.8% to −30.2% (Ranks 2–7)
                           </td>
                           <td>
-                            Upstream carbon trunk; expanding capacity alone does
-                            not redirect flux into C4 acids
+                            KO-only upstream supply; essential for carbon entry
+                            but non-monotonic under enforced PMA push
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            Lower Glycolytic Backbone (PYK, ENO, PGM, PGK,
+                            GAPDH)
+                          </td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            0.479 to 0.553 (Ranks 6–10)
+                          </td>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            −4.7% to −11.5% (Ranks 8–10)
+                          </td>
+                          <td>
+                            Dual-responsive glycolytic trunk; moderate knockout
+                            impact due to glycolytic/bypass buffering
                           </td>
                         </tr>
                         <tr>
@@ -571,7 +587,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </table>
                   </div>
                   <Caption prefix="Tab.1">
-                    Three metabolic control regimes resolved by dual-metric
+                    Four metabolic control regimes resolved by dual-metric
                     screening across 1,102 candidate isozyme groups.
                   </Caption>
                 </figure>
@@ -605,9 +621,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                   alone would have misdirected wet-lab cloning toward cyMDH,
                   whose deletion is buffered by cross-compartment bypasses.
                   Isolating cytosolic PYC as the sole target in the dual-optimal
-                  quadrant anchored our wet lab&apos;s PYC overexpression strain
-                  construction and defined enzyme-constrained modeling as our
-                  next refinement step.
+                  quadrant provided genome-scale mechanistic support for our
+                  team&apos;s ongoing PYC overexpression engineering and defined
+                  enzyme-constrained modeling as our next refinement step.
                 </p>
               </>
             ),
@@ -616,10 +632,10 @@ export const modelEngineeringSections: ArticleSection[] = [
         insight={
           <>
             Combining FSEOF sensitivity with joint isozyme-group knockout
-            bypassed paralog masking and anchored cytosolic PYC for wet-lab
-            overexpression. As strain construction and adhesive experiments
-            scaled up, preventing cross-project protocol and data errors
-            motivated the WetFlow workbench in Cycle 3.
+            bypassed paralog masking and supported cytosolic PYC as the primary
+            anaplerotic target. In parallel, as wet-lab fermentation and
+            adhesive experiments scaled up, preventing cross-project protocol
+            and data errors motivated the WetFlow workbench in Cycle 3.
           </>
         }
       />
@@ -646,7 +662,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                   structural limitation of prompt-only LLM workflows: conversational
                   instructions cannot prevent an agent from mixing SOPs across
                   projects, overwriting wet-lab measurements with literature
-                  values <Cite k="Tang2020PMLADA" />, or skipping human review.
+                  values, or skipping human review.
                   We therefore designed <strong>WetFlow</strong> around a
                   service-layer guardrail methodology — shifting safety
                   enforcement out of fragile prompts and into database and
@@ -932,10 +948,11 @@ export const modelEngineeringSections: ArticleSection[] = [
                     <div>
                       <strong>Baseline-locked formulation audit plugin</strong>
                       <p>
-                        Verifies that archived multi-ratio MD summaries share an
-                        identical carboxyl activation baseline and trajectory
-                        window before comparing contact fractions, preventing
-                        mismatched cross-run comparisons.
+                        Verifies that already-generated multi-ratio MD summary
+                        reports share an identical carboxyl activation baseline
+                        and trajectory window before comparing contact
+                        fractions, bringing completed MD results back into
+                        formulation discussions.
                       </p>
                     </div>
                   </li>
@@ -979,10 +996,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Unbound activity citations in generated lesson briefs
                       </strong>
                       <p>
-                        Generated classroom activities cited general documents
-                        without exact paragraph identifiers, preventing teachers
-                        from tracing activities back to underlying outreach
-                        records.
+                        Early generated lesson briefs lacked consistent source
+                        citations for retrieved outreach cases and activity
+                        adaptations, making it harder for educators to trace
+                        pedagogical provenance.
                       </p>
                     </div>
                   </li>
@@ -997,8 +1014,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </strong>
                       <p>
                         Mechanically splitting 30 minutes across all five WEAVE
-                        stages compressed hands-on classroom time, conflicting
-                        with our pedagogy where Verify and Echo occur post-class.
+                        stages compressed classroom implementation time,
+                        conflicting with our pedagogy where Verify and Echo
+                        occur post-class.
                       </p>
                     </div>
                   </li>
@@ -1029,12 +1047,13 @@ export const modelEngineeringSections: ArticleSection[] = [
                 <p>
                   Because the outreach logic was isolated inside a hot-swappable
                   plugin, we fixed both defects without touching the core host
-                  (Img.7): we enforced mandatory paragraph-ID binding on every
-                  generated activity and dedicated the full 30-minute classroom
-                  window to hands-on Action while keeping Verify and Echo as
-                  post-class assessment modules. With upstream strain design and
-                  midstream workflow architecture complete, Cycle 5 turned to
-                  downstream PMA–DA conjugation.
+                  (Img.7): we provided accurate source citations for retrieved
+                  outreach cases and generated lesson briefs, and dedicated the
+                  30-minute window to full classroom implementation while
+                  keeping Verify and Echo as post-class assessment modules.
+                  Meanwhile, to investigate the molecular mechanism behind the
+                  coupling summaries audited in the workbench, Cycle 5 details
+                  our explicit-solvent MD simulations of PMA–DA conjugation.
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -1060,9 +1079,9 @@ export const modelEngineeringSections: ArticleSection[] = [
           <>
             Modular Cordis plugins equipped our formulation and outreach teams
             with traceable tools while keeping the core workbench lightweight.
-            With upstream strain targets and midstream data management in place,
-            Cycle 5 investigated why excess dopamine lowers downstream
-            bioadhesive conjugation.
+            To examine the atomic-scale interactions underlying the coupling
+            summaries audited by our formulation plugin, Cycle 5 details our
+            all-atom MD investigation of PMA–dopamine conjugation.
           </>
         }
       />
@@ -1083,12 +1102,14 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  In downstream EDC/NHS coupling of A08-fermented PMA with
-                  dopamine, published grafted dopamine content peaked at{" "}
-                  <strong>21.3 wt% at equimolar 1.00</strong> but{" "}
-                  <strong>dropped to 19.2 wt% at 1.25</strong>{" "}
-                  <Cite k="Tang2020PMLADA" />. Conventional collision-frequency
-                  intuition cannot explain why adding more nucleophile lowers
+                  In Tang et al.&apos;s published EDC/NHS coupling series of PMA
+                  with dopamine, grafted dopamine content in the purified
+                  product peaked at <strong>21.3 wt% at equimolar 1.00</strong>{" "}
+                  but <strong>dropped to 19.2 wt% at 1.25</strong>{" "}
+                  <Cite k="Tang2020PMLADA" /> (whereas our wet-lab team
+                  synthesized broth-derived PMA–DA at a 1:1 baseline ratio).
+                  Conventional collision-frequency intuition cannot explain why
+                  adding more nucleophile lowers
                   yield, because amide bond formation requires not just spatial
                   proximity (
                   <MathInline tex={String.raw`d_{\text{N–C}} < 4\text{ Å}`} />)
@@ -1165,9 +1186,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                         ) into reaction-compatible attack windows (
                         <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />
                         ) versus shallow side-on states (
-                        <MathInline tex={String.raw`<60^\circ`} />) and projects
-                        the local hydrogen-bond and Lennard-Jones (LJ) angular
-                        restoring torques.
+                        <MathInline tex={String.raw`<60^\circ`} />), tallies
+                        amine–carbonyl hydrogen-bond candidate geometries, and
+                        computes Lennard-Jones (LJ) angular projections.
                       </p>
                     </div>
                   </li>
@@ -1220,10 +1241,11 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Local side-on trapping versus bulk aggregation
                       </strong>
                       <p>
-                        Conformational and torque analysis (Img.10A–B) showed
-                        that at 1.25, local amine–carbonyl hydrogen bonding and
-                        a sign-reversed catechol-OH Lennard-Jones torque oppose
-                        rotation into the{" "}
+                        Conformational and angular-projection analysis
+                        (Img.10A–B) showed that at 1.25, higher amine–carbonyl
+                        hydrogen-bond candidate geometry (32.9% vs. 17.5%) and a
+                        sign-reversed catechol-OH Lennard-Jones angular
+                        projection oppose rotation into the{" "}
                         <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />{" "}
                         attack window, whereas bulk dopamine self-clustering and
                         site saturation remained negligible within this
@@ -1422,7 +1444,8 @@ export const modelEngineeringSections: ArticleSection[] = [
                 isozyme groups and intersected FSEOF overexpression push with
                 joint group-knockout essentiality — filtering out bypassable
                 cyMDH (−4.7% loss) and isolating cytosolic PYC (Rank 4 FSEOF,
-                Rank 1 group KO at −58.6% loss) for wet-lab overexpression.
+                Rank 1 group KO at −58.6% loss) to support our PYC
+                overexpression engineering.
               </p>
             </li>
             <li>
@@ -1442,8 +1465,8 @@ export const modelEngineeringSections: ArticleSection[] = [
               <p>
                 Extended the workbench via dependency-injected Cordis plugins
                 that hot-swap cleanly without polluting core state — automating
-                baseline-verified adhesive coupling checks and
-                paragraph-traceable 30-minute WEAVE outreach lesson generation.
+                baseline-verified adhesive coupling checks and source-cited
+                30-minute WEAVE classroom lesson generation.
               </p>
             </li>
             <li>

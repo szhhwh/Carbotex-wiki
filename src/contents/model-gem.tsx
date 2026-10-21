@@ -66,8 +66,8 @@ const sections: ArticleSection[] = [
           annotation, strain-specific transcriptomic data, or a pre-existing
           genome-scale metabolic model (GEM). To resolve intracellular carbon
           bottlenecks governing PMA biosynthesis at the genome scale and
-          systematically prioritize metabolic engineering targets to guide
-          wet-lab strain construction, we organized our metabolic modeling work
+          systematically evaluate metabolic engineering targets to support
+          wet-lab strain engineering, we organized our metabolic modeling work
           into two connected parts (Figure 1):
         </p>
         <ul>
@@ -97,8 +97,8 @@ const sections: ArticleSection[] = [
             essentiality filtering with Flux Scanning based on Enforced
             Objective Flux (FSEOF) and homologous-group joint knockout
             simulations across 1,102 non-essential in-scope candidate enzyme
-            groups to identify the primary non-compensable metabolic bottleneck
-            for wet-lab overexpression.
+            groups to evaluate and support the primary non-compensable metabolic
+            bottleneck for wet-lab overexpression.
           </li>
         </ul>
         <Figure

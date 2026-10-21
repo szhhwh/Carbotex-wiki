@@ -93,8 +93,9 @@ const sections: ArticleSection[] = [
           <strong>pyruvate carboxylase (PYC)</strong> as the sole
           non-compensable bottleneck (overexpression Rank 4, slope{" "}
           <MathInline tex="0.687" />; knockout Rank 1,{" "}
-          <MathInline tex={String.raw`-58.6\%`} /> flux loss), guiding wet-lab
-          strain construction.
+          <MathInline tex={String.raw`-58.6\%`} /> flux loss), providing
+          genome-scale mechanistic support for our PYC overexpression
+          engineering.
         </p>
         <div className={styles.sectionAction}>
           <Link to="/model/gem" className={styles.actionBtn}>
@@ -151,8 +152,9 @@ const sections: ArticleSection[] = [
           ). Under the <MathInline tex={String.raw`50\%`} />
           -activation main model, reaction-compatible contacts plunged from{" "}
           <strong>25.2%</strong> at <MathInline tex="1.00" /> to{" "}
-          <strong>5.2%</strong> at <MathInline tex="1.25" /> as local hydrogen
-          bonding and catechol torque trapped excess dopamine in shallow-angle (
+          <strong>5.2%</strong> at <MathInline tex="1.25" /> as local
+          hydrogen-bond candidate geometry and catechol angular projections
+          retained excess dopamine in shallow-angle (
           <MathInline tex={String.raw`<60^\circ`} />) side-on
           association—providing a conditional pre-reaction hypothesis for the{" "}
           <MathInline tex="1:1" /> dosing optimum while identifying carboxyl
