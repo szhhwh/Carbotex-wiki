@@ -5,7 +5,6 @@ import { Cite } from "../article/References";
 const CITATION_KEYS: Record<string, string> = {
   ISO14040_2006: "ISO14040",
   ISO14044_2006: "ISO14044",
-  KeAi2026GreenCarbon: "KeAiGreenCarbon2026",
   Liu2023CBS: "liu2023cornbioconversion",
 };
 
