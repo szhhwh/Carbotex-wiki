@@ -6,9 +6,9 @@ const sourceThreeLineHeadings = new Set([
   "1.3 HPLC quantification of malic acid equivalents in acid-hydrolysed PMA",
 ]);
 const protocol19ASourceUrl =
-  "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-three-standards-en.pdf";
+  "https://static.igem.wiki/teams/6147/wiki/wet-protocol/19a-pma-acid-hydrolysis-and-hplc-en.pdf";
 const protocol19ASourceSha256 =
-  "7a89886812e0d8abb9dc1971edb9818eeb97fb4648fab64c3102cb0b1ca7fdf5";
+  "acb0567ea595962dc94a020e9a24192cf798d80ef1155211158160b2a100bc64";
 
 async function openArticle(page: Page, route: string) {
   await page.goto(`/ouc-haide${route}`);
