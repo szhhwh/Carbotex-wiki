@@ -12,7 +12,7 @@ import sectionStyles from "../components/hardware/engineering-sections.module.cs
 import tableStyles from "../components/article/article-table.module.css";
 import { Caption } from "../components/media/Caption";
 import { Figure } from "../components/media/Figure";
-
+import { FigurePair } from "../components/media/FigurePair";
 export const modelEngineeringReferenceOrder = [
   "zhang2024yeast9",
   "qi2021pmla",
@@ -44,15 +44,10 @@ export const modelEngineeringReferenceOrder = [
   "ebrahim2013cobrapy",
   "huangfu2018highs",
   "feng2018pycmodel",
-  "OpenCodeDocs",
-  "ClaudeCodeOverview",
   "Tang2020PMLADA",
-  "DeepSeekHarnessArchitecture",
-  "cordisFramework",
   "Shi2026Cordis",
   "Rodriguez2023Approach",
   "Eastman2017OpenMM",
-  "AmberForceFields",
   "Jakalian2002AM1BCC",
 ];
 
@@ -69,7 +64,7 @@ const modelCycleSummaries: CycleSummaryItem[] = [
     title: "Orthogonal Group Screening",
     focus: "Overcome paralog masking in a duplicated genome",
     achievement:
-      "Shifted target screening from individual genes to homologous isozyme groups and intersected FSEOF overexpression push with joint group-knockout essentiality — filtering out bypassable cyMDH (−4.7% loss) and isolating cytosolic PYC (#4 FSEOF, #1 group KO at −58.6% loss) for wet-lab overexpression.",
+      "Shifted target screening from individual genes to homologous isozyme groups and intersected FSEOF overexpression push with joint group-knockout essentiality — filtering out bypassable cyMDH (−4.7% loss) and isolating cytosolic PYC (Rank 4 FSEOF, Rank 1 group KO at −58.6% loss) for wet-lab overexpression.",
   },
   {
     id: "dbtl-en-c3",
@@ -529,10 +524,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                             Cytosolic MDH (cyMDH)
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            1.013 (Rank #1)
+                            1.013 (Rank 1)
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            −4.7% (Rank #10)
+                            −4.7% (Rank 10)
                           </td>
                           <td>
                             Terminal reduction step; bypassed by
@@ -547,7 +542,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                             Non-monotonic
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            −23.8% to −30.2% (Ranks #2–7)
+                            −23.8% to −30.2% (Ranks 2–7)
                           </td>
                           <td>
                             Upstream carbon trunk; expanding capacity alone does
@@ -559,10 +554,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                             <strong>Cytosolic PYC</strong>
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            <strong>0.687 (Rank #4)</strong>
+                            <strong>0.687 (Rank 4)</strong>
                           </td>
                           <td style={{ whiteSpace: "nowrap" }}>
-                            <strong>−58.6% (Rank #1)</strong>
+                            <strong>−58.6% (Rank 1)</strong>
                           </td>
                           <td>
                             <strong>
@@ -644,9 +639,8 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  When we deployed general-purpose coding agents (OpenCode{" "}
-                  <Cite k="OpenCodeDocs" /> and Claude Code{" "}
-                  <Cite k="ClaudeCodeOverview" />) to coordinate A08
+                  When we deployed general-purpose coding agents (OpenCode and
+                  Claude Code) to coordinate A08
                   fermentation and PMLA–DA synthesis records, we uncovered a
                   structural limitation of prompt-only LLM workflows: conversational
                   instructions cannot prevent an agent from mixing SOPs across
@@ -911,13 +905,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                   task-specific scripts into the core workbench risked
                   duplicating database connections and polluting global state.
                   Drawing on DSH and the Cordis dependency-injection framework{" "}
-                  <Cite
-                    k={[
-                      "DeepSeekHarnessArchitecture",
-                      "cordisFramework",
-                      "Shi2026Cordis",
-                    ]}
-                  />
+                  <Cite k="Shi2026Cordis" />
                   , we designed a microkernel-and-plugin methodology: each
                   domain workflow mounts as an isolated, hot-swappable plugin
                   that consumes the shared evidence service and cleanly unmounts
@@ -1151,7 +1139,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <p>
                         Using OpenMM <Cite k="Eastman2017OpenMM" /> with GAFF2
                         and AM1-BCC charges{" "}
-                        <Cite k={["AmberForceFields", "Jakalian2002AM1BCC"]} />,
+                        <Cite k="Jakalian2002AM1BCC" />,
                         we constructed explicit TIP3P water boxes across all
                         five experimental dopamine-to-carboxyl molar ratios (0.25
                         to 1.25) at a shared 50% NHS-ester activation baseline,
@@ -1243,6 +1231,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </div>
                   </li>
                 </ul>
+                <FigurePair>
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-3-a.svg"
                     alt="Total close contacts and orientation-compatible contacts across five molar ratios"
@@ -1262,7 +1251,6 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
-
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-3-b.svg"
                     alt="Orientation-compatible fraction across five molar ratios"
@@ -1277,6 +1265,8 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
+                </FigurePair>
+                <FigurePair>
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-3-c.svg"
                     alt="Distance–angle scatter distribution of individual close-contact pair-frames"
@@ -1292,7 +1282,6 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
-
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-3-d.svg"
                     alt="Distribution of approach-angle regimes across molar ratios"
@@ -1312,6 +1301,8 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
+                </FigurePair>
+                <FigurePair>
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-4-a.svg"
                     alt="Representative pre-reactive 3D approach pose at molar ratio 1.00"
@@ -1331,7 +1322,6 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
-
                   <Figure
                     src="https://static.igem.wiki/teams/6147/wiki/model/fig-3-4-b.svg"
                     alt="Representative pre-reactive 3D side-on pose at molar ratio 1.25"
@@ -1351,6 +1341,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </>
                     }
                   />
+                </FigurePair>
               </>
             ),
           },
@@ -1429,8 +1420,8 @@ export const modelEngineeringSections: ArticleSection[] = [
                 Shifted target screening from individual genes to homologous
                 isozyme groups and intersected FSEOF overexpression push with
                 joint group-knockout essentiality — filtering out bypassable
-                cyMDH (−4.7% loss) and isolating cytosolic PYC (#4 FSEOF, #1
-                group KO at −58.6% loss) for wet-lab overexpression.
+                cyMDH (−4.7% loss) and isolating cytosolic PYC (Rank 4 FSEOF,
+                Rank 1 group KO at −58.6% loss) for wet-lab overexpression.
               </p>
             </li>
             <li>

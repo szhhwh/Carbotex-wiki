@@ -312,7 +312,7 @@ const sections: ArticleSection[] = [
                 Small molecules and PMA oligomer templates were parameterized
                 with <strong>GAFF2</strong> and{" "}
                 <strong>AM1-BCC partial charges</strong>{" "}
-                <Cite k={["AmberForceFields", "Jakalian2002AM1BCC"]} /> in{" "}
+                <Cite k="Jakalian2002AM1BCC" /> in{" "}
                 <strong>TIP3P water</strong>. After energy minimization, NVT
                 equilibration, and NPT equilibration, each of the five
                 50%-activation main-model systems underwent a{" "}
@@ -1033,7 +1033,6 @@ export function ModelMd() {
       referenceOrder={[
         "Tang2020PMLADA",
         "Eastman2017OpenMM",
-        "AmberForceFields",
         "Jakalian2002AM1BCC",
         "Rodriguez2023Approach",
       ]}

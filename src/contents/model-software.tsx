@@ -22,8 +22,7 @@ const sections: ArticleSection[] = [
         <p>
           As agents increasingly assist wet-lab research, we found that
           conventional Coding Agents designed primarily for programming tasks
-          (such as OpenCode <Cite k="OpenCodeDocs" /> and Claude Code{" "}
-          <Cite k="ClaudeCodeOverview" />) struggle to handle complex biological
+          (such as OpenCode and Claude Code) struggle to handle complex biological
           experimental workflows directly. In our exploration, they provided
           limited built-in support for biological materials, measurement units,
           experimental records, and researcher approval at laboratory
@@ -498,7 +497,7 @@ const sections: ArticleSection[] = [
               collaboration (such as education outreach) requires tailored
               toolsets. We organized WetFlow around the{" "}
               <strong>Cordis plugin architecture</strong>{" "}
-              <Cite k="cordisFramework" />: each plugin declares its registered
+              <Cite k="Shi2026Cordis" />: each plugin declares its registered
               tools, required shared services (such as project storage and
               evidence search), and cleanup logic upon disposal, sharing a
               unified action–observation agent loop <Cite k="Yao2023ReAct" />{" "}
@@ -1500,7 +1499,6 @@ const sections: ArticleSection[] = [
               <li>
                 <strong>Summary of Contributions</strong>: Inspired by DSH and
                 built on the Cordis plugin framework{" "}
-                <Cite k="DeepSeekHarnessArchitecture" />,
                 <Cite k="Shi2026Cordis" />, WetFlow unifies project-scoped
                 retrieval, unit-checked measurement logging, researcher stage
                 approval, and hot-swappable scientific plugins into a single
@@ -1569,15 +1567,7 @@ export function ModelSoftware() {
       }
       sections={sections}
       references
-      referenceOrder={[
-        "OpenCodeDocs",
-        "ClaudeCodeOverview",
-        "Tang2020PMLADA",
-        "cordisFramework",
-        "Yao2023ReAct",
-        "DeepSeekHarnessArchitecture",
-        "Shi2026Cordis",
-      ]}
+      referenceOrder={["Tang2020PMLADA", "Shi2026Cordis", "Yao2023ReAct"]}
     />
   );
 }
