@@ -12,7 +12,6 @@ import { MetricBand } from "./MetricBand";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { RelatedWorkCard } from "./RelatedWorkCard";
 import { SdgFlipCards } from "./SdgFlipCards";
-import { StakeholderEcosystemMap } from "./StakeholderEcosystemMap";
 import { StakeholderNavigator } from "./StakeholderNavigator";
 import { TraceCycle } from "./TraceCycle";
 import type {
@@ -328,8 +327,6 @@ export function IhpParts({
             return <DecisionCards key="decisions" />;
           case "navigator":
             return <StakeholderNavigator groups={groups} key="navigator" />;
-          case "ecosystem-map":
-            return <StakeholderEcosystemMap key="ecosystem-map" />;
           case "collaborators":
             return (
               <CollaboratorGrid

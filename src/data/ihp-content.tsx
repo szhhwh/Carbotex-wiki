@@ -572,22 +572,66 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "content",
-            inline: true,
+            inline: false,
             content: (
               <>
-                <em>
-                  <strong>{"Stakeholder Ecosystem Map:"}</strong>
-                </em>
-                {" We further visualized our identified stakeholders in a "}
-                <strong>{"Stakeholder Ecosystem Map"}</strong>
-                {
-                  ", providing an at-a-glance view of how they connect to Carbotex and where their perspectives contribute across the project. The map also served as a guide for navigating our subsequent IHP journey."
-                }
+                <p>
+                  <em>
+                    <strong>{"Stakeholder Ecosystem Map:"}</strong>
+                  </em>
+                  {
+                    " Building on our Stakeholder Matrix, we visualized interconnected stakeholder perspectives surrounding Carbotex: "
+                  }
+                  <strong>
+                    {
+                      "Feedstock & Agriculture, Biomanufacturing & Research, Materials & Applications, Industry & Scale-up, Sustainability, Policy & Governance, and Society, Communication & Peer Community"
+                    }
+                  </strong>
+                  {"."}
+                </p>
+                <p>
+                  {"By placing "}
+                  <strong>{"TRACE at the center"}</strong>
+                  {
+                    ", the map illustrates how our framework connects these different perspectives with the project's development. Rather than treating stakeholder engagement as a series of isolated activities, we used TRACE to guide how external insights could be analyzed, translated into project decisions, and subsequently evaluated."
+                  }
+                </p>
               </>
             ),
           },
           {
-            kind: "ecosystem-map",
+            kind: "figure",
+            src: "https://static.igem.wiki/teams/6147/wiki/mapmap.svg",
+            alt: "Carbotex stakeholder ecosystem map showing stakeholder perspectives surrounding the TRACE framework.",
+            ratio: "1482 / 1024",
+            caption: "Carbotex stakeholder ecosystem centered on TRACE.",
+            figureNumber: 3,
+          },
+          {
+            kind: "content",
+            inline: false,
+            content: (
+              <>
+                <p>
+                  {"The map provides an overview of "}
+                  <strong>
+                    {"whose perspectives were relevant to Carbotex"}
+                  </strong>
+                  {", while our subsequent IHP Journey illustrates "}
+                  <strong>
+                    {
+                      "how specific stakeholder interactions informed our research and development"
+                    }
+                  </strong>
+                  {"."}
+                </p>
+                <p>
+                  {
+                    "Together, they connect stakeholder identification with the practical application of TRACE, providing a foundation for the engagement stories and project decisions presented in the following sections."
+                  }
+                </p>
+              </>
+            ),
           },
         ],
       },

@@ -83,7 +83,6 @@ export type IhpSpecialPartKind =
   | "epigraph"
   | "decisions"
   | "navigator"
-  | "ecosystem-map"
   | "collaborators"
   | "sdg-cards"
   | "capability-matrix"
