@@ -428,79 +428,99 @@ const sections: ArticleSection[] = [
                 <table aria-labelledby="design-table-components-caption">
                   <thead>
                     <tr>
+                      <th scope="col">Part ID</th>
                       <th scope="col">Part</th>
-                      <th scope="col">
-                        Composition and role in the collection
-                      </th>
-                      <th scope="col">Registry ID</th>
+                      <th scope="col">Role in the collection</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">
+                      <th scope="row" className={styles.partId}>
+                        <a
+                          href="https://registry.igem.org/parts/bba-26x6m2g5"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          BBa_26X6M2G5
+                        </a>
+                      </th>
+                      <td>
                         A08 <em>xlnR</em> gene
-                      </th>
-                      <td>
-                        The endogenous A08 gene corresponding to g3332.t1.
-                        Encodes the transcription factor XlnR and provides the
-                        gene sequence for functional studies and expression
-                        constructs.
                       </td>
-                      <td></td>
+                      <td>
+                        Provides the native XlnR regulator gene for functional
+                        studies and expression-construct development.
+                      </td>
                     </tr>
                     <tr>
-                      <th scope="row">
+                      <th scope="row" className={styles.partId}>
+                        <a
+                          href="https://registry.igem.org/parts/bba-26k4gkdm"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          BBa_26K4GKDM
+                        </a>
+                      </th>
+                      <td>
                         A08 <em>araR</em> gene
+                      </td>
+                      <td>
+                        Provides the native AraR regulator gene for individual
+                        studies and comparisons with <em>xlnR</em>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className={styles.partId}>
+                        <a
+                          href="https://registry.igem.org/parts/bba-265vc540"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          BBa_265VC540
+                        </a>
                       </th>
+                      <td>pNAT-LoxP-rDNA-xlnR</td>
                       <td>
-                        The endogenous A08 gene corresponding to g13480.t1.
-                        Encodes the transcription factor AraR and provides the
-                        gene sequence for functional studies and expression
-                        constructs.
+                        Places the A08 <em>xlnR</em> gene in the shared
+                        TEF-promoter expression framework for
+                        XlnR-overexpression studies.
                       </td>
-                      <td></td>
                     </tr>
                     <tr>
-                      <th scope="row">
-                        A08 <em>xlnR</em> expression construct
+                      <th scope="row" className={styles.partId}>
+                        <a
+                          href="https://registry.igem.org/parts/bba-26by6bju"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          BBa_26BY6BJU
+                        </a>
                       </th>
+                      <td>pNAT-LoxP-rDNA-araR</td>
                       <td>
-                        An 8,251-base-pair (bp) pNAT-LoxP-rDNA-derived plasmid
-                        carrying the A08 <em>xlnR</em> gene sequence under the
-                        translation elongation factor (TEF) promoter. Used for
-                        the XlnR-overexpression intervention.
+                        Places the A08 <em>araR</em> gene in the same expression
+                        framework for AraR-overexpression studies.
                       </td>
-                      <td></td>
                     </tr>
                     <tr>
-                      <th scope="row">
-                        A08 <em>araR</em> expression construct
+                      <th scope="row" className={styles.partId}>
+                        <a
+                          href="https://registry.igem.org/parts/bba-260ok570"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          BBa_260OK570
+                        </a>
                       </th>
+                      <td>fl4a-hpt-loxp</td>
                       <td>
-                        A 7,765-bp pNAT-LoxP-rDNA-derived plasmid carrying the
-                        A08 <em>araR</em> gene sequence under the TEF promoter.
-                        Used for the AraR-overexpression intervention.
+                        Supporting knockout backbone containing the hygromycin B
+                        phosphotransferase (HPT) selection interval and flanking
+                        lox sites. Adding a separate pair of target-specific
+                        homology arms produces the corresponding <em>xlnR</em>{" "}
+                        or <em>araR</em> knockout-donor design.
                       </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">pNAT-LoxP-rDNA expression backbone</th>
-                      <td>
-                        The existing parent backbone shared by both expression
-                        constructs. Provides the expression framework,
-                        nourseothricin-resistance (NAT) selection, and ribosomal
-                        DNA (rDNA) homology regions.
-                      </td>
-                      <td>BBa_25QPWVAX</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">fl4a-hpt-loxp knockout backbone</th>
-                      <td>
-                        The supporting backbone for target-specific knockout
-                        constructs. Target-specific homology arms adapt the
-                        backbone for <em>xlnR</em> or <em>araR</em> disruption.
-                      </td>
-                      <td></td>
                     </tr>
                   </tbody>
                 </table>
