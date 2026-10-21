@@ -237,6 +237,57 @@
   line-height: 1.55;
 }
 
+.wideTableHint {
+  display: flex !important;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.55rem;
+  color: var(--hardware-navy, #1f315f);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.wideTable {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+:global(#article-body) .wideTable.wideTable table {
+  width: max-content;
+  min-width: 100%;
+}
+
+:global(#article-body) .wideTable.wideTable :is(th, td) {
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 0.8rem 1.05rem;
+}
+
+:global(#article-body) .wideTable.wideTable thead th:first-child,
+:global(#article-body) .wideTable.wideTable tbody td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 2px 0 6px rgba(31, 49, 95, 0.08);
+}
+
+:global(#article-body) .wideTable.wideTable thead th:first-child {
+  z-index: 2;
+}
+
+.wrapCol {
+  white-space: normal !important;
+  min-width: 15rem;
+  max-width: 22rem;
+}
+
+.numCol {
+  text-align: center !important;
+  min-width: 8.2rem;
+}
+
 @media (max-width: 960px) {
   .hubGrid {
     grid-template-columns: 1fr;

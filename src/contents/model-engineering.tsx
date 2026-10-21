@@ -57,7 +57,7 @@ const modelCycleSummaries: CycleSummaryItem[] = [
     title: "Localization-Calibrated GEM",
     focus: "Correct cross-species template compartment transfer",
     achievement:
-      "Established a two-channel reconstruction and proteome-wide localization calibration workflow for the unannotated fungus A08, eliminating the 1.29 mmol·gDW⁻¹·h⁻¹ pathway detour caused by inherited yeast organelle labels and raising theoretical PMLA flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹.",
+      "Established a two-channel reconstruction and proteome-wide localization calibration workflow for the unannotated fungus A08, eliminating the 1.29 mmol·gDW⁻¹·h⁻¹ pathway detour caused by inherited yeast organelle labels and raising theoretical PMA flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹.",
   },
   {
     id: "dbtl-en-c2",
@@ -98,7 +98,7 @@ export const modelEngineeringSections: ArticleSection[] = [
         <p>
           Engineering the non-model black yeast{" "}
           <em>Aureobasidium melanogenum</em> A08 to convert agricultural straw
-          sugars into poly(β-L-malic acid) (PMLA, or PMA) and conjugating it
+          sugars into poly(β-L-malic acid) (PMA, also abbreviated PMLA) and conjugating it
           with dopamine (DA) into an underwater bioadhesive (PMA–DA) exposed
           three
           methodological bottlenecks: unannotated fungal genetics with extensive
@@ -175,7 +175,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                   a distantly related fungus blindly copies template organelle
                   labels, even when key enzymes have evolved different
                   subcellular localizations. Because{" "}
-                  <em>Aureobasidium</em> synthesizes PMLA via a cytosolic
+                  <em>Aureobasidium</em> synthesizes PMA via a cytosolic
                   reductive pathway from pyruvate through oxaloacetate to
                   L-malate{" "}
                   <Cite
@@ -341,7 +341,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                           tex={String.raw`1.29\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />{" "}
                         detour, restored direct cytosolic oxaloacetate
-                        reduction, and raised theoretical PMLA flux from{" "}
+                        reduction, and raised theoretical PMA flux from{" "}
                         <MathInline tex={String.raw`1.430`} /> to{" "}
                         <MathInline
                           tex={String.raw`1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
@@ -363,7 +363,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                     caption={
                       <>
                         {" "}
-                        Cytosolic malate pathway flux and maximum PMLA flux
+                        Cytosolic malate pathway flux and maximum PMA flux
                         before and after localization calibration{" "}
                       </>
                     }
@@ -396,7 +396,7 @@ export const modelEngineeringSections: ArticleSection[] = [
             Proteome-wide localization calibration resolved the template
             compartment artifact, but multi-copy isozyme redundancy still masked
             single-gene knockouts across the network. Overcoming paralog backup
-            to find the true PMLA bottleneck became the priority for Cycle 2.
+            to find the true PMA bottleneck became the priority for Cycle 2.
           </>
         }
       />
@@ -474,7 +474,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                         solver (quantifying monotonic flux-response slope{" "}
                         <MathInline tex={String.raw`\beta_f`} />) with a joint
                         group-knockout solver that disables all paralogs in a
-                        cluster simultaneously to measure PMLA flux drop{" "}
+                        cluster simultaneously to measure PMA flux drop{" "}
                         <MathInline tex={String.raw`\Delta Y_f`} />{" "}
                         <Cite k="feng2018pycmodel" />.
                       </p>
@@ -511,7 +511,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                             FSEOF Slope <MathInline tex={String.raw`\beta_f`} />
                           </th>
                           <th scope="col" style={{ whiteSpace: "nowrap" }}>
-                            Knockout PMLA Loss{" "}
+                            Knockout PMA Loss{" "}
                             <MathInline tex={String.raw`\Delta Y_f`} />
                           </th>
                           <th scope="col">
@@ -585,7 +585,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                     caption={
                       <>
                         {" "}
-                        FSEOF overexpression slope versus joint-knockout PMLA
+                        FSEOF overexpression slope versus joint-knockout PMA
                         flux loss across 1,102 candidate enzyme groups{" "}
                       </>
                     }
@@ -1410,7 +1410,7 @@ export const modelEngineeringSections: ArticleSection[] = [
                 Established a two-channel reconstruction and proteome-wide
                 localization calibration workflow for the unannotated fungus
                 A08, eliminating the 1.29 mmol·gDW⁻¹·h⁻¹ pathway detour caused
-                by inherited yeast organelle labels and raising theoretical PMLA
+                by inherited yeast organelle labels and raising theoretical PMA
                 flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹.
               </p>
             </li>

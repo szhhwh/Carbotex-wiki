@@ -835,16 +835,16 @@ const sections: ArticleSection[] = [
                 quantities (see collapsible card below), and confirmed that 1:1
                 equimolar feed achieves the highest reported product dopamine
                 content (21.3 wt%) in the published series to support our team's
-                1:1 starting formulation. After our MD simulations generated
-                the multi-ratio contact summary report, calling{" "}
-                <code>md_compare_feeds</code> verified that total close
-                contacts are nearly unchanged between feeds 1.00 and 1.25 (485
-                vs. 462) while{" "}
+                1:1 starting formulation; next, by reading the already-generated
+                MD contact summary report via <code>md_compare_feeds</code>,
+                WetFlow brought the existing MD results back into our
+                formulation discussion—confirming that total close contacts
+                are nearly unchanged between feeds 1.00 and 1.25 (485 vs. 462)
+                while{" "}
                 <strong>
-                  the orientation-compatible fraction plunges from 25.2% to 5.2%
+                  the orientation-compatible fraction drops from 25.2% to 5.2%
                 </strong>{" "}
-                (Figure 7), summarizing the pre-reaction geometric contrast
-                established in the MD module.
+                (Figure 7)—and clarified follow-up analysis questions.
               </li>
             </ul>
             <figure className={tableStyles.tableFigure}>
@@ -1006,11 +1006,12 @@ const sections: ArticleSection[] = [
                 <strong>WetFlow Execution</strong>: Combining synthesis
                 protocols with mechanical test records, the agent organized the
                 three molecular components and their modeling questions (Table
-                2), used <code>md_compare_feeds</code> to cross-check the
-                generated coupling-stage trajectory summary alongside three
-                key trajectory observables (radial distance distributions,
-                approach-angle distributions, and hydration shells), and
-                outlined surface models for glass (hydroxylated amorphous{" "}
+                2), used <code>md_compare_feeds</code> to bring the generated
+                coupling-stage MD summary back into formulation discussion and
+                clarify follow-up trajectory analysis questions (radial distance
+                distributions, approach-angle distributions, and hydration
+                shells), and outlined surface models for glass (hydroxylated
+                amorphous{" "}
                 <MathInline tex={String.raw`\text{SiO}_2`} />
                 ), stainless steel (passivated metal-oxide layer), and porcine
                 skin (hydrated stratum corneum tissue) (Figure 8).
@@ -1516,18 +1517,11 @@ const sections: ArticleSection[] = [
               <li>
                 <strong>How Other iGEM Teams Can Reuse WetFlow</strong>: Any
                 iGEM team working on a different organism, metabolic pathway, or
-                biomaterial can clone our source-available repository (GitHub:{" "}
-                <a
-                  href="https://github.com/OUC-haide/wetflow"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  https://github.com/OUC-haide/wetflow
-                </a>{" "}
-                , released under the Apache-2.0 License), create a project, and
-                import their own SOPs, literature
-                notes, and measurement tables to immediately use Europe PMC /
-                arXiv / NCBI GEO search, unit-validated experiment records, and
+                biomaterial can use our open-source WetFlow package (released
+                under the Apache-2.0 License), create a project, and import their
+                own SOPs, literature notes, and measurement tables to immediately
+                use Europe PMC / arXiv / NCBI GEO search, unit-validated
+                experiment records, and
                 modular modeling plugins.
               </li>
               <li>
@@ -1536,8 +1530,10 @@ const sections: ArticleSection[] = [
                 simulations—our team synthesis uses a 1:1 dopamine-to-carboxyl
                 feed ratio, whereas Tang et al.'s series shows an anomalous drop
                 in product dopamine content when feed increases from 1.00 to
-                1.25. WetFlow organized the protocol, composition, and
-                generated MD summary evidence around this question; the{" "}
+                1.25. WetFlow organized the protocol and composition records,
+                brought the generated MD summary results back into our
+                formulation discussions, and helped clarify follow-up analysis
+                questions; the{" "}
                 <Link to="/model/md">Molecular Dynamics Simulation module</Link>{" "}
                 presents the full all-atom trajectories and geometric analysis
                 of how excess dopamine behaves around activated PMA.

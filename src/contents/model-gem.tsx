@@ -53,10 +53,11 @@ const sections: ArticleSection[] = [
     content: (
       <>
         <p>
-          Poly(malic acid) (PMLA) is a biodegradable biopolyester polymerized
-          from L-malate monomers. Our team uses the industrial black yeast{" "}
+          Poly(β-L-malic acid) (PMA, also abbreviated PMLA in metabolic literature
+          and reaction IDs) is a biodegradable biopolyester polymerized from
+          L-malate monomers. Our team uses the industrial black yeast{" "}
           <em>Aureobasidium melanogenum</em> strain A08 as a fermentation
-          chassis to produce PMLA and functionalizes it with dopamine to prepare
+          chassis to produce PMA and functionalizes it with dopamine to prepare
           an underwater biomedical bioadhesive.
         </p>
         <p>
@@ -64,10 +65,10 @@ const sections: ArticleSection[] = [
           with only a raw genome assembly—lacking a curated reference
           annotation, strain-specific transcriptomic data, or a pre-existing
           genome-scale metabolic model (GEM). To resolve intracellular carbon
-          bottlenecks governing PMLA biosynthesis at the genome scale and
-          provide rigorous mechanistic and quantitative support for our team's{" "}
-          <code>PYC</code> overexpression engineering, we organized our
-          metabolic modeling work into two connected parts (Figure 1):
+          bottlenecks governing PMA biosynthesis at the genome scale and
+          systematically prioritize metabolic engineering targets to guide
+          wet-lab strain construction, we organized our metabolic modeling work
+          into two connected parts (Figure 1):
         </p>
         <ul>
           <li>
@@ -87,7 +88,7 @@ const sections: ArticleSection[] = [
           </li>
           <li>
             <strong>
-              Part II · Dual-Dimensional Target Prioritization for PMLA
+              Part II · Dual-Dimensional Target Prioritization for PMA
               Overproduction
             </strong>
             : Addressing paralog compensation arising from full retention of
@@ -96,13 +97,13 @@ const sections: ArticleSection[] = [
             essentiality filtering with Flux Scanning based on Enforced
             Objective Flux (FSEOF) and homologous-group joint knockout
             simulations across 1,102 non-essential in-scope candidate enzyme
-            groups, isolating cytosolic pyruvate carboxylase (<code>PYC</code>)
-            as the primary anaplerotic engineering target.
+            groups to identify the primary non-compensable metabolic bottleneck
+            for wet-lab overexpression.
           </li>
         </ul>
         <Figure
           src="https://static.igem.wiki/teams/6147/wiki/model/01-carbotex-workflow-overview.svg"
-          alt="Figure 1: End-to-end technical route from the A08 genome assembly to genome-scale metabolic model reconstruction and dual-dimensional PMLA target prioritization"
+          alt="Figure 1: End-to-end technical route from the A08 genome assembly to genome-scale metabolic model reconstruction and dual-dimensional PMA target prioritization"
           ratio="2402 / 1106"
           captionPrefix="Figure 1:"
           caption={
@@ -110,7 +111,7 @@ const sections: ArticleSection[] = [
               {" "}
               End-to-end technical route from the A08 genome assembly to
               genome-scale metabolic model reconstruction and dual-dimensional
-              PMLA target prioritization
+              PMA target prioritization
             </>
           }
         />
@@ -344,11 +345,11 @@ const sections: ArticleSection[] = [
               similarity.
             </p>
             <figure className={tableStyles.tableFigure}>
-              <p className={tableStyles.tableHint}>
-                Swipe horizontally to explore the table.
+              <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
+                ↔ Scroll horizontally to view all columns.
               </p>
               <div
-                className={tableStyles.tableScroller}
+                className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
                 role="region"
                 aria-label="Table 1: Accuracy and per-genome runtime comparison of three ab initio gene predictors across 13 reference fungi"
                 tabIndex={0}
@@ -358,12 +359,24 @@ const sections: ArticleSection[] = [
                     <tr>
                       <th scope="col">Reference Species</th>
                       <th scope="col">Fungal Class</th>
-                      <th scope="col">L1 Locus F1: ANN / TIB / HEL</th>
-                      <th scope="col">L2 Exon F1: ANN / TIB / HEL</th>
-                      <th scope="col">L3 Near-95% F1: ANN / TIB / HEL</th>
-                      <th scope="col">L4 Exact F1: ANN / TIB / HEL</th>
-                      <th scope="col">BUSCO %: ANN / TIB / HEL</th>
-                      <th scope="col">Runtime (s): ANN / TIB / HEL</th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        L1 Locus F1<br />ANN / TIB / HEL
+                      </th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        L2 Exon F1<br />ANN / TIB / HEL
+                      </th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        L3 Near-95% F1<br />ANN / TIB / HEL
+                      </th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        L4 Exact F1<br />ANN / TIB / HEL
+                      </th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        BUSCO %<br />ANN / TIB / HEL
+                      </th>
+                      <th scope="col" className={sharedStyles.numCol}>
+                        Runtime (s)<br />ANN / TIB / HEL
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -846,7 +859,7 @@ const sections: ArticleSection[] = [
 
             <ArticleFramework title="Multi-Copy Homolog Duplication in A08 & Our Two-Stage Strategy (“Retain All in Reconstruction, Group in Screening”)">
               <p>
-                Published studies report that high-PMLA-producing{" "}
+                Published studies report that high-PMA-producing{" "}
                 <em>A. melanogenum</em> strains underwent a whole-genome
                 duplication event <Cite k="qi2022highmwpolymalate" />. In our
                 OrthoDB evaluation, over 91% of core benchmark markers in both
@@ -919,7 +932,7 @@ const sections: ArticleSection[] = [
                           knockouts are masked by retained paralogs within the
                           same isozyme family; joint group knockouts reveal the
                           true topological contribution of each enzymatic step
-                          to maximum PMLA flux.
+                          to maximum PMA flux.
                         </td>
                       </tr>
                     </tbody>
@@ -1086,11 +1099,11 @@ const sections: ArticleSection[] = [
             </ArticleFramework>
 
             <figure className={tableStyles.tableFigure}>
-              <p className={tableStyles.tableHint}>
-                Swipe horizontally to explore the table.
+              <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
+                ↔ Scroll horizontally to view all columns.
               </p>
               <div
-                className={tableStyles.tableScroller}
+                className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
                 role="region"
                 aria-label="Table 2: Dual-track parameters and reaction contributions for the A08 initial draft metabolic network"
                 tabIndex={0}
@@ -1257,7 +1270,7 @@ const sections: ArticleSection[] = [
           <>
             <p>
               Biochemical studies establish that <em>Aureobasidium</em>{" "}
-              synthesizes PMLA monomers in the cytosol via the{" "}
+              synthesizes PMA monomers in the cytosol via the{" "}
               <strong>
                 cytosolic reductive oxaloacetate (rTCA) malate pathway
               </strong>{" "}
@@ -1304,7 +1317,7 @@ const sections: ArticleSection[] = [
                 dicarboxylate pathway reactions into their predicted target
                 compartments (including 4 reactions reassigned directly to the
                 cytosol alongside associated transport and mitochondrial steps)
-                restored cytosolic <code>cyMDH</code>. Under 90% enforced PMLA
+                restored cytosolic <code>cyMDH</code>. Under 90% enforced PMA
                 production (Figure 7; method in{" "}
                 <a href="#gem-sec-11">Section 2.2</a>), the uncalibrated draft
                 forced oxaloacetate formed by cytosolic <code>PYC</code> (
@@ -1329,7 +1342,7 @@ const sections: ArticleSection[] = [
                 <MathInline
                   tex={String.raw`1.43\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                 />
-                ), and maximum theoretical specific PMLA flux rose from{" "}
+                ), and maximum theoretical specific PMA flux rose from{" "}
                 <MathInline tex={String.raw`1.430`} /> to{" "}
                 <strong>
                   <MathInline
@@ -1340,32 +1353,32 @@ const sections: ArticleSection[] = [
               </li>
             </ul>
             <figure className={tableStyles.tableFigure}>
-              <p className={tableStyles.tableHint}>
-                Swipe horizontally to explore the table.
+              <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
+                ↔ Scroll horizontally to view all columns.
               </p>
               <div
-                className={tableStyles.tableScroller}
+                className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
                 role="region"
-                aria-label="Table 3: Dual-tool subcellular localization probabilities for key PMLA pathway enzyme paralogs in A08"
+                aria-label="Table 3: Dual-tool subcellular localization probabilities for key PMA pathway enzyme paralogs in A08"
                 tabIndex={0}
               >
                 <table>
                   <thead>
                     <tr>
-                      <th scope="col">Key Enzyme &amp; Gene IDs</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>Key Enzyme &amp; Gene IDs</th>
                       <th scope="col">A08 Paralogs</th>
-                      <th scope="col">Catalyzed Reaction</th>
-                      <th scope="col">Initial Template Compartment</th>
-                      <th scope="col">TargetP 2.0: noTP / mTP</th>
-                      <th scope="col">
+                      <th scope="col" className={sharedStyles.wrapCol}>Catalyzed Reaction</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>Initial Template Compartment</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>TargetP 2.0: noTP / mTP</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>
                         DeepLoc 2.1 Multi-Label: Cytosol / Mitochondrion
                       </th>
-                      <th scope="col">Calibrated Compartment &amp; Role</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>Calibrated Compartment &amp; Role</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Cytosolic Malate Dehydrogenase <code>cyMDH</code>
                         </strong>
@@ -1373,19 +1386,19 @@ const sections: ArticleSection[] = [
                         <code>ANV010130</code> / <code>ANV010759</code>
                       </td>
                       <td>2 paralogs</td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Oxaloacetate <MathInline tex={String.raw`+`} /> NADH{" "}
                         <MathInline tex={String.raw`\leftrightarrow`} />{" "}
                         L-Malate <MathInline tex={String.raw`+`} />{" "}
                         <MathInline tex={String.raw`\text{NAD}^+`} />
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Mitochondrion <code>[m]</code> only
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>No transit peptide: 0.985 / 0.006</strong>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Cytosol primary: 0.806 / 0.222 &amp; 0.806 / 0.220
                           (mean 0.806 / 0.221)
@@ -1393,7 +1406,7 @@ const sections: ArticleSection[] = [
                         <br />
                         <em>Peroxisomal score mean: 0.135</em>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Restored into cytosol <code>[c]</code>, completing
                           direct cytosolic malate reduction
@@ -1401,7 +1414,7 @@ const sections: ArticleSection[] = [
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Mitochondrial Malate Dehydrogenase <code>mMDH</code>
                         </strong>
@@ -1409,24 +1422,24 @@ const sections: ArticleSection[] = [
                         <code>ANV008085</code> / <code>ANV005681</code>
                       </td>
                       <td>2 paralogs</td>
-                      <td>Mitochondrial malate–oxaloacetate redox step</td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>Mitochondrial malate–oxaloacetate redox step</td>
+                      <td className={sharedStyles.wrapCol}>
                         Mitochondrion <code>[m]</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Mitochondrial peptide: 0.002 / <strong>0.998</strong>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Mitochondrion primary: 0.159 / 0.951 &amp; 0.160 / 0.951
                         (mean 0.160 / <strong>0.951</strong>)
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Retained in mitochondrion <code>[m]</code> to sustain
                         TCA cycle
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Pyruvate Carboxylase <code>PYC</code>
                         </strong>
@@ -1434,7 +1447,7 @@ const sections: ArticleSection[] = [
                         <code>ANV006176</code> / <code>ANV019425</code>
                       </td>
                       <td>2 paralogs</td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Pyruvate <MathInline tex={String.raw`+`} />{" "}
                         <MathInline tex={String.raw`\text{HCO}_3^-`} />{" "}
                         <MathInline tex={String.raw`+`} /> ATP{" "}
@@ -1442,18 +1455,18 @@ const sections: ArticleSection[] = [
                         <MathInline tex={String.raw`+`} /> ADP{" "}
                         <MathInline tex={String.raw`+`} /> Pi
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Cytosol <code>[c]</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         No transit peptide: <strong>0.9999</strong> / 0.0001
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Cytosol primary: <strong>0.635</strong> / 0.200
                         <br />
                         <em>Paralogs: 0.631/0.206 &amp; 0.640/0.194</em>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Maintained in cytosol <code>[c]</code> as C3
                         <MathInline tex={String.raw`\to`} />
                         C4 anaplerotic entry
@@ -1464,7 +1477,7 @@ const sections: ArticleSection[] = [
               </div>
               <Caption prefix="Table 3:">
                 {" "}
-                Dual-tool subcellular localization probabilities for key PMLA
+                Dual-tool subcellular localization probabilities for key PMA
                 pathway enzyme paralogs in A08
               </Caption>
             </figure>
@@ -1478,7 +1491,7 @@ const sections: ArticleSection[] = [
                   <>
                     {" "}
                     DeepLoc 2.1 subcellular compartment distribution of all
-                    20,089 A08 proteins and key PMLA enzymes
+                    20,089 A08 proteins and key PMA enzymes
                   </>
                 }
               />
@@ -1491,7 +1504,7 @@ const sections: ArticleSection[] = [
                 caption={
                   <>
                     {" "}
-                    Cytosolic malate pathway flux and maximum theoretical PMLA
+                    Cytosolic malate pathway flux and maximum theoretical PMA
                     flux before and after localization calibration
                   </>
                 }
@@ -1501,13 +1514,13 @@ const sections: ArticleSection[] = [
       },
       {
         id: "gem-sec-7",
-        title: "1.5 Network Gap-Filling & PMLA Biosynthetic Module Integration",
+        title: "1.5 Network Gap-Filling & PMA Biosynthetic Module Integration",
         content: (
           <>
             <p>
               Following subcellular localization calibration, we recovered
               unannotated genomic enzymes, filled minimal-medium growth gaps,
-              and integrated the PMLA polymerization module:
+              and integrated the PMA polymerization module:
             </p>
             <ul>
               <li>
@@ -1527,9 +1540,9 @@ const sections: ArticleSection[] = [
                 backbone reactions added in total).
               </li>
               <li>
-                <strong>PMLA Polymerization Module</strong>: Based on the
+                <strong>PMA Polymerization Module</strong>: Based on the
                 non-ribosomal peptide synthetase (NRPS)-like catalytic mechanism
-                of <em>A. melanogenum</em> PMLA synthetase{" "}
+                of <em>A. melanogenum</em> PMA synthetase{" "}
                 <Cite k="wang2020pmla" />, we introduced the mass- and
                 charge-balanced cytosolic polymerization step alongside an
                 intracellular demand sink (<code>EX_pmla_c</code>):
@@ -1571,44 +1584,25 @@ const sections: ArticleSection[] = [
             <ul>
               <li>
                 <strong>MEMOTE Standardized Quality Assessment</strong>: As
-                shown in Figure 8, the finalized A08 GEM achieved an official
-                weighted MEMOTE total score of <strong>59.7%</strong>, matching
-                the <strong>61.5%</strong> score of the <em>S. pombe</em>{" "}
-                benchmark GEM reconstructed with the exact same pipeline (SBO
-                term score <MathInline tex={String.raw`68.4\%`} />
-                ). Across 3,274 internal (non-boundary) reactions, A08 achieved{" "}
-                <strong>98.3% charge balance</strong> (3,217/3,274) and{" "}
-                <strong>93.3% mass balance</strong> (3,056/3,274), with 67.2%
-                MEMOTE gene-annotation pass rate (2,385/3,549) and 59.5%
-                explicit boolean GPR coverage (2,111/3,549). For full
-                transparency, under MEMOTE's strict unconstrained global check,
-                Track 2 secondary-metabolite and generic-formula boundary
-                additions left global unconstrained stoichiometric consistency
-                unpassed (57 charge-unbalanced and 218 mass-unbalanced reactions
-                network-wide, plus 1,629 blocked reactions under minimal-medium
-                bounds), whereas every reaction along our core cytosolic PMLA
-                biosynthetic pathway (<code>PYC</code>, <code>cyMDH</code>, and
-                PMLA polymerization) was verified to be strictly mass- and
-                charge-balanced.
+                shown in Figure 8, the finalized A08 GEM achieved a weighted
+                MEMOTE total score of <strong>59.7%</strong>, matching the{" "}
+                <strong>61.5%</strong> score of the reference <em>S. pombe</em>{" "}
+                GEM reconstructed with the same pipeline. Across 3,274 internal
+                reactions, A08 reached <strong>98.3% charge balance</strong> and{" "}
+                <strong>93.3% mass balance</strong>, with every reaction along
+                the cytosolic malate–PMA biosynthetic pathway verified to be
+                strictly mass- and charge-balanced.
               </li>
               <li>
                 <strong>Fission Yeast Single-Gene Knockout Benchmark</strong>:
-                Tested against the genome-wide <em>S. pombe</em> deletion
-                viability dataset <Cite k="Kim2010Spombe" /> across{" "}
-                <strong>840</strong> in-model genes with explicit essential (
-                <MathInline tex={String.raw`\text{P}`} />) or viable (
-                <MathInline tex={String.raw`\text{N}`} />) labels (
-                <MathInline tex={String.raw`\text{TN}=551`} />,{" "}
-                <MathInline tex={String.raw`\text{FP}=78`} />,{" "}
-                <MathInline tex={String.raw`\text{TP}=97`} />,{" "}
-                <MathInline tex={String.raw`\text{FN}=114`} />; Figure 9), the
-                pipeline achieved <strong>87.6% viable specificity</strong>{" "}
-                (551/629), <strong>77.1% overall accuracy</strong> (648/840),{" "}
-                <strong>66.8% balanced accuracy</strong>, 55.4% precision, 50.3%
-                F1, and Matthews correlation coefficient{" "}
-                <MathInline tex={String.raw`\text{MCC} = +0.359`} /> (essential
-                recall 46.0%, 97/211; across all 854 scored genes including 14
-                conditional entries, accuracy was 76.2% and specificity 87.6%).
+                Evaluated against experimental deletion viability labels across{" "}
+                <strong>840</strong> <em>S. pombe</em> genes{" "}
+                <Cite k="Kim2010Spombe" /> (Figure 9), the pipeline achieved{" "}
+                <strong>87.6% viable specificity</strong> and{" "}
+                <strong>77.1% overall accuracy</strong> (
+                <MathInline tex={String.raw`\text{MCC} = +0.359`} />), confirming
+                that the reconstruction workflow reliably separates viable from
+                lethal gene deletions prior to A08 target screening.
               </li>
             </ul>
               <Figure
@@ -1646,7 +1640,7 @@ const sections: ArticleSection[] = [
   },
   {
     id: "gem-sec-9",
-    title: "Part II: Dual-Dimensional PMLA Target Prioritization",
+    title: "Part II: Dual-Dimensional PMA Target Prioritization",
     content: <></>,
     subsections: [
       {
@@ -1722,11 +1716,11 @@ const sections: ArticleSection[] = [
 
             <ArticleFramework title="Three-Tier Clustering Hyperparameter Sensitivity & the 17 Single-Gene Essential Clusters">
               <figure className={tableStyles.tableFigure}>
-                <p className={tableStyles.tableHint}>
-                  Swipe horizontally to explore the table.
+                <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
+                  ↔ Scroll horizontally to view all columns.
                 </p>
                 <div
-                  className={tableStyles.tableScroller}
+                  className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
                   role="region"
                   aria-label="Metabolic model data table"
                   tabIndex={0}
@@ -1740,8 +1734,8 @@ const sections: ArticleSection[] = [
                         <th scope="col">Bidirectional Coverage</th>
                         <th scope="col">Total Proteome Clusters</th>
                         <th scope="col">
-                          Core Target <code>PYC</code> Clustering &amp; FSEOF
-                          Slope Result
+                          Representative Candidate Group (<code>C_00083</code>)
+                          Clustering &amp; FSEOF Slope
                         </th>
                       </tr>
                     </thead>
@@ -1831,8 +1825,8 @@ const sections: ArticleSection[] = [
           <>
             <p>
               To isolate non-compensable bottlenecks whose flux scales strongly
-              with enforced PMLA production and whose joint family deletion
-              severely reduces maximum PMLA capacity, using COBRApy{" "}
+              with enforced PMA production and whose joint family deletion
+              severely reduces maximum PMA capacity, using COBRApy{" "}
               <Cite k="ebrahim2013cobrapy" /> and the HiGHS linear programming
               solver <Cite k="huangfu2018highs" />, we combined FBA{" "}
               <Cite k="orth2010fba" />, pFBA (
@@ -1857,7 +1851,7 @@ const sections: ArticleSection[] = [
               <div
                 className={tableStyles.tableScroller}
                 role="region"
-                aria-label="Table 4: Four computational flux-analysis methods used for A08 network characterization and PMLA target screening"
+                aria-label="Table 4: Four computational flux-analysis methods used for A08 network characterization and PMA target screening"
                 tabIndex={0}
               >
                 <table>
@@ -1889,7 +1883,7 @@ const sections: ArticleSection[] = [
                         <MathInline
                           tex={String.raw`\mu_{\max} = 0.0857\text{ h}^{-1}`}
                         />{" "}
-                        and max PMLA flux{" "}
+                        and max PMA flux{" "}
                         <MathInline
                           tex={String.raw`v_{\text{PMLA}}^{\max} = 1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />
@@ -1924,7 +1918,7 @@ const sections: ArticleSection[] = [
                         <Cite k="choi2010fseof" />
                       </td>
                       <td>
-                        Steps enforced PMLA lower bound across 10 levels (9% to
+                        Steps enforced PMA lower bound across 10 levels (9% to
                         90% of{" "}
                         <MathInline tex={String.raw`v_{\text{PMLA}}^{\max}`} />:{" "}
                         <MathInline tex={String.raw`0.135 \to 1.350`} />
@@ -1946,13 +1940,13 @@ const sections: ArticleSection[] = [
                         <MathInline tex={String.raw`g \in \mathcal{G}_f`} />{" "}
                         within homologous group{" "}
                         <MathInline tex={String.raw`f`} />, closes unsupported
-                        GPR reactions, and computes relative max PMLA flux
+                        GPR reactions, and computes relative max PMA flux
                         change <MathInline tex={String.raw`\Delta Y_f`} />.
                       </td>
                       <td>
                         Overcomes boolean <code>OR</code> paralog compensation
                         to measure each homologous group's true topological
-                        contribution to PMLA capacity.
+                        contribution to PMA capacity.
                       </td>
                     </tr>
                   </tbody>
@@ -1961,7 +1955,7 @@ const sections: ArticleSection[] = [
               <Caption prefix="Table 4:">
                 {" "}
                 Four computational flux-analysis methods used for A08 network
-                characterization and PMLA target screening
+                characterization and PMA target screening
               </Caption>
             </figure>
 
@@ -1981,20 +1975,20 @@ const sections: ArticleSection[] = [
               <strong>11 groups</strong> passed the strict 10-step monotonic
               FSEOF overexpression filter (the remaining 1,091 groups recorded
               as <code>NA</code>), and <strong>15 groups</strong> reduced
-              maximum PMLA flux upon joint group knockout (union = 18 responsive
+              maximum PMA flux upon joint group knockout (union = 18 responsive
               groups; intersection = 8 dual-responsive groups: <code>PYC</code>,{" "}
               <code>cyMDH</code>, <code>PGK</code>, <code>GAPDH</code>,{" "}
               <code>ENO</code>, <code>PGM</code>, <code>PYK</code>, and{" "}
               <code>TPI</code>) (Table 5 and Figure 11).
             </p>
             <figure className={tableStyles.tableFigure}>
-              <p className={tableStyles.tableHint}>
-                Swipe horizontally to explore the table.
+              <p className={`${tableStyles.tableHint} ${sharedStyles.wideTableHint}`}>
+                ↔ Scroll horizontally to view all columns.
               </p>
               <div
-                className={tableStyles.tableScroller}
+                className={`${tableStyles.tableScroller} ${sharedStyles.wideTable}`}
                 role="region"
-                aria-label="Table 5: Side-by-side comparison of Top 11 FSEOF overexpression-responsive groups and Top 15 joint-knockout PMLA reduction groups"
+                aria-label="Table 5: Side-by-side comparison of Top 11 FSEOF overexpression-responsive groups and Top 15 joint-knockout PMA reduction groups"
                 tabIndex={0}
               >
                 <table>
@@ -2002,13 +1996,13 @@ const sections: ArticleSection[] = [
                     <tr>
                       <th scope="col">FSEOF Rank</th>
                       <th scope="col">Overexpression Top 11 Group</th>
-                      <th scope="col">Catalytic Function &amp; Module</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>Catalytic Function &amp; Module</th>
                       <th scope="col">
                         Slope <MathInline tex={String.raw`\beta_f`} />
                       </th>
                       <th scope="col">KO Rank</th>
                       <th scope="col">Joint-Knockout Top 15 Group</th>
-                      <th scope="col">Catalytic Function &amp; Module</th>
+                      <th scope="col" className={sharedStyles.wrapCol}>Catalytic Function &amp; Module</th>
                       <th scope="col">
                         Flux Change <MathInline tex={String.raw`\Delta Y_f`} />
                       </th>
@@ -2025,7 +2019,7 @@ const sections: ArticleSection[] = [
                         </strong>{" "}
                         <code>FAM06110</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Cytosolic malate dehydrogenase · Direct OAA reduction
                         </strong>
@@ -2042,7 +2036,7 @@ const sections: ArticleSection[] = [
                         </strong>{" "}
                         <code>FAM04209</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Pyruvate carboxylase · C3
                           <MathInline tex={String.raw`\to`} />
@@ -2058,13 +2052,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>ADK</code> I <code>FAM04315</code>
                       </td>
-                      <td>Adenylate kinase · AMP energy recycling</td>
+                      <td className={sharedStyles.wrapCol}>Adenylate kinase · AMP energy recycling</td>
                       <td>0.697</td>
                       <td>2=</td>
                       <td>
                         <code>PFK</code> <code>FAM04976</code>
                       </td>
-                      <td>6-Phosphofructokinase · Upper glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>6-Phosphofructokinase · Upper glycolysis</td>
                       <td>−30.2%</td>
                     </tr>
                     <tr>
@@ -2072,13 +2066,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>ADK</code> II <code>FAM07259</code>
                       </td>
-                      <td>Adenylate kinase · AMP energy recycling</td>
+                      <td className={sharedStyles.wrapCol}>Adenylate kinase · AMP energy recycling</td>
                       <td>0.697</td>
                       <td>2=</td>
                       <td>
                         <code>FBA</code> <code>FAM05638</code>
                       </td>
-                      <td>Fructose-bisphosphate aldolase · Upper glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Fructose-bisphosphate aldolase · Upper glycolysis</td>
                       <td>−30.2%</td>
                     </tr>
                     <tr>
@@ -2091,7 +2085,7 @@ const sections: ArticleSection[] = [
                         </strong>{" "}
                         <code>FAM04209</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Pyruvate carboxylase · C3
                           <MathInline tex={String.raw`\to`} />
@@ -2105,7 +2099,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>G6PDH</code> <code>FAM04047</code>
                       </td>
-                      <td>Glucose-6-phosphate dehydrogenase · PPP</td>
+                      <td className={sharedStyles.wrapCol}>Glucose-6-phosphate dehydrogenase · PPP</td>
                       <td>−23.8%</td>
                     </tr>
                     <tr>
@@ -2113,7 +2107,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>CA</code> <code>FAM06806</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Carbonic anhydrase ·{" "}
                         <MathInline tex={String.raw`\text{HCO}_3^-`} /> supply
                       </td>
@@ -2122,7 +2116,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>PGL</code> <code>FAM07497</code>
                       </td>
-                      <td>6-Phosphogluconolactonase · PPP</td>
+                      <td className={sharedStyles.wrapCol}>6-Phosphogluconolactonase · PPP</td>
                       <td>−23.8%</td>
                     </tr>
                     <tr>
@@ -2130,13 +2124,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>PYK</code> <code>FAM01390</code>
                       </td>
-                      <td>Pyruvate kinase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Pyruvate kinase · Lower glycolysis</td>
                       <td>0.553</td>
                       <td>4=</td>
                       <td>
                         <code>RPI</code> <code>FAM02172</code>
                       </td>
-                      <td>Ribose-5-phosphate isomerase · PPP</td>
+                      <td className={sharedStyles.wrapCol}>Ribose-5-phosphate isomerase · PPP</td>
                       <td>−23.8%</td>
                     </tr>
                     <tr>
@@ -2144,13 +2138,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>ENO</code> <code>FAM01769</code>
                       </td>
-                      <td>Enolase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Enolase · Lower glycolysis</td>
                       <td>0.520</td>
                       <td>4=</td>
                       <td>
                         <code>RPE</code> <code>FAM04398</code>
                       </td>
-                      <td>Ribulose-phosphate 3-epimerase · PPP</td>
+                      <td className={sharedStyles.wrapCol}>Ribulose-phosphate 3-epimerase · PPP</td>
                       <td>−23.8%</td>
                     </tr>
                     <tr>
@@ -2158,13 +2152,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>PGM</code> <code>FAM06555</code>
                       </td>
-                      <td>Phosphoglycerate mutase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Phosphoglycerate mutase · Lower glycolysis</td>
                       <td>0.520</td>
                       <td>8=</td>
                       <td>
                         <code>PGK</code> <code>FAM04922</code>
                       </td>
-                      <td>Phosphoglycerate kinase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Phosphoglycerate kinase · Lower glycolysis</td>
                       <td>−11.5%</td>
                     </tr>
                     <tr>
@@ -2172,13 +2166,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>PGK</code> <code>FAM04922</code>
                       </td>
-                      <td>Phosphoglycerate kinase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Phosphoglycerate kinase · Lower glycolysis</td>
                       <td>0.479</td>
                       <td>8=</td>
                       <td>
                         <code>GAPDH</code> <code>FAM07215</code>
                       </td>
-                      <td>Glyceraldehyde-3-phosphate dehydrogenase</td>
+                      <td className={sharedStyles.wrapCol}>Glyceraldehyde-3-phosphate dehydrogenase</td>
                       <td>−11.5%</td>
                     </tr>
                     <tr>
@@ -2186,13 +2180,13 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>GAPDH</code> <code>FAM07215</code>
                       </td>
-                      <td>Glyceraldehyde-3-phosphate dehydrogenase</td>
+                      <td className={sharedStyles.wrapCol}>Glyceraldehyde-3-phosphate dehydrogenase</td>
                       <td>0.479</td>
                       <td>10=</td>
                       <td>
                         <code>PGM</code> / <code>ENO</code>
                       </td>
-                      <td>Mutase &amp; enolase · Lower glycolysis</td>
+                      <td className={sharedStyles.wrapCol}>Mutase &amp; enolase · Lower glycolysis</td>
                       <td>−4.7%</td>
                     </tr>
                     <tr>
@@ -2200,7 +2194,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>TPI</code> <code>FAM05642</code>
                       </td>
-                      <td>Triosephosphate isomerase · Triose split</td>
+                      <td className={sharedStyles.wrapCol}>Triosephosphate isomerase · Triose split</td>
                       <td>0.320</td>
                       <td>
                         <strong>10=</strong>
@@ -2211,7 +2205,7 @@ const sections: ArticleSection[] = [
                         </strong>{" "}
                         <code>FAM06110</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <strong>
                           Cytosolic malate dehydrogenase · Terminal step
                         </strong>
@@ -2225,7 +2219,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <em>Remaining 1,091 groups</em>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         <em>
                           Failed 10-step strict monotonicity filter (
                           <code>NA</code>)
@@ -2238,7 +2232,7 @@ const sections: ArticleSection[] = [
                       <td>
                         <code>PYK</code> / <code>GPI</code> / <code>TPI</code>
                       </td>
-                      <td>
+                      <td className={sharedStyles.wrapCol}>
                         Pyruvate kinase (−4.7%), isomerases (−3.2%, −0.3%)
                       </td>
                       <td>−4.7% to −0.3%</td>
@@ -2249,7 +2243,7 @@ const sections: ArticleSection[] = [
               <Caption prefix="Table 5:">
                 {" "}
                 Side-by-side comparison of Top 11 FSEOF
-                overexpression-responsive groups and Top 15 joint-knockout PMLA
+                overexpression-responsive groups and Top 15 joint-knockout PMA
                 reduction groups
               </Caption>
             </figure>
@@ -2272,9 +2266,9 @@ const sections: ArticleSection[] = [
               </strong>{" "}
               and{" "}
               <strong>
-                #1 in candidate joint-knockout PMLA reduction (
+                #1 in candidate joint-knockout PMA reduction (
                 <MathInline tex={String.raw`-58.6\%`} />, dropping max specific
-                PMLA flux from <MathInline tex={String.raw`1.500`} /> to{" "}
+                PMA flux from <MathInline tex={String.raw`1.500`} /> to{" "}
                 <MathInline
                   tex={String.raw`0.621\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                 />
@@ -2283,13 +2277,13 @@ const sections: ArticleSection[] = [
               . By contrast, although <code>cyMDH</code> (<code>FAM06110</code>)
               ranks #1 in FSEOF slope (
               <MathInline tex={String.raw`\beta_f = 1.013`} />
-              ), its joint deletion reduces max PMLA flux by only{" "}
+              ), its joint deletion reduces max PMA flux by only{" "}
               <MathInline tex={String.raw`4.7\%`} /> because cross-compartment
               malate routes buffer the terminal reduction step. Controlling the
               C3-to-C4 anaplerotic entry that fixes{" "}
               <MathInline tex={String.raw`\text{HCO}_3^-`} /> onto pyruvate to
               form cytosolic oxaloacetate, <code>PYC</code> is thus confirmed at
-              the whole-network level as the primary target for PMLA
+              the whole-network level as the primary target for PMA
               overproduction <Cite k="feng2018pycmodel" />.
             </p>
             <Figure
@@ -2303,7 +2297,7 @@ const sections: ArticleSection[] = [
                   Two-dimensional target prioritization across 1,102 candidate
                   homologous enzyme groups (FSEOF slope{" "}
                   <MathInline tex={String.raw`\beta_f`} /> vs. joint-knockout
-                  PMLA loss <MathInline tex={String.raw`-\Delta Y_f`} />)
+                  PMA loss <MathInline tex={String.raw`-\Delta Y_f`} />)
                 </>
               }
             />

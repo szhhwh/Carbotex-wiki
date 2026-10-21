@@ -12,10 +12,10 @@ const sections: ArticleSection[] = [
       <>
         <p>
           To turn agricultural straw sugars into a dopamine-functionalized
-          poly(β-L-malic acid) (PMLA, or PMA; PMA–DA) underwater bioadhesive,
+          poly(β-L-malic acid) (PMA, also abbreviated PMLA; PMA–DA) underwater bioadhesive,
           our dry-lab framework resolves three core questions along the
           biomanufacturing
-          chain: <strong>which gene limits PMLA synthesis in an unannotated fungus</strong>,{" "}
+          chain: <strong>which gene limits PMA synthesis in an unannotated fungus</strong>,{" "}
           <strong>how to prevent protocol and measurement errors across multi-stage experiments</strong>, and{" "}
           <strong>why excess dopamine dosing lowers polymer grafting efficiency</strong>.
         </p>
@@ -29,7 +29,7 @@ const sections: ArticleSection[] = [
                 </strong>
                 <span className={styles.hubDesc}>
                   De novo <em>A. melanogenum</em> A08 metabolic reconstruction
-                  &amp; dual-metric PYC target prioritization
+                  &amp; dual-metric target prioritization for PMA biosynthesis
                 </span>
               </div>
               <span className={styles.hubCta}>
@@ -86,7 +86,7 @@ const sections: ArticleSection[] = [
           <em>Aureobasidium melanogenum</em> A08, we reconstructed its de novo
           genome-scale metabolic network and calibrated enzyme subcellular
           localization to restore the native cytosolic malate pathway (raising
-          theoretical PMLA flux from 1.430 to 1.500 mmol·gDW<sup>−1</sup>·h
+          theoretical PMA flux from 1.430 to 1.500 mmol·gDW<sup>−1</sup>·h
           <sup>−1</sup>). Dual-metric screening combining FSEOF overexpression
           sensitivity with homologous isozyme-group knockouts across 1,102
           candidate enzyme groups isolated cytosolic{" "}
