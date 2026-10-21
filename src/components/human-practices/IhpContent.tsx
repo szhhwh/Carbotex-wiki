@@ -9,7 +9,6 @@ import { DecisionCards } from "./DecisionCards";
 import { FlowChain } from "./FlowChain";
 import { MetricBand } from "./MetricBand";
 import { ProcessTimeline } from "./ProcessTimeline";
-import { ReflectionCards } from "./ReflectionCards";
 import { RelatedWorkCard } from "./RelatedWorkCard";
 import { SdgFlipCards } from "./SdgFlipCards";
 import { StakeholderEcosystemMap } from "./StakeholderEcosystemMap";
@@ -234,7 +233,7 @@ export function IhpParts({
           }
           case "label": {
             const LabelHeading = labelLevel === 3 ? "h3" : "h4";
-            latestLabel = cleanTraceTitle(part.text);
+            latestLabel = cleanTraceText(part.text);
             if (parts[index + 1]?.kind === "trace") {
               return (
                 <LabelHeading aria-hidden="true" hidden key={`label-${index}`}>
@@ -290,17 +289,21 @@ export function IhpParts({
                 <img
                   className={styles.epigraphCover}
                   src="https://static.igem.wiki/teams/6147/wiki/book.avif"
-                  alt="Illustrated cover of The Book of Rites."
+                  alt="Book of Rites — opening quotation"
                   loading="lazy"
                   decoding="async"
                 />
                 <blockquote>
                   <p>
-                    "Studying alone without peers for discussion renders one
-                    shallow and ill-informed."
+                    <em>
+                      “Studying alone without peers for discussion renders one
+                      shallow and ill-informed.”
+                    </em>
                   </p>
                 </blockquote>
-                <Caption>The Book of Rites</Caption>
+                <Caption>
+                  — <em>The Book of Rites</em>
+                </Caption>
               </figure>
             );
           case "decisions":
@@ -308,9 +311,7 @@ export function IhpParts({
           case "navigator":
             return <StakeholderNavigator groups={groups} key="navigator" />;
           case "ecosystem-map":
-            return (
-              <StakeholderEcosystemMap groups={groups} key="ecosystem-map" />
-            );
+            return <StakeholderEcosystemMap key="ecosystem-map" />;
           case "collaborators":
             return (
               <CollaboratorGrid
@@ -330,10 +331,6 @@ export function IhpParts({
             return <CostBreakdown key="cost-breakdown" />;
           case "process-timeline":
             return <ProcessTimeline key="process-timeline" />;
-          case "reflection-cards":
-            return <ReflectionCards kind="changes" key="reflection-cards" />;
-          case "unresolved-cards":
-            return <ReflectionCards kind="unresolved" key="unresolved-cards" />;
           default:
             return null;
         }

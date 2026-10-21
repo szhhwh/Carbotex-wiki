@@ -3,141 +3,19 @@
   font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
 }
 
-.map {
-  position: relative;
-  padding: var(--ihp-padding-wide, 1.5rem);
-  border: 0;
-  border-radius: var(--ihp-radius-lg, 1.5rem);
-  background: var(--hardware-paper, #fbf0dd);
-  color: var(--hardware-ink, #003f34);
-  overflow: clip;
-}
-
-.mapHeader {
-  position: relative;
-  z-index: 1;
+.placeholder {
   display: grid;
-  gap: 0.35rem;
-  max-width: none;
-  margin-bottom: 1.2rem;
-  padding: 1rem 1.15rem;
-  border: 0;
-  border-radius: var(--ihp-radius, 1rem);
-  background: var(--hardware-yellow, #ffc647);
-}
-
-.mapHeader strong {
-  color: var(--ihp-card-heading, #1e4fbc);
-  font-family: var(--hardware-display, Impact, sans-serif);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.05;
-}
-
-.mapNote {
-  max-width: 46rem;
-  color: var(--hardware-ink, #003f34);
-  font-size: var(--ihp-text-meta, 0.84rem);
+  width: 100%;
+  max-width: 46.25rem;
+  min-height: 8rem;
+  margin-inline: auto;
+  padding: 2.125rem 1.125rem;
+  place-items: center;
+  border: 2px dashed #a7c8bd;
+  border-radius: 0.625rem;
+  background: #f3faf6;
+  color: #42665d;
+  font-size: 0.875rem;
   line-height: 1.5;
-}
-
-.stages {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.stages a {
-  position: relative;
-  display: grid;
-  gap: 0.45rem;
-  min-height: 8.5rem;
-  padding: var(--ihp-padding, 1.25rem);
-  border: 0;
-  border-radius: var(--ihp-radius, 1rem);
-  background: var(--hardware-card-mint, #b8e3da);
-  color: var(--hardware-ink, #003f34);
-  text-decoration: none;
-  transition:
-    border-color var(--ihp-duration, 170ms) ease,
-    transform var(--ihp-duration, 170ms) ease;
-}
-
-.stages li:nth-child(even) a {
-  background: var(--hardware-pale-yellow, #ffe7b6);
-}
-
-.stages a:hover {
-  border-color: var(--hardware-green, #007c60);
-  transform: translateY(-3px);
-}
-
-.stages a:focus-visible {
-  outline: 3px solid var(--ihp-focus, #007c60);
-  outline-offset: 3px;
-}
-
-.stageTitle {
-  align-self: start;
-  color: var(--ihp-card-heading, #1e4fbc);
-  font-family: var(--hardware-display, Impact, sans-serif);
-  font-size: 1.15rem;
-  font-weight: 400;
-  line-height: 1.1;
-}
-
-.stageMeta {
-  display: flex;
-  gap: 0.35rem;
-  align-items: center;
-  align-self: end;
-  color: var(--hardware-ink, #003f34);
-  font-size: var(--ihp-text-label, 0.8rem);
-}
-
-.direction {
-  position: absolute;
-  right: 0.7rem;
-  bottom: 0.65rem;
-  color: var(--hardware-green, #007c60);
-  opacity: 1;
-}
-
-.stages li:nth-child(6) .direction {
-  display: none;
-}
-
-@media (max-width: 760px) {
-  .map {
-    padding: var(--ihp-padding, 1.25rem);
-  }
-
-  .stages {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .stages {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .stages a {
-    min-height: 0;
-  }
-
-  .direction {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stages a {
-    transition: none;
-  }
+  text-align: center;
 }

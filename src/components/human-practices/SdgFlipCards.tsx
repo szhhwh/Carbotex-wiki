@@ -5,30 +5,36 @@ import styles from "./sdg-flip-cards.module.css";
 const CARDS = [
   {
     goal: "9",
-    title: "Industry, innovation and infrastructure",
-    focus: "The pathway from laboratory innovation to reliable production.",
+    title: "Industry, Innovation and Infrastructure",
+    icon: "https://static.igem.wiki/teams/6147/wiki/sdg-9-icon.avif",
+    iconAlt: "SDG 9: Industry, Innovation and Infrastructure",
+    focus: "Promotes sustainable industrial development and innovation.",
     front:
-      "What would it take to move beyond a successful experiment toward reproducible production?",
+      "Our PMA production research explores biological innovation, while future manufacturing requires stable and scalable processes.",
     question:
-      "Which process controls, evidence records, and validation steps would make the pathway reliable?",
+      "How can laboratory achievements become reliable manufacturing processes?",
   },
   {
     goal: "12",
-    title: "Responsible consumption and production",
-    focus: "Process inputs and resource use.",
-    front: "Which inputs and downstream steps dominate the material pathway?",
+    title: "Responsible Consumption and Production",
+    icon: "https://static.igem.wiki/teams/6147/wiki/sdg-12-icon.avif",
+    iconAlt: "SDG 12: Responsible Consumption and Production",
+    focus: "Encourages responsible resource use and sustainable production.",
+    front:
+      "Using straw-derived carbon creates opportunities, but chemical reagents, water, energy, and downstream processing must also be considered.",
     question:
-      "How can coupling reagents, water, dialysis, drying, and material recovery be used more deliberately?",
+      "How can we reduce resource consumption and unnecessary waste throughout production?",
   },
   {
     goal: "13",
-    title: "Climate action",
-    focus:
-      "Environmental motivation is not the same as a verified environmental benefit.",
+    title: "Climate Action",
+    icon: "https://static.igem.wiki/teams/6147/wiki/sdg-13-icon.avif",
+    iconAlt: "SDG 13: Climate Action",
+    focus: "Calls for action to address climate change and its impacts.",
     front:
-      "What evidence would show that renewable carbon leads to a better process?",
+      "Renewable carbon motivates our project, but lower emissions cannot be assumed without examining the full production pathway.",
     question:
-      "Which resource inputs, emissions, and trade-offs would a future life-cycle assessment need to measure?",
+      "What life-cycle evidence is needed to evaluate potential climate benefits?",
   },
 ];
 
@@ -61,25 +67,42 @@ export function SdgFlipCards() {
                 aria-pressed={isFlipped}
                 aria-label={`SDG ${card.goal}: ${card.title}. ${
                   isFlipped ? card.question : card.front
-                } ${isFlipped ? "Show context" : "Reveal the evaluation question"}.`}
+                } ${isFlipped ? "Show overview" : "Reveal details"}.`}
                 onClick={() => toggle(index)}
               >
                 <span className={styles.inner}>
-                  <span className={styles.face} aria-hidden={isFlipped}>
-                    <span className={styles.goal}>{card.goal}</span>
-                    <span className={styles.title}>{card.title}</span>
-                    <span className={styles.focus}>{card.focus}</span>
-                    <span className={styles.prompt}>{card.front}</span>
-                    <span className={styles.action}>Reveal the question</span>
+                  <span
+                    className={`${styles.face} ${styles.front}`}
+                    aria-hidden={isFlipped}
+                  >
+                    <img
+                      className={styles.frontIcon}
+                      src={card.icon}
+                      alt={card.iconAlt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className={styles.action}>Reveal details</span>
                   </span>
                   <span
                     className={`${styles.face} ${styles.back}`}
                     aria-hidden={!isFlipped}
                   >
-                    <span className={styles.backLabel}>
-                      Evaluation question
+                    <span className={styles.backLabel}>SDG {card.goal}</span>
+                    <span className={styles.backTitle}>{card.title}</span>
+                    <span className={styles.focus}>{card.focus}</span>
+                    <span className={styles.backField}>
+                      <span className={styles.backFieldLabel}>
+                        Connection to Carbotex
+                      </span>
+                      <span className={styles.prompt}>{card.front}</span>
                     </span>
-                    <span className={styles.question}>{card.question}</span>
+                    <span className={styles.backField}>
+                      <span className={styles.backFieldLabel}>
+                        Our Question
+                      </span>
+                      <span className={styles.question}>{card.question}</span>
+                    </span>
                     <span className={styles.action}>
                       <RotateCcw size={14} aria-hidden="true" />
                       Return
@@ -92,12 +115,21 @@ export function SdgFlipCards() {
         })}
       </div>
       <p className={styles.note}>
-        These cards use SDGs 9, 12, and 13 as evaluation questions, not as
-        claims of verified impact. See the{" "}
-        <a href="https://sdgs.un.org/goals">
-          United Nations Sustainable Development Goals
-        </a>
-        .
+        <em>
+          SDG icons and information:{" "}
+          <strong>
+            <a href="https://www.un.org/sustainabledevelopment">
+              United Nations Sustainable Development Goals ↗
+            </a>
+          </strong>
+          . See the{" "}
+          <strong>
+            <a href="https://www.un.org/sustainabledevelopment/wp-content/uploads/2023/09/E_SDG_Guidelines_Sep20238.pdf">
+              UN SDG Icon Guidelines ↗
+            </a>
+          </strong>
+          .
+        </em>
       </p>
     </section>
   );

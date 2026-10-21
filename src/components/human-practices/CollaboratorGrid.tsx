@@ -15,12 +15,13 @@ export function CollaboratorGrid({
       aria-labelledby="ihp-collaborators-title"
     >
       <header className={styles.header}>
-        <h3 id="ihp-collaborators-title">Additional teams and collaborators</h3>
+        <h3 id="ihp-collaborators-title">
+          Additional Teams &amp; Collaborators
+        </h3>
         <p>
-          Beyond the {stakeholderCount} stakeholder cards, these peer exchanges,
-          shared discussions, event organizers, and co-created outreach are
-          listed separately because not every exchange was a formal
-          consultation.
+          Peer exchanges, shared discussions, event organizers, and co-created
+          outreach. These cards are distinct from the {stakeholderCount}{" "}
+          interview / stakeholder cards.
         </p>
       </header>
       <div className={styles.list}>

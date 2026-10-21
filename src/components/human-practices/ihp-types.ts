@@ -86,9 +86,7 @@ export type IhpSpecialPartKind =
   | "sdg-cards"
   | "capability-matrix"
   | "cost-breakdown"
-  | "process-timeline"
-  | "reflection-cards"
-  | "unresolved-cards";
+  | "process-timeline";
 
 export type IhpPart =
   | IhpContentPart
@@ -134,14 +132,6 @@ export interface IhpStakeholderGroup {
   title: string;
   description: string;
   stakeholders: IhpStakeholder[];
-  additionalCollaborators?: {
-    title: string;
-    items: Array<{
-      name: string;
-      identity?: string;
-      href: string;
-    }>;
-  };
 }
 
 export interface IhpCollaborator {

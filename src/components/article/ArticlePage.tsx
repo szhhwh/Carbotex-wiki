@@ -51,6 +51,8 @@ interface ArticlePageProps {
   sections: ArticleSection[];
   /** Render the page's cited sources after every article section. */
   references?: boolean;
+  /** Optional additional hash target at the start of the references section. */
+  referencesAnchorId?: string;
   /** Optional introduction shown above the shared reference list. */
   referencesIntro?: ReactNode;
   /** Canonical numbering order for pages with an explicit source list. */
@@ -172,6 +174,7 @@ export function ArticlePage({
   heroImage,
   sections,
   references = false,
+  referencesAnchorId,
   referencesIntro,
   referenceOrder,
   stickyMobileOutline = true,
@@ -513,6 +516,13 @@ export function ArticlePage({
           )}
           {references && (
             <section className={pageStyles.referencesSection} id="references">
+              {referencesAnchorId ? (
+                <span
+                  className={pageStyles.referenceAnchor}
+                  id={referencesAnchorId}
+                  aria-hidden="true"
+                />
+              ) : null}
               <References intro={referencesIntro} />
             </section>
           )}

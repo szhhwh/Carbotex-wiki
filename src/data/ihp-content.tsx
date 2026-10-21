@@ -1,6 +1,10 @@
 // Structured IHP content rendered as native JSX from the supplied source copy.
 import { Link } from "react-router-dom";
 import { Cite } from "../components/article/References";
+import { IhpRichText } from "../components/human-practices/IhpRichText";
+import { ihpReviewedSection3 } from "./ihp-reviewed-section-3";
+import { ihpReviewedSection4 } from "./ihp-reviewed-section-4";
+import { ihpReviewedSection5 } from "./ihp-reviewed-section-5";
 import type {
   IhpCollaborator,
   IhpSectionContent,
@@ -73,12 +77,12 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
           "https://static.igem.wiki/teams/6147/wiki/card/04-bio-guanglei-liu.webp",
         identity: "Professor · Microbial Biomanufacturing · Metabolic Pathways",
         question: "What should straw-derived carbon ultimately become?",
-        impact: "Chassis First → Carbon Destination First",
+        impact: "1. PMA as a product target; 2. Metabolic precursor strategy",
         why: "Before selecting a chassis, we needed to determine what the carbon released from straw should ultimately become.",
         heard:
           "Feedstock characteristics, target product properties, existing biological production foundations, and future applications should be considered together before choosing a chassis.",
         changed:
-          "We defined PMA as the target product and A08 as the candidate chassis instead of choosing an organism first.",
+          "We prioritized PMA/A08 initially and later revisited precursor-supply pathways after further discussion.",
         led: "Straw-Derived Carbon → A08 → PMA",
         storyHref: "#ihp-guanglei-liu",
       },
@@ -89,12 +93,13 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
         identity: "Professor · Straw Hydrolysate · Biomanufacturing",
         question:
           "Can A08 use carbon under realistic straw hydrolysate conditions?",
-        impact: "Ideal Medium → Real Mixed Sugars",
+        impact:
+          "1. Real hydrolysate → Mixed-sugar tests; 2. Upstream process → Cost inquiry",
         why: "Our early understanding of A08 was based largely on simplified carbon-source conditions. We needed a system that better reflected real agricultural feedstock.",
         heard:
           "Straw hydrolysate mainly contained glucose and xylose; our experiments showed efficient glucose utilization but limited xylose utilization.",
         changed:
-          "We moved from idealized single-sugar conditions toward a real straw-derived mixed-sugar system.",
+          "We tested real straw-derived mixed sugars and later considered upstream hydrolysate processing costs.",
         led: "Real Hydrolysate → Mixed Sugar Challenge",
         storyHref: "#ihp-yajun-liu",
       },
@@ -171,12 +176,13 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
           "https://static.igem.wiki/teams/6147/wiki/card/10-bio-weihui-wu.webp",
         identity: "Professor · Microbial Metabolism & Carbon Allocation",
         question: "Does more carbon uptake necessarily mean more PMA?",
-        impact: "Carbon Uptake → Carbon Allocation",
+        impact:
+          "1. Carbon uptake → Carbon allocation; 2. Allocation → Precursor questions",
         why: "Improving xylose utilization could allow more carbon to enter A08, but that did not necessarily mean more carbon would reach PMA.",
         heard:
           "Assimilated carbon can be distributed among biomass formation, cellular maintenance, competing pathways, and product formation.",
         changed:
-          "We began asking where carbon goes, not only how much carbon is consumed.",
+          "We reconsidered carbon allocation and examined precursor supply as a possible next target.",
         led: "Carbon Utilization → Precursor Supply → pyruvate carboxylase (PYC)",
         storyHref: "#ihp-weihui-wu",
       },
@@ -335,16 +341,17 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
         storyHref: "#ihp-shenzhen-infrastructure",
       },
       {
-        name: "Qingdao Institute of Bioenergy and Bioprocess Technology (QIBEBT)",
+        name: "Qingdao Institute of Bioenergy and Bioprocess Technology, Chinese Academy of Sciences (QIBEBT)",
         portrait: "https://static.igem.wiki/teams/6147/wiki/card/20-qibebt.svg",
         identity: "Research Institute · Renewable Carbon · Biomanufacturing",
         question: "What does a complete biomanufacturing system depend on?",
-        impact: "Single Route → Manufacturing Ecosystem",
+        impact:
+          "1. Production route → Manufacturing ecosystem; 2. Renewable carbon → Public outreach",
         why: "We wanted to understand how Carbotex's feedstock, fermentation, downstream processing, and material-development stages relate in real manufacturing.",
         heard:
           "Different stages may depend on different technologies and specialized partners rather than one organization reproducing the entire pathway.",
         changed:
-          "We began to see Carbotex as part of a broader renewable-carbon biomanufacturing ecosystem.",
+          "We considered the wider biomanufacturing ecosystem and joined renewable-carbon science outreach.",
         led: "Technical Route → Manufacturing Ecosystem",
         storyHref: "#ihp-qibebt",
       },
@@ -376,30 +383,17 @@ export const stakeholderGroups: IhpStakeholderGroup[] = [
           "https://static.igem.wiki/teams/6147/wiki/card/22-grand-apic-judges.webp",
         identity: "iGEM Judges · Biosafety · Responsible Implementation",
         question: "Which biosafety risks actually matter?",
-        impact: "Cell Escape → Risk & Consequence",
+        impact:
+          "1. Containment → HGT considerations; 2. Production cells → Material responsibility",
         why: "As Carbotex moved toward real-world implementation, we needed to consider biosafety beyond routine laboratory procedures.",
         heard:
           "Limited environmental proliferation does not eliminate other questions, particularly the possibility and consequences of horizontal gene transfer (HGT).",
         changed:
-          "We shifted from focusing mainly on viable cell escape toward risk, consequence, and remaining uncertainty.",
+          "We examined HGT concerns and extended the questions to material purification and future use.",
         led: "Containment → HGT → Risk-Based Assessment",
         storyHref: "#ihp-grand-apic",
       },
     ],
-    additionalCollaborators: {
-      title: "Additional iGEM Teams & Collaborators",
-      items: [
-        {
-          name: "Other teams",
-          href: "#ihp-community",
-        },
-        {
-          name: "Prof. Ning Yan",
-          identity: "Artistic Guidance & Science Communication",
-          href: "#ihp-collab-ning-yan",
-        },
-      ],
-    },
   },
 ];
 
@@ -461,6 +455,10 @@ export const ihpSections: IhpSectionContent[] = [
     parts: [
       {
         kind: "epigraph",
+      },
+      {
+        kind: "anchor",
+        id: "section-1",
       },
     ],
     subsections: [
@@ -540,8 +538,7 @@ export const ihpSections: IhpSectionContent[] = [
             src: "https://static.igem.wiki/teams/6147/wiki/ihp.svg",
             alt: "TRACE framework showing Trigger, Reach Out, Analyze, Change, and Evaluate in relation to the Carbotex DBTL process.",
             ratio: "740 / 500",
-            caption:
-              "TRACE framework connecting stakeholder engagement with the Carbotex DBTL cycle.",
+            caption: "TRACE and the DBTL cycle.",
             figureNumber: 1,
             frame: "none",
           },
@@ -570,7 +567,7 @@ export const ihpSections: IhpSectionContent[] = [
             src: "https://static.igem.wiki/teams/6147/wiki/ihp-2.avif",
             alt: "OUC-Haide team members brainstorming and organizing stakeholders for the Carbotex Stakeholder Matrix.",
             ratio: "540 / 380",
-            caption: "Team brainstorming for the Carbotex Stakeholder Matrix.",
+            caption: "Brainstorming the stakeholder matrix.",
             figureNumber: 2,
           },
           {
@@ -614,7 +611,7 @@ export const ihpSections: IhpSectionContent[] = [
             src: "https://static.igem.wiki/teams/6147/wiki/journey.avif",
             alt: "Integrated Human Practices Journey",
             ratio: "740 / 500",
-            caption: "Integrated Human Practices Journey.",
+            caption: "The Carbotex IHP journey.",
             figureNumber: 4,
           },
         ],
@@ -656,6 +653,10 @@ export const ihpSections: IhpSectionContent[] = [
     id: "ihp-journey",
     title: "Our IHP Journey",
     parts: [
+      {
+        kind: "anchor",
+        id: "section-2",
+      },
       {
         kind: "content",
         inline: false,
@@ -743,6 +744,10 @@ export const ihpSections: IhpSectionContent[] = [
         title: "2.0 Where It Began",
         parts: [
           {
+            kind: "anchor",
+            id: "section-2-0",
+          },
+          {
             kind: "content",
             inline: false,
             content: (
@@ -790,6 +795,10 @@ export const ihpSections: IhpSectionContent[] = [
         id: "ihp-feedstock",
         title: "2.1 Understanding the Problem & Feedstock",
         parts: [
+          {
+            kind: "anchor",
+            id: "section-2-1",
+          },
           {
             kind: "content",
             inline: true,
@@ -868,8 +877,7 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 3,
                     ratio: "220 / 285",
-                    caption:
-                      "Visit to the local authority on straw utilization.",
+                    caption: "Visit to the local agricultural authority.",
                     figureNumber: 5,
                   },
                   {
@@ -928,8 +936,7 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 3,
                     ratio: "270 / 220",
-                    caption:
-                      "Discussion with farmers and a cooperative on straw supply.",
+                    caption: "Farmer and cooperative exchange on straw supply.",
                     figureNumber: 6,
                   },
                   {
@@ -988,8 +995,7 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 3,
                     ratio: "270 / 220",
-                    caption:
-                      "Planting-base observations on straw sources and storage.",
+                    caption: "Straw conditions observed at the planting base.",
                     figureNumber: 7,
                   },
                   {
@@ -1132,6 +1138,25 @@ export const ihpSections: IhpSectionContent[] = [
               },
             ],
           },
+          {
+            kind: "label",
+            text: "Closing the Feedstock Exploration Loop",
+          },
+          {
+            kind: "content",
+            inline: false,
+            content: (
+              <IhpRichText>{`Through these engagements, Carbotex's understanding of agricultural straw evolved from a broadly available resource into a potential feedstock whose practical value depends on real agricultural conditions.
+
+The local agricultural authority helped us understand existing straw-utilization pathways. Farmers and cooperative representatives highlighted the importance of collection, storage, transportation, and seasonal supply, while the agricultural expert and planting-base visit drew our attention to feedstock characteristics such as moisture content, impurities, and storage stability.
+
+Together, these perspectives reshaped our starting point. Rather than treating agricultural straw simply as an abundant waste resource, we began considering how suitable straw-derived carbon could be utilized for biomanufacturing while respecting existing agricultural uses and practical supply conditions.
+
+**This first stage connected our initial observation of agricultural straw with a more grounded understanding of feedstock availability and suitability, providing the foundation for Carbotex's subsequent biological engineering work.**
+
+With this understanding, our next question became: **How could we convert straw-derived carbon into a valuable product through biological engineering?**`}</IhpRichText>
+            ),
+          },
         ],
       },
       {
@@ -1139,26 +1164,21 @@ export const ihpSections: IhpSectionContent[] = [
         title: "2.2 Building the Biological System",
         parts: [
           {
+            kind: "anchor",
+            id: "section-2-2",
+          },
+          {
             kind: "content",
             inline: false,
             content: (
-              <>
-                <p>
-                  {
-                    "Our exploration of agricultural resource utilization helped us understand the potential value of further developing straw-derived carbon resources."
-                  }
-                </p>
-                <p>
-                  {
-                    "We then shifted our attention from agricultural resources to biological conversion, asking how microbial production could transform this renewable carbon into a product with potential for downstream applications."
-                  }
-                </p>
-              </>
+              <IhpRichText>{`Our exploration of agricultural resource utilization helped us understand the potential value of further developing straw-derived carbon resources.
+
+We then shifted our attention from agricultural resources to biological conversion, asking how microbial production could transform this renewable carbon into a product with potential for downstream applications.`}</IhpRichText>
             ),
           },
           {
             kind: "label",
-            text: "Defining the Carbon Destination",
+            text: "2.2.1 Defining the Carbon Destination",
           },
           {
             kind: "trace",
@@ -1171,20 +1191,9 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Having examined the agricultural context of straw, we needed to identify a biologically feasible conversion route that could connect straw-derived carbon with a value-added product and potential material applications."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Which target product and microbial production system could provide a reliable starting point for valorizing sugars derived from straw?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Having examined the agricultural context of straw, we needed to identify a biologically feasible conversion route that could connect straw-derived carbon with a value-added product and potential material applications.
+
+**Which target product and microbial production system could provide a reliable starting point for valorizing sugars derived from straw?**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1200,9 +1209,7 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: true,
                     content: (
-                      <>
-                        <strong>{"Prof. Guanglei Liu"}</strong>
-                      </>
+                      <IhpRichText inline>**Prof. Guanglei Liu**</IhpRichText>
                     ),
                   },
                   {
@@ -1220,56 +1227,24 @@ export const ihpSections: IhpSectionContent[] = [
                     columns: 2,
                     ratio: "345 / 260",
                     caption:
-                      "Consultation with Prof. Guanglei Liu on straw-derived carbon conversion.",
+                      "Discussing PMA production with Prof. Guanglei Liu.",
                     figureNumber: 8,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "To clarify the direction of biological carbon conversion, we consulted Prof. Guanglei Liu."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Prof. Liu advised us to consider the characteristics of the carbon source, the properties and value of the target product, the existing foundation for biological production, and potential applications together, rather than evaluating the production capacity of a microbial strain in isolation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "As we explored products that could give agricultural carbon additional value, "
-                          }
-                          <strong>{"poly(malic acid) (PMA)"}</strong>
-                          {" attracted our attention."}
-                        </p>
-                        <p>
-                          {
-                            "PMA is a bio-based polymer with pendant carboxyl groups that offer opportunities for further chemical functionalization and material development. Meanwhile, previous research on PMA production by "
-                          }
-                          <em>{"Aureobasidium"}</em>
-                          {
-                            " species provided a relevant biological foundation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "An established laboratory strain collection offered a concrete starting point for this direction: "
-                          }
-                          <strong>
-                            <em>{"Aureobasidium melanogenum"}</em>
-                            {" A08"}
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "The supplying laboratory had previously isolated and screened this strain and had established its potential for producing high-molecular-weight PMA. This existing strain resource allowed us to investigate how PMA production could be connected with the conversion of agricultural carbon."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`To clarify the direction of biological carbon conversion, we consulted Prof. Guanglei Liu.
+
+Prof. Liu advised us to consider the characteristics of the carbon source, the properties and value of the target product, the existing foundation for biological production, and potential applications together, rather than evaluating the production capacity of a microbial strain in isolation.
+
+As we explored products that could give agricultural carbon additional value, **poly(malic acid) (PMA)** attracted our attention.
+
+PMA is a bio-based polymer with pendant carboxyl groups that offer opportunities for further chemical functionalization and material development. Meanwhile, previous research on PMA production by *Aureobasidium* species provided a relevant biological foundation.
+
+An important starting point was ***Aureobasidium melanogenum* A08**, provided by **Prof. Guanglei Liu's laboratory**.
+
+The strain had previously been isolated and screened by his research group for PMA production, providing Carbotex with an existing microbial production resource. Building on this foundation, we began investigating how PMA biosynthesis in A08 could be connected to the utilization of straw-derived carbon.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1281,66 +1256,30 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Drawing on Prof. Liu's perspective, we considered three connected factors: "
-                          }
-                          <strong>
+                      <IhpRichText>{`Drawing on Prof. Liu's perspective, we considered three connected factors: **the potential of PMA as a functionalizable polymer, the existing PMA-production background of A08, and the feasibility of using agricultural sugars as fermentation substrates**.
+
+Literature research also supported the biological production of PMA by *Aureobasidium* species.{{cite:Chi2016PMLA}}
+
+To establish the identity of the supplied strain, we examined its colony and microscopic morphology and analyzed its internal transcribed spacer (ITS) sequence.
+
+Phylogenetic analysis placed A08 in a cluster with the reference strain *A. melanogenum* CBS 105.22, supporting its identification as *Aureobasidium melanogenum* and providing a defined chassis for subsequent engineering.
+
+Together, the literature, available strain resource, and Prof. Liu's perspective on biological production supported **A08 as our production chassis and PMA as the target product**.`}</IhpRichText>
+                    ),
+                  },
+                  {
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <p>
+                        <strong>
+                          <Link to={"/design#design-chassis-selection-why-a08"}>
                             {
-                              "the potential of PMA as a functionalizable polymer, the existing PMA-production background of A08, and the feasibility of using agricultural sugars as fermentation substrates"
+                              "Explore A08 Chassis Background and Identification →"
                             }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "Literature research also supported the biological production of PMA by "
-                          }
-                          <em>{"Aureobasidium"}</em>
-                          {" species "}
-                          <Cite k={["Chi2016PMLA"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "To establish the identity of the supplied strain, we examined its colony and microscopic morphology and analyzed its internal transcribed spacer (ITS) sequence."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Phylogenetic analysis placed A08 in a cluster with the reference strain "
-                          }
-                          <em>{"A. melanogenum"}</em>
-                          {" CBS 105.22, supporting its identification as "}
-                          <em>{"Aureobasidium melanogenum"}</em>
-                          {
-                            " and providing a defined chassis for subsequent engineering."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, the literature, available strain resource, and Prof. Liu's perspective on biological production supported "
-                          }
-                          <strong>
-                            {
-                              "A08 as our production chassis and PMA as the target product"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          <strong>
-                            <Link
-                              to={"/design#design-chassis-selection-why-a08"}
-                            >
-                              {
-                                "Explore A08 Chassis Background and Identification →"
-                              }
-                            </Link>
-                          </strong>
-                        </p>
-                      </>
+                          </Link>
+                        </strong>
+                      </p>
                     ),
                   },
                 ],
@@ -1352,11 +1291,10 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: true,
                     content: (
-                      <>
-                        {
-                          "Based on these considerations, we established an initial biological engineering route for Carbotex:"
-                        }
-                      </>
+                      <IhpRichText inline>
+                        Based on these considerations, we established an initial
+                        biological engineering route for Carbotex:
+                      </IhpRichText>
                     ),
                   },
                   {
@@ -1372,18 +1310,9 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "This direction connected agricultural carbon resources, a microbial production chassis, and downstream material development."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "It also helped us identify the key experimental questions for the next stage: examining A08's responses to different carbon sources, comparing PMA production under different sugar compositions, and further evaluating the feasibility of using sugars derived from actual straw feedstocks for fermentation."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`This direction connected agricultural carbon resources, a microbial production chassis, and downstream material development.
+
+It also helped us identify the key experimental questions for the next stage: understanding how A08 responds to different carbon sources, examining how sugar composition affects PMA production, and ultimately evaluating the feasibility of using sugars derived from actual straw feedstocks for fermentation.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1395,35 +1324,13 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "This stage established an A08–PMA conversion route supported by an existing PMA-production background and our strain-identification results."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, the structural carbohydrates in straw must first undergo upstream saccharification to release soluble sugars before they can be used as carbon sources in our A08 fermentation system."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Cellulose primarily contributes glucose, while xylan in hemicellulose can release xylose. Consequently, straw-derived hydrolysates commonly contain both glucose and xylose."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For Carbotex, identifying the chassis and target product was only the first step. We also needed to understand A08's production performance in this mixed-sugar environment."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "How would changes in glucose–xylose composition affect PMA production by A08?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`By this point, we had selected A08 as our candidate PMA-production chassis, supported by its existing PMA-production background and our strain-identification results. However, whether this production system could effectively utilize carbon derived from agricultural straw remained to be investigated.
+
+In our proposed process, the structural carbohydrates in straw must first undergo upstream saccharification to release fermentable sugars. Cellulose primarily yields glucose, while xylan in hemicellulose can release xylose. As a result, straw-derived hydrolysates may contain both sugars in varying proportions.
+
+This introduced an important consideration for our next experiments. Demonstrating A08's potential for PMA production was not sufficient to establish its suitability for a straw-based process. We also needed to understand how the composition of these available sugars might influence its production performance.
+
+Could our selected A08–PMA production system effectively utilize carbon derived from agricultural straw?`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1432,7 +1339,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "Revealing the Mixed-Sugar Challenge",
+            text: "2.2.2 Revealing the Mixed-Sugar Challenge",
           },
           {
             kind: "trace",
@@ -1445,27 +1352,11 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Lignocellulosic hydrolysates commonly contain different sugars, including glucose and xylose "
-                          }
-                          <Cite k={["Francois2020"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "Although A08 had an established background in PMA production, this did not mean it would perform equally well across different sugar compositions."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Could A08 maintain favorable PMA production when glucose and xylose were present together, especially as the proportion of xylose increased?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Lignocellulosic hydrolysates commonly contain different sugars, including glucose and xylose.{{cite:Francois2020}} Since these sugars originate from different components of straw, their relative proportions can vary depending on the feedstock and saccharification process.
+
+Although A08 had an established background in PMA production, we could not assume that it would perform equally well under different sugar compositions. This raised an important question for our straw-based production route: whether changes in the balance between glucose and xylose would influence A08's PMA production performance.
+
+**How would different glucose–xylose ratios affect PMA production by A08?**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1481,9 +1372,7 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: true,
                     content: (
-                      <>
-                        <strong>{"Prof. Yajun Liu"}</strong>
-                      </>
+                      <IhpRichText inline>**Prof. Yajun Liu**</IhpRichText>
                     ),
                   },
                   {
@@ -1500,86 +1389,44 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 2,
                     ratio: "345 / 260",
-                    caption:
-                      "Consultation with Prof. Yajun Liu on straw hydrolysate conditions.",
+                    caption: "Consulting Prof. Yajun Liu on straw hydrolysate.",
                     figureNumber: 9,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "To connect our biological production system with agricultural residues, we received corn-stover hydrolysate provided by Prof. Yajun Liu. The hydrolysate had been prepared by a collaborating laboratory using a consolidated bio-saccharification (CBS) system."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This provided an agricultural-residue-derived sugar source for investigating A08 fermentation under conditions relevant to Carbotex."
-                          }
-                        </p>
-                        <p>
-                          {"Our analysis of the hydrolysate showed that, "}
-                          <strong>
-                            {
-                              "within the measured sugar fraction, glucose accounted for approximately 80.33% and xylose for 19.67%"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                      </>
+                      <IhpRichText>{`To evaluate whether our A08–PMA production system could utilize sugars derived from agricultural residues, we obtained corn-stover hydrolysate prepared and provided by **Prof. Yajun Liu's laboratory team** using a consolidated bio-saccharification (CBS) system.
+
+This provided us with a real straw-derived substrate for subsequent sugar-composition analysis and fermentation experiments.
+
+Our analysis of the hydrolysate showed that, **within the measured sugar fraction, glucose accounted for approximately 80.33% and xylose for 19.67%**.
+
+Thus, glucose was the predominant sugar, but xylose represented a substantial component of the fermentation feedstock.`}</IhpRichText>
                     ),
                   },
                   {
-                    kind: "metrics",
-                    label: "Measured hydrolysate sugar fraction",
-                    items: [
-                      {
-                        value: "80.33%",
-                        label: "Glucose",
-                        detail: "of measured sugars",
-                      },
-                      {
-                        value: "19.67%",
-                        label: "Xylose",
-                        detail: "of measured sugars",
-                      },
-                    ],
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <p>
+                        <strong>
+                          <Link to={"/design#design-saccharification-module"}>
+                            {"Explore the CBS System →"}
+                          </Link>
+                        </strong>
+                      </p>
+                    ),
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Thus, glucose was the predominant sugar, but xylose represented a substantial component of the fermentation feedstock."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            <Link to={"/design#design-saccharification-module"}>
-                              {"Explore the CBS System →"}
-                            </Link>
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We then examined A08 growth under different carbon-source conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The experiments showed that A08 could grow in the presence of glucose, xylose, and arabinose. However, subsequent fermentation comparisons revealed differences in PMA production: as the proportion of xylose increased in glucose–xylose mixtures, PMA titers generally decreased."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These results drew our attention to the distinction between being able to grow on a carbon source and achieving favorable PMA production under that condition."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`We then examined A08 growth under different carbon-source conditions.
+
+The experiments showed that A08 could grow in the presence of glucose, xylose, and arabinose. However, subsequent fermentation comparisons revealed differences in PMA production: as the proportion of xylose increased in glucose–xylose mixtures, PMA titers generally decreased.
+
+These results drew our attention to the distinction between being able to grow on a carbon source and achieving favorable PMA production under that condition.`}</IhpRichText>
                     ),
                   },
                   {
@@ -1589,11 +1436,7 @@ export const ihpSections: IhpSectionContent[] = [
                   {
                     kind: "content",
                     inline: true,
-                    content: (
-                      <>
-                        <strong>{"Dr. Le Yu"}</strong>
-                      </>
-                    ),
+                    content: <IhpRichText inline>**Dr. Le Yu**</IhpRichText>,
                   },
                   {
                     kind: "gallery",
@@ -1609,54 +1452,24 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 2,
                     ratio: "345 / 260",
-                    caption:
-                      "Discussion with Dr. Le Yu on xylose utilization and PMA production.",
+                    caption: "Discussing xylose utilization with Dr. Le Yu.",
                     figureNumber: 10,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "We discussed this experimental observation with Dr. Le Yu."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "If A08 could grow under xylose conditions, why did its PMA production decline as the xylose proportion increased? What did this mean for the utilization of straw-derived hydrolysate?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Dr. Yu encouraged us to consider not only the glucose fraction, which supported more favorable PMA production, but also the carbon represented by xylose."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Xylose had already been released from straw during upstream saccharification and formed part of the available fermentation substrate. Evaluating the potential of agricultural biomass valorization therefore required considering whether this carbon could contribute to the formation of the final product."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Her perspective helped us clarify an important distinction: "
-                          }
-                          <strong>
-                            {
-                              "growth on a particular sugar does not necessarily mean efficient production of the target compound under that condition"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "For Carbotex, the goal was not merely to demonstrate that A08 could grow in a xylose-containing environment. We also wanted to explore how to improve PMA production under such conditions, making better use of the carbon available in straw hydrolysate for downstream biomanufacturing."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`We discussed this experimental observation with Dr. Le Yu.
+
+**If A08 could grow under xylose-containing conditions, why did its PMA production decline as the xylose proportion increased? What did this mean for the utilization of straw-derived hydrolysate?**
+
+Dr. Yu encouraged us to look beyond the glucose fraction, which had supported more favorable PMA production in our experiments, and also consider the xylose released during straw saccharification.
+
+Since xylose forms part of the sugars available in straw-derived hydrolysate, its potential contribution to PMA production should not be overlooked simply because A08 performed less favorably under xylose-rich conditions.
+
+This discussion helped us recognize an important distinction: **the ability to grow in a xylose-containing medium does not necessarily mean that PMA can be produced efficiently under the same conditions.**
+
+Rather than focusing only on the sugar conditions that favored PMA production, we began to consider how production could be improved in the presence of xylose, with the broader aim of making better use of the carbon available in straw-derived hydrolysate.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1668,73 +1481,15 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Combining the experimental findings with Dr. Yu's perspective, we examined the relationship between microbial growth and PMA production under different carbon-source conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "A08 grew under glucose, xylose, and arabinose conditions, but its PMA-production performance varied."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In our initial glucose–xylose composition comparison, the PMA titer was approximately "
-                          }
-                          <strong>
-                            {"19.00 g/L under glucose-only conditions"}
-                          </strong>
-                          {", compared with "}
-                          <strong>
-                            {"11.61 g/L under xylose-only conditions"}
-                          </strong>
-                          {
-                            ". PMA titers generally declined as the xylose proportion increased in the mixed-sugar formulations."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "metrics",
-                    label: "PMA titer by single sugar",
-                    items: [
-                      {
-                        value: "19.00 g/L",
-                        label: "Glucose-only",
-                      },
-                      {
-                        value: "11.61 g/L",
-                        label: "Xylose-only",
-                      },
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "We also examined PMA production at different initial xylose concentrations. Increasing the supplied xylose concentration did not lead to a continuous increase in PMA titer, indicating that greater substrate loading alone was insufficient to resolve the production challenge."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together with the mixed-sugar composition of the actual corn-stover hydrolysate, these findings identified "
-                          }
-                          <strong>
-                            {
-                              "improving PMA production by A08 under xylose-containing conditions"
-                            }
-                          </strong>
-                          {
-                            " as an important direction for subsequent engineering."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`Combining the experimental findings with Dr. Yu's perspective, we examined the relationship between microbial growth and PMA production under different carbon-source conditions.
+
+A08 grew under glucose, xylose, and arabinose conditions, but its PMA-production performance varied.
+
+In our initial glucose–xylose composition comparison, the PMA titer was approximately **19.00 g/L under glucose-only conditions**, compared with **11.61 g/L under xylose-only conditions**. PMA titers generally declined as the xylose proportion increased in the mixed-sugar formulations.
+
+We also examined PMA production at different initial xylose concentrations. Increasing the supplied xylose concentration did not lead to a continuous increase in PMA titer, indicating that greater substrate loading alone was insufficient to resolve the production challenge.
+
+Together with the mixed-sugar composition of the actual corn-stover hydrolysate, these findings identified **improving PMA production by A08 under xylose-containing conditions** as an important direction for subsequent engineering.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1746,25 +1501,22 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Based on the experimental results and Dr. Yu's perspective, we focused our subsequent engineering efforts on improving PMA production by A08 under glucose–xylose conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We emphasized PMA titers across different glucose–xylose formulations and included treated corn-stover hydrolysate in the fermentation evaluation framework to examine whether engineering could improve product accumulation under conditions relevant to our feedstock."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            <Link to={"/design#design-xylose-module"}>
-                              {"Explore the Mixed-Sugar Fermentation Results →"}
-                            </Link>
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Based on the experimental results and Dr. Yu's perspective, we focused our subsequent engineering efforts on improving PMA production by A08 under glucose–xylose conditions.
+
+We emphasized PMA titers across different glucose–xylose formulations and included treated corn-stover hydrolysate in the fermentation evaluation framework to examine whether engineering could improve product accumulation under conditions relevant to our feedstock.`}</IhpRichText>
+                    ),
+                  },
+                  {
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <p>
+                        <strong>
+                          <Link to={"/design#design-xylose-module"}>
+                            {"Explore the Mixed-Sugar Fermentation Results →"}
+                          </Link>
+                        </strong>
+                      </p>
                     ),
                   },
                 ],
@@ -1776,35 +1528,15 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "This stage established a production challenge for A08 under xylose-containing conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Although the strain could grow on xylose, PMA titers were relatively low when xylose made up a greater proportion of the carbon source. Increasing xylose loading also failed to produce a sustained improvement in PMA accumulation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together with Dr. Yu's emphasis on the value of the available feedstock carbon, these findings shifted our attention beyond substrate composition and cultivation conditions toward biological processes that might influence product formation."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Which biological mechanisms might affect PMA production by A08 under xylose-containing conditions?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This led us to investigate regulatory processes associated with pentose metabolism."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`This stage established a production challenge for A08 under xylose-containing conditions.
+
+Although the strain could grow on xylose, PMA titers were relatively low when xylose made up a greater proportion of the carbon source. Increasing xylose loading also failed to produce a sustained improvement in PMA accumulation.
+
+Together with Dr. Yu's emphasis on the value of the available feedstock carbon, these findings shifted our attention beyond substrate composition and cultivation conditions toward biological processes that might influence product formation.
+
+**Which biological mechanisms might affect PMA production by A08 under xylose-containing conditions?**
+
+This led us to investigate regulatory processes associated with pentose metabolism.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1813,7 +1545,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "From Metabolic Limitation to Regulatory Engineering",
+            text: "2.2.3 From Metabolic Limitation to Regulatory Engineering",
           },
           {
             kind: "trace",
@@ -1826,20 +1558,9 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Having identified the PMA-production challenge under xylose-containing conditions, we needed to explore engineering strategies that could be tested in A08."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Should we modify individual metabolic reactions, or focus on upstream regulators capable of coordinating several metabolic processes?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Having identified the PMA-production challenge under xylose-containing conditions, we needed to explore engineering strategies that could be tested in A08.
+
+**Should we modify individual metabolic reactions, or focus on upstream regulators capable of coordinating several metabolic processes?**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1854,53 +1575,27 @@ export const ihpSections: IhpSectionContent[] = [
                   {
                     kind: "content",
                     inline: true,
-                    content: (
-                      <>
-                        <strong>{"Dr. Nan Hao"}</strong>
-                      </>
-                    ),
+                    content: <IhpRichText inline>**Dr. Nan Hao**</IhpRichText>,
                   },
                   {
                     kind: "figure",
                     src: "https://static.igem.wiki/teams/6147/wiki/ihp-reach-out-dr-nan-hao-01-discussion.avif",
                     alt: "Discussion with Dr. Nan Hao on A08 xylose utilization.",
                     ratio: "540 / 380",
-                    caption:
-                      "Discussion with Dr. Nan Hao on xylose-related regulation.",
+                    caption: "Regulatory discussion with Dr. Nan Hao.",
                     figureNumber: 11,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "To better understand the biological mechanisms that might contribute to A08's PMA-production performance under xylose-containing conditions, we discussed the problem with Dr. Nan Hao."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Dr. Hao drew our attention to the fact that microbial responses to different carbon sources involve not only metabolic enzymes, but also carbon-source sensing and gene-expression regulation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Under pentose conditions in particular, several metabolic processes may be influenced by interconnected regulatory mechanisms rather than by a single metabolic reaction."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This perspective broadened our initial focus on individual metabolic steps and encouraged us to consider "
-                          }
-                          <strong>
-                            {
-                              "whether transcriptional regulation might also influence carbon-source responses and PMA production in A08"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                      </>
+                      <IhpRichText>{`To better understand the biological mechanisms that might contribute to A08's PMA-production performance under xylose-containing conditions, we discussed the problem with Dr. Nan Hao.
+
+Dr. Hao drew our attention to the fact that microbial responses to different carbon sources involve not only metabolic enzymes, but also carbon-source sensing and gene-expression regulation.
+
+Under pentose conditions in particular, several metabolic processes may be influenced by interconnected regulatory mechanisms rather than by a single metabolic reaction.
+
+This perspective broadened our initial focus on individual metabolic steps and encouraged us to consider **whether transcriptional regulation might also influence carbon-source responses and PMA production in A08**.`}</IhpRichText>
                     ),
                   },
                   {
@@ -1910,11 +1605,7 @@ export const ihpSections: IhpSectionContent[] = [
                   {
                     kind: "content",
                     inline: true,
-                    content: (
-                      <>
-                        <strong>{"Dr. Tao Ma"}</strong>
-                      </>
-                    ),
+                    content: <IhpRichText inline>**Dr. Tao Ma**</IhpRichText>,
                   },
                   {
                     kind: "gallery",
@@ -1930,41 +1621,22 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 2,
                     ratio: "345 / 260",
-                    caption:
-                      "Discussion with Dr. Tao Ma on regulatory engineering for xylose utilization.",
+                    caption: "Consulting Dr. Tao Ma on xylose regulation.",
                     figureNumber: 12,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Building on this regulatory perspective, we further discussed potential engineering strategies with Dr. Tao Ma."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Because pentose metabolism involves several interconnected processes, modifying downstream metabolic enzymes one by one could increase engineering complexity without necessarily improving the cell's overall response to a carbon source."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In contrast, upstream transcriptional regulators may influence the expression of multiple related genes, making them promising candidates for further investigation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "At the same time, the involvement of a regulator in pentose responses does not necessarily mean that increasing its expression will improve PMA production. Its effects on microbial growth and target-product formation must be evaluated experimentally."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These discussions encouraged us to examine the biological functions and potential engineering value of pentose-associated transcriptional regulators, providing a useful perspective for subsequent target investigation."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`Building on this regulatory perspective, we further discussed potential engineering strategies with Dr. Tao Ma.
+
+Because pentose metabolism involves several interconnected processes, modifying downstream metabolic enzymes one by one could increase engineering complexity without necessarily improving the cell's overall response to a carbon source.
+
+In contrast, upstream transcriptional regulators may influence the expression of multiple related genes, making them promising candidates for further investigation.
+
+At the same time, the involvement of a regulator in pentose responses does not necessarily mean that increasing its expression will improve PMA production. Its effects on microbial growth and target-product formation must be evaluated experimentally.
+
+These discussions encouraged us to examine the biological functions and potential engineering value of pentose-associated transcriptional regulators, providing a useful perspective for subsequent target investigation.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -1976,56 +1648,17 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Drawing on these discussions, we used literature research and the gene-annotation records of A08 to identify two candidate transcriptional regulators associated with fungal pentose responses: "
-                          }
-                          <strong>{"XlnR and AraR"}</strong>
-                          {", corresponding to "}
-                          <em>{"xlnR"}</em>
-                          {" (g3332.t1) and "}
-                          <em>{"araR"}</em>
-                          {" (g13480.t1), respectively."}
-                        </p>
-                        <p>
-                          {
-                            "Previous research has implicated these regulators in fungal responses to pentose carbon sources "
-                          }
-                          <Cite k={["deSouza2013AraRXlnR"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "After identifying the candidates, we used published XlnR-recognition motifs to examine promoter sequences of selected PMA-associated and central-carbon-metabolism genes."
-                          }
-                        </p>
-                        <p>
-                          {"The analysis included "}
-                          <em>{"PMA-1"}</em>
-                          {", "}
-                          <em>{"PMA-2"}</em>
-                          {", and glycolysis-associated targets "}
-                          <em>{"HK"}</em>
-                          {", "}
-                          <em>{"PFK"}</em>
-                          {", "}
-                          <em>{"GAPDH"}</em>
-                          {", and "}
-                          <em>{"PGK"}</em>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "The predicted motif matches suggested possible links among pentose-responsive regulation, central carbon metabolism, and PMA production, providing a rationale for subsequent experimental testing."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, the literature and sequence analyses supported the selection of XlnR and AraR as engineering targets requiring further functional validation."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`Drawing on these discussions, we used literature research and the gene-annotation records of A08 to identify two candidate transcriptional regulators associated with fungal pentose responses: **XlnR and AraR**, corresponding to *xlnR* (g3332.t1) and *araR* (g13480.t1), respectively.
+
+Previous research has implicated these regulators in fungal responses to pentose carbon sources.{{cite:deSouza2013AraRXlnR}}
+
+After identifying the candidates, we used published XlnR-recognition motifs to examine promoter sequences of selected PMA-associated and central-carbon-metabolism genes.
+
+The analysis included *PMA-1*, *PMA-2*, and glycolysis-associated targets *HK*, *PFK*, *GAPDH*, and *PGK*.
+
+The predicted motif matches suggested possible links among pentose-responsive regulation, central carbon metabolism, and PMA production, providing a rationale for subsequent experimental testing.
+
+Together, the literature and sequence analyses supported the selection of XlnR and AraR as engineering targets requiring further functional validation.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2037,28 +1670,13 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "We established two complementary series of engineered strains centered on XlnR and AraR."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The first series used single- and double-regulator deletions to investigate how these factors affected A08 growth under xylose and arabinose conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The second series used individual and combined overexpression of XlnR and AraR to evaluate whether these modifications could improve PMA production under different glucose–xylose compositions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these experiments allowed us to examine the biological roles of the regulators and their potential engineering value, informing the subsequent selection of strains with favorable production performance."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`We established two complementary series of engineered strains centered on XlnR and AraR.
+
+The first series used single- and double-regulator deletions to investigate how these factors affected A08 growth under xylose and arabinose conditions.
+
+The second series used individual and combined overexpression of XlnR and AraR to evaluate whether these modifications could improve PMA production under different glucose–xylose compositions.
+
+Together, these experiments allowed us to examine the biological roles of the regulators and their potential engineering value, informing the subsequent selection of strains with favorable production performance.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2070,68 +1688,13 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "The regulator-deletion experiments showed that XlnR and AraR were associated with growth under pentose conditions, although their effects varied with the carbon source."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Under xylose conditions, the double-deletion strain showed the strongest growth reduction, with an endpoint OD₆₀₀ of approximately "
-                          }
-                          <strong>{"1.27"}</strong>
-                          {", compared with "}
-                          <strong>{"3.90"}</strong>
-                          {" for the parental A08 strain."}
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "metrics",
-                    label: "Endpoint growth under xylose",
-                    items: [
-                      {
-                        value: "1.27",
-                        label: "Double-regulator deletion",
-                        detail: "endpoint OD₆₀₀",
-                      },
-                      {
-                        value: "3.90",
-                        label: "Parental A08",
-                        detail: "endpoint OD₆₀₀",
-                      },
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Under arabinose conditions, deleting AraR alone had a greater effect on growth than deleting XlnR alone."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These findings supported investigating the two regulators individually and in combination, while also highlighting the importance of regulatory responses under pentose conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, changes in deletion-strain growth did not establish whether overexpression could improve PMA production."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "We therefore turned to fermentation evaluation to determine the actual PMA-production performance of the XlnR/AraR-engineered strains."
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`The regulator-deletion experiments suggested that XlnR and AraR contributed to A08's growth under pentose conditions, although their effects varied with the carbon source.
+
+Under xylose conditions, the double-deletion strain showed a marked reduction in growth, with an endpoint OD₆₀₀ of approximately **1.27**, compared with **3.90** for the parental A08 strain. Under arabinose conditions, deleting AraR alone had a greater effect on growth than deleting XlnR alone.
+
+These findings led us to hypothesize that, since the loss of XlnR and AraR impaired growth under xylose conditions, increasing their expression might improve A08's growth performance in xylose-containing media and potentially support PMA production under glucose–xylose conditions.
+
+However, improved growth would not necessarily translate into higher PMA production. **We therefore proceeded to fermentation experiments to test whether overexpression of XlnR and/or AraR could improve PMA titers under glucose–xylose conditions.**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2140,7 +1703,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "Turning Regulatory Engineering into Fermentation Evidence",
+            text: "2.2.4 Turning Regulatory Engineering into Fermentation Evidence",
           },
           {
             kind: "trace",
@@ -2153,20 +1716,11 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Identifying XlnR and AraR provided a clear engineering direction, but successful genetic modification alone could not demonstrate an improvement in PMA production."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Could regulatory engineering improve PMA production under glucose–xylose conditions and in corn-stover hydrolysate?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`The deletion experiments suggested that XlnR and AraR influenced A08's growth under pentose conditions, leading us to hypothesize that their overexpression might improve its performance in xylose-containing media.
+
+However, changes in growth performance could not establish whether regulatory engineering would actually improve PMA production.
+
+**How could we test whether this hypothesis was valid and evaluate its practical feasibility?**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2182,9 +1736,7 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: true,
                     content: (
-                      <>
-                        <strong>{"Prof. Qilin Yu"}</strong>
-                      </>
+                      <IhpRichText inline>**Prof. Qilin Yu**</IhpRichText>
                     ),
                   },
                   {
@@ -2193,44 +1745,27 @@ export const ihpSections: IhpSectionContent[] = [
                     alt: "Discussion with Prof. Qilin Yu on functional validation of the regulatory strategy.",
                     ratio: "540 / 380",
                     caption:
-                      "Discussion with Prof. Qilin Yu on functional validation.",
+                      "Reviewing functional validation with Prof. Qilin Yu.",
                     figureNumber: 13,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "To improve the functional evaluation of our engineered strains, we discussed our experimental approach with Prof. Qilin Yu."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Prof. Yu emphasized the importance of distinguishing successful genetic modification from genuine functional improvement."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For Carbotex, confirming that a genetic construct had been successfully introduced was not enough. We also needed to examine whether the modification affected strain performance under different carbon-source conditions and, ultimately, promoted the formation of the target product."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "His advice reinforced three connected levels of evaluation:"
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`To seek advice on validating our regulatory engineering strategy, we met with Prof. Qilin Yu and first introduced the overall objectives of Carbotex and our previous experimental work.
+
+We explained that PMA production had declined as the xylose proportion increased in our glucose–xylose experiments. We also shared the results of our XlnR/AraR deletion experiments, which suggested that these regulators influenced A08's growth under pentose conditions. Based on these observations, we had proposed that overexpressing XlnR and AraR might improve A08's performance in xylose-containing media.
+
+We presented this hypothesis to Prof. Yu and asked for his advice on how to verify its validity and evaluate its practical feasibility.
+
+After learning about our experimental findings and proposed strategy, Prof. Yu emphasized that successful genetic modification, changes in microbial growth, and improved product formation represented different levels of evidence.
+
+He pointed out that confirming a genetic modification alone would not demonstrate improved production performance. Even if an engineered strain showed better growth under xylose-containing conditions, this would not necessarily mean that more PMA was produced.
+
+His advice helped us clarify the need to evaluate our engineering strategy at three levels: confirming the genetic modification, examining strain growth under relevant carbon-source conditions, and directly comparing PMA production between engineered strains and the parental A08 strain.
+
+**Genetic Confirmation → Carbon-Source Growth Response → PMA Production Evaluation**`}</IhpRichText>
                     ),
-                  },
-                  {
-                    kind: "flow",
-                    steps: [
-                      "Genetic Modification",
-                      "Carbon-Source Response",
-                      "PMA Production",
-                    ],
                   },
                 ],
               },
@@ -2241,28 +1776,13 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Following this evaluation framework, we examined genetic engineering outcomes alongside strain growth and PMA production."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Using our existing strain-comparison system, we focused on the performance of A08, OE-XlnR, OE-AraR, and OE-XlnR+AraR under different glucose–xylose compositions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Because Carbotex uses sugars derived from agricultural residues, it was also important to examine PMA production by these strains in actual corn-stover hydrolysate."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "By considering both defined mixed-sugar formulations and straw-derived hydrolysate, we could evaluate the regulatory engineering strategy in relation to the project's intended feedstock."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`Following Prof. Yu's advice, we organized our evaluation around three levels: confirming the intended genetic modifications, examining strain growth under different carbon-source conditions, and determining whether these changes were accompanied by improvements in PMA production.
+
+To assess the effects of regulatory engineering, we compared the parental A08 strain with OE-XlnR, OE-AraR, and OE-XlnR+AraR under different glucose–xylose ratios. This comparison allowed us to investigate whether overexpressing either regulator individually or both regulators together could improve PMA production, rather than merely affecting microbial growth.
+
+We also included corn-stover hydrolysate in the fermentation evaluation to examine the relevance of our engineering strategy to the project's intended feedstock. Unlike defined glucose–xylose mixtures, actual hydrolysate presents a more complex substrate environment.
+
+By combining these evaluations, we aimed to determine not only whether the regulatory modifications affected strain performance, but also whether they could support improved PMA production under conditions relevant to agricultural straw utilization.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2274,41 +1794,30 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "We extended strain evaluation beyond genetic construct verification to functional production performance."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We compared the growth and PMA production of the four strains across different glucose–xylose formulations and conducted further fermentation experiments using treated corn-stover hydrolysate."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In addition, to explore molecular responses associated with the observed production phenotype, we compared the relative transcript levels of selected xylose-metabolism-related and PMA-associated genes between A08 and OE-XlnR+AraR."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these comparisons connected regulatory engineering, carbon-source conditions, and target-product formation."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            <Link
-                              to={
-                                "/design#design-xylose-module-experimental-design"
-                              }
-                            >
-                              {
-                                "Explore AraR/XlnR Fermentation and PMA Results →"
-                              }
-                            </Link>
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`We extended strain evaluation beyond genetic construct verification to functional production performance.
+
+We compared the growth and PMA production of the four strains across different glucose–xylose formulations and conducted further fermentation experiments using treated corn-stover hydrolysate.
+
+In addition, to explore molecular responses associated with the observed production phenotype, we compared the relative transcript levels of selected xylose-metabolism-related and PMA-associated genes between A08 and OE-XlnR+AraR.
+
+Together, these comparisons connected regulatory engineering, carbon-source conditions, and target-product formation.`}</IhpRichText>
+                    ),
+                  },
+                  {
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <p>
+                        <strong>
+                          <Link
+                            to={
+                              "/design#design-xylose-module-experimental-design"
+                            }
+                          >
+                            {"Explore AraR/XlnR Fermentation and PMA Results →"}
+                          </Link>
+                        </strong>
+                      </p>
                     ),
                   },
                 ],
@@ -2320,119 +1829,27 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {"Our fermentation results showed that "}
-                          <strong>
-                            {
-                              "co-overexpression of XlnR and AraR improved PMA production under xylose-containing conditions"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "Under xylose-only conditions, OE-XlnR+AraR achieved a PMA titer of "
-                          }
-                          <strong>{"13.86 g/L"}</strong>
-                          {", compared with "}
-                          <strong>{"10.04 g/L"}</strong>
-                          {
-                            " for the parental A08 strain, an increase of approximately "
-                          }
-                          <strong>{"38.0%"}</strong>
-                          {"."}
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "metrics",
-                    label: "OE-XlnR+AraR under xylose-only conditions",
-                    items: [
-                      {
-                        value: "13.86 g/L",
-                        label: "OE-XlnR+AraR",
-                      },
-                      {
-                        value: "10.04 g/L",
-                        label: "Parental A08",
-                      },
-                      {
-                        value: "+38.0%",
-                        label: "PMA titer increase",
-                      },
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        {
-                          "The improvement was also observed in corn-stover hydrolysate: the dual-overexpression strain reached "
-                        }
-                        <strong>{"18.63 g/L"}</strong>
-                        {", compared with "}
-                        <strong>{"15.87 g/L"}</strong>
-                        {" for A08, an increase of approximately "}
-                        <strong>{"17.4%"}</strong>
-                        {"."}
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "metrics",
-                    label: "OE-XlnR+AraR in corn-stover hydrolysate",
-                    items: [
-                      {
-                        value: "18.63 g/L",
-                        label: "OE-XlnR+AraR",
-                      },
-                      {
-                        value: "15.87 g/L",
-                        label: "Parental A08",
-                      },
-                      {
-                        value: "+17.4%",
-                        label: "PMA titer increase",
-                      },
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "These results demonstrated an improved production phenotype under conditions relevant to the project's agricultural feedstock, supporting our regulatory engineering strategy."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Furthermore, the relative expression levels of selected xylose-metabolism-related and PMA-associated genes were higher in the dual-overexpression strain than in A08, consistent with its improved PMA production."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these findings confirmed that XlnR/AraR co-overexpression promoted PMA accumulation under the conditions tested."
-                          }
-                        </p>
-                        <p>{"They also raised a further question:"}</p>
-                        <p>
-                          <strong>
-                            {
-                              "Having improved PMA production under xylose-containing conditions, could we increase production further by strengthening the supply of metabolic precursors required for PMA synthesis?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This extended our investigation from regulatory engineering toward precursor-supply engineering."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`Our fermentation results showed that **co-overexpression of XlnR and AraR improved PMA production under xylose-containing conditions**.
+
+Under xylose-only conditions, OE-XlnR+AraR achieved a PMA titer of **13.86 g/L**, compared with **10.04 g/L** for the parental A08 strain, an increase of approximately **38.0%**.
+
+The improvement was also observed in corn-stover hydrolysate: the dual-overexpression strain reached **18.63 g/L**, compared with **15.87 g/L** for A08, an increase of approximately **17.4%**.
+
+These results demonstrated an improved production phenotype under conditions relevant to the project's agricultural feedstock, supporting our regulatory engineering strategy.
+
+Furthermore, the relative expression levels of selected xylose-metabolism-related and PMA-associated genes were higher in the dual-overexpression strain than in A08, consistent with its improved PMA production.
+
+Together, these findings showed that XlnR/AraR co-overexpression improved PMA production under the conditions tested.
+
+However, our team hoped to further increase PMA production beyond the improvements achieved through regulatory engineering. We therefore began to explore whether additional optimization of the PMA biosynthetic pathway could provide another opportunity for enhancing production.
+
+During PMA biosynthesis, carbon from utilized sugars enters central carbon metabolism, contributing to the formation of intermediates such as oxaloacetate, which can subsequently be converted into L-malic acid, the building block of PMA.
+
+This led us to consider whether strengthening the upstream supply of metabolic precursors could provide more substrates for PMA biosynthesis and potentially support further production improvements.
+
+**Could we further increase PMA production by enhancing the upstream supply of its biosynthetic precursors?**
+
+To pursue further improvements in PMA production, we therefore extended our engineering strategy beyond carbon-source-responsive regulation and began exploring metabolic precursor-supply engineering.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2441,7 +1858,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "Following Carbon Flow Toward PMA",
+            text: "2.2.5 Following Carbon Flow Toward PMA",
           },
           {
             kind: "trace",
@@ -2454,25 +1871,11 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "XlnR/AraR co-overexpression improved PMA production under xylose-containing conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, improved production performance did not necessarily mean that the metabolic precursor supply for PMA synthesis had been fully optimized."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "How could we further support the conversion of carbon entering central metabolism into PMA?"
-                            }
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`XlnR/AraR co-overexpression improved PMA production under xylose-containing conditions.
+
+However, improved production performance did not necessarily mean that the metabolic precursor supply for PMA synthesis had been fully optimized.
+
+**How could we further support the conversion of carbon entering central metabolism into PMA?**`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2488,9 +1891,7 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: true,
                     content: (
-                      <>
-                        <strong>{"Prof. Weihui Wu"}</strong>
-                      </>
+                      <IhpRichText inline>**Prof. Weihui Wu**</IhpRichText>
                     ),
                   },
                   {
@@ -2499,38 +1900,29 @@ export const ihpSections: IhpSectionContent[] = [
                     alt: "Discussion with Prof. Weihui Wu on intracellular carbon allocation.",
                     ratio: "540 / 380",
                     caption:
-                      "Discussion with Prof. Weihui Wu on intracellular carbon allocation.",
+                      "Discussing carbon allocation with Prof. Weihui Wu.",
                     figureNumber: 14,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "To explore this question, we discussed intracellular carbon allocation and its relationship with product formation with Prof. Weihui Wu."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Prof. Wu encouraged us to distinguish carbon entering cellular metabolism from carbon ultimately contributing to the synthesis of the target product."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Carbon entering central metabolism may support biomass formation, cellular maintenance, competing metabolic processes, or target-product synthesis. Therefore, improved production under a particular carbon-source condition does not imply that all available carbon is directed toward PMA biosynthesis."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This perspective drew our attention to the metabolic processes supporting PMA synthesis, especially the supply of relevant precursor molecules."
-                          }
-                        </p>
-                        <p>
-                          <strong>{"Follow-up with Prof. Guanglei Liu"}</strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`To explore this question, we discussed intracellular carbon allocation and its relationship with product formation with Prof. Weihui Wu.
+
+Prof. Wu encouraged us to distinguish carbon entering cellular metabolism from carbon ultimately contributing to the synthesis of the target product.
+
+Carbon entering central metabolism may support biomass formation, cellular maintenance, competing metabolic processes, or target-product synthesis. Therefore, improved production under a particular carbon-source condition does not imply that all available carbon is directed toward PMA biosynthesis.
+
+This perspective drew our attention to the metabolic processes supporting PMA synthesis, especially the supply of relevant precursor molecules.`}</IhpRichText>
+                    ),
+                  },
+                  {
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <IhpRichText inline>
+                        **Follow-up with Prof. Guanglei Liu**
+                      </IhpRichText>
                     ),
                   },
                   {
@@ -2538,38 +1930,22 @@ export const ihpSections: IhpSectionContent[] = [
                     src: "https://static.igem.wiki/teams/6147/wiki/ihp-follow-up-prof-guanglei-liu-01-metabolic-route-discussion.avif",
                     alt: "Follow-up discussion with Prof. Guanglei Liu on the metabolic route toward PMA.",
                     ratio: "540 / 380",
-                    caption:
-                      "Follow-up with Prof. Guanglei Liu on the metabolic route toward PMA.",
+                    caption: "Follow-up discussion on PMA precursor supply.",
                     figureNumber: 15,
                   },
                   {
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "As we considered the metabolic fate of carbon entering the cell, we returned to Prof. Guanglei Liu to discuss the PMA biosynthetic route."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Unlike our initial discussion about the carbon source, target product, and microbial chassis, this consultation focused on a more specific question:"
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "How could strengthening metabolic precursor supply support additional PMA synthesis?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This follow-up connected the previously established A08–PMA production route with questions emerging from regulatory engineering and fermentation evaluation, providing direction for further pathway analysis."
-                          }
-                        </p>
-                      </>
+                      <IhpRichText>{`To explore the possibility of further increasing PMA production, we returned to Prof. Guanglei Liu for additional guidance.
+
+During this follow-up discussion, we first shared our recent experimental progress, including the improvement in PMA production achieved through XlnR/AraR co-overexpression. We also introduced our new idea of enhancing PMA production by strengthening the upstream supply of metabolic precursors.
+
+Prof. Liu suggested that, beyond improving the regulatory response to different carbon sources, we should also examine the metabolic pathways responsible for supplying the building blocks of PMA.
+
+He encouraged us to pay particular attention to the formation of L-malic acid, the monomer of PMA, and to investigate the upstream metabolic reactions that contribute to its synthesis. Strengthening these pathways might provide another opportunity to improve PMA production, although the effectiveness of such an approach would require experimental verification.
+
+His advice gave us a clearer direction for further investigation: identifying the upstream metabolic reactions that could influence the availability of L-malic acid for PMA biosynthesis.`}</IhpRichText>
                     ),
                   },
                 ],
@@ -2579,58 +1955,46 @@ export const ihpSections: IhpSectionContent[] = [
                 parts: [
                   {
                     kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        {
-                          "We examined the relationship between central carbon metabolism and PMA biosynthesis:"
-                        }
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "flow",
-                    steps: ["Pyruvate", "Oxaloacetate", "Malate", "PMA"],
-                  },
-                  {
-                    kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Pyruvate carboxylase (PYC) catalyzes the conversion of pyruvate to oxaloacetate and is one of the enzymes linking central metabolism to malate precursor supply "
-                          }
-                          <Cite k={["Jitrapakdee2008PYC"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "Based on the known metabolic role of PYC and our examination of the PMA biosynthetic pathway, we considered PYC a candidate target for investigating precursor supply."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {"Related Team Work — A08 Metabolic Modeling."}
-                          </strong>
-                          {
-                            " The Model group also explored a genome-informed research direction for analyzing A08 metabolism, considering proteome prediction, genome-scale metabolic modeling (GEM), and flux variability analysis (FVA) as possible computational steps. This offers a complementary perspective on intracellular carbon allocation. We do not claim that a completed GEM/FVA prediction preceded or directly determined the PYC constructs tested in the wet lab. The engineering work described below is supported by the team's documented strain construction and fermentation measurements."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "To explore whether PYC genes from different sources might influence PMA production, we considered four candidate sources, including endogenous A08 PYC."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            <Link to={"/model#model-overview"}>
-                              {"Explore the Modeling Analysis →"}
-                            </Link>
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Following our discussions with **Prof. Liu**, we gained a clearer understanding of the importance of metabolic precursor supply in PMA biosynthesis. His suggestions not only inspired our Wet Lab engineering strategy but also provided valuable direction for our Model team, encouraging us to explore how intracellular carbon flux could be directed toward PMA production.
+
+Our pathway analysis highlighted a potential precursor-supply route in which pyruvate is converted into oxaloacetate by pyruvate carboxylase (PYC), followed by reduction to L-malic acid through malate dehydrogenase (MDH). L-malic acid subsequently serves as the building block for PMA biosynthesis.
+
+**Pyruvate → Oxaloacetate → L-Malic Acid → PMA**
+
+This pathway suggested that strengthening PYC-related precursor supply might support downstream PMA production.{{cite:Jitrapakdee2008PYC}}`}</IhpRichText>
                     ),
+                  },
+                  {
+                    kind: "related",
+                    title: "A08 Genome-Scale Metabolic Modeling",
+                    parts: [
+                      {
+                        kind: "content",
+                        inline: false,
+                        content: (
+                          <IhpRichText>{`Inspired by this exchange, our **Model team** further investigated A08 metabolism through genome-scale metabolic modeling. Starting from the A08 genomic sequence, the team reconstructed a genome-scale metabolic model (GEM), incorporating enzyme annotation, subcellular localization, and metabolic network analysis.
+
+Using flux-based approaches, including FBA/pFBA, FSEOF, and gene-family knockout simulations, the team identified **PYC as a promising engineering target** associated with malate precursor supply. These computational findings complemented Prof. Liu's suggestions and strengthened our rationale for investigating PYC in the Wet Lab.
+
+Together, the expert feedback, pathway analysis, and modeling work helped us develop a more systematic approach to metabolic engineering. We therefore investigated PYC genes from four candidate sources, including endogenous A08 PYC, to explore their potential effects on PMA production.`}</IhpRichText>
+                        ),
+                      },
+                      {
+                        kind: "content",
+                        inline: true,
+                        content: (
+                          <p>
+                            <strong>
+                              <Link to={"/model#model-overview"}>
+                                {"Explore the Modeling Analysis →"}
+                              </Link>
+                            </strong>
+                          </p>
+                        ),
+                      },
+                    ],
                   },
                 ],
               },
@@ -2641,54 +2005,28 @@ export const ihpSections: IhpSectionContent[] = [
                     kind: "content",
                     inline: false,
                     content: (
-                      <>
-                        <p>
-                          {
-                            "Building on the existing XlnR/AraR co-overexpression background, we investigated whether PYC expression could further support PMA precursor supply."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Four PYC sources were considered during construct development."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "An overexpression strain carrying the endogenous A08 PYC could not be successfully established. We subsequently obtained strains carrying three heterologous PYC candidates and combined the corresponding constructs with the "
-                          }
-                          <strong>{"OE-XlnR+AraR"}</strong>
-                          {" regulatory-engineering background."}
-                        </p>
-                        <p>{"The three heterologous PYC sources were:"}</p>
-                        <ul>
-                          <li>
-                            <em>{"Yarrowia lipolytica"}</em>
-                          </li>
-                          <li>
-                            <em>{"Saccharomyces cerevisiae"}</em>
-                          </li>
-                          <li>
-                            <em>{"Aureobasidium thailandense"}</em>
-                            {" ZW03-4"}
-                          </li>
-                        </ul>
-                        <p>
-                          {
-                            "We compared PMA production by these combined-engineering strains in corn-stover hydrolysate to evaluate the performance of the different PYC constructs under the tested conditions."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            <Link
-                              to={
-                                "/design#design-pyc-module-experimental-design"
-                              }
-                            >
-                              {"Explore PYC Engineering and PMA Results →"}
-                            </Link>
-                          </strong>
-                        </p>
-                      </>
+                      <IhpRichText>{`Building on the improvements achieved through XlnR/AraR co-overexpression, we decided to explore whether strengthening upstream metabolic precursor supply could further enhance PMA production.
+
+Following Prof. Liu's suggestions and our pathway analysis, we selected pyruvate carboxylase (PYC) as a potential engineering target. Considering that PYC genes from different organisms might perform differently in A08, we investigated four candidate sources, including endogenous A08 PYC.
+
+Although we were unable to successfully establish the endogenous PYC overexpression strain, we obtained three combined-engineering strains by introducing heterologous PYC genes into the existing **OE-XlnR+AraR** background.
+
+We then compared their PMA production in corn-stover hydrolysate to evaluate whether this additional engineering strategy could support further improvements under conditions relevant to our intended feedstock.`}</IhpRichText>
+                    ),
+                  },
+                  {
+                    kind: "content",
+                    inline: true,
+                    content: (
+                      <p>
+                        <strong>
+                          <Link
+                            to={"/design#design-pyc-module-experimental-design"}
+                          >
+                            {"Explore PYC Engineering and PMA Results →"}
+                          </Link>
+                        </strong>
+                      </p>
                     ),
                   },
                 ],
@@ -2703,53 +2041,39 @@ export const ihpSections: IhpSectionContent[] = [
                       <>
                         <p>
                           {
-                            "Among the obtained and evaluated combined-engineering strains, the "
+                            "The fermentation results showed differences in PMA production among the tested PYC-engineered strains."
                           }
-                          <strong>
-                            {"SC group achieved the highest PMA titer"}
-                          </strong>
-                          {"."}
                         </p>
                         <p>
-                          {"This strain expressed "}
+                          {"Among them, the "}
+                          <strong>{"SC group"}</strong>
+                          {", which expressed "}
                           <strong>
                             {"PYC1 from "}
                             <em>{"Saccharomyces cerevisiae"}</em>
                           </strong>
+                          {" in the "}
+                          <strong>{"OE-XlnR+AraR"}</strong>
                           {
-                            " in the OE-XlnR+AraR background and achieved a PMA titer of approximately "
+                            " background, achieved the highest PMA titer of approximately "
                           }
                           <strong>{"26 g/L"}</strong>
-                          {" in corn-stover hydrolysate."}
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "metrics",
-                    label: "Highest PMA titer among evaluated combined strains",
-                    items: [
-                      {
-                        value: "≈26 g/L",
-                        label: "SC PYC strain",
-                        detail:
-                          "Corn-stover hydrolysate; highest among evaluated combined strains",
-                      },
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
                           {
-                            "This result demonstrated the improved production performance attainable by combining regulatory engineering with the PYC engineering strategy under the tested fermentation conditions."
+                            " in corn-stover hydrolysate, representing an improvement of approximately "
+                          }
+                          <strong>{"36.8%"}</strong>
+                          {
+                            " over the wild-type A08 control in this comparison."
                           }
                         </p>
                         <p>
                           {
-                            "Although these experiments did not directly quantify intracellular carbon-flux distribution, the fermentation comparisons among PYC constructs provided experimental evidence relevant to investigating the relationship between precursor supply and PMA production."
+                            "These findings supported the potential of combining regulatory engineering with PYC engineering to improve PMA production. However, the experiments did not directly confirm increased intracellular precursor availability or independently quantify the additional contribution of PYC1 overexpression."
+                          }
+                        </p>
+                        <p>
+                          {
+                            "For Carbotex, this stage extended our engineering approach from improving responses to mixed carbon sources toward exploring upstream metabolic precursor supply, providing another direction for further PMA production optimization."
                           }
                         </p>
                       </>
@@ -2767,35 +2091,15 @@ export const ihpSections: IhpSectionContent[] = [
             kind: "content",
             inline: false,
             content: (
-              <>
-                <p>
-                  {
-                    "Through these successive investigations, Carbotex progressed from an existing PMA-producing microbial chassis to an engineered system capable of producing PMA from sugars derived from corn stover."
-                  }
-                </p>
-                <p>
-                  {
-                    "We first connected the PMA-production background of A08 with the potential of PMA for subsequent material development, establishing the biological conversion route."
-                  }
-                </p>
-                <p>
-                  {
-                    "Mixed-sugar experiments then revealed a PMA-production challenge under xylose-containing conditions. Stakeholder perspectives and literature research helped direct our attention to transcriptional regulation, and XlnR/AraR engineering improved PMA production under the conditions tested."
-                  }
-                </p>
-                <p>
-                  {
-                    "Further evaluation led us to investigate precursor supply, where PYC engineering provided another route for improving production."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Across these iterations, we connected straw-derived carbon resources, microbial regulatory engineering, metabolic precursor supply, and PMA production into a coherent biological manufacturing strategy for Carbotex."
-                    }
-                  </strong>
-                </p>
-              </>
+              <IhpRichText>{`Through these successive investigations, Carbotex progressed from an existing PMA-producing microbial chassis to an engineered system capable of producing PMA from sugars derived from corn stover.
+
+We first connected the PMA-production background of A08 with the potential of PMA for subsequent material development, establishing the biological conversion route.
+
+Mixed-sugar experiments then revealed a PMA-production challenge under xylose-containing conditions. Stakeholder perspectives and literature research helped direct our attention to transcriptional regulation, and XlnR/AraR engineering improved PMA production under the conditions tested.
+
+Further evaluation led us to investigate precursor supply, where PYC engineering provided another route for improving production.
+
+**Across these iterations, we connected straw-derived carbon resources, microbial regulatory engineering, metabolic precursor supply, and PMA production into a coherent biological manufacturing strategy for Carbotex.**`}</IhpRichText>
             ),
           },
         ],
@@ -2804,6 +2108,10 @@ export const ihpSections: IhpSectionContent[] = [
         id: "ihp-material",
         title: "2.3 Developing the Material & Application",
         parts: [
+          {
+            kind: "anchor",
+            id: "section-2-3",
+          },
           {
             kind: "content",
             inline: false,
@@ -2824,7 +2132,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "From Fermentation Product to Material Platform",
+            text: "2.3.1 From Fermentation Product to Material Platform",
           },
           {
             kind: "trace",
@@ -2876,8 +2184,7 @@ export const ihpSections: IhpSectionContent[] = [
                     src: "https://static.igem.wiki/teams/6147/wiki/ihp-reach-out-liu-ya-01-materials-perspective.avif",
                     alt: "Discussion with Liu Ya on PMA material properties and downstream potential.",
                     ratio: "540 / 380",
-                    caption:
-                      "Discussion with Liu Ya on PMA structure–property relationships and downstream potential.",
+                    caption: "Discussing PMA material properties with Liu Ya.",
                     figureNumber: 16,
                   },
                   {
@@ -3020,7 +2327,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "From an Application Idea to a Molecular Design",
+            text: "2.3.2 From an Application Idea to a Molecular Design",
           },
           {
             kind: "trace",
@@ -3077,8 +2384,7 @@ export const ihpSections: IhpSectionContent[] = [
                     src: "https://static.igem.wiki/teams/6147/wiki/ihp-reach-out-dr-haotian-guo-01-ccic-feedback.avif",
                     alt: "Discussion with Dr. Haotian Guo during CCiC about Carbotex project integration.",
                     ratio: "540 / 380",
-                    caption:
-                      "Discussion with Dr. Haotian Guo on carbon utilization, PMA production, and adhesive development.",
+                    caption: "Consulting Dr. Haotian Guo on material design.",
                     figureNumber: 17,
                   },
                   {
@@ -3139,8 +2445,7 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 2,
                     ratio: "345 / 260",
-                    caption:
-                      "Bright Moon Seaweed visit on functional natural polymers and material modification.",
+                    caption: "Visit to Bright Moon Seaweed.",
                     figureNumber: 18,
                   },
                   {
@@ -3357,7 +2662,7 @@ export const ihpSections: IhpSectionContent[] = [
           },
           {
             kind: "label",
-            text: "From Molecular Functionalization to Performance Evidence",
+            text: "2.3.3 From Molecular Functionalization to Performance Evidence",
           },
           {
             kind: "trace",
@@ -3420,8 +2725,7 @@ export const ihpSections: IhpSectionContent[] = [
                     ],
                     columns: 2,
                     ratio: "345 / 260",
-                    caption:
-                      "Oyster Science & Technology Courtyard visit on biological adhesion in marine environments.",
+                    caption: "Oyster-inspired adhesion discussion.",
                     figureNumber: 19,
                   },
                   {
@@ -3665,3481 +2969,7 @@ export const ihpSections: IhpSectionContent[] = [
       },
     ],
   },
-  {
-    id: "ihp-responsible-implementation",
-    title: "Responsible Implementation",
-    parts: [],
-    subsections: [
-      {
-        id: "ihp-sustainability",
-        title: "3.1 Rethinking Sustainability",
-        parts: [
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "Our project began with the possibility of transforming straw-derived carbon into a functional bio-based adhesive. As we moved from PMA fermentation to PMA–dopamine (PMA-DA) material preparation, we began to question whether using a renewable feedstock was, by itself, enough to make the overall process sustainable."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "trace",
-            number: 10,
-            stages: [
-              {
-                stage: "trigger",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Carbotex explores an additional material-use pathway for agricultural carbon through microbial PMA production and subsequent functionalization. Initially, the renewable origin of the feedstock was an important part of how we understood the project's potential environmental relevance."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, our actual workflow extended beyond feedstock selection to fermentation, chemical coupling, dialysis, and freeze-drying. We therefore asked:"
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Does renewable carbon automatically make an adhesive-production process sustainable, and what else should we consider?"
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "reach-out",
-                parts: [
-                  {
-                    kind: "anchor",
-                    id: "ihp-eva",
-                  },
-                  {
-                    kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        <strong>{"Eva — Sustainability Expert"}</strong>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-sustainability-eva-sdgs-whole-system-perspective.avif",
-                    alt: "Discussion with sustainability expert Eva about the Sustainable Development Goals and whole-system sustainability.",
-                    ratio: "310 / 410",
-                    caption:
-                      "Discussion with Eva on sustainability assessment.",
-                    figureNumber: 20,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "To examine this question, we spoke with Eva about sustainability and the United Nations Sustainable Development Goals (SDGs)."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Eva encouraged us to look beyond the renewable origin of our feedstock and consider "
-                          }
-                          <strong>
-                            {
-                              "resource inputs, energy requirements, processing steps, and downstream treatment"
-                            }
-                          </strong>
-                          {
-                            " across the production pathway. Her feedback helped us recognize that an environmentally motivated starting material does not, on its own, establish the environmental performance of a final product."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The discussion also gave us a way to think about the SDGs: not as labels confirming success, but as questions that could help us examine the significance and limitations of Carbotex."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "analyze",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          <strong>
-                            {"From Renewable Feedstocks to the Whole Process"}
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We reconsidered the actual steps linking straw-derived sugars to adhesive material preparation. A collaborating laboratory supplied corn-stover hydrolysate; our team used "
-                          }
-                          <em>{"Aureobasidium melanogenum"}</em>
-                          {
-                            " A08 to produce PMA, and then explored dopamine functionalization of PMA-containing fermentation broth."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In addition to the carbon feedstock, this route includes fermentation-medium inputs, coupling reagents such as dopamine, EDC·HCl and NHS, dialysis water, and energy-intensive steps such as prefreezing and freeze-drying."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "This made us distinguish the renewable origin of a material from the sustainability of its full production process."
-                            }
-                          </strong>
-                          {
-                            " It also helped us identify categories of inputs to consider when developing a preliminary material-preparation cost analysis later in the project. Financial cost, however, is not itself a measure of environmental impact."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {"From SDG Labels to Practical Questions"}
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "The SDGs are 17 interconnected goals established under the United Nations 2030 Agenda in 2015 "
-                          }
-                          <Cite k={["UN2015SDGs"]} />
-                          {
-                            ". Rather than claiming alignment with every goal, we use SDGs 9, 12, and 13 to examine three distinct dimensions of the Carbotex pathway."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "sdg-cards",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Taken together, these goals prompted three different reflections: "
-                          }
-                          <strong>{"SDG 9"}</strong>
-                          {
-                            " led us to consider the pathway from laboratory innovation to reliable production; "
-                          }
-                          <strong>{"SDG 12"}</strong>
-                          {
-                            " directed our attention toward process inputs and resource use; and "
-                          }
-                          <strong>{"SDG 13"}</strong>
-                          {
-                            " reminded us that an environmental motivation is not the same as verified environmental benefit."
-                          }
-                        </p>
-                        <p>
-                          <em>
-                            {"SDG reference: "}
-                            <a href={"https://sdgs.un.org/goals"}>
-                              {"United Nations — The 17 Goals"}
-                            </a>
-                            {". If official UN SDG icons are used, follow the "}
-                            <a
-                              href={
-                                "https://www.un.org/sustainabledevelopment/wp-content/uploads/2023/09/E_SDG_Guidelines_Sep20238.pdf"
-                              }
-                            >
-                              {"UN icon guidelines"}
-                            </a>
-                            {
-                              " and include the required attribution statement: “The content of this publication has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States.”"
-                            }
-                          </em>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "change",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {"Eva's feedback changed "}
-                          <strong>{"how we considered sustainability"}</strong>
-                          {
-                            ", rather than immediately changing the wet-lab formulation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We stopped treating the renewable origin of straw-derived carbon as sufficient evidence of a sustainable adhesive. Instead, we began considering the additional inputs and downstream steps involved in producing PMA-DA, including chemical modification, dialysis, and freeze-drying."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This reflection also helped us identify the relevant input categories for subsequent preliminary cost calculations and questions for future process optimization. It did not amount to a completed life-cycle assessment."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "evaluate",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "This exchange gave us a more grounded understanding of the potential and limitations of Carbotex. We can demonstrate the experimental development of a PMA-derived adhesive formulation, but evaluating its overall environmental performance requires evidence beyond the origin of the feedstock."
-                          }
-                        </p>
-                        <p>
-                          {"We have "}
-                          <strong>{"not"}</strong>
-                          {
-                            " completed a full life-cycle assessment or quantified net emissions reductions. Instead, Eva's input helped us identify what would need to be examined as the project develops, including resource consumption, downstream processing, and material recovery. For a future life-cycle assessment, ISO 14040 provides the principles and framework, while ISO 14044 describes the assessment requirements and guidelines "
-                          }
-                          <Cite k={["ISO14040", "ISO14044"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Sustainability became a question to consider across the Carbotex pathway, not a property we could assume from renewable carbon alone."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This perspective also leads to our next challenge: "
-                          }
-                          <strong>
-                            {
-                              "what would the laboratory pathway require to become a reliable manufacturing process?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Next: 3.2 From Laboratory Success to Reliable Manufacturing"
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "ihp-implementation-ecosystem",
-        title: "3.2 From Laboratory Success to Reliable Manufacturing",
-        parts: [
-          {
-            kind: "trace",
-            number: 11,
-            stages: [
-              {
-                stage: "trigger",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Through our earlier work, Carbotex developed an experimental pathway connecting straw-derived sugars, polymalic acid (PMA) production by engineered "
-                          }
-                          <em>{"Aureobasidium melanogenum"}</em>
-                          {
-                            " A08, dopamine functionalization, and preliminary evaluation of adhesive performance."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "But the ability to carry out fermentation and material preparation in the laboratory does not, by itself, establish a reliable manufacturing process. As our project progressed from individual experiments toward a connected production pathway, we began to ask questions that could not be answered by a single PMA titer or adhesive test. Could fermentation performance remain consistent across batches? How might separate processing steps be connected? And how could data gathered by different research groups support future engineering decisions?"
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Beyond improving PMA production and material properties, what would Carbotex need to consider before moving toward reliable manufacturing?"
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "reach-out",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        {
-                          "To explore the gap between laboratory feasibility and practical manufacturing, we visited industrial companies, a biotechnology organization, and a synthetic biology research infrastructure. Each exchange offered a different perspective on fermentation reliability, process integration, research evidence, or standardized engineering."
-                        }
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "anchor",
-                    id: "ihp-tsingtao",
-                  },
-                  {
-                    kind: "label",
-                    text: "Tsingtao Brewery — From Fermentation Yield to Process Reliability",
-                  },
-                  {
-                    kind: "gallery",
-                    images: [
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-tsingtao-brewery-production-line-reliable-fermentation.avif",
-                        alt: "Industrial fermentation production line observed during the Tsingtao Brewery visit",
-                      },
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-tsingtao-brewery-site-fermentation-scale-up.avif",
-                        alt: "Carbotex team visit to Tsingtao Brewery to learn about fermentation scale-up",
-                      },
-                    ],
-                    columns: 2,
-                    ratio: "345 / 260",
-                    caption:
-                      "Tsingtao Brewery visit on fermentation scale-up, monitoring, and batch consistency.",
-                    figureNumber: 21,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Our visit to Tsingtao Brewery introduced us to the practical importance of process monitoring, batch consistency, and controlled operating conditions in industrial fermentation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These considerations are directly relevant to our PMA-producing system. In the laboratory, we primarily compare engineered A08 strains using growth observations and measured PMA concentrations. Such comparisons are valuable for evaluating strain engineering, but a high titer in one experiment does not demonstrate that equivalent performance can be maintained across batches or at larger scales."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The exchange therefore changed how we understood scale-up: "
-                          }
-                          <strong>
-                            {
-                              "it is not simply a matter of increasing culture volume, but of achieving reproducible production under controlled conditions."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We consequently began to regard fermentation stability, batch-to-batch consistency, and monitoring as important questions for future assessments of PMA manufacturing feasibility."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "anchor",
-                    id: "ihp-kinger",
-                  },
-                  {
-                    kind: "label",
-                    text: "Kinger Robot — From Individual Operations to Process Integration",
-                  },
-                  {
-                    kind: "gallery",
-                    images: [
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-kinger-robot-entrance.avif",
-                        alt: "Entrance to Kinger Robot visited by the Carbotex team",
-                      },
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-kinger-robot-factory-tour.avif",
-                        alt: "Carbotex team touring the Kinger Robot manufacturing facility",
-                      },
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-kinger-robot-automation-integration.avif",
-                        alt: "Automation and process integration discussed during the Kinger Robot visit",
-                      },
-                    ],
-                    columns: 3,
-                    ratio: "270 / 220",
-                    caption:
-                      "Kinger Robot visit on automation, integration, and traceability.",
-                    figureNumber: 22,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "At Kinger Robot, we learned that manufacturing involves more than the successful operation of individual machines. The connections between operations, the recording of process information, and the traceability of each step are also essential considerations."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This perspective prompted us to look at the Carbotex pathway as a whole. PMA fermentation, cell removal, material coupling, dialysis, and freeze-drying are currently conducted as successive laboratory operations. Although each step can be carried out, further process development would need to consider how these operations could be connected, monitored, and controlled."
-                          }
-                        </p>
-                        <p>
-                          {"The visit therefore drew our attention to "}
-                          <strong>
-                            {
-                              "process integration, operational monitoring, and standardization"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "related",
-                    title: "Hardware Design",
-                    parts: [
-                      {
-                        kind: "content",
-                        inline: false,
-                        content: (
-                          <>
-                            <p>
-                              {
-                                "This manufacturing perspective also connects with the engineering design explored by our Hardware team."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "The team designed a modular liquid-pretreatment concept to investigate how upstream and downstream operations might be linked. For an upstream liquid stream that may require ammonium management, the proposed system uses a cation-exchange resin adsorption column together with peristaltic pumps and multi-way valves. Its fluidic design considers adsorption, washing, and resin-regeneration pathways."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "The Hardware team also designed an Internet of Things (IoT) monitoring component with pH and temperature sensors for collecting and transmitting process information."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "These designs provided us with a concrete example through which to consider material transfer and process monitoring between manufacturing steps. They are "
-                              }
-                              <strong>
-                                {"engineering design explorations"}
-                              </strong>
-                              {
-                                ", however, not evidence that an integrated Carbotex manufacturing line has already been validated."
-                              }
-                            </p>
-                          </>
-                        ),
-                      },
-                      {
-                        kind: "figure",
-                        src: "https://static.igem.wiki/teams/6147/wiki/fig5-2-hardware.avif",
-                        alt: "Carbotex Hardware design for modular liquid pretreatment and process integration",
-                        ratio: "740 / 500",
-                        caption:
-                          "Modular liquid-pretreatment and process-integration design.",
-                        figureNumber: 23,
-                      },
-                      {
-                        kind: "content",
-                        inline: true,
-                        content: (
-                          <>
-                            <strong>
-                              <Link to={"/hardware"}>
-                                {"Explore Our Hardware Design →"}
-                              </Link>
-                            </strong>
-                          </>
-                        ),
-                      },
-                    ],
-                  },
-                  {
-                    kind: "anchor",
-                    id: "ihp-bgi",
-                  },
-                  {
-                    kind: "label",
-                    text: "BGI — From Dispersed Results to Traceable Research Evidence",
-                  },
-                  {
-                    kind: "gallery",
-                    images: [
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-bgi-data-translation-meeting.avif",
-                        alt: "Exchange at BGI about data, analysis, and biotechnology translation",
-                      },
-                      {
-                        src: "https://static.igem.wiki/teams/6147/wiki/ihp-bgi-group-visit.avif",
-                        alt: "Carbotex team during the BGI visit",
-                      },
-                    ],
-                    columns: 2,
-                    ratio: "345 / 260",
-                    caption:
-                      "BGI exchange on data and analytical infrastructure for biotechnology development.",
-                    figureNumber: 24,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Our exchange with BGI highlighted the importance of data management and analytical infrastructure in complex biotechnology research."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "As Carbotex progressed, our team accumulated fermentation results from engineered strains, PMA concentration measurements, adhesive performance records, literature references, and modeling reports. These materials originated in different research modules. Answering a specific question could therefore require researchers to revisit experimental protocols, published datasets, and computational outputs to check the conditions and evidence underlying each result."
-                          }
-                        </p>
-                        <p>{"This raised a broader question for us:"}</p>
-                        <p>
-                          <strong>
-                            {
-                              "How can experimental records, literature evidence, and modeling results be connected so that existing research can better inform subsequent analysis and decisions?"
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "related",
-                    title: "WetFlow Research Agent",
-                    parts: [
-                      {
-                        kind: "content",
-                        inline: false,
-                        content: (
-                          <>
-                            <p>
-                              {"This challenge also resonates with "}
-                              <strong>{"WetFlow"}</strong>
-                              {
-                                ", a research Agent workspace developed by our Model team."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "WetFlow brings project context together with local research documents, publicly available literature, and relevant modeling reports. It helps researchers examine the sources behind an answer and discuss different types of evidence within a shared research context."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "The team demonstrated WetFlow using three questions from the PMA–dopamine (PMA–DA) adhesive work: reconstructing the material-preparation procedure, comparing published dopamine feeding conditions, and identifying molecular questions related to existing adhesion tests. In the feeding comparison, the workspace helped distinguish the initial dopamine-to-carboxyl feed ratio, the dopamine content reported for a recovered product, and the separate concept of actual grafting efficiency."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "These examples show how evidence from experiments, publications, and modeling can be organized and revisited together. Importantly, "
-                              }
-                              <strong>
-                                {
-                                  "the demonstrations re-examined completed experimental work"
-                                }
-                              </strong>
-                              {
-                                "; they should not be interpreted as proof that WetFlow determined the team's earlier material formulation choices."
-                              }
-                            </p>
-                            <p>
-                              {
-                                "The BGI exchange reinforced the relevance of this kind of evidence management, while WetFlow represents a separate, tangible effort by our own team to explore it. We do not claim that BGI developed the tool or directly performed our analyses."
-                              }
-                            </p>
-                            <p>
-                              <strong>
-                                <Link to={"/model#model-overview"}>
-                                  {"Explore Our WetFlow Research Agent →"}
-                                </Link>
-                              </strong>
-                            </p>
-                          </>
-                        ),
-                      },
-                    ],
-                  },
-                  {
-                    kind: "anchor",
-                    id: "ihp-shenzhen-infrastructure",
-                  },
-                  {
-                    kind: "label",
-                    text: "Shenzhen Synthetic Biology Infrastructure — From Isolated Success to Standardized Engineering",
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-shenzhen-synthetic-biology-infrastructure.avif",
-                    alt: "Carbotex visit to the Shenzhen synthetic biology research infrastructure",
-                    ratio: "540 / 380",
-                    caption:
-                      "Shenzhen synthetic biology infrastructure visit on automated, standardized Design–Build–Test–Learn workflows.",
-                    figureNumber: 25,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Our visit to the Shenzhen synthetic biology research infrastructure helped us appreciate the roles of automation, standardization, and systematic workflows in synthetic biology."
-                          }
-                        </p>
-                        <p>
-                          {"In particular, the "}
-                          <strong>{"Design–Build–Test–Learn (DBTL)"}</strong>
-                          {
-                            " cycle encouraged us to think about the connections between successive experiments. Carbotex has already conducted work involving engineered strains, fermentation, and material preparation. Yet success in one experiment does not guarantee that the result can be reproduced."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For experiments to support continuous engineering improvement, conditions need to be documented clearly, results need to be comparable across rounds, and the evidence obtained should inform subsequent designs."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Reliable engineering is not only about obtaining results; it is also about creating a process in which those results can be tested, compared, and improved."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We did not build or use an automation platform equivalent to the infrastructure we visited. The value of this exchange was the perspective it provided on reproducibility and systematic iteration."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "analyze",
-                parts: [
-                  {
-                    kind: "label",
-                    text: "From a Laboratory Pathway to a Reliable Manufacturing System",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The four exchanges addressed different parts of manufacturing, yet they pointed to a common conclusion: "
-                          }
-                          <strong>
-                            {
-                              "successfully completing a sequence of laboratory operations is not the same as establishing a reliable manufacturing system."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Tsingtao Brewery emphasized fermentation stability; Kinger Robot highlighted process integration and monitoring; BGI brought attention to research evidence and data management; and the Shenzhen infrastructure demonstrated the importance of standardized, iterative engineering."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Comparing these perspectives with our current research helped us distinguish what Carbotex has already explored from what future manufacturing development would still require."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "capability-matrix",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "This comparison made it clear that manufacturing feasibility cannot be judged solely from one PMA titer or one adhesive performance result. It also needs to consider how individual operations and their supporting evidence fit together."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These concerns connect with our earlier sustainability reflection: downstream processing, material recovery, and resource inputs may affect not only the environmental implications of the pathway, but also its practicality as a manufacturing process."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "change",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "These exchanges broadened the questions we ask about Carbotex's future development."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Previously, our attention centered on improving PMA production in A08 and turning PMA into a functional adhesive material. We now recognize that future implementation must also address fermentation consistency, connections between process steps, reliable research records, and reproducible engineering practices."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The Hardware design and WetFlow work, introduced alongside the relevant stakeholder exchanges above, made two of these challenges more tangible: how a processing interface might be designed and monitored, and how experimental, literature, and modeling evidence might be revisited together."
-                          }
-                        </p>
-                        <p>
-                          {"We do "}
-                          <strong>{"not"}</strong>
-                          {
-                            " present these independent technical projects as changes directly caused by the industry visits. Rather, the visits helped us place existing work within a broader understanding of what reliable biomanufacturing would require."
-                          }
-                        </p>
-                        <p>
-                          {"Our change was therefore one of "}
-                          <strong>
-                            {
-                              "engineering perspective and future evaluation priorities"
-                            }
-                          </strong>
-                          {
-                            ": instead of treating isolated laboratory successes as evidence of readiness for manufacturing, we began to examine the stability, integration, documentation, and reproducibility of the pathway as a whole."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "evaluate",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The exchanges gave us a clearer view of both Carbotex's current capabilities and the work still needed for responsible implementation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We have established a laboratory basis for PMA production and PMA–DA material preparation. WetFlow has been demonstrated through research cases that connect documents and evidence, while the Hardware team has developed a modular pretreatment and monitoring design."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, these achievements do not amount to a validated industrial manufacturing process. We have not established industrial-scale batch consistency or an integrated automated production and quality-control system. WetFlow is a research workspace rather than an industrial quality-management platform. Likewise, the Hardware concept still requires verification against the actual feedstock and process conditions used for A08 fermentation, including whether ammonium removal is necessary and suitable."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These limitations are important outcomes of our reflection, not reasons to overlook the exchanges. They help us distinguish demonstrated laboratory research from the requirements of future implementation."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "For Carbotex, laboratory success is a starting point for reliable manufacturing—not proof that reliable manufacturing has already been achieved."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Once we began to consider what stable production would require, another question followed: "
-                          }
-                          <strong>
-                            {
-                              "even if PMA–DA could eventually be manufactured consistently, how would we know whether it meets a real application need and is economically feasible?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          <em>
-                            {
-                              "Next: 3.3 From Material Prototype to Commercial Feasibility"
-                            }
-                          </em>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "ihp-commercial",
-        title: "3.3 Exploring Application and Commercial Potential",
-        parts: [
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                <em>
-                  {
-                    "Beyond the Laboratory: Balancing Material Value and Manufacturing Feasibility"
-                  }
-                </em>
-              </>
-            ),
-          },
-          {
-            kind: "trace",
-            number: 12,
-            stages: [
-              {
-                stage: "trigger",
-                label: "From Material Development to Practical Application",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "As Carbotex progressed, our research extended from microbial production of polymalic acid (PMA) to the preparation of dopamine-functionalized polymalic acid (PMA-DA), a bio-based material with adhesive properties."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We explored PMA-DA adhesion on glass, stainless steel, and ex vivo porcine skin. Our underwater-related experiments and preliminary biocompatibility assessments also yielded encouraging observations, suggesting further directions for potential applications."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, our progress raised a more practical question: "
-                          }
-                          <strong>
-                            {
-                              "What must a new material offer in order to create real value beyond the laboratory?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Turning agricultural straw into PMA-DA requires lignocellulosic pretreatment and saccharification, microbial fermentation, dopamine functionalization, purification, and freeze-drying. Each stage involves resources, processing time, and equipment. We gradually recognized that "
-                          }
-                          <strong>
-                            {
-                              "technical feasibility in the laboratory does not automatically establish readiness for practical application or commercialization"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "We therefore wanted to understand what producing PMA-DA might cost, what makes it worth developing, and how to balance its functional advantages with manufacturing feasibility. These questions became the starting point for our next stage of Human Practices."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "reach-out",
-                label: "Exploring Commercialization Challenges at CCiC",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "During the 2026 Conference of China iGEMer Community (CCiC), we participated in an Unconference organized by DUT-China on project commercialization and startup incubation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The discussion extended beyond technical innovation to practical product development, including manufacturing feasibility, production scale-up, market demand, and business models. This perspective was particularly relevant to Carbotex, which connects microbial production with functional-material development."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Previously, we had largely evaluated the project from a research perspective: Could PMA be produced successfully? Could we functionalize it with dopamine? Would the resulting material adhere to different substrates?"
-                          }
-                        </p>
-                        <p>
-                          {
-                            "At CCiC, we began reconsidering these questions from the perspectives of potential users and manufacturers. A promising material must also be produced consistently, meet clearly defined needs, and offer a convincing reason to be selected over existing alternatives."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-peer-community-dut-unconference-01-group-photo.avif",
-                    alt: "Carbotex team at the CCiC Unconference on commercialization and startup incubation",
-                    ratio: "540 / 380",
-                    caption:
-                      "Carbotex joined a CCiC discussion on commercialization.",
-                    figureNumber: 26,
-                  },
-                  {
-                    kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        <a
-                          href={
-                            "https://static.igem.wiki/teams/6147/wiki/igem-discussion-notes.pdf"
-                          }
-                        >
-                          <strong>
-                            {"View our CCiC commercialization discussion notes"}
-                          </strong>
-                        </a>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "What We Learned from the Discussion Notes",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The discussion notes did more than record our participation at CCiC. They helped us organize the questions that must be addressed when moving a technology from laboratory research toward actual use."
-                          }
-                        </p>
-                        <p>
-                          {"First, we recognized that "}
-                          <strong>
-                            {
-                              "technical feasibility and commercial feasibility are not the same"
-                            }
-                          </strong>
-                          {
-                            ". Successfully preparing a material demonstrates a promising technical approach, but practical adoption also requires attention to manufacturing scale, production costs, product consistency, and convenience."
-                          }
-                        </p>
-                        <p>
-                          {"Second, the exchange encouraged us to connect "}
-                          <strong>
-                            {"product value with specific user needs"}
-                          </strong>
-                          {
-                            ". Low cost and mature manufacturing can be significant advantages for general-purpose adhesives. A specialized functional material, however, may create value through its performance under particular conditions or by addressing requirements that conventional products do not prioritize."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Finally, we recognized that commercial analysis should not remain speculative. Wherever possible, it should be grounded in actual production steps and available data."
-                          }
-                        </p>
-                        <p>{"This led us to two concrete questions:"}</p>
-                        <p>
-                          <strong>
-                            {
-                              "What resources are needed to prepare PMA-DA, and where could its material properties provide meaningful value?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We translated these insights into follow-up actions: reviewing our production pathway, consulting an upstream technical collaborator for a second time, estimating preliminary costs, and reconsidering the application potential of PMA-DA."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "analyze",
-                label: "From Production Cost to Material Value",
-                parts: [
-                  {
-                    kind: "label",
-                    text: "1. Reassessing the Advantages and Significance of PMA-DA",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "While beginning our cost analysis, we also reconsidered the value of the material we were developing."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "From agricultural residues to higher-value functional materials"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {"Carbotex is distinctive in its production pathway."}
-                        </p>
-                        <p>
-                          {
-                            "Agricultural straw is an abundant non-food biomass resource. Through lignocellulosic saccharification, we aim to convert its carbon content into fermentable substrates, use engineered microorganisms to produce PMA, and subsequently functionalize PMA into an adhesive material."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Carbotex is therefore more than an adhesive-development project: it explores a biological manufacturing route that converts agricultural residues into functional materials. Compared with pathways that depend directly on conventional fossil-derived feedstocks, this approach presents another possibility for using renewable carbon and creating higher-value uses for agricultural residues."
-                          }
-                        </p>
-                        <p>
-                          {"Our goal is not simply to consume straw. "}
-                          <strong>
-                            {
-                              "We aim to convert an underutilized biomass resource into a functional material through microbial production and chemical functionalization."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "The overall environmental benefits of this pathway will still require quantitative evaluation, including future life-cycle analysis. Nevertheless, its design connects resource utilization with material development in a meaningful way."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {"From polymer chemistry to functional adhesion"}
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "PMA contains abundant carboxyl groups, providing sites for chemical modification. By introducing dopamine, we aim to incorporate catechol groups capable of participating in interfacial interactions and to explore new adhesive properties."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This design draws inspiration from chemical strategies associated with adhesion in wet environments. Instead of remaining only a fermentation-derived polymer, PMA becomes a functionalized material whose adhesive behavior can be studied across different interfaces."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Our adhesion tests on glass, stainless steel, and ex vivo porcine skin provided initial observations on substrates with different surface characteristics, helping us explore the interfacial behavior of PMA-DA."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Beyond conventional bonding: opportunities in challenging environments"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "In addition to tests on different substrates, we conducted underwater-related experiments and preliminary biocompatibility assessments involving L929 cells. Their encouraging results drew our attention to potential applications in wet environments and at biological interfaces."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For certain applications, an adhesive must accomplish much more than joining two surfaces. Water can affect contact and interfacial interactions; materials used near biological surfaces must also satisfy relevant compatibility and safety requirements."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "A bio-based adhesive with a chemically modifiable polymer backbone and encouraging preliminary behavior in aqueous-condition and cell-response experiments is therefore worth exploring further."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "At present, these results do not establish that PMA-DA outperforms existing commercial adhesives or that it is safe for medical use. They do, however, suggest more focused directions for future research."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Carbotex is intended to offer more than another type of glue: a material option for applications with specific requirements concerning material origin, operating environment, or compatibility with biological interfaces."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This perspective helped us recognize that the commercial potential of PMA-DA should be evaluated through both production cost and application-specific material value."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "2. Consulting Professor Yajun Liu Again: Tracing the Upstream Cost of Hydrolysate Production",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Following the commercialization discussion at CCiC, we began evaluating Carbotex's economic feasibility across the entire production pathway. However, while mapping the costs, we realized that our understanding of the resources required to produce the upstream consolidated bio-saccharification (CBS) hydrolysate was still incomplete."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We had previously established a collaboration with Professor Yajun Liu and her team, who provided CBS hydrolysate for our subsequent PMA fermentation. This support enabled us to connect the biological conversion of agricultural residues with the development of a functional adhesive."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Inspired by the discussion at CCiC, we decided to consult Professor Liu for a second time. Unlike our first communication, which focused on technical collaboration, this follow-up focused on the actual inputs and cost considerations of upstream processing."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We wanted to understand which steps were involved in converting agricultural straw into a fermentable hydrolysate, which reagents and materials were required, what typical input ratios were used, and what additional costs might be overlooked."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "During this exchange, we focused on the CBS process and the resources required at different stages. We considered the need for biomass pretreatment to improve lignocellulose accessibility, which introduces expenses related to pretreatment reagents, heating, and washing water."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The pretreated biomass then enters the CBS system. Beyond the biomass substrate itself, culture-medium components are required to support the saccharifying microorganisms. Depending on the needs of downstream fermentation, the hydrolysate may subsequently undergo purification, impurity removal, or concentration."
-                          }
-                        </p>
-                        <p>
-                          {"These steps helped us recognize that "}
-                          <strong>
-                            {
-                              "producing fermentable sugars from straw is not a simple raw-material substitution but a biological manufacturing process requiring multiple resources."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "As related background, research on consolidated bioprocessing describes the integration of lignocellulose breakdown with microbial conversion "
-                          }
-                          <Cite k={["Akinosho2014Thermocellum"]} />
-                          {". That work concerns "}
-                          <em>{"Clostridium thermocellum"}</em>
-                          {
-                            " and should not be treated as a source for the specific CBS process parameters or costs used in our estimates."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Following this consultation, we also examined related research from Professor Liu's team to obtain quantitative reference parameters. In one published corn-stover CBS process, the system used approximately "
-                          }
-                          <strong>{"40 g/L of pretreated substrate"}</strong>
-                          {" and obtained approximately "}
-                          <strong>{"24.3 g/L of reducing sugars"}</strong>
-                          {
-                            ". The study also described alkaline pretreatment, culture-medium composition, and downstream hydrolysate treatment, allowing us to estimate selected material requirements "
-                          }
-                          <Cite k={["liu2023cornbioconversion"]} />
-                          {"."}
-                        </p>
-                        <p>
-                          {"These numerical values come from "}
-                          <strong>{"published research conditions"}</strong>
-                          {
-                            ", not from measurements of the exact hydrolysate batch supplied to Carbotex or a direct price quotation from Professor Liu."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, this second consultation and the published process data helped us build an initial framework for evaluating upstream costs."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "We learned that although agricultural straw is a relatively inexpensive non-food resource, converting it into fermentable carbon still entails expenses."
-                            }
-                          </strong>
-                          {
-                            " Pretreatment, saccharification, water, energy, medium components, and equipment all contribute to the overall production pathway and may affect the feasibility of PMA-DA."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We do not yet have a complete cost quotation for the hydrolysate supplied by our collaborator. Nevertheless, this second discussion helped us understand the upstream cost structure and identify the additional information needed for a fuller assessment."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Most importantly, it transformed the commercialization insights gained at CCiC into concrete action: rather than examining only the final adhesive, we began tracing resource consumption back through the biological manufacturing process."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "We then combined this upstream perspective with laboratory preparation records and reagent purchase prices to conduct a preliminary quantitative cost analysis of PMA-DA."
-                          }
-                        </p>
-                        <p>
-                          <em>
-                            {"Reference for the upstream process: "}
-                            <a
-                              href={
-                                "https://doi.org/10.1186/s13068-023-02260-z"
-                              }
-                            >
-                              {
-                                "Liu et al. (2023), “Bioconversion of non-food corn biomass to polyol esters of fatty acid and single-cell oils”"
-                              }
-                            </a>
-                            {
-                              ". This study provides reference CBS process conditions, not the actual supply cost for Carbotex's hydrolysate."
-                            }
-                          </em>
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "3. Preliminary Material-Cost Analysis of PMA-DA Preparation",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Building on our upstream process analysis, we combined laboratory records, actual reagent purchasing information, and reference supplier quotations to estimate selected material costs associated with PMA-DA preparation."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "According to our preparation records, the batch used approximately "
-                          }
-                          <strong>
-                            {
-                              "200 mL of fermentation broth with a PMA concentration of 18 g/L"
-                            }
-                          </strong>
-                          {", corresponding to approximately "}
-                          <strong>
-                            {"3.6 g of PMA before dopamine functionalization"}
-                          </strong>
-                          {
-                            ". This is the theoretical PMA input, not the mass of recovered adhesive."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For a theoretical reagent-consumption scenario, we assumed a dopamine-to-PMA-carboxyl molar ratio of 1:1, with EDC·HCl and NHS each used at two molar equivalents."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Using available purchase prices and reference quotations, we obtained the following preliminary estimate:"
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "cost-breakdown",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          <em>
-                            {
-                              "Notes: The dopamine range represents two alternative calculation scenarios using dopamine free base or dopamine hydrochloride, rather than observed price fluctuations. EDC·HCl and NHS costs use supplier reference quotations. The CBS contribution is based on published process conditions and an assumed PMA yield of 0.5 g per g of reducing sugar. The displayed figures are rounded; consequently, summing the displayed line items may give a difference of RMB 0.01. This subtotal is not the complete production cost or the unit cost of recovered freeze-dried PMA-DA."
-                            }
-                          </em>
-                        </p>
-                        <p>
-                          {
-                            "This preliminary calculation highlighted an important factor that we had not previously considered in sufficient detail:"
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Dopamine accounted for approximately 83–86% of the material costs currently included in our model."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Under these laboratory-scale assumptions, functionalizing fermentation-derived PMA into PMA-DA represents a significant part of the reagent expenditure."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "From a technical perspective, dopamine functionalization adds adhesive functionality worth investigating. From an economic perspective, it also introduces additional reagent requirements. This relationship between functional improvement and cost became an important consideration for future process development."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Our attention therefore expanded beyond improving PMA production alone to include functionalization efficiency, appropriate reagent consumption, and recovery of the final usable material."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "4. Recognizing the Limitations of Laboratory-Scale Cost Estimation",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Beyond the purchase prices of reagents, we reviewed the main operational steps involved in preparing PMA-DA."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "According to our laboratory procedure, functionalization and recovery involve approximately 1 hour of activation, 24 hours of dopamine coupling, 48 hours of dialysis, 1 hour of prefreezing, and 48 hours of freeze-drying."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these operations represent approximately "
-                          }
-                          <strong>
-                            {"122 hours of elapsed processing time"}
-                          </strong>
-                          {
-                            ", excluding upstream hydrolysate preparation and PMA fermentation."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "process-timeline",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "This review highlighted the potential influence of processing duration, equipment occupation, consumables, and material recovery on practical production."
-                          }
-                        </p>
-                        <p>
-                          {"However, "}
-                          <strong>
-                            {
-                              "our preliminary calculation does not yet accurately represent the complete cost of PMA-DA production, and it cannot predict the economics of future industrial-scale manufacturing."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "First, elapsed processing time is not equivalent to continuous labor. Coupling, dialysis, and freeze-drying have different operational requirements, and their durations cannot simply be counted as working hours."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Second, complete data on equipment energy consumption, water use, consumables, all upstream input prices, and the actual recovered mass of freeze-dried PMA-DA are not yet available."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Third, laboratory-scale preparation and potential larger-scale processes differ substantially in procurement, equipment utilization, and operating methods."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Therefore, our current cost estimate should be understood as "
-                          }
-                          <strong>
-                            {
-                              "an initial attempt to identify the cost structure and potential process bottlenecks, rather than a complete techno-economic assessment"
-                            }
-                          </strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "Nevertheless, it gives our subsequent work a clearer direction. We can improve records of actual reagent consumption, material recovery, and resource use across processing steps. We can also explore more efficient coupling conditions, less resource-intensive purification, and better equipment and material utilization."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Once more complete data are available, we will calculate unit production cost using the actual recovered mass of the freeze-dried adhesive:"
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Unit production cost (RMB/g) = Complete batch production cost (RMB) / Recovered freeze-dried PMA-DA mass (g)"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Such a measure would enable more objective comparisons of preparation conditions and provide a reference for future manufacturing assessment."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "The main contribution of this analysis is not a precise prediction of product price, but a clearer identification of the factors affecting manufacturing feasibility and the opportunities for future improvement."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "5. From Price Comparison to Application-Specific Value",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Following the preliminary cost analysis, we reconsidered the position of PMA-DA relative to existing adhesive products."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Conventional industrial adhesives often benefit from established manufacturing systems, optimized formulations, and mature supply chains. Long-term industrial development has enabled cost reductions through economies of scale and more efficient processes."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "PMA-DA, in contrast, is still at the laboratory research stage. Expecting it to immediately achieve the price level of mature, mass-produced general-purpose adhesives would be unrealistic."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "However, this discussion also led us to an important realization: "
-                          }
-                          <strong>
-                            {
-                              "the value of a new material depends not only on whether it is cheaper than existing products, but also on whether it can address different application needs."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "The bio-based production pathway of Carbotex, the dopamine-functionalization strategy, and the encouraging observations from underwater-related experiments and preliminary biocompatibility assessments all suggest potential directions beyond conventional low-cost bonding."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Wet environments and biological interfaces can place additional demands on an adhesive. In these settings, material selection may depend not only on price, but also on adhesion in relevant conditions, stability, and compatibility."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This does not establish that PMA-DA already performs better than commercial alternatives. Rather, it gives us a reason to investigate the material under more clearly defined application conditions."
-                          }
-                        </p>
-                        <p>{"We therefore reached a key conclusion:"}</p>
-                        <p>
-                          <strong>
-                            {
-                              "Exploring the commercial potential of Carbotex should not simply mean competing with ordinary glue on price. It should mean identifying applications that genuinely benefit from the distinctive properties of PMA-DA."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "change",
-                label:
-                  "Integrating Commercial Considerations into Technical Development",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The CCiC commercialization discussion, our second consultation with Professor Liu, and the subsequent material-value and cost analyses gave us a clearer perspective on Carbotex's future development."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "First, we began assessing the entire production pathway rather than focusing solely on final laboratory performance."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Previously, we mainly evaluated project progress through PMA production, material preparation, and adhesion tests. After these exchanges, we began reviewing feedstock supply, functionalization reagents, and downstream processing to develop a more comprehensive picture of manufacturing requirements."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Second, we identified process stages that deserve attention in future optimization."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Our preliminary cost analysis indicated that dopamine represented the largest share of the currently priced material inputs, while dialysis, freeze-drying, and product recovery may also affect production efficiency."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This helped us define more specific objectives, including improving functionalization efficiency, avoiding unnecessary reagent consumption, shortening processing where feasible, and increasing material recovery."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Third, we placed greater emphasis on matching material properties with actual application needs."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Our experiments under aqueous conditions and preliminary biocompatibility assessments provided a foundation for exploring PMA-DA in specific usage environments."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We increasingly recognized that future development must answer not only "
-                          }
-                          <em>
-                            {"how to produce the material more economically"}
-                          </em>
-                          {", but also "}
-                          <em>
-                            {"why a particular group of users would need it"}
-                          </em>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "We therefore identified more systematic application-oriented testing and future engagement with potential users and adhesive manufacturers as important next steps."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In this way, Human Practices became more than a discussion alongside the project: it helped us reconsider technical priorities and potential application pathways."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "evaluate",
-                label:
-                  "Balancing Material Innovation with Manufacturing Feasibility",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "These Human Practices activities encouraged us to consider Carbotex's material performance and production-resource requirements within the same framework."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The CCiC discussion helped us understand the challenges of moving from technical validation to practical application. Consulting Professor Liu a second time improved our understanding of upstream saccharification inputs. Our preliminary cost analysis highlighted dopamine functionalization as an important cost consideration. Reexamining our material experiments also helped us recognize the potential value of PMA-DA in specialized environments."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For a laboratory batch beginning with approximately "
-                          }
-                          <strong>{"3.6 g of PMA"}</strong>
-                          {
-                            ", the selected material inputs currently included in our model were estimated at "
-                          }
-                          <strong>{"approximately RMB 194–232"}</strong>
-                          {"."}
-                        </p>
-                        <p>
-                          {
-                            "This figure is not the complete production cost, but it captures the material expenditure included in our current model and clarifies which additional data are still needed for future optimization."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We also recognized that encouraging laboratory observations do not automatically translate into a mature commercial product. Practical applications will require further evaluation of material performance, production consistency, safety, and genuine user needs."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "The most valuable outcome of this exploration was not proof that Carbotex is already commercially competitive, but the development of a more realistic and purposeful approach to material development."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "By considering technical feasibility, manufacturing cost, and application requirements together, we established a stronger basis for the future development of Carbotex."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            kind: "label",
-            text: "Future Outlook: Creating Value Beyond Price Competition",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  <strong>
-                    {
-                      "At the current stage, PMA-DA is not as inexpensive as conventional adhesives produced through mature large-scale manufacturing."
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "However, different materials serve different application needs, and price should not be the only measure of their value."
-                  }
-                </p>
-                <p>
-                  {
-                    "One of the most promising aspects of Carbotex is how it connects agricultural-residue utilization, microbial synthesis, and functional-material development."
-                  }
-                </p>
-                <p>
-                  {
-                    "Starting with non-food lignocellulosic carbon, producing PMA using engineered microorganisms, and then introducing dopamine-derived functionality to explore adhesive behavior, this pathway demonstrates the potential of biological manufacturing in functional-material development."
-                  }
-                </p>
-                <p>
-                  {
-                    "Our results on different substrates, in underwater-related experiments, and in preliminary biocompatibility assessments support further investigation of application-specific uses."
-                  }
-                </p>
-                <p>
-                  {
-                    "More systematic evaluation will help identify applications in which wet-environment adhesion and interactions with biological interfaces are especially important."
-                  }
-                </p>
-                <p>
-                  {
-                    "Looking ahead, we aim to investigate underwater adhesion and long-term stability under wet conditions, expand biocompatibility and material-safety assessments, and optimize our preparation process to reduce production costs."
-                  }
-                </p>
-                <p>
-                  {
-                    "We also plan to communicate with potential users and relevant manufacturers to clarify expectations regarding adhesive performance, convenience, durability, safety, and acceptable costs, so that further development aligns with real needs."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Rather than becoming a cheaper version of ordinary glue, Carbotex should develop into a bio-based adhesive whose distinctive material properties address specific application challenges."
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "We believe the significance of transforming agricultural residues into functional adhesives lies not only in producing a new material, but also in exploring a biological manufacturing pathway connecting resource value, material innovation, and practical needs."
-                  }
-                </p>
-                <p>
-                  {
-                    "By continuously improving production, validating material properties, and listening to future users, we can move Carbotex from a laboratory research outcome toward a functional material with clearly defined applications and practical value."
-                  }
-                </p>
-                <p>
-                  {
-                    "As our future applications approach more complex environments and biological interfaces, the responsible evaluation of material safety will become increasingly important. We discuss these considerations in the following section, "
-                  }
-                  <strong>
-                    {"3.4 From Biosafety to Product Responsibility"}
-                  </strong>
-                  {"."}
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-biosafety",
-        title: "3.4 From Biosafety to Product Responsibility",
-        parts: [
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                <em>
-                  {
-                    "Embedding Safety Throughout the Journey from Engineered Cells to Functional Materials"
-                  }
-                </em>
-              </>
-            ),
-          },
-          {
-            kind: "trace",
-            number: 13,
-            stages: [
-              {
-                stage: "trigger",
-                label: "When Material Development Raises New Safety Questions",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "As Carbotex progressed, we established a production pathway that connects microbial fermentation of polymalic acid (PMA) with the preparation of dopamine-functionalized PMA (PMA-DA), our bio-based adhesive."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Safety had been part of our laboratory work from the beginning. During strain construction and fermentation, we paid attention to the use of engineered microorganisms, genetic manipulation, laboratory procedures, and biological waste management. As the project moved into material preparation and performance testing, our understanding of safety began to broaden."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We had investigated adhesion on glass, stainless steel, and ex vivo porcine skin, alongside experiments under underwater conditions, mass-change measurements in phosphate-buffered saline (PBS), and preliminary L929 cell-based assessments. These studies encouraged us to explore possible applications of PMA-DA, including those involving wet environments and biological interfaces."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "At the same time, the production of PMA-DA involves several distinct stages: cultivation of engineered microorganisms, cell separation, chemical functionalization, purification, and material recovery. Each creates different questions for safe handling and future product development."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "How could we carry the principles of responsible research from the engineered production strain all the way to the final adhesive?"
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This question guided our next Human Practices activities."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "anchor",
-                    id: "ihp-grand-apic",
-                  },
-                ],
-              },
-              {
-                stage: "reach-out",
-                label: "A New Perspective from Grand APiC",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "At Grand APiC, we introduced Carbotex's production strategy, our genetic engineering work, and our plans for developing PMA-DA as an adhesive material."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "During the discussion, judges raised a question about biosafety, specifically drawing our attention to "
-                          }
-                          <strong>{"horizontal gene transfer (HGT)"}</strong>
-                          {
-                            " and the genetic information carried by engineered microorganisms."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Until then, our discussions of biosafety had focused mainly on laboratory containment and the possibility of engineered microorganisms entering unintended environments. The feedback encouraged us to think more carefully about genetic elements themselves: which elements were introduced, how they were managed, and what their potential effects might be outside the intended production process."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Horizontal gene transfer is a recognized mechanism of genetic exchange in microbial communities "
-                          }
-                          <Cite k={["Brito2021HGT"]} />
-                          {
-                            ". This general background highlights a topic for risk assessment; it does not demonstrate that HGT occurs from our engineered A08 strains."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-grand-apic-2026-02-carbotex-poster-exchange.webp",
-                    alt: "Carbotex presenting the project at Grand APiC",
-                    ratio: "540 / 380",
-                    caption: "Carbotex presenting the project at Grand APiC.",
-                    figureNumber: 27,
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-grand-apic-2026-03-responsible-research-session.webp",
-                    alt: "Discussion on responsible research at Grand APiC",
-                    ratio: "540 / 380",
-                    caption:
-                      "Discussion on biosafety and responsible research at Grand APiC.",
-                    figureNumber: 28,
-                  },
-                  {
-                    kind: "label",
-                    text: "Responding to the Judges' Question",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "To address the concern, we revisited the roles of the engineered microorganism and the final adhesive in our production pathway."
-                          }
-                        </p>
-                        <p>
-                          {"Carbotex uses engineered "}
-                          <em>{"Aureobasidium melanogenum"}</em>
-                          {
-                            " A08 to produce PMA during laboratory fermentation. The intended adhesive is a processed polymer material, not an application of living engineered cells. In our material-preparation procedure, the fermentation broth is centrifuged to separate cells before the PMA-containing liquid enters the dopamine-functionalization process."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This distinction helped us organize our response, but it also led us to look more closely at the steps between microbial production and the final material. Biosafety management should address the engineered culture and biological waste, while the downstream process must consider separation, purification, and final material quality."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The judges' question also brought our attention back to the strain records. A meaningful assessment of genetic risks requires clarity about the genetic elements present in the strain actually used for production, including the selection systems involved in its construction."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "The exchange changed the scope of our safety review: instead of considering only the behavior of the microorganism, we began examining the links between genetic design, laboratory management, material processing, and product quality."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "analyze",
-                label: "Following Safety Through the Production Pathway",
-                parts: [
-                  {
-                    kind: "label",
-                    text: "1. Managing Engineered A08 and Its Genetic Elements",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {"Our team engineered "}
-                          <em>{"Aureobasidium melanogenum"}</em>
-                          {
-                            " A08 to improve PMA production from straw-derived carbon sources, with work addressing xylose-related regulation and metabolic precursor supply."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The strain-construction records include the use of genetic-expression and selection systems. For example, NAT selection appears in our records, while HPT is associated with certain knockout-donor designs. These details matter because a selection marker used during an experiment is not necessarily equivalent to a marker retained in the final production strain."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "After Grand APiC, we gave greater attention to documenting the genetic background and construction history of individual A08 strains. This allows questions about introduced elements, their intended function, and their status in the strain used for fermentation to be addressed using actual construct records."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We also connected this genetic perspective with laboratory management, including the handling of cultures and biological waste. Considering HGT in the context of a specific organism, genetic design, and possible exposure pathways is more useful than drawing conclusions from general assumptions about microbial survival."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Our priority became making biosafety assessments traceable to the genetic design and practical handling of the strains we use."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "2. From Fermentation Broth to Adhesive: Why Purification Matters",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The safety discussion also prompted us to revisit the transition from biological production to material processing."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "In our wet-lab workflow, cells are separated from the fermentation broth by centrifugation. The PMA-containing liquid is then subjected to dopamine functionalization using an EDC·HCl/NHS coupling system. Dialysis, prefreezing, and freeze-drying are used in subsequent material preparation and recovery."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These steps determine not only whether a usable adhesive sample can be obtained, but also which components may remain in the final material."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The upstream fermentation process introduces possible microbial components, while the coupling reaction introduces dopamine, activation reagents, and reaction by-products. Understanding the composition of the final material therefore requires attention to both stages."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "This consideration connects directly with our discussion in Section 3.3. There, we identified purification and freeze-drying as resource-intensive parts of laboratory preparation. Here, we recognized their additional importance for material quality."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Improving production efficiency should go hand in hand with understanding what each separation and purification step contributes to the final product."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "For future optimization, this means examining process efficiency, product recovery, and purification performance together, rather than evaluating a change only by the time or reagents it saves."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "3. From Adhesive Performance to Safety in Intended Use",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Our material experiments have provided several perspectives on the potential uses of PMA-DA."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Adhesion tests on glass, stainless steel, and ex vivo porcine skin helped us examine interactions with different surfaces. Experiments under underwater conditions and mass-change measurements in PBS extended our investigation to aqueous environments. We also conducted preliminary assessments involving L929 cells to explore the material's cellular response."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these investigations helped us think about the requirements of possible applications more concretely."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "For example, bonding industrial surfaces involves questions about adhesion, stability, handling, and exposure during use. Applications involving biological interfaces introduce further considerations, including material composition, substances released from the material, and responses under relevant contact conditions."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Our existing experiments offer a starting point for investigating these questions. They also help us identify which tests would be most useful as we narrow down potential application scenarios."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Understanding where PMA-DA can adhere is one part of developing the material; understanding how it behaves in its intended environment is what will help guide responsible application."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "label",
-                    text: "4. From Safety Awareness to Laboratory Practice",
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Alongside the evaluation of microorganisms and materials, we also paid attention to how team members carry out everyday laboratory work."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "During an on-site laboratory session, a laboratory instructor introduced us to basic experimental procedures, instrument use, and safety precautions. The explanations gave us a clearer understanding of laboratory routines and the risks associated with improper operation, and reinforced the importance of following established procedures."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "figure",
-                    src: "https://static.igem.wiki/teams/6147/wiki/ihp-3-4-lab-safety-training.avif",
-                    alt: "Laboratory instruction on experimental procedures and safety precautions",
-                    ratio: "540 / 380",
-                    caption:
-                      "Laboratory guidance on experimental operation and safety.",
-                    figureNumber: 29,
-                  },
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "China Ocean University's Virtual Simulation Laboratory Management Platform also offers interactive online resources for laboratory safety education. By simulating operations and equipment use, these resources can help students become familiar with procedures and recognize common risks before working with real experimental materials."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "We see value in combining direct guidance from laboratory instructors with virtual simulation resources and established laboratory procedures to strengthen routine safety training."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "This experience brought biosafety into the practical details of our work: understanding procedures, recognizing risks, and carrying out experiments responsibly."
-                            }
-                          </strong>
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "change",
-                label: "Bringing Safety into Project Development",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "The feedback at Grand APiC, our review of the wet-lab workflow, and the laboratory safety guidance led us to refine our priorities in three areas."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "First, we placed greater emphasis on the genetic records and management of engineered A08 strains."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "The judges' concern about HGT encouraged us to consider genetic elements alongside laboratory containment and culture handling. When discussing strain safety, we now focus on the construction history and actual genetic status of the strain used, rather than treating all experimental constructs as identical."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Second, we connected purification and material quality with process optimization."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "Revisiting the PMA-DA preparation workflow highlighted the importance of cell separation, functionalization reagents, and dialysis. As we consider future improvements to the process, we intend to evaluate both preparation efficiency and the quality of the recovered material."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "Third, we strengthened the place of safety education in our development process."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "The laboratory instructor's on-site explanations improved our understanding of basic operations and precautions. Virtual simulation resources provide a useful complementary learning approach, and we intend to connect these resources with routine laboratory guidance and operating procedures."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "Together, these considerations gave us a framework that follows Carbotex's actual workflow:"
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                  {
-                    kind: "flow",
-                    steps: [
-                      "Engineered strain management",
-                      "Responsible laboratory practice",
-                      "Material preparation and purification",
-                      "Safety assessment for intended applications",
-                    ],
-                  },
-                  {
-                    kind: "content",
-                    inline: true,
-                    content: (
-                      <>
-                        {
-                          "This framework helps us connect feedback from Human Practices with the practical choices that shape our experimental work."
-                        }
-                      </>
-                    ),
-                  },
-                ],
-              },
-              {
-                stage: "evaluate",
-                label: "Extending Responsibility Beyond the Laboratory",
-                parts: [
-                  {
-                    kind: "content",
-                    inline: false,
-                    content: (
-                      <>
-                        <p>
-                          {
-                            "Our work in this section changed how we think about safety across Carbotex."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "The discussion at Grand APiC brought genetic elements and HGT into our consideration of engineered-strain management. Revisiting the material-preparation procedure connected safety questions with separation, chemical functionalization, and purification. The laboratory instructor's guidance also made the importance of everyday experimental practice more tangible for our team."
-                          }
-                        </p>
-                        <p>
-                          {
-                            "These experiences complement our material testing. Adhesion experiments, underwater-condition observations, PBS mass-change measurements, and L929 assessments help us explore the material's potential. More detailed characterization and application-specific evaluation will help us decide how that potential can be developed responsibly."
-                          }
-                        </p>
-                        <p>
-                          <strong>
-                            {
-                              "The central outcome of this Human Practices work was a broader approach to safety: one that follows Carbotex from the production strain to the final adhesive, while keeping laboratory practice and intended use in view."
-                            }
-                          </strong>
-                        </p>
-                        <p>
-                          {
-                            "This approach also connects with the manufacturing discussion in Section 3.3. As we improve production efficiency and explore applications that benefit from the distinctive properties of PMA-DA, material quality and safety will remain part of our design decisions."
-                          }
-                        </p>
-                      </>
-                    ),
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            kind: "label",
-            text: "Future Outlook: Making Safety Part of Practical Application",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "We will continue developing Carbotex as a route from agricultural residues to functional bio-based adhesives. Future progress will depend not only on material performance and production efficiency, but also on how well we understand and manage the associated risks."
-                  }
-                </p>
-                <p>
-                  {
-                    "For the engineered production strain, our priorities include maintaining clear genetic records and refining biosafety assessment around the strain and laboratory procedures actually used."
-                  }
-                </p>
-                <p>
-                  {
-                    "For PMA-DA preparation, we will examine the removal of microbial components and functionalization-related residues, alongside improvements in purification efficiency and material recovery."
-                  }
-                </p>
-                <p>
-                  {
-                    "For future applications, we plan to build on our adhesion, underwater-condition, PBS, and L929 experiments with more systematic assessments of stability, material composition, and biological responses under relevant conditions."
-                  }
-                </p>
-                <p>
-                  {
-                    "We will also continue to value laboratory safety education, drawing on in-person guidance, virtual simulation resources, and routine operating practices."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Our goal is to develop not only a promising adhesive, but also a responsible pathway for producing, evaluating, and eventually using it."
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "For Carbotex, responsible innovation means taking each stage of the process seriously—from the genetic design of the production strain to the way the final material may interact with its environment."
-                  }
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "ihp-conversation",
-    title: "Carbotex in Conversation",
-    parts: [
-      {
-        kind: "content",
-        inline: false,
-        content: (
-          <>
-            <p>
-              <em>
-                {"Sharing Ideas, Building Connections, Creating Together"}
-              </em>
-            </p>
-            <p>{"Carbotex did not grow within the laboratory alone."}</p>
-            <p>
-              {
-                "From our first project discussions to strain engineering, PMA production, and adhesive development, we kept exchanging ideas with fellow iGEM teams, researchers, and people from different backgrounds. Presenting our work gave us opportunities to hear questions we had not considered, learn how other teams approached their challenges, and build relationships that continued beyond a single event."
-              }
-            </p>
-            <p>
-              {
-                "These exchanges served different purposes. Some informed our technical decisions; others introduced new approaches to Human Practices, supported peer learning, or developed into collaborative public engagement. Together, they gave Carbotex a place within a wider community of people exploring what synthetic biology can contribute."
-              }
-            </p>
-          </>
-        ),
-      },
-    ],
-    subsections: [
-      {
-        id: "ihp-peers",
-        title: "4.1 Growing Alongside Our Peers",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-collab-ouc-china",
-          },
-          {
-            kind: "label",
-            text: "OUC-China: From Campus Peers to Cross-University Exchange",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Our connection with OUC-China began when both teams were newly formed."
-                  }
-                </p>
-                <p>
-                  {
-                    "As two iGEM teams from Ocean University of China, OUC-Haide and OUC-China met early in the season to introduce our projects, exchange initial plans, and discuss the challenges of building an iGEM team. Although we had chosen different research topics, we shared a desire to turn what we had learned into meaningful synthetic biology projects."
-                  }
-                </p>
-                <p>{"We continued that contact as the season progressed."}</p>
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp.avif",
-            alt: "Early exchange between OUC-Haide and OUC-China",
-            ratio: "540 / 380",
-            caption: "Early project exchange between OUC-Haide and OUC-China.",
-            figureNumber: 30,
-          },
-          {
-            kind: "anchor",
-            id: "ihp-collab-tianjin-exchange",
-            label: "Nankai University and Tianjin University exchange",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Together with OUC-China, we later traveled to Tianjin to exchange ideas with students and researchers from Nankai University and Tianjin University. Through project discussions and laboratory visits, we learned about different research environments, facilities, and approaches to organizing experimental work."
-                  }
-                </p>
-                <p>
-                  {
-                    "These meetings extended our conversations beyond our home university. We shared progress and practical experiences while listening to how other teams approached their projects. Communication channels established through the exchange also provided opportunities to stay in touch and continue sharing questions during the season."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-community-ouc-china-tianjin-exchange-01-meeting.webp",
-                alt: "Cross-university project exchange in Tianjin",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-community-ouc-china-tianjin-exchange-05-lab-discussion.webp",
-                alt: "Discussion during a university laboratory visit",
-              },
-            ],
-            columns: 2,
-            ratio: "345 / 260",
-            caption:
-              "Cross-university discussions and laboratory visits in Tianjin.",
-            figureNumber: 31,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "Our connection continued through OUC-China's subsequent recruitment activities, where we exchanged experiences of participating in iGEM with prospective new members."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp-community-ouc-china-recruitment-exchange-01.webp",
-            alt: "Exchange during OUC-China recruitment activities",
-            ratio: "540 / 380",
-            caption: "OUC-Haide sharing iGEM experience with OUC-China.",
-            figureNumber: 32,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "From our first conversation to visits and later activities, OUC-China became a valued peer team throughout the season. This experience reminded us that iGEM is not only about completing our own project, but also about supporting one another through a shared scientific journey."
-                }
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-community",
-        title: "4.2 Seeing Carbotex Through Other Eyes",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-ccic",
-          },
-          {
-            kind: "label",
-            text: "CCiC: Bringing Our Project into a Wider Community",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "As Carbotex's technical strategy took shape, we wanted to share it beyond our own team and hear how other researchers and iGEMers understood our work."
-                  }
-                </p>
-                <p>
-                  {
-                    "In 2026, we attended the 13th Conference of China iGEMer Community (CCiC), hosted at Dalian University of Technology, together with the Synbiopunk activities held during the event."
-                  }
-                </p>
-                <p>
-                  {
-                    "Through poster discussions, project presentations, and informal conversations, we introduced our approach: using straw-derived carbon for microbial PMA production and developing the resulting polymer into a bio-based adhesive."
-                  }
-                </p>
-                <p>
-                  {
-                    "The conference brought us into contact with teams studying a wide range of applications of synthetic biology. Talking with people who did not share our immediate research background helped us recognize which parts of Carbotex's story were clear and which needed a stronger connection between modules."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-ccic-2026-02-peer-exchange.webp",
-                alt: "Peer exchange at CCiC",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-ccic-2026-04-poster-discussion.webp",
-                alt: "Carbotex poster discussion at CCiC",
-              },
-            ],
-            columns: 2,
-            ratio: "345 / 260",
-            caption: "Presenting Carbotex and exchanging ideas at CCiC.",
-            figureNumber: 33,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "During project evaluation, judges noted that Carbotex brought together genetic engineering, modeling, fermentation, and material development, but that the relationships among these components could be communicated more clearly. They encouraged us to use the "
-                  }
-                  <strong>{"Design–Build–Test–Learn (DBTL)"}</strong>
-                  {
-                    " framework to show how experimental findings and analysis could inform subsequent design."
-                  }
-                </p>
-                <p>
-                  {
-                    "This feedback helped us rethink how to present the project as an interconnected engineering process rather than a collection of separate results. It also drew our attention to the importance of making feedback between design, testing, and learning visible in the Wiki."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp-ccic-2026-06-carbotex-stage-presentation-dbtl.webp",
-            alt: "Carbotex project presentation and DBTL-related feedback at CCiC",
-            ratio: "540 / 380",
-            caption: "Carbotex presenting the project at CCiC.",
-            figureNumber: 34,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "We also spoke with Dr. Haotian Guo about the development of PMA-based adhesives. This exchange helped us consider PMA as a platform for functional material design, rather than simply a fermentation product. Its contribution to our material-development thinking is discussed in the earlier sections of our Integrated Human Practices."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "label",
-            text: "An Encounter That Became a Collaboration: QingdaoAcademy",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {"CCiC was also where we met "}
-                  <strong>{"QingdaoAcademy"}</strong>
-                  {", a high-school iGEM team from Qingdao."}
-                </p>
-                <p>
-                  {
-                    "We introduced our projects to each other and shared our experiences of joining iGEM. That first meeting established a connection between two teams working independently but interested in making synthetic biology accessible to more young people."
-                  }
-                </p>
-                <p>
-                  {
-                    "As we stayed in touch, we discovered a shared interest in making science communication more engaging and participatory. "
-                  }
-                  <strong>
-                    {
-                      "The encounter at CCiC eventually became the starting point for a public-engagement activity that we designed and delivered together."
-                    }
-                  </strong>
-                </p>
-                <p>{"We return to that collaboration in Section 4.5."}</p>
-              </>
-            ),
-          },
-          {
-            kind: "label",
-            text: "Learning from Team-Led Discussions",
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "At CCiC, we also joined Unconference activities hosted by other iGEM teams."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "anchor",
-            id: "ihp-collab-dut-china",
-            label: "DUT-China commercialization discussion",
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "DUT-China organized a discussion on commercialization and startup incubation. Our conversations about manufacturing scale, production costs, and real user needs motivated the preliminary PMA-DA cost analysis described in "
-                }
-                <strong>
-                  {
-                    "Section 3.3, Exploring Application and Commercial Potential"
-                  }
-                </strong>
-                {"."}
-              </>
-            ),
-          },
-          {
-            kind: "anchor",
-            id: "ihp-collab-jlu-fbh",
-            label: "JLU-FBH From Teams, For Teams roundtable",
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {"We also participated in JLU-FBH's "}
-                <strong>{'"From Teams, For Teams"'}</strong>
-                {
-                  " roundtable, where teams exchanged experiences of project development, team organization, and Human Practices."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-peer-community-dut-unconference-01-group-photo.avif",
-                alt: "DUT-China commercialization discussion at CCiC",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-peer-community-jlu-fbh-from-teams-for-teams-01-multiteam-group-photo.avif",
-                alt: "JLU-FBH From Teams, For Teams roundtable",
-              },
-            ],
-            columns: 2,
-            ratio: "345 / 260",
-            caption: "Participating in peer-led discussions at CCiC.",
-            figureNumber: 35,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  <a
-                    href={
-                      "https://static.igem.wiki/teams/6147/wiki/igem-discussion-notes.pdf"
-                    }
-                  >
-                    {"View our commercialization discussion notes"}
-                  </a>
-                </p>
-                <p>
-                  {"At the Synbiopunk event, our team also received "}
-                  <strong>{"second place in the popularity award"}</strong>
-                  {
-                    ". We appreciated this encouragement from the iGEM community, alongside the conversations and new friendships that made the event memorable."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp-ccic-2026-09-synbiopunk-challenge-second-place.webp",
-            alt: "Carbotex at Synbiopunk",
-            ratio: "540 / 380",
-            caption: "Carbotex receiving recognition at Synbiopunk.",
-            figureNumber: 36,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "Looking back, some of the most valuable outcomes of CCiC continued well beyond the conference. Judges' questions sharpened our project narrative, commercialization discussions led to further analysis, and a chance meeting with another team eventually developed into joint outreach."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "label",
-            text: "Grand APiC: Engaging with Broader Perspectives",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "We also presented Carbotex at Grand APiC, where we met iGEM teams, researchers, and participants from different professional backgrounds."
-                  }
-                </p>
-                <p>
-                  {
-                    "Through poster sessions and conversations, we introduced our project and learned how others approached the scientific and practical questions surrounding synthetic biology."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-grand-apic-2026-01-community-group-photo.webp",
-                alt: "Community gathering at Grand APiC",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-grand-apic-2026-02-carbotex-poster-exchange.webp",
-                alt: "Carbotex poster exchange at Grand APiC",
-              },
-            ],
-            columns: 2,
-            ratio: "345 / 260",
-            caption: "Presenting Carbotex and exchanging ideas at Grand APiC.",
-            figureNumber: 37,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "A discussion with judges raised questions about biosafety and horizontal gene transfer (HGT). This feedback prompted us to revisit the genetic-element management of our engineered A08 strain and the responsibilities involved in preparing a final adhesive material. We examine this response in "
-                  }
-                  <strong>
-                    {"Section 3.4, From Biosafety to Product Responsibility"}
-                  </strong>
-                  {"."}
-                </p>
-                <p>
-                  {
-                    "Other discussions with industry-related participants gave us further opportunities to consider the relationship between synthetic biology research and practical manufacturing."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp-grand-apic-2026-04-biotechnology-industry-exchange.webp",
-            alt: "Biotechnology industry exchange at Grand APiC",
-            ratio: "540 / 380",
-            caption:
-              "Exchanges with industry-related participants at Grand APiC.",
-            figureNumber: 38,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "CCiC and Grand APiC gave Carbotex a wider audience and exposed us to questions from people with different priorities. Together, they strengthened our understanding that research must be communicated and evaluated from more than one perspective."
-                }
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-across-borders",
-        title: "4.3 Human Practices Across Borders",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-collab-peking-rice",
-          },
-          {
-            kind: "label",
-            text: "2026 US-China iGEM Human Practices Summit: Learning Across Teams",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {"We participated in "}
-                  <strong>
-                    {
-                      '"People in the World of SynBio — 2026 US-China iGEM Human Practices Summit,"'
-                    }
-                  </strong>
-                  {
-                    " a virtual event hosted by Peking University and Rice University from July to August 2026."
-                  }
-                </p>
-                <p>
-                  {
-                    "The summit brought together iGEM teams from China and other countries to introduce their projects, share their Human Practices experiences, and exchange different approaches to connecting synthetic biology with society."
-                  }
-                </p>
-                <p>
-                  {
-                    "Through online presentations and discussions, we learned how different teams explored the social dimensions of their projects, engaged with stakeholders, and reflected on the challenges they encountered."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "anchor",
-            id: "ihp-collab-princeton",
-            label: "Princeton University Human Practices case",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Among the presentations, Princeton University's team shared how expert engagement could help teams reconsider project assumptions and inform design decisions. Nankai University's team introduced its approach to incorporating different stakeholder perspectives into research and communication."
-                  }
-                </p>
-                <p>
-                  {
-                    "For Carbotex, the summit provided an opportunity to learn from the experiences of other teams and reflect on our own Human Practices approach. It reminded us that meaningful engagement is not defined simply by the number of activities conducted, but by how carefully teams listen, interpret feedback, and connect what they learn to their projects."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/meeting.avif",
-                alt: "Online presentations and team exchanges during the 2026 US-China iGEM Human Practices Summit",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/certification.avif",
-                alt: "Certificate of participation awarded to OUC-Haide at the 2026 US-China iGEM Human Practices Summit",
-              },
-            ],
-            columns: 2,
-            ratio: "390 / 290",
-            caption:
-              "Online exchanges during the 2026 US-China iGEM Human Practices Summit and the certificate of participation awarded to OUC-Haide.",
-            figureNumber: 39,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "We also prepared a presentation to organize and share the outcomes of this international learning experience. It serves as a record of the exchange and a resource for revisiting the Human Practices approaches discussed during the summit."
-                  }
-                </p>
-                <p>
-                  <a
-                    href={
-                      "https://static.igem.wiki/teams/6147/wiki/ouc-haide-1.pdf"
-                    }
-                  >
-                    <strong>
-                      {
-                        "View Our International Human Practices Summit Presentation (PDF)"
-                      }
-                    </strong>
-                  </a>
-                </p>
-                <p>
-                  {
-                    "Although the participating teams explored different scientific questions, the summit highlighted a shared interest in connecting synthetic biology with people and society. Learning from their experiences encouraged us to reflect more carefully on how we document and communicate our own Human Practices activities."
-                  }
-                </p>
-                <p>
-                  {
-                    "Other examples emphasized public trust, meaningful participation, and communication with audiences of different backgrounds. Seeing these varied approaches reminded us that there is no single template for Human Practices. Teams need to choose methods suited to their projects and the people they hope to engage."
-                  }
-                </p>
-                <p>
-                  {
-                    "For Carbotex, a particularly useful lesson was the importance of connecting what stakeholders say with the decisions and actions that follow. It encouraged us to revisit how we document expert consultations, project feedback, application analysis, and public engagement within our own Human Practices."
-                  }
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-collaboration",
-        title: "4.4 From Straw to Renewable Carbon",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-qibebt",
-          },
-          {
-            kind: "label",
-            text: "Green Carbon and QIBEBT: Seeing the Wider Resource Context",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Carbotex began with agricultural straw. As our project developed, we gradually broadened our perspective from a particular feedstock to the renewable carbon it contains and the different ways that carbon may enter useful products."
-                  }
-                </p>
-                <p>
-                  {"Through research visits and exchanges associated with the "}
-                  <strong>
-                    {
-                      "Qingdao Institute of Bioenergy and Bioprocess Technology (QIBEBT)"
-                    }
-                  </strong>
-                  {
-                    ", we encountered work related to lignocellulosic conversion, synthetic biology, and green biomanufacturing. Research themes discussed in the journal "
-                  }
-                  <em>{"Green Carbon"}</em>
-                  {
-                    ", including renewable carbon resources and their transformation, also provided a broader context for our project "
-                  }
-                  <Cite k={["KeAiGreenCarbon2026"]} />
-                  {"."}
-                </p>
-                <p>
-                  {
-                    "These were opportunities to learn about relevant research directions, rather than claims that the journal itself provided direct technical guidance to Carbotex."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-green-carbon-qibebt-02-project-exchange-meeting.avif",
-                alt: "Project exchange related to Green Carbon and QIBEBT",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-green-carbon-qibebt-03-lignocellulose-bioconversion-tour.avif",
-                alt: "Visit concerning lignocellulosic bioconversion",
-              },
-            ],
-            columns: 2,
-            ratio: "345 / 260",
-            caption:
-              "Exploring renewable-carbon and green-biomanufacturing research.",
-            figureNumber: 40,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "We had originally approached the project with a simple question: how could we make better use of agricultural straw? These exchanges encouraged us to view straw as part of a wider agricultural and carbon-resource system."
-                  }
-                </p>
-                <p>
-                  {
-                    "Crop residues already serve several established purposes. Our ambition is not to replace those pathways indiscriminately, but to investigate whether suitable biomass resources could support an additional route toward functional materials."
-                  }
-                </p>
-                <p>
-                  {
-                    "From straw-derived sugars to microbial PMA production and eventually adhesive development, Carbotex explores one possible connection between renewable carbon and biological manufacturing."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "We started with straw, but our conversations helped us understand the project through the broader lens of renewable carbon."
-                    }
-                  </strong>
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "figure",
-            src: "https://static.igem.wiki/teams/6147/wiki/ihp-green-carbon-qibebt-04-synthetic-biology-green-biomanufacturing-exhibit.avif",
-            alt: "Exhibition on synthetic biology and green biomanufacturing",
-            ratio: "540 / 380",
-            caption: "Learning about related work in synthetic biology.",
-            figureNumber: 41,
-          },
-        ],
-      },
-      {
-        id: "ihp-co-creation",
-        title: "4.5 From Communication to Co-Creation",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-collab-qingdaoacademy",
-          },
-          {
-            kind: "label",
-            text: 'OUC-Haide × QingdaoAcademy: "17 C: The Fatal Experiment"',
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "After meeting QingdaoAcademy at CCiC, we stayed in contact and began discussing how the two teams could collaborate on synthetic biology outreach."
-                  }
-                </p>
-                <p>
-                  {
-                    "Our team members came from different educational backgrounds, but we shared an interest in helping younger audiences participate actively in science rather than simply listening to a presentation."
-                  }
-                </p>
-                <p>{"We began with a question:"}</p>
-                <p>
-                  <strong>
-                    {
-                      "What if participants could become investigators in a scientific story, instead of remaining passive listeners?"
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "This idea developed into an immersive synthetic biology activity that we jointly designed and delivered: "
-                  }
-                  <strong>{'"17 C: The Fatal Experiment."'}</strong>
-                </p>
-                <p>
-                  {
-                    "The activity integrated scientific concepts into an investigative storyline. Participants followed clues, considered evidence, discussed possibilities, and made decisions as they explored ideas connected with biological technology."
-                  }
-                </p>
-                <p>
-                  {
-                    "By inviting participants into the story, we turned synthetic biology into something they could actively question and explore."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/mishi1.webp",
-                alt: "Students participating in interactive science communication activities",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/mishi2.webp",
-                alt: "Group photographs of students and iGEM team members during the outreach activity",
-              },
-            ],
-            columns: 2,
-            ratio: "420 / 360",
-            caption:
-              "OUC-Haide and QingdaoAcademy co-created an outreach activity.",
-            figureNumber: 42,
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "The collaboration also changed our own experience of science communication. Participants' questions, interpretations of clues, and discussions gave us opportunities to see how people with different backgrounds approached the material."
-                  }
-                </p>
-                <p>
-                  {
-                    "For the two teams, designing and carrying out the event required continued communication, coordination, and problem-solving. What started as a chance meeting became a shared public-engagement project."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "We met at CCiC as two independent teams, and later came together again as co-creators."
-                    }
-                  </strong>
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-beyond-language",
-        title: "4.6 Beyond Technical Language",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-collab-ning-yan",
-          },
-          {
-            kind: "label",
-            text: "Ning Yan × Original Song: When Science Meets Art",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "As Carbotex's research became more technically detailed, the vocabulary we used to explain it also grew more specialized: lignocellulose, carbon utilization, genetic regulation, fermentation, PMA, and dopamine functionalization."
-                  }
-                </p>
-                <p>
-                  {
-                    "These terms matter for scientific accuracy, but they are not always the easiest way to introduce a project to people outside the field."
-                  }
-                </p>
-                <p>
-                  {
-                    "We therefore explored a different form of communication: music."
-                  }
-                </p>
-                <p>
-                  {
-                    "Inspired by the ideas behind Carbotex, we created an original song to tell the story of starting with agricultural straw and exploring the possibilities of renewable carbon and biomanufacturing through lyrics and melody."
-                  }
-                </p>
-                <p>
-                  {
-                    "During its development, we sought professional artistic advice from "
-                  }
-                  <strong>{"Professor Ning Yan"}</strong>
-                  {
-                    " at Ocean University of China and used this feedback to refine how the piece was expressed and presented."
-                  }
-                </p>
-              </>
-            ),
-          },
-          {
-            kind: "gallery",
-            images: [
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-art-science-01-carbotex-musical-performance.avif",
-                alt: "Carbotex original song performance",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-art-science-02-flute-duet-performance.avif",
-                alt: "Musical performance during science-and-art communication",
-              },
-              {
-                src: "https://static.igem.wiki/teams/6147/wiki/ihp-art-science-03-professional-feedback.avif",
-                alt: "Professional feedback on the science-and-art activity",
-              },
-            ],
-            columns: 3,
-            ratio: "270 / 220",
-            caption:
-              "Carbotex explored music and artistic exchange for science communication.",
-            figureNumber: 43,
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                <strong>{"Original song lyrics (PDF):"}</strong>{" "}
-                <a
-                  href={
-                    "https://static.igem.wiki/teams/6147/wiki/amber-dreams-in-the-wheat-field.pdf"
-                  }
-                >
-                  <em>{"Amber Dreams in the Wheat Field"}</em>
-                  {" — Read the full lyrics"}
-                </a>
-              </>
-            ),
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Unlike a scientific presentation, music does not need to explain every pathway or experimental result. It can introduce the motivation and human side of research through rhythm, emotion, and storytelling, encouraging audiences to ask questions and learn more."
-                  }
-                </p>
-                <p>
-                  {
-                    "This experience reminded us to choose communication methods that fit different audiences. Technical discussions depend on accurate evidence, while creative forms of expression can make scientific ideas more approachable."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Our original song did not change the engineered strain or adhesive material. It gave Carbotex another way to connect with the public."
-                    }
-                  </strong>
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-what-returned",
-        title: "What Returned With Us",
-        parts: [
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "Looking back over these exchanges, we see that each contributed something different to Carbotex."
-                  }
-                </p>
-                <p>
-                  {
-                    "OUC-China and other university peers showed us the value of sustained support and cross-university conversation. CCiC and Grand APiC brought our project into contact with questions from different audiences. The international Human Practices summit introduced diverse ways of connecting stakeholder engagement with research and left us with a presentation that we could share and revisit."
-                  }
-                </p>
-                <p>
-                  {
-                    "Research exchanges concerning renewable carbon expanded how we understood our feedstock. Working with QingdaoAcademy brought us from discussion into genuine co-creation. Our original song opened another route for communicating science through art."
-                  }
-                </p>
-                <p>
-                  {
-                    "Some exchanges informed project decisions, others built relationships, and still others helped us find ways to reach the public. We value these different outcomes for what they actually contributed."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Human Practices is not only about bringing outside perspectives back into a project. It is also about joining a wider community, sharing what we have learned, and creating opportunities to learn and build together."
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "Carbotex's experimental research is carried out by our team, but its development has been enriched by the people and communities we have met along the way."
-                  }
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "ihp-reflection",
-    title: "Final Reflection",
-    parts: [
-      {
-        kind: "content",
-        inline: false,
-        content: (
-          <>
-            <p>
-              <em>
-                {"What Human Practices Changed — and Where Carbotex Goes Next"}
-              </em>
-            </p>
-            <p>
-              {
-                "Carbotex began with a question about the carbon stored in agricultural straw. Could this renewable resource become the starting point for a new biological manufacturing pathway?"
-              }
-            </p>
-            <p>
-              {
-                "As our research developed, the question became more demanding. We needed to understand which straw resources were realistically available, how microorganisms could make better use of the resulting sugars, how that carbon could be directed toward PMA, and what it would take to turn PMA into a material worth using."
-              }
-            </p>
-            <p>
-              {
-                "The answers did not come from laboratory experiments alone. They developed through conversations with agricultural stakeholders, researchers, industry professionals, other iGEM teams, and people who approached our project from outside our immediate field."
-              }
-            </p>
-            <p>
-              <strong>
-                {
-                  "Human Practices helped us change not only how we explained Carbotex, but also what we asked of the project itself."
-                }
-              </strong>
-            </p>
-          </>
-        ),
-      },
-    ],
-    subsections: [
-      {
-        id: "ihp-reflection-1",
-        title: "5.1 What Human Practices Changed",
-        parts: [
-          {
-            kind: "anchor",
-            id: "ihp-reflection-2",
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "Looking back, we can identify five important shifts in our thinking and development."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "reflection-cards",
-          },
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {
-                    "These were not five isolated decisions. They connected the beginning of our project to its intended outcome: "
-                  }
-                  <strong>
-                    {
-                      "which carbon we use, how we engineer its conversion, what we make from it, and how we evaluate the consequences of making it."
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "Our wider community activities contributed in different ways. Exchanges with OUC-China and other teams created opportunities for continued peer learning; the international Human Practices summit helped us compare approaches to stakeholder engagement; our collaboration with QingdaoAcademy developed into a jointly created science-communication activity; and our original song gave Carbotex a different way to reach audiences beyond the laboratory."
-                  }
-                </p>
-                <p>
-                  {
-                    "Not every conversation changed an experiment, nor did it need to. Some helped us make a technical decision; others challenged an assumption, built a relationship, or made our research easier for others to engage with. Being clear about those differences is part of what made our Human Practices more meaningful."
-                  }
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-reflection-4",
-        title: "5.2 What Remains Unresolved",
-        parts: [
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "The changes described above have given Carbotex a stronger direction, but moving from a laboratory adhesive to a useful product will require another round of evidence and engagement."
-                }
-              </>
-            ),
-          },
-          {
-            kind: "unresolved-cards",
-          },
-          {
-            kind: "content",
-            inline: true,
-            content: (
-              <>
-                {
-                  "These priorities are connected. A future user may value wet-environment adhesion, for example, but the appropriate product design will also depend on reliable production, material quality, safety requirements, and acceptable cost. Addressing any one of these factors in isolation would provide only part of the answer."
-                }
-              </>
-            ),
-          },
-        ],
-      },
-      {
-        id: "ihp-reflection-3",
-        title: "Carrying TRACE Forward",
-        parts: [
-          {
-            kind: "content",
-            inline: false,
-            content: (
-              <>
-                <p>
-                  {"Throughout our work, "}
-                  <strong>
-                    {
-                      "TRACE — Trigger, Reach Out, Analyze, Change, and Evaluate"
-                    }
-                  </strong>
-                  {
-                    " — became more than a structure for documenting activities."
-                  }
-                </p>
-                <p>
-                  {
-                    "It helped us ask whether an interaction had actually entered the project. What question prompted us to seek another perspective? What did we hear? How did we interpret it alongside our experimental evidence? What changed in our thinking or work? And what would we need to evaluate next?"
-                  }
-                </p>
-                <p>
-                  {
-                    "That process was rarely a straight line. New results led to new questions, some discussions called for follow-up, and not every promising idea was ready to become an engineering decision. The value of TRACE was that it encouraged us to make these connections visible."
-                  }
-                </p>
-                <p>
-                  {
-                    "To make this approach accessible beyond our own team, we have also made our current "
-                  }
-                  <a
-                    href={
-                      "https://static.igem.wiki/teams/6147/wiki/trace-20handbook.pdf"
-                    }
-                  >
-                    {"TRACE Handbook (PDF)"}
-                  </a>
-                  {
-                    " available. We will continue refining the handbook as our Human Practices work develops."
-                  }
-                </p>
-                <p>
-                  <strong>
-                    {
-                      "Carbotex started by asking what else agricultural straw could become. Human Practices taught us to ask a second question: what would make that transformation useful, responsible, and worth pursuing?"
-                    }
-                  </strong>
-                </p>
-                <p>
-                  {
-                    "As we continue to develop the material, that question will remain part of our design process — from the carbon source to the engineered microorganism, from PMA to PMA-DA, and from laboratory performance toward real application."
-                  }
-                </p>
-              </>
-            ),
-          },
-        ],
-      },
-    ],
-  },
+  ihpReviewedSection3,
+  ihpReviewedSection4,
+  ihpReviewedSection5,
 ];

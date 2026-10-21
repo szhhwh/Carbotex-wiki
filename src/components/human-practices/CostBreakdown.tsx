@@ -5,7 +5,7 @@ const ITEMS = [
   { name: "EDC·HCl", low: 20.68, high: 20.68 },
   { name: "NHS", low: 5.7, high: 5.7 },
   {
-    name: "Selected priced inputs from the reference CBS process",
+    name: "Selected CBS reference inputs",
     low: 5.78,
     high: 5.78,
   },
@@ -63,10 +63,8 @@ export function CostBreakdown() {
               </tr>
             ))}
             <tr className={styles.total}>
-              <th scope="row">Preliminary priced-material subtotal</th>
-              <td data-label="Estimated cost">
-                Approximately RMB 193.70–232.15
-              </td>
+              <th scope="row">Preliminary material subtotal</th>
+              <td data-label="Estimated cost">Approximately RMB 194–232</td>
             </tr>
           </tbody>
         </table>

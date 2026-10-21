@@ -7,7 +7,7 @@ import {
   type CSSProperties,
 } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, UserRound, X } from "lucide-react";
+import { UserRound, X } from "lucide-react";
 import type { IhpStakeholder, IhpStakeholderGroup } from "./ihp-types";
 import { stakeholderGroupId } from "./ihp-links";
 import styles from "./stakeholder-navigator.module.css";
@@ -70,6 +70,10 @@ function twoDigit(value: number) {
   return String(value).padStart(2, "0");
 }
 
+function stakeholderImpactLines(impact: string) {
+  return impact.split(/\s*;\s*(?=\d+\.\s)/).map((line) => line.trim());
+}
+
 function StakeholderCard({
   stakeholder,
   number,
@@ -114,7 +118,7 @@ function StakeholderCard({
         ) : (
           <img
             src={stakeholder.portrait}
-            alt={`Stakeholder portrait: ${stakeholder.name}`}
+            alt={`Stakeholder portrait — ${stakeholder.name}`}
             data-logo={/\.svg(?:[?#]|$)/i.test(stakeholder.portrait)}
             loading="lazy"
             decoding="async"
@@ -124,6 +128,29 @@ function StakeholderCard({
       </div>
       <div className={styles.cardSummary}>
         <h4 id={headingId}>{stakeholder.name}</h4>
+        <div className={styles.cardFacts}>
+          <p className={styles.cardFact}>
+            <strong className={styles.cardFactLabel}>Identity:</strong>{" "}
+            <span className={styles.cardFactValue}>{stakeholder.identity}</span>
+          </p>
+          <p className={styles.cardFact}>
+            <strong className={styles.cardFactLabel}>Question:</strong>{" "}
+            <span className={styles.cardFactValue}>{stakeholder.question}</span>
+          </p>
+          <p className={styles.cardFact}>
+            <strong className={styles.cardFactLabel}>Impact:</strong>{" "}
+            <span className={styles.cardImpact}>
+              {stakeholderImpactLines(stakeholder.impact).map(
+                (line, lineIndex, lines) => (
+                  <span className={styles.cardImpactLine} key={line}>
+                    {line}
+                    {lineIndex < lines.length - 1 ? " " : null}
+                  </span>
+                ),
+              )}
+            </span>
+          </p>
+        </div>
       </div>
       <button
         type="button"
@@ -139,43 +166,6 @@ function StakeholderCard({
         </span>
       </button>
     </article>
-  );
-}
-
-function AdditionalCollaborators({
-  group,
-  headingId,
-}: {
-  group: IhpStakeholderGroup;
-  headingId: string;
-}) {
-  const additional = group.additionalCollaborators;
-  if (!additional) return null;
-
-  return (
-    <div
-      className={styles.additionalCollaborators}
-      data-additional-collaborators
-    >
-      <h4 id={`${headingId}-additional`} className={styles.additionalTitle}>
-        {additional.title}
-      </h4>
-      <div className={styles.additionalList}>
-        {additional.items.map((item) => (
-          <a className={styles.additionalCard} href={item.href} key={item.name}>
-            <span className={styles.additionalCopy}>
-              <strong>{item.name}</strong>
-              {item.identity && <span>{item.identity}</span>}
-            </span>
-            <ArrowUpRight
-              className={styles.additionalArrow}
-              size={14}
-              aria-hidden="true"
-            />
-          </a>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -197,8 +187,6 @@ function StakeholderGroupSection({
   const id = useId();
   const headingId = `${id}-${index}`;
   const dense = group.stakeholders.length > 4;
-  const cardCount =
-    group.stakeholders.length + (group.additionalCollaborators ? 1 : 0);
 
   return (
     <section
@@ -213,7 +201,7 @@ function StakeholderGroupSection({
       </header>
       <div
         className={styles.cardGrid}
-        data-count={cardCount}
+        data-count={group.stakeholders.length}
         data-dense={dense}
         data-stakeholder-card-grid
       >
@@ -231,7 +219,6 @@ function StakeholderGroupSection({
             />
           );
         })}
-        <AdditionalCollaborators group={group} headingId={headingId} />
       </div>
     </section>
   );
@@ -331,7 +318,7 @@ function StakeholderDetailsDialog({
               ) : (
                 <img
                   src={stakeholder.portrait}
-                  alt={`Stakeholder portrait: ${stakeholder.name}`}
+                  alt={`Stakeholder portrait — ${stakeholder.name}`}
                   data-logo={/\.svg(?:[?#]|$)/i.test(stakeholder.portrait)}
                   decoding="async"
                   onError={() => setFailedPortrait(true)}

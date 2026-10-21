@@ -409,6 +409,12 @@
   font-size: var(--article-text);
 }
 
+.referenceAnchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
 .sectionHeading {
   display: block;
   margin-bottom: 1.4rem;

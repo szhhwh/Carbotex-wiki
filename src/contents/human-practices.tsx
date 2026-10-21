@@ -66,6 +66,7 @@ export function HumanPractices() {
           }}
           sections={sections}
           references
+          referencesAnchorId="section-6"
           stickyMobileOutline
         />
       </TraceCycleProvider>

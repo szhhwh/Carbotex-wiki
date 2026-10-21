@@ -105,7 +105,7 @@
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 10.5rem;
+  min-height: 18rem;
   overflow: clip;
   flex-direction: column;
   border: 2px solid var(--group-border);
@@ -165,7 +165,7 @@
 
 .portrait {
   display: grid;
-  height: clamp(6.35rem, 12cqi, 8rem);
+  height: clamp(5.4rem, 9.5cqi, 6.8rem);
   margin: 0.42rem 0.42rem 0;
   overflow: hidden;
   flex: 0 0 auto;
@@ -206,12 +206,11 @@
 .cardSummary {
   display: flex;
   min-width: 0;
-  padding: 0.22rem 0.5rem 0.3rem;
-  flex: 0 0 auto;
-  align-items: center;
+  padding: 0.48rem 0.62rem 0.74rem;
+  flex: 1 1 auto;
+  align-items: stretch;
   flex-direction: column;
-  gap: 0;
-  justify-content: center;
+  gap: 0.52rem;
   pointer-events: none;
 }
 
@@ -230,6 +229,39 @@
   overflow-wrap: anywhere;
   text-align: center;
   text-wrap: pretty;
+}
+
+.cardFacts {
+  display: grid;
+  min-width: 0;
+  gap: 0.38rem;
+  text-align: left;
+}
+
+.cardFact {
+  min-width: 0;
+  margin: 0;
+  color: var(--hardware-ink, #003f34);
+  font-size: clamp(0.72rem, 0.92cqi, 0.82rem);
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.cardFactLabel {
+  color: var(--group-accent);
+  font-weight: 800;
+}
+
+.cardFactValue {
+  font-weight: 500;
+}
+
+.cardImpact {
+  display: inline;
+}
+
+.cardImpactLine {
+  display: block;
 }
 
 .cardTrigger {
@@ -253,35 +285,32 @@
 }
 
 .card[data-dense="true"] {
-  min-height: 5.35rem;
-  flex-direction: row;
-  align-items: stretch;
+  min-height: 18rem;
 }
 
 .card[data-dense="true"] .portrait {
-  width: clamp(3.8rem, 7.3cqi, 4.6rem);
-  height: auto;
-  margin: 0.38rem 0 0.38rem 0.38rem;
-  flex: 0 0 clamp(3.8rem, 7.3cqi, 4.6rem);
+  width: auto;
+  height: clamp(5rem, 8cqi, 6.2rem);
+  margin: 0.42rem 0.42rem 0;
+  flex: 0 0 auto;
 }
 
 .card[data-dense="true"] .cardSummary {
   min-width: 0;
   flex: 1 1 auto;
-  align-items: flex-start;
-  padding: 0.36rem 0.42rem 0.36rem 0.34rem;
-  justify-content: center;
+  align-items: stretch;
+  padding: 0.48rem 0.62rem 0.74rem;
 }
 
 .navigator .card[data-dense="true"] h4 {
-  display: flex;
-  min-height: 0;
-  flex: 0 1 auto;
+  display: grid;
+  min-height: 2.4em;
+  flex: 0 0 auto;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   font-size: clamp(0.88rem, 1.02cqi, 0.98rem);
   line-height: 1.24;
-  text-align: left;
+  text-align: center;
   text-wrap: pretty;
 }
 
@@ -294,92 +323,6 @@
   font-size: 0.66rem;
 }
 
-.additionalCollaborators {
-  display: flex;
-  min-width: 0;
-  min-height: 10.5rem;
-  padding: 0.78rem 0.62rem;
-  flex-direction: column;
-  gap: 0.52rem;
-  justify-content: center;
-  border: 2px dashed var(--group-border);
-  border-radius: 1rem;
-  background: color-mix(
-    in srgb,
-    var(--group-surface) 52%,
-    var(--hardware-white, #fff)
-  );
-  box-shadow: 0 0.2rem 0
-    color-mix(in srgb, var(--group-border) 58%, transparent);
-}
-
-.navigator .additionalTitle {
-  margin: 0;
-  color: var(--hardware-ink, #003f34);
-  font-family: var(--hardware-body, "Trebuchet MS", sans-serif);
-  font-size: clamp(0.92rem, 1.16cqi, 1.04rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  text-align: center;
-  text-wrap: balance;
-}
-
-.additionalList {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.additionalCard {
-  position: relative;
-  display: block;
-  min-width: 0;
-  padding: 0.45rem 1.15rem 0.45rem 0.48rem;
-  border: 1px solid var(--group-border);
-  border-radius: 0.68rem;
-  background: var(--hardware-white, #fff);
-  color: var(--hardware-ink, #003f34);
-  text-align: left;
-  text-decoration: none;
-  transition:
-    border-color var(--ihp-duration, 170ms) ease,
-    transform var(--ihp-duration, 170ms) ease;
-}
-
-@media (hover: hover) {
-  .additionalCard:hover {
-    border-color: var(--group-accent);
-    transform: translateY(-1px);
-  }
-}
-
-.additionalCopy {
-  display: grid;
-  gap: 0.12rem;
-  min-width: 0;
-}
-
-.additionalCopy strong {
-  color: var(--hardware-navy, #1f315f);
-  font-size: 0.8rem;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
-
-.additionalCopy span {
-  color: var(--hardware-ink, #003f34);
-  font-size: 0.72rem;
-  line-height: 1.4;
-}
-
-.additionalArrow {
-  position: absolute;
-  top: 0.38rem;
-  right: 0.34rem;
-  color: var(--group-accent);
-}
-
-.navigator .additionalCard:focus-visible,
 .detailsClose:focus-visible,
 .storyLink:focus-visible {
   outline: 3px solid var(--hardware-navy, #1f315f);
@@ -692,7 +635,7 @@
 
 @container stakeholder-navigator (max-width: 430px) {
   .card {
-    min-height: 9.75rem;
+    min-height: 17rem;
   }
 
   .portrait {
@@ -704,21 +647,16 @@
   }
 
   .card[data-dense="true"] {
-    min-height: 5rem;
+    min-height: 17rem;
   }
 
   .card[data-dense="true"] .portrait {
-    width: 3.65rem;
-    flex-basis: 3.65rem;
+    width: auto;
+    flex-basis: auto;
   }
 
   .navigator .card[data-dense="true"] h4 {
     font-size: 0.92rem;
-  }
-
-  .additionalCollaborators {
-    min-height: 9.75rem;
-    padding: 0.62rem 0.5rem;
   }
 }
 
@@ -731,47 +669,30 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .card,
-  .card[data-dense="true"] {
-    display: grid;
-    min-height: 5.4rem;
-    grid-template-columns: 5.35rem minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
-    align-items: stretch;
-  }
-
   .portrait,
   .card[data-dense="true"] .portrait {
     width: auto;
     height: auto;
     min-height: 4.45rem;
     margin: 0.42rem;
-    grid-column: 1;
-    grid-row: 1;
     flex: none;
   }
 
   .cardSummary,
   .card[data-dense="true"] .cardSummary {
-    grid-column: 2;
-    grid-row: 1;
-    align-items: flex-start;
-    padding: 0.48rem 0.5rem 0.48rem 0.36rem;
+    align-items: stretch;
+    padding: 0.52rem 0.58rem 0.7rem;
   }
 
   .navigator .card h4,
   .navigator .card[data-dense="true"] h4 {
-    display: flex;
-    min-height: 0;
+    display: grid;
+    min-height: 2.4em;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     font-size: 1rem;
     line-height: 1.24;
-    text-align: left;
-  }
-
-  .additionalCollaborators {
-    min-height: 0;
+    text-align: center;
   }
 }
 
@@ -820,8 +741,6 @@
 @media (forced-colors: active) {
   .stage,
   .card,
-  .additionalCollaborators,
-  .additionalCard,
   .detailsPanel,
   .detailsPortrait {
     border: 1px solid CanvasText;
@@ -836,7 +755,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .card,
-  .additionalCard,
   .detailsClose {
     transition: none;
   }
