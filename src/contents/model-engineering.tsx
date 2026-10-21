@@ -14,6 +14,7 @@ import { Caption } from "../components/media/Caption";
 import { Figure } from "../components/media/Figure";
 
 export const modelEngineeringReferenceOrder = [
+  "zhang2024yeast9",
   "qi2021pmla",
   "qi2022highmwpolymalate",
   "wang2020pmla",
@@ -26,7 +27,6 @@ export const modelEngineeringReferenceOrder = [
   "han2026alphagem",
   "rives2021esm1b",
   "liu2024plmsearch",
-  "zhang2024yeast9",
   "cantalapiedra2021eggnog",
   "yu2023clean",
   "kim2023deepectransformer",
@@ -59,38 +59,38 @@ export const modelEngineeringReferenceOrder = [
 const modelCycleSummaries: CycleSummaryItem[] = [
   {
     id: "dbtl-en-c1",
-    title: "First-Generation Fungal GEM",
-    focus: "Reconstruct A08 network to guide pathway design",
+    title: "Localization-Calibrated GEM",
+    focus: "Correct cross-species template compartment transfer",
     achievement:
-      "Selected ANNEVO for 10-fold faster fungal gene prediction to build a 3,500-reaction draft model, uncovered a 1.29 mmol·gDW⁻¹·h⁻¹ detour caused by inherited Yeast9 organelle labels, and calibrated 15 reactions via DeepLoc 2.1 and TargetP 2.0 to restore direct cytosolic malate synthesis and raise theoretical PMLA flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹ — establishing a reliable in silico chassis to guide wet-lab strain engineering.",
+      "Established a two-channel reconstruction and proteome-wide localization calibration workflow for the unannotated fungus A08, eliminating the 1.29 mmol·gDW⁻¹·h⁻¹ pathway detour caused by inherited yeast organelle labels and raising theoretical PMLA flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹.",
   },
   {
     id: "dbtl-en-c2",
-    title: "Rate-Limiting Target Screen",
-    focus: "Isolate bottleneck amidst isozyme redundancy",
+    title: "Orthogonal Group Screening",
+    focus: "Overcome paralog masking in a duplicated genome",
     achievement:
-      "Demonstrated that top-FSEOF candidate cyMDH loses only 4.7% PMLA flux upon group deletion due to alternative pathways, whereas cytosolic PYC uniquely occupies the dual-optimal quadrant with FSEOF Rank #4 and candidate knockout Rank #1 at −58.6% flux loss — providing our wet-lab team with a high-confidence overexpression target.",
+      "Shifted target screening from individual genes to homologous isozyme groups and intersected FSEOF overexpression push with joint group-knockout essentiality — filtering out bypassable cyMDH (−4.7% loss) and isolating cytosolic PYC (#4 FSEOF, #1 group KO at −58.6% loss) for wet-lab overexpression.",
   },
   {
     id: "dbtl-en-c3",
-    title: "Protocol & Record Guardrails",
-    focus: "Prevent SOP mix-ups and invalid data writes",
+    title: "Service-Layer Guardrails",
+    focus: "Replace fragile prompts with architectural constraints",
     achievement:
-      "Eliminated cross-project SOP mix-ups, unit-mismatched database writes, and unapproved workflow jumps while achieving 28/30 or 93.3% accuracy on the biological-evidence benchmark versus 21/30 for the OpenCode baseline — safeguarding daily fermentation and bioadhesive synthesis records.",
+      "Moved experimental safety rules from prompt instructions into SQLite and state-machine service guardrails — enforcing project-isolated SOP retrieval, unit-validated measurement logging, and researcher-gated transitions to reach 28/30 (93.3%) benchmark accuracy versus 21/30 (70.0%) for OpenCode.",
   },
   {
     id: "dbtl-en-c4",
-    title: "Modular Domain Plugins",
-    focus: "Equip formulation and outreach workflows",
+    title: "Hot-Swappable Domain Plugins",
+    focus: "Decouple specialized analytics from the core host",
     achievement:
-      "Verified lossless 26 to 35 tool hot-swapping and automated coupling-ratio checks, while restoring document-chunk citation traceability and dedicating the full 30-minute classroom schedule to hands-on Action — empowering both our formulation and education teams without disrupting core record management.",
+      "Extended the workbench via dependency-injected Cordis plugins that hot-swap cleanly without polluting core state — automating baseline-verified adhesive coupling checks and paragraph-traceable 30-minute WEAVE outreach lesson generation.",
   },
   {
     id: "dbtl-en-c5",
-    title: "Bioadhesive Coupling Simulation",
-    focus: "Investigate high-dosing loss to guide recipe",
+    title: "Pre-Reaction Orientation Analysis",
+    focus: "Decouple spatial proximity from attack geometry",
     achievement:
-      "Formulated a conditional pre-reaction hypothesis under the 50%-activation main model where reaction-compatible contacts drop from 25.2% at equimolar 1.00 to 5.2% at 1.25 due to shallow-angle side-on association, while 75%-activation sensitivity runs revealed a coupled relationship between carboxyl activation and dopamine dosing — helping our wet-lab team interpret the 1:1 dosing optimum and design next-stage adhesive formulation experiments.",
+      "Formulated a testable pre-reaction geometric hypothesis in which shallow-angle side-on association (<60°) reduces orientation-compatible contacts from 25.2% (1.00) to 5.2% (1.25) under the 50%-activation baseline, while 75%-activation sensitivity runs revealed coupled ordering reversal (5.25% vs. 10.72%).",
   },
 ];
 
@@ -101,62 +101,56 @@ export const modelEngineeringSections: ArticleSection[] = [
     content: (
       <>
         <p>
-          In the biomanufacturing of poly(β-L-malic acid) (PMLA) from
-          agricultural straw sugars using the non-model black yeast{" "}
-          <em>Aureobasidium melanogenum</em> A08 and its downstream chemical
-          conjugation with dopamine (DA) into an underwater bioadhesive
-          (PMLA–DA), relying on trial-and-error laboratory experiments alone
-          faces unannotated fungal genetics, error-prone multi-stage protocols,
-          and unobservable molecular interactions. Our Model team task was to
-          build an integrated computational and software system that guides
-          high-yield microbial pathway engineering, safeguards laboratory
-          protocol and measurement management, and optimizes downstream
-          bioadhesive synthesis.
+          Engineering the non-model black yeast{" "}
+          <em>Aureobasidium melanogenum</em> A08 to convert agricultural straw
+          sugars into poly(β-L-malic acid) (PMLA) and conjugating it with
+          dopamine (DA) into an underwater bioadhesive (PMLA–DA) exposed three
+          methodological bottlenecks: unannotated fungal genetics with extensive
+          paralog redundancy, error-prone multi-stage laboratory record
+          management, and unobservable pre-reaction polymer–dopamine coupling
+          geometry. Our Model team developed five progressive computational and
+          software methodologies across the DBTL cycles to guide pathway
+          engineering, safeguard experimental execution, and formulate testable
+          bioadhesive design rules.
         </p>
         <EngineeringBrief
           core={
             <>
-              De novo genome-scale metabolic modeling reconstructs intracellular
-              carbon flux in <em>Aureobasidium melanogenum</em> A08, a
-              guardrail-enforced software workbench manages experimental
-              protocols and data, and all-atom molecular dynamics simulates
-              pre-reaction polymer–dopamine coupling.
+              Localization-calibrated genome-scale metabolic modeling (GEM) and
+              isozyme-group orthogonal screening for A08, a service-guardrailed
+              and plugin-extensible experimental workbench (WetFlow), and
+              orientation-resolved all-atom molecular dynamics (MD).
             </>
           }
           goal={
             <>
-              Build a predictive fungal metabolic model, a scientist-supervised
-              experimental workbench, and an atomic-scale reaction simulation —
-              to guide wet-lab metabolic engineering for higher PMLA yield,
-              eliminate protocol and data-recording errors, and optimize
-              underwater bioadhesive synthesis.
+              Establish generalizable dry-lab methodologies that resolve
+              cross-species template distortion and paralog masking in metabolic
+              models, replace fragile prompt rules with architectural software
+              guardrails, and decouple spatial encounter from reactive
+              orientation in polymer conjugation.
             </>
           }
           integration={
             <>
-              A unified computational and software framework connects all
-              dry-lab modules to support our experimental pipeline across the
-              entire workflow: A08 metabolic network modeling → genetic target
-              screening → controlled fermentation and protocol execution →
-              PMLA–DA bioadhesive formulation.
+              Five linked DBTL cycles connect our entire biomanufacturing pipeline:
+              localization-calibrated A08 GEM → isozyme-group bottleneck
+              screening → guardrailed protocol and data management → modular
+              formulation and outreach plugins → pre-reaction coupling geometry
+              simulation.
             </>
           }
           objectives={[
-            "Reconstruct and calibrate a metabolic model of the unannotated fungus A. melanogenum A08 to guide wet-lab pathway engineering for PMLA biosynthesis",
-            "Screen homologous enzyme groups across the A08 metabolic network to identify the primary rate-limiting genetic target and avoid wasted cloning on redundant genes",
-            "Enforce project-isolated SOP retrieval, unit-validated measurement logging, and modular plugin extensions in WetFlow to ensure reliable experimental execution and science outreach",
-            "Simulate five dopamine-to-carboxyl molar ratios via all-atom molecular dynamics to formulate a pre-reaction hypothesis for high-dosing coupling loss and guide wet-lab bioadhesive formulation",
+            "Establish a two-channel reconstruction and proteome-wide localization calibration method to eliminate template-induced pathway breaks in non-model fungi",
+            "Formulate an isozyme-group orthogonal screening paradigm (FSEOF push × joint group-knockout essentiality) to isolate true metabolic bottlenecks amidst paralog compensation",
+            "Enforce service-layer guardrails and hot-swappable Cordis domain plugins in WetFlow so experimental safety and specialized extensions never corrupt core laboratory records",
+            "Decouple spatial proximity from nucleophilic attack orientation via all-atom MD to formulate a testable pre-reaction hypothesis for PMLA–DA formulation",
           ]}
         />
         <p>
-          We followed the iGEM Engineering Cycle framework — Design, Build,
-          Test, Learn (DBTL) — across five iterations. Each cycle addressed
-          specific limitations identified in the previous one, progressively
-          building an end-to-end dry-lab platform that reconstructs the A08
-          metabolic network, pinpoints the primary genetic target for PMLA
-          overproduction, enforces reliable experimental record management, and
-          guides the rational formulation of our PMLA–DA underwater
-          bioadhesive.{" "}
+          Following the iGEM Design–Build–Test–Learn (DBTL) framework across
+          five iterations, each cycle resolved a distinct methodological
+          failure mode uncovered by the previous step:
         </p>
         <CycleJourney items={modelCycleSummaries} />
       </>
@@ -170,31 +164,32 @@ export const modelEngineeringSections: ArticleSection[] = [
       <DbtlCycle
         number={1}
         title="Building a First-Generation Metabolic Model for an Unannotated Fungal Chassis"
-        focus="De novo metabolic network reconstruction and subcellular localization calibration from the unannotated A. melanogenum A08 genome"
+        focus="Two-channel de novo reconstruction and proteome-wide localization calibration to eliminate cross-species template compartment artifacts"
         phases={[
           {
             phase: "Design",
             content: (
               <>
                 <p>
-                  To guide metabolic engineering for higher PMLA yield in{" "}
-                  <em>Aureobasidium melanogenum</em> A08, we first needed a
-                  genome-scale metabolic model (GEM) to simulate intracellular
-                  carbon flux. At the start of modeling, only a raw genome
-                  assembly was available, with no curated gene annotation,
-                  RNA-seq data, or existing metabolic network for this non-model
-                  fungus. Because <em>Aureobasidium</em> synthesizes PMLA
-                  monomers via a cytosolic reductive pathway from pyruvate
-                  through oxaloacetate to L-malate{" "}
+                  Reconstructing a genome-scale metabolic model (GEM) for{" "}
+                  <em>Aureobasidium melanogenum</em> A08 from an unannotated
+                  genome assembly exposed a fundamental methodological flaw in
+                  standard template-based modeling: transferring homology
+                  mappings from model yeasts (<Cite k="zhang2024yeast9" />) onto
+                  a distantly related fungus blindly copies template organelle
+                  labels, even when key enzymes have evolved different
+                  subcellular localizations. Because{" "}
+                  <em>Aureobasidium</em> synthesizes PMLA via a cytosolic
+                  reductive pathway from pyruvate through oxaloacetate to
+                  L-malate{" "}
                   <Cite
                     k={["qi2021pmla", "qi2022highmwpolymalate", "wang2020pmla"]}
                   />
-                  , we designed a de novo reconstruction workflow combining
-                  deep-learning gene prediction, multi-copy homolog retention{" "}
-                  <Cite k="qi2022highmwpolymalate" />, and proteome-wide
-                  localization auditing (Img.1) — to establish an accurate
-                  metabolic model that reliably guides wet-lab pathway
-                  engineering.
+                  , we designed a reconstruction methodology combining de novo
+                  deep-learning gene prediction, dual-channel reaction assembly,
+                  and proteome-wide subcellular localization calibration (Img.1)
+                  so that compartment topology is governed by A08&apos;s own
+                  signal sequences rather than yeast defaults.
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -220,8 +215,8 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  The initial A08 metabolic model and localization audit were
-                  built in three modules:
+                  We implemented this reconstruction methodology in three
+                  modular stages:
                 </p>
                 <ul className={sectionStyles.manifest}>
                   <li>
@@ -229,22 +224,18 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>De novo A08 proteome prediction</strong>
+                      <strong>Ab initio fungal proteome prediction</strong>
                       <p>
-                        Across 13 reference fungal genomes, ANNEVO{" "}
-                        <Cite k="annevo2026" /> matched Tiberius{" "}
-                        <Cite k="gabriel2024tiberius" /> in top accuracy while
-                        running nearly 10-fold faster (133 s versus 1,270 s per
-                        genome) and outperforming Helixer{" "}
+                        Benchmarking ab initio predictors across reference
+                        fungal genomes established ANNEVO{" "}
+                        <Cite k="annevo2026" /> as matching Tiberius{" "}
+                        <Cite k="gabriel2024tiberius" /> in accuracy at nearly
+                        10-fold higher speed while outperforming Helixer{" "}
                         <Cite k={["stiehler2020helixer", "holst2025helixer"]} />
-                        . Achieving 64.5% to 76.4% near-exact full-length
-                        protein recall (
-                        <MathInline tex={String.raw`\ge 95\%`} /> sequence
-                        similarity) across{" "}
-                        <MathInline tex={String.raw`\ge 200\text{ aa}`} />{" "}
-                        length bins, ANNEVO predicted 20,089 A08 proteins with
-                        99.82% Dothideomycetes core completeness{" "}
-                        <Cite k={["huang2023compleasm", "manni2021busco"]} />.
+                        , predicting 20,089 A08 proteins (99.82% Dothideomycetes
+                        completeness{" "}
+                        <Cite k={["huang2023compleasm", "manni2021busco"]} />)
+                        while retaining all multi-copy homologs.
                       </p>
                     </div>
                   </li>
@@ -253,15 +244,18 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Two-channel draft metabolic network</strong>
+                      <strong>Dual-channel draft network assembly</strong>
                       <p>
-                        Following the AlphaGEM framework{" "}
-                        <Cite k="han2026alphagem" />, we combined
-                        protein-language-model homology mapping{" "}
-                        <Cite k={["rives2021esm1b", "liu2024plmsearch"]} />{" "}
-                        against the Yeast9 template <Cite k="zhang2024yeast9" />{" "}
-                        (3,066 reactions) with a four-tool weighted enzyme
-                        annotation ensemble{" "}
+                        Following AlphaGEM <Cite k="han2026alphagem" />, we
+                        intersected protein-language-model template mapping{" "}
+                        <Cite
+                          k={[
+                            "rives2021esm1b",
+                            "liu2024plmsearch",
+                            "zhang2024yeast9",
+                          ]}
+                        />{" "}
+                        with a four-tool enzyme functional ensemble{" "}
                         <Cite
                           k={[
                             "cantalapiedra2021eggnog",
@@ -270,8 +264,8 @@ export const modelEngineeringSections: ArticleSection[] = [
                             "bansal2022rhea",
                           ]}
                         />{" "}
-                        (434 reactions) to assemble a 3,500-reaction draft
-                        model.
+                        to capture both conserved eukaryotic backbone pathways
+                        and template-independent fungal reactions.
                       </p>
                     </div>
                   </li>
@@ -284,14 +278,13 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Proteome-wide localization calibration &amp; curation
                       </strong>
                       <p>
-                        Using DeepLoc 2.1 <Cite k="odum2024deeploc21" /> and
-                        TargetP 2.0 <Cite k="almagro2019targetp2" /> across all
-                        20,089 A08 proteins, we audited compartment assignments
-                        for 15 central-carbon and dicarboxylate reactions,
-                        followed by genomic sequence rescue{" "}
-                        <Cite k="camacho2009blast" />, minimal-medium
-                        gap-filling, and PMLA demand addition to complete the
-                        3,549-reaction A08 GEM.
+                        We audited N-terminal targeting peptides and subcellular
+                        localization across the entire A08 proteome using
+                        DeepLoc 2.1 <Cite k="odum2024deeploc21" /> and TargetP
+                        2.0 <Cite k="almagro2019targetp2" /> to re-anchor 15
+                        central-carbon and dicarboxylate reactions, followed by
+                        homology rescue <Cite k="camacho2009blast" /> and
+                        minimal-medium gap-filling.
                       </p>
                     </div>
                   </li>
@@ -304,11 +297,10 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Testing intracellular flux distribution via parsimonious flux
-                  balance analysis (pFBA){" "}
+                  Comparing parsimonious flux balance analysis (pFBA){" "}
                   <Cite k={["orth2010fba", "lewis2010pfba"]} /> before and after
-                  localization calibration revealed a critical template
-                  distortion and validated its repair (Img.2):
+                  localization calibration exposed the template artifact and
+                  verified our methodological fix (Img.2):
                 </p>
                 <ul className={sectionStyles.findings}>
                   <li>
@@ -318,25 +310,20 @@ export const modelEngineeringSections: ArticleSection[] = [
                     ></span>
                     <div>
                       <strong>
-                        Severed cytosolic malate pathway in the uncalibrated
-                        draft
+                        Template-inherited compartment labels severed cytosolic
+                        malate synthesis
                       </strong>
                       <p>
-                        Because the initial homology channel inherited default
-                        yeast organelle labels, all A08 malate dehydrogenase
-                        genes were assigned exclusively to the mitochondrion,
-                        leaving the cytosol without malate dehydrogenase
-                        (cyMDH). At 90% enforced PMLA production, oxaloacetate
-                        generated by cytosolic pyruvate carboxylase (PYC) at{" "}
-                        <MathInline
-                          tex={String.raw`1.33\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
-                        />{" "}
-                        was forced through a multi-step transamination and
-                        fumarate hydration detour carrying{" "}
+                        Inheriting default yeast mitochondrial labels left the
+                        uncalibrated draft without cytosolic malate
+                        dehydrogenase (cyMDH), forcing oxaloacetate from
+                        cytosolic pyruvate carboxylase (PYC) through an
+                        artificial{" "}
                         <MathInline
                           tex={String.raw`1.29\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />{" "}
-                        (Img.2, left).
+                        transamination and fumarate hydration detour (Img.2,
+                        left).
                       </p>
                     </div>
                   </li>
@@ -347,31 +334,25 @@ export const modelEngineeringSections: ArticleSection[] = [
                     ></span>
                     <div>
                       <strong>
-                        Pathway restoration after localization calibration
+                        Localization calibration restored native cytosolic flux
                       </strong>
                       <p>
-                        Dual-tool localization confirmed that both A08 cyMDH
-                        paralogs lack mitochondrial transit peptides (TargetP
-                        probability 0.985) and reside in the cytosol (DeepLoc
-                        probability 0.806). Restoring cytosolic cyMDH across the
-                        15 calibrated reactions eliminated the{" "}
+                        Dual-tool localization proved that A08 cyMDH paralogs
+                        lack mitochondrial transit peptides and reside in the
+                        cytosol. Re-anchoring the 15 calibrated reactions
+                        eliminated the{" "}
                         <MathInline
                           tex={String.raw`1.29\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />{" "}
-                        detour, re-established direct cytosolic oxaloacetate
-                        reduction (
-                        <MathInline
-                          tex={String.raw`1.35\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
-                        />
-                        ), and raised maximum theoretical PMLA flux from{" "}
+                        detour, restored direct cytosolic oxaloacetate
+                        reduction, and raised theoretical PMLA flux from{" "}
                         <MathInline tex={String.raw`1.430`} /> to{" "}
                         <MathInline
                           tex={String.raw`1.500\text{ mmol}\cdot\text{gDW}^{-1}\cdot\text{h}^{-1}`}
                         />{" "}
-                        (Img.2, right), while the curated model passed MEMOTE
-                        quality checks <Cite k="Lieven2020MEMOTE" /> and{" "}
-                        <em>S. pombe</em> knockout validation{" "}
-                        <Cite k="Kim2010Spombe" />.
+                        (Img.2, right), while passing MEMOTE{" "}
+                        <Cite k="Lieven2020MEMOTE" /> and <em>S. pombe</em>{" "}
+                        knockout benchmarks <Cite k="Kim2010Spombe" />.
                       </p>
                     </div>
                   </li>
@@ -400,17 +381,15 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Cycle 1 demonstrated that transferring default yeast organelle
-                  labels onto a distantly related non-model fungus silently
-                  severs its native cytosolic production pathway, making
-                  proteome-wide localization auditing indispensable during de
-                  novo model reconstruction. However, while the calibrated A08
-                  GEM accurately captured wild-type pathway topology, retaining
-                  all multi-copy homologs from A08&apos;s duplicated genome
-                  meant that paralogous isozymes compensated for one another
-                  during single-gene deletions — preventing conventional
-                  single-gene knockout screens from identifying the
-                  rate-limiting genetic target and motivating Cycle 2.
+                  Cycle 1 established a core methodological rule for non-model
+                  eukaryotic GEM reconstruction: homology mapping transfers
+                  catalytic function but must never blindly transfer template
+                  organelle labels without proteome-wide localization auditing.
+                  However, retaining all multi-copy homologs from A08&apos;s
+                  duplicated genome meant that paralogous isozymes compensated
+                  for one another during single-gene deletions — rendering
+                  standard single-gene knockout screens blind to rate-limiting
+                  steps and motivating Cycle 2.
                 </p>
               </>
             ),
@@ -435,33 +414,28 @@ export const modelEngineeringSections: ArticleSection[] = [
       <DbtlCycle
         number={2}
         title="Pinpointing the Rate-Limiting Genetic Target in a Redundant Metabolic Network"
-        focus="Dual-metric screening across 1,102 homologous enzyme groups to overcome multi-copy isozyme compensation and guide genetic engineering"
+        focus="Isozyme-group orthogonal screening (FSEOF push × joint group-knockout essentiality) to overcome paralog compensation and bypass routes"
         phases={[
           {
             phase: "Design",
             content: (
               <>
                 <p>
-                  With the A08 metabolic network calibrated, our central
-                  question was which among more than two thousand metabolic
-                  genes represents the primary bottleneck for PMLA
-                  overproduction. Standard single-metric computational screens
-                  failed for two reasons: multi-copy isozymes retained from
-                  A08's duplicated genome <Cite k="qi2022highmwpolymalate" />{" "}
-                  compensate for one another and mask single-gene knockouts,
-                  whereas FSEOF overexpression scanning{" "}
-                  <Cite k="choi2010fseof" /> alone favors terminal reactions
-                  that co-vary with product flux even when alternative
-                  intracellular routes can bypass them. We therefore designed a
-                  dual-metric screen over{" "}
-                  <strong>homologous isozyme groups</strong> combining 10-step
-                  FSEOF overexpression sensitivity (
-                  <MathInline tex={String.raw`\beta_f`} />) with joint
-                  isozyme-group knockout flux loss (
-                  <MathInline tex={String.raw`\Delta Y_f`} />) — to provide our
-                  wet-lab team with a high-confidence genetic engineering target
-                  and avoid wasted cloning effort on redundant or bypassable
-                  enzymes.
+                  In a duplicated fungal genome{" "}
+                  <Cite k="qi2022highmwpolymalate" />, conventional
+                  single-metric target screens fail from two opposite directions:
+                  single-gene knockouts yield false negatives because unmutated
+                  paralogs buffer flux, whereas FSEOF overexpression scanning{" "}
+                  <Cite k="choi2010fseof" /> yields false positives by ranking
+                  terminal reactions high even when alternative cross-compartment
+                  routes can bypass them. To overcome both failure modes, we
+                  elevated the unit of screening from individual genes to{" "}
+                  <strong>homologous isozyme groups</strong> and intersected two
+                  orthogonal criteria: FSEOF overexpression sensitivity (
+                  <MathInline tex={String.raw`\beta_f`} />, measuring{" "}
+                  <em>flux push</em>) and joint isozyme-group knockout loss (
+                  <MathInline tex={String.raw`\Delta Y_f`} />, measuring{" "}
+                  <em>topological irreplaceability</em>).
                 </p>
               </>
             ),
@@ -471,8 +445,8 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  The dual-metric target prioritization pipeline was implemented
-                  in two stages:
+                  We implemented the group-level orthogonal screening pipeline in
+                  two stages:
                 </p>
                 <ul className={sectionStyles.manifest}>
                   <li>
@@ -480,16 +454,13 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Homologous isozyme-group funnel</strong>
+                      <strong>Homologous isozyme-group consolidation</strong>
                       <p>
-                        All-vs-all protein sequence alignment{" "}
-                        <Cite k={["buchfink2021diamond", "Tian2003Enzyme"]} /> (
-                        <MathInline tex={String.raw`\ge 70\%`} /> identity,{" "}
-                        <MathInline tex={String.raw`\ge 80\%`} /> coverage)
-                        grouped the A08 proteome into homologous clusters;
-                        filtering out 17 growth-essential clusters and 214
-                        transport clusters defined 1,102 non-essential candidate
-                        enzyme groups in the GEM.
+                        All-vs-all sequence clustering{" "}
+                        <Cite k={["buchfink2021diamond", "Tian2003Enzyme"]} />{" "}
+                        grouped multi-copy paralogs across the A08 proteome and
+                        filtered out growth-essential and transport reactions to
+                        define 1,102 non-essential candidate enzyme groups.
                       </p>
                     </div>
                   </li>
@@ -499,17 +470,15 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </span>
                     <div>
                       <strong>
-                        Orthogonal FSEOF &amp; joint-knockout solvers
+                        Orthogonal FSEOF &amp; joint group-knockout solvers
                       </strong>
                       <p>
                         Using COBRApy <Cite k="ebrahim2013cobrapy" /> and HiGHS{" "}
-                        <Cite k="huangfu2018highs" />, the FSEOF solver stepped
-                        enforced PMLA production from 9% to 90% of maximum
-                        theoretical flux to compute sensitivity slopes{" "}
-                        <MathInline tex={String.raw`\beta_f`} /> for strictly
-                        monotonic reactions, while the joint-knockout solver
-                        disabled all member genes of each group simultaneously
-                        to quantify the PMLA flux drop{" "}
+                        <Cite k="huangfu2018highs" />, we paired a 10-step FSEOF
+                        solver (quantifying monotonic flux-response slope{" "}
+                        <MathInline tex={String.raw`\beta_f`} />) with a joint
+                        group-knockout solver that disables all paralogs in a
+                        cluster simultaneously to measure PMLA flux drop{" "}
                         <MathInline tex={String.raw`\Delta Y_f`} />{" "}
                         <Cite k="feng2018pycmodel" />.
                       </p>
@@ -634,16 +603,14 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Cycle 2 proved that in a duplicated fungal genome, neither
-                  overexpression correlation nor single-gene deletion alone can
-                  reliably isolate a true metabolic bottleneck: FSEOF alone
-                  would have misdirected wet-lab cloning toward cyMDH, whose
-                  group deletion is buffered by cross-compartment bypasses.
-                  Combining FSEOF with joint group knockout uniquely isolated
-                  cytosolic PYC in the dual-optimal quadrant across all
-                  clustering thresholds, providing the strain-specific
-                  mechanistic basis for our wet lab&apos;s PYC overexpression
-                  construction while defining enzyme-constrained modeling as our
+                  Cycle 2 demonstrated why metabolic target discovery in
+                  duplicated eukaryotic genomes requires intersecting group-level
+                  overexpression push with joint knockout essentiality: FSEOF
+                  alone would have misdirected wet-lab cloning toward cyMDH,
+                  whose deletion is buffered by cross-compartment bypasses.
+                  Isolating cytosolic PYC as the sole target in the dual-optimal
+                  quadrant anchored our wet lab&apos;s PYC overexpression strain
+                  construction and defined enzyme-constrained modeling as our
                   next refinement step.
                 </p>
               </>
@@ -670,28 +637,25 @@ export const modelEngineeringSections: ArticleSection[] = [
       <DbtlCycle
         number={3}
         title="Safeguarding Multi-Stage Biomanufacturing Protocols and Experimental Records"
-        focus="Service-layer guardrails enforcing project-isolated SOP retrieval, unit-validated measurement logging, and researcher-approved stage transitions"
+        focus="Shifting experimental agent safety from fragile prompt instructions to architectural service-layer guardrails"
         phases={[
           {
             phase: "Design",
             content: (
               <>
                 <p>
-                  To coordinate A08 fermentation and PMLA–DA bioadhesive
-                  synthesis, we initially tested general-purpose coding agents
-                  (OpenCode <Cite k="OpenCodeDocs" /> and Claude Code{" "}
-                  <Cite k="ClaudeCodeOverview" />) to manage experimental
-                  protocols and laboratory records. However, three failure modes
-                  threatened daily wet-lab work: protocols from different
-                  projects were mixed during retrieval, literature reference
-                  values <Cite k="Tang2020PMLADA" /> could overwrite actual
-                  experimental measurements, and workflow stages could advance
-                  without human review. We therefore designed the{" "}
-                  <strong>WetFlow</strong> workbench around three service-layer
-                  guardrails—project-isolated retrieval, unit-validated
-                  measurement logging, and researcher-approved stage transitions
-                  (Img.4) — to prevent protocol mix-ups and database corruption
-                  across multi-stage experiments.
+                  When we deployed general-purpose coding agents (OpenCode{" "}
+                  <Cite k="OpenCodeDocs" /> and Claude Code{" "}
+                  <Cite k="ClaudeCodeOverview" />) to coordinate A08
+                  fermentation and PMLA–DA synthesis records, we uncovered a
+                  structural limitation of prompt-only LLM workflows: conversational
+                  instructions cannot prevent an agent from mixing SOPs across
+                  projects, overwriting wet-lab measurements with literature
+                  values <Cite k="Tang2020PMLADA" />, or skipping human review.
+                  We therefore designed <strong>WetFlow</strong> around a
+                  service-layer guardrail methodology — shifting safety
+                  enforcement out of fragile prompts and into database and
+                  state-machine constraints (Img.4).
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -717,8 +681,8 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  The core WetFlow workbench was built around three
-                  service-layer modules:
+                  We embedded three hard guardrails directly into the core
+                  service layer:
                 </p>
                 <ul className={sectionStyles.manifest}>
                   <li>
@@ -726,11 +690,11 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Project-isolated evidence store</strong>
+                      <strong>Context-isolated evidence store</strong>
                       <p>
-                        A SQLite store segments imported SOPs and laboratory
-                        notes into source-tagged chunks restricted strictly to
-                        the active project context.
+                        A SQLite store partitions imported SOPs into
+                        project-scoped, source-tagged chunks so retrieval queries
+                        can never leak protocols across experiments.
                       </p>
                     </div>
                   </li>
@@ -739,11 +703,12 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Unit-validated measurement logger</strong>
+                      <strong>Dimension-checked measurement logger</strong>
                       <p>
-                        Each registered parameter requires an explicit physical
-                        unit (°C or g/L), blocking valueless or unit-mismatched
-                        writes while flagging out-of-range readings for review.
+                        Database write schemas enforce explicit physical units
+                        and plausible bounds at the storage boundary, rejecting
+                        valueless or unit-mismatched agent writes before they
+                        reach disk.
                       </p>
                     </div>
                   </li>
@@ -754,10 +719,9 @@ export const modelEngineeringSections: ArticleSection[] = [
                     <div>
                       <strong>Researcher-gated workflow state machine</strong>
                       <p>
-                        Across the six experimental stages (Design, Build,
-                        Culture, Assay, Analyze, and Decide), stage transitions
-                        pause as pending proposals until explicitly approved by
-                        a researcher.
+                        Across the six experimental stages (Design through
+                        Decide), state transitions pause as pending proposals
+                        until explicitly approved by a researcher.
                       </p>
                     </div>
                   </li>
@@ -770,8 +734,9 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  We evaluated the workbench on synthetic guardrail test cases
-                  and our team's real PMLA–DA synthesis records:
+                  We tested these architectural guardrails against both
+                  adversarial write injections and a 30-question
+                  biological-evidence benchmark:
                 </p>
                 <ul
                   className={[
@@ -787,16 +752,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Service-level guardrail verification</strong>
+                      <strong>
+                        Zero cross-project leakage and 100% invalid-write
+                        interception
+                      </strong>
                       <p>
-                        Switching repeatedly between two projects with different
-                        culture conditions (30 °C for 24 h versus 37 °C for 12
-                        h) restored the exact project-specific protocols and
-                        citations on every round trip. Submitting Kelvin values
-                        or valueless entries to a Celsius temperature channel
-                        was 100% blocked while valid 30 °C readings were saved,
-                        and unapproved multi-stage workflow jumps were rejected
-                        by the state machine (Img.5).
+                        Round-trip project switching preserved exact
+                        project-scoped SOP citations without cross-contamination,
+                        unit-mismatched or valueless measurement writes were
+                        100% blocked at the schema boundary, and unapproved
+                        multi-stage jumps were rejected by the state machine
+                        (Img.5).
                       </p>
                     </div>
                   </li>
@@ -832,20 +798,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </span>
                     <div>
                       <strong>
-                        Adhesive protocol compilation and 30-question evidence
-                        benchmark
+                        Eliminating execution failures on the 30-question
+                        evidence benchmark
                       </strong>
                       <p>
-                        Applied to our PMLA–DA synthesis records, WetFlow
-                        cleanly separated our wet lab's 1 h activation and 24 h
-                        coupling schedule (50% w/v in distilled water) from Tang
-                        et al.'s 6 h activation and 3 d reference protocol{" "}
-                        <Cite k="Tang2020PMLADA" /> (50 wt% in PBS). On a
-                        30-question biological-evidence benchmark, WetFlow
-                        achieved <strong>28/30 (93.3%)</strong> accuracy with
-                        zero execution failures, outperforming the OpenCode
-                        baseline at <strong>21/30 (70.0%)</strong> under the
-                        same model backend (Tab.2).
+                        WetFlow cleanly separated our wet lab&apos;s rapid
+                        PMLA–DA schedule from Tang et al.&apos;s literature
+                        reference protocol <Cite k="Tang2020PMLADA" /> and
+                        achieved 28/30 (93.3%) benchmark accuracy with zero
+                        execution failures, outperforming the OpenCode baseline
+                        at 21/30 (70.0%) under the identical model backend
+                        (Tab.2).
                       </p>
                     </div>
                   </li>
@@ -903,15 +866,14 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Cycle 3 confirmed that moving safety rules from fragile prompt
-                  instructions into service-layer guardrails eliminates
-                  cross-project SOP mix-ups and invalid measurement writes;
-                  meanwhile, analyzing a shared benchmark miss taught us to
-                  store measured values, assay methods, and independent
-                  verification status as separate fields. With the core
-                  workbench operational, our adhesive formulation and education
-                  outreach teams needed specialized domain tools without
-                  bloating the core host, motivating Cycle 4.
+                  Cycle 3 proved that reliable laboratory AI requires enforcing
+                  context isolation, unit validation, and human approval at the
+                  service layer rather than in conversational prompts, while a
+                  shared benchmark miss taught us to separate measured values,
+                  assay methods, and verification status in the schema. With the
+                  core host secured, our formulation and outreach teams needed
+                  specialized domain tools without bloating the core kernel,
+                  motivating Cycle 4.
                 </p>
               </>
             ),
@@ -936,22 +898,19 @@ export const modelEngineeringSections: ArticleSection[] = [
       <DbtlCycle
         number={4}
         title="Scaling the Workbench to Adhesive Recipe Verification and Classroom Outreach"
-        focus="Hot-swappable Cordis plugins extending the workbench to multi-ratio coupling verification and 30-minute primary-school WEAVE lesson generation"
+        focus="Microkernel host and hot-swappable Cordis domain plugins decoupling specialized analytics from core laboratory state"
         phases={[
           {
             phase: "Design",
             content: (
               <>
                 <p>
-                  To support downstream formulation analysis and science
-                  education without cluttering the core workbench, we needed two
-                  domain-specific capabilities: verifying archived multi-ratio
-                  PMLA–dopamine coupling summaries for our formulation team, and
-                  generating structured primary-school lesson briefs for our
-                  education team. Hardcoding task-specific scripts into the core
-                  host would duplicate database connections and risk cross-task
-                  interference. Drawing on DSH and the Cordis modular plugin
-                  framework{" "}
+                  As our formulation and education teams requested specialized
+                  capabilities—auditing multi-ratio PMLA–DA coupling summaries
+                  and generating primary-school outreach lesson plans—hardcoding
+                  task-specific scripts into the core workbench risked
+                  duplicating database connections and polluting global state.
+                  Drawing on DSH and the Cordis dependency-injection framework{" "}
                   <Cite
                     k={[
                       "DeepSeekHarnessArchitecture",
@@ -959,11 +918,10 @@ export const modelEngineeringSections: ArticleSection[] = [
                       "Shi2026Cordis",
                     ]}
                   />
-                  , we designed each capability as an independent, hot-swappable
-                  plugin that reuses the shared evidence service and cleans up
-                  its registered tools upon unloading — to equip our formulation
-                  and education teams with dedicated analytical tools without
-                  disrupting core laboratory record management.
+                  , we designed a microkernel-and-plugin methodology: each
+                  domain workflow mounts as an isolated, hot-swappable plugin
+                  that consumes the shared evidence service and cleanly unmounts
+                  its tools without disturbing active laboratory sessions.
                 </p>
               </>
             ),
@@ -973,9 +931,9 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Building on the four core services (Evidence, Research,
-                  Modeling, and Experiment; 35 registered tools), we developed
-                  two domain plugins:
+                  On top of the four core workbench services (Evidence,
+                  Research, Modeling, and Experiment), we built two
+                  dependency-injected domain plugins:
                 </p>
                 <ul className={sectionStyles.manifest}>
                   <li>
@@ -983,12 +941,12 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Adhesive coupling comparison plugin</strong>
+                      <strong>Baseline-locked formulation audit plugin</strong>
                       <p>
-                        Reads archived five-ratio molecular dynamics summaries
-                        and verifies a shared 50% carboxyl activation baseline
-                        and 3–5 ns trajectory window before returning contact
-                        ratios, preventing accidental re-simulations.
+                        Verifies that archived multi-ratio MD summaries share an
+                        identical carboxyl activation baseline and trajectory
+                        window before comparing contact fractions, preventing
+                        mismatched cross-run comparisons.
                       </p>
                     </div>
                   </li>
@@ -997,12 +955,12 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>WEAVE outreach lesson plugin</strong>
+                      <strong>Evidence-bound WEAVE outreach plugin</strong>
                       <p>
-                        Queries 7 structured experience cards distilled from 6
-                        iGEM outreach sources in the shared evidence database to
-                        generate lesson briefs around our five-step WEAVE
-                        framework (Wonder, Explore, Action, Verify, and Echo).
+                        Queries structured outreach experience cards in the
+                        shared evidence store to assemble primary-school lesson
+                        briefs around our five-step WEAVE pedagogy (Wonder,
+                        Explore, Action, Verify, and Echo).
                       </p>
                     </div>
                   </li>
@@ -1015,13 +973,11 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  We tested both plugins on real formulation and outreach
-                  workflows, confirming lossless hot-swapping between 26 and 35
-                  active tools with the project session intact (Img.6) and
-                  accurate contact-ratio verification between molar ratios 1.00
-                  (25.2%) and 1.25 (5.2%). Meanwhile, our first test generating
-                  a 30-minute primary-school DNA lesson plan exposed two
-                  practical defects:
+                  Runtime lifecycle testing confirmed lossless hot-swapping
+                  (unloading and restoring domain tools with zero session drop;
+                  Img.6) and accurate formulation baseline checks, while our
+                  first primary-school DNA lesson test exposed two design flaws
+                  in the outreach generator:
                 </p>
                 <ul className={sectionStyles.findings}>
                   <li>
@@ -1031,13 +987,12 @@ export const modelEngineeringSections: ArticleSection[] = [
                     ></span>
                     <div>
                       <strong>
-                        Incomplete source traceability in generated lesson
-                        briefs
+                        Unbound activity citations in generated lesson briefs
                       </strong>
                       <p>
-                        Several classroom activity suggestions lacked exact
-                        document paragraph identifiers, preventing teachers from
-                        tracing recommendations back to the underlying outreach
+                        Generated classroom activities cited general documents
+                        without exact paragraph identifiers, preventing teachers
+                        from tracing activities back to underlying outreach
                         records.
                       </p>
                     </div>
@@ -1048,12 +1003,13 @@ export const modelEngineeringSections: ArticleSection[] = [
                       aria-hidden="true"
                     ></span>
                     <div>
-                      <strong>Misallocated 30-minute classroom schedule</strong>
+                      <strong>
+                        Rigid five-stage time slicing in a 30-minute class
+                      </strong>
                       <p>
-                        The initial generator mechanically divided the 30-minute
-                        class across all five WEAVE stages, conflicting with our
-                        education workflow in which Verify and Echo are
-                        conducted after class through empirical feedback.
+                        Mechanically splitting 30 minutes across all five WEAVE
+                        stages compressed hands-on classroom time, conflicting
+                        with our pedagogy where Verify and Echo occur post-class.
                       </p>
                     </div>
                   </li>
@@ -1082,15 +1038,14 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  We resolved both outreach defects within Cycle 4 (Img.7) by
-                  binding every generated activity directly to its evidence
-                  paragraph identifier and allocating the full 30-minute
-                  classroom schedule to hands-on Action while keeping Verify and
-                  Echo as post-class assessment plans. With upstream metabolic
-                  target discovery and midstream workflow management complete,
-                  Cycle 5 turns to downstream chemical coupling to investigate
-                  why excess dopamine dosing reduces polymer conjugation and to
-                  guide our wet-lab bioadhesive formulation.
+                  Because the outreach logic was isolated inside a hot-swappable
+                  plugin, we fixed both defects without touching the core host
+                  (Img.7): we enforced mandatory paragraph-ID binding on every
+                  generated activity and dedicated the full 30-minute classroom
+                  window to hands-on Action while keeping Verify and Echo as
+                  post-class assessment modules. With upstream strain design and
+                  midstream workflow architecture complete, Cycle 5 turned to
+                  downstream PMLA–DA conjugation.
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -1132,34 +1087,30 @@ export const modelEngineeringSections: ArticleSection[] = [
       <DbtlCycle
         number={5}
         title="Investigating High-Dosing Coupling Loss to Guide Bioadhesive Formulation"
-        focus="Explicit-solvent all-atom molecular dynamics decoupling spatial encounter frequency from nucleophilic attack orientation across five molar ratios"
+        focus="Pre-reaction geometric analysis decoupling spatial encounter frequency from Bürgi–Dunitz attack orientation in explicit-solvent MD"
         phases={[
           {
             phase: "Design",
             content: (
               <>
                 <p>
-                  In the final stage of our biomanufacturing route,
-                  A08-fermented PMLA is functionalized with dopamine via
-                  EDC/NHS-mediated amide coupling to form the underwater
-                  bioadhesive. Across five dopamine-to-carboxyl molar dosing
-                  ratios (0.25, 0.50, 0.75, 1.00, and 1.25){" "}
-                  <Cite k="Tang2020PMLADA" />, conjugated dopamine content in
-                  the purified polymer rose from 8.9 wt% at 0.25 to a peak of{" "}
-                  <strong>21.3 wt% at equimolar 1.00</strong>, but{" "}
-                  <strong>dropped to 19.2 wt% at 1.25</strong>. Because bulk
-                  wet-lab assays cannot observe how free dopamine approaches
-                  activated polymer sites prior to bond formation—where
-                  nucleophilic substitution requires both close contact (
+                  In downstream EDC/NHS coupling of A08-fermented PMLA with
+                  dopamine, wet-lab conjugation peaked at{" "}
+                  <strong>21.3 wt% at equimolar 1.00</strong> but{" "}
+                  <strong>dropped to 19.2 wt% at 1.25</strong>{" "}
+                  <Cite k="Tang2020PMLADA" />. Conventional collision-frequency
+                  intuition cannot explain why adding more nucleophile lowers
+                  yield, because amide bond formation requires not just spatial
+                  proximity (
                   <MathInline tex={String.raw`d_{\text{N–C}} < 4\text{ Å}`} />)
-                  and a Bürgi–Dunitz attack angle near{" "}
+                  but also a Bürgi–Dunitz nucleophilic attack angle near{" "}
                   <MathInline tex={String.raw`107^\circ`} />{" "}
-                  <Cite k="Rodriguez2023Approach" />
-                  —we designed an explicit-solvent all-atom molecular dynamics
-                  (MD) study across all five molar ratios to decouple spatial
-                  encounter frequency from reaction-compatible orientation
-                  (Img.8), formulating a pre-reaction molecular hypothesis to
-                  help our wet-lab team optimize the PMLA–DA bioadhesive recipe.
+                  <Cite k="Rodriguez2023Approach" />. We therefore designed an
+                  explicit-solvent all-atom MD methodology that decouples{" "}
+                  <strong>spatial encounter frequency</strong> from{" "}
+                  <strong>reaction-compatible orientation</strong> across five
+                  molar ratios and three carboxyl-activation levels (Img.8) to
+                  formulate a testable pre-reaction molecular hypothesis.
                 </p>
                 <div className={sectionStyles.phaseMedia}>
                   <Figure
@@ -1185,8 +1136,8 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  The explicit-solvent simulation and geometric analysis
-                  pipeline comprised two modules:
+                  Our pre-reaction geometric analysis pipeline comprised two
+                  modules:
                 </p>
                 <ul className={sectionStyles.manifest}>
                   <li>
@@ -1194,21 +1145,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                       <Check size={13} aria-hidden="true" />
                     </span>
                     <div>
-                      <strong>Five-ratio explicit water box construction</strong>
+                      <strong>
+                        Controlled multi-ratio &amp; activation-sensitivity boxes
+                      </strong>
                       <p>
-                        Using CUDA-accelerated OpenMM{" "}
-                        <Cite k="Eastman2017OpenMM" /> with GAFF2 and AM1-BCC
-                        charges{" "}
+                        Using OpenMM <Cite k="Eastman2017OpenMM" /> with GAFF2
+                        and AM1-BCC charges{" "}
                         <Cite k={["AmberForceFields", "Jakalian2002AM1BCC"]} />,
-                        we built five TIP3P water boxes matching the
-                        experimental molar ratios (0.25 to 1.25) around a{" "}
-                        <MathInline tex={String.raw`\sim 12\text{ kDa}`} />{" "}
-                        <MathInline tex={String.raw`\beta`} />
-                        -PMLA chain (104 carboxyls) at a shared{" "}
-                        <strong>
-                          50% NHS-ester activation baseline (52 active sites)
-                        </strong>
-                        , plus sensitivity boxes at 25% and 75% activation.
+                        we constructed explicit TIP3P water boxes across all
+                        five experimental dopamine-to-carboxyl molar ratios (0.25
+                        to 1.25) at a shared 50% NHS-ester activation baseline,
+                        paired with 25% and 75% activation sensitivity runs.
                       </p>
                     </div>
                   </li>
@@ -1221,18 +1168,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                         Three-tier pre-reaction geometric classifier
                       </strong>
                       <p>
-                        Across 5 ns production trajectories (analyzing the
-                        equilibrated 3–5 ns window), we classified every
-                        dopamine–ester pair frame-by-frame across close contact
-                        (
+                        Rather than counting raw collisions, our classifier
+                        decomposes every close contact (
                         <MathInline
                           tex={String.raw`d_{\text{N–C}} < 4\text{ Å}`}
                         />
-                        ), reaction-compatible attack orientation (
-                        <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />{" "}
-                        versus <MathInline tex={String.raw`<60^\circ`} />{" "}
-                        shallow side-on approach), and local hydrogen-bond /
-                        Lennard-Jones (LJ) angular torque projections.
+                        ) into reaction-compatible attack windows (
+                        <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />
+                        ) versus shallow side-on states (
+                        <MathInline tex={String.raw`<60^\circ`} />) and projects
+                        the local hydrogen-bond and Lennard-Jones (LJ) angular
+                        restoring torques.
                       </p>
                     </div>
                   </li>
@@ -1259,22 +1205,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </span>
                     <div>
                       <strong>
-                        Decoupling proximity from attack orientation at excess
-                        dopamine dosing
+                        Decoupling proximity from attack orientation under the
+                        50%-activation baseline
                       </strong>
                       <p>
-                        Within the 3–5 ns analysis window of the 50%-activation
-                        main model, total close-contact pair-frames were nearly
-                        identical between molar ratios 1.00 and 1.25 (485 versus
-                        462), yet orientation-compatible contacts plunged from
-                        122 to 24 (25.2% to 5.2%), while 82.7% of close contacts
-                        at 1.25 accumulated in the{" "}
-                        <MathInline tex={String.raw`<60^\circ`} /> shallow-angle
-                        side-on regime (Img.9A–D). Under the 50%-activation
-                        baseline, this geometric shift provides a candidate
-                        pre-reaction explanation for why excess dopamine beyond
-                        the 1:1 equimolar ratio fails to increase productive
-                        pre-reactive encounters.
+                        Between molar ratios 1.00 and 1.25, total close-contact
+                        encounters remained nearly unchanged, yet
+                        orientation-compatible contacts dropped nearly five-fold
+                        from 25.2% to 5.2% as 82.7% of close contacts at 1.25
+                        shifted into the{" "}
+                        <MathInline tex={String.raw`<60^\circ`} /> shallow
+                        side-on regime (Img.9A–D).
                       </p>
                     </div>
                   </li>
@@ -1287,27 +1228,17 @@ export const modelEngineeringSections: ArticleSection[] = [
                     </span>
                     <div>
                       <strong>
-                        Noncovalent driving forces of side-on trapping
+                        Local side-on trapping versus bulk aggregation
                       </strong>
                       <p>
-                        Three-dimensional conformational snapshots (Img.10A–B)
-                        and Lennard-Jones (LJ) angular torque projections showed
-                        that at molar ratio 1.25, local amine–carbonyl
-                        hydrogen-bond candidates nearly doubled (17.5% to
-                        32.9%), the catechol-OH LJ angular torque reversed sign
-                        from <MathInline tex={String.raw`+6.54`} /> to{" "}
-                        <MathInline
-                          tex={String.raw`-5.73\text{ kJ}\cdot\text{mol}^{-1}\cdot\text{rad}^{-1}`}
-                        />{" "}
-                        to oppose rotation into the attack window, and the top
-                        three recurring pairs accounted for 60.8% of
-                        close-contact frames with zero compatible frames.
-                        Meanwhile, bulk dopamine self-clustering (~4.5%) and
-                        active-site occupancy (&lt;0.5%) stayed low, indicating
-                        that neither large-scale self-clustering nor site
-                        saturation was observed within this single-trajectory
-                        3–5 ns classical window and focusing our formulation
-                        team's attention on local polymer–dopamine orientation.
+                        Conformational and torque analysis (Img.10A–B) showed
+                        that at 1.25, local amine–carbonyl hydrogen bonding and
+                        a sign-reversed catechol-OH Lennard-Jones torque oppose
+                        rotation into the{" "}
+                        <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />{" "}
+                        attack window, whereas bulk dopamine self-clustering and
+                        site saturation remained negligible within this
+                        single-trajectory classical window.
                       </p>
                     </div>
                   </li>
@@ -1428,22 +1359,19 @@ export const modelEngineeringSections: ArticleSection[] = [
             content: (
               <>
                 <p>
-                  Cycle 5 formulated a conditional pre-reaction molecular
-                  hypothesis under the 50%-activation baseline: raising dopamine
-                  dosing past equimolar 1:1 does not automatically increase
-                  productive nucleophilic approaches because aromatic
-                  dispersion, local hydrogen bonding, and opposing catechol
-                  torque bias excess dopamine toward shallow-angle side-on
-                  association along the polymer backbone. Equally important,
-                  75%-activation sensitivity runs reversed the
-                  compatible-contact ordering between molar ratios 1.00 and 1.25
-                  (5.25% versus 10.72%), demonstrating within this
-                  single-trajectory non-reactive model that carboxyl activation
-                  fraction and dopamine dosing ratio are coupled variables —
-                  helping our wet-lab team interpret the 1:1 dosing optimum and
-                  guiding next-stage experiments to co-measure NHS-ester
-                  conversion, conjugation degree, and underwater lap-shear
-                  adhesion.
+                  Cycle 5 established a pre-reaction geometric methodology that
+                  generates a <strong>testable conditional hypothesis</strong>{" "}
+                  rather than an unverified causal claim: under the
+                  50%-activation baseline, backbone-mediated side-on association
+                  biases excess dopamine away from the Bürgi–Dunitz attack
+                  cone, whereas 75%-activation sensitivity runs reversed the
+                  compatible-contact ordering between ratios 1.00 and 1.25
+                  (5.25% versus 10.72%). Because this single-trajectory
+                  classical model is non-reactive, discovering that carboxyl
+                  activation fraction and dopamine dosing are coupled variables
+                  directly guides our next dry–wet iteration to co-measure actual
+                  NHS-ester conversion, conjugation degree, and underwater
+                  lap-shear adhesion.
                 </p>
               </>
             ),
@@ -1467,82 +1395,75 @@ export const modelEngineeringSections: ArticleSection[] = [
     content: (
       <>
         <p>
-          Across five progressive DBTL iterations, our dry-lab engineering
-          advanced from de novo fungal metabolic network reconstruction and
-          rate-limiting genetic target discovery to guardrail-enforced
-          experimental record management, modular plugin extensions, and
-          atomic-scale molecular simulation for bioadhesive formulation:
+          Across five DBTL iterations, our dry-lab engineering progressed by
+          replacing ad hoc trial-and-error with five generalizable methodologies
+          spanning metabolic reconstruction, target prioritization, laboratory
+          AI safety, modular software architecture, and pre-reactive molecular
+          simulation:
         </p>
         <section
           className={[sectionStyles.scope, sectionStyles.summary].join(" ")}
         >
           <div className={sectionStyles.summaryHeader}>
             <h3>
-              From A08 metabolic modeling to controlled experimental workflows
-              and bioadhesive formulation
+              Five methodological paradigms connecting A08 chassis modeling,
+              safe laboratory execution, and bioadhesive formulation
             </h3>
           </div>
           <ol>
             <li>
-              <span>Reconstruct A08 network to guide pathway design</span>
-              <h4>Cycle 1: First-Generation Fungal GEM</h4>
+              <span>Correct cross-species template compartment transfer</span>
+              <h4>Cycle 1: Localization-Calibrated GEM</h4>
               <p>
-                Selected ANNEVO for 10-fold faster fungal gene prediction to
-                build a 3,500-reaction draft model, uncovered a 1.29
-                mmol·gDW⁻¹·h⁻¹ detour caused by inherited Yeast9 organelle
-                labels, and calibrated 15 reactions via DeepLoc 2.1 and TargetP
-                2.0 to restore direct cytosolic malate synthesis and raise
-                theoretical PMLA flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹ —
-                establishing a reliable in silico chassis to guide wet-lab
-                strain engineering.
+                Established a two-channel reconstruction and proteome-wide
+                localization calibration workflow for the unannotated fungus
+                A08, eliminating the 1.29 mmol·gDW⁻¹·h⁻¹ pathway detour caused
+                by inherited yeast organelle labels and raising theoretical PMLA
+                flux from 1.430 to 1.500 mmol·gDW⁻¹·h⁻¹.
               </p>
             </li>
             <li>
-              <span>Isolate bottleneck amidst isozyme redundancy</span>
-              <h4>Cycle 2: Rate-Limiting Target Screen</h4>
+              <span>Overcome paralog masking in a duplicated genome</span>
+              <h4>Cycle 2: Orthogonal Group Screening</h4>
               <p>
-                Demonstrated that top-FSEOF candidate cyMDH loses only 4.7% PMLA
-                flux upon group deletion due to alternative pathways, whereas
-                cytosolic PYC uniquely occupies the dual-optimal quadrant with
-                FSEOF Rank #4 and candidate knockout Rank #1 at −58.6% flux loss
-                — providing our wet-lab team with a high-confidence
-                overexpression target.
+                Shifted target screening from individual genes to homologous
+                isozyme groups and intersected FSEOF overexpression push with
+                joint group-knockout essentiality — filtering out bypassable
+                cyMDH (−4.7% loss) and isolating cytosolic PYC (#4 FSEOF, #1
+                group KO at −58.6% loss) for wet-lab overexpression.
               </p>
             </li>
             <li>
-              <span>Prevent SOP mix-ups and invalid data writes</span>
-              <h4>Cycle 3: Protocol &amp; Record Guardrails</h4>
+              <span>Replace fragile prompts with architectural constraints</span>
+              <h4>Cycle 3: Service-Layer Guardrails</h4>
               <p>
-                Eliminated cross-project SOP mix-ups, unit-mismatched database
-                writes, and unapproved workflow jumps while achieving 28/30 or
-                93.3% accuracy on the biological-evidence benchmark versus 21/30
-                for the OpenCode baseline — safeguarding daily fermentation and
-                bioadhesive synthesis records.
+                Moved experimental safety rules from prompt instructions into
+                SQLite and state-machine service guardrails — enforcing
+                project-isolated SOP retrieval, unit-validated measurement
+                logging, and researcher-gated transitions to reach 28/30 (93.3%)
+                benchmark accuracy versus 21/30 (70.0%) for OpenCode.
               </p>
             </li>
             <li>
-              <span>Equip formulation and outreach workflows</span>
-              <h4>Cycle 4: Modular Domain Plugins</h4>
+              <span>Decouple specialized analytics from the core host</span>
+              <h4>Cycle 4: Hot-Swappable Domain Plugins</h4>
               <p>
-                Verified lossless 26 to 35 tool hot-swapping and automated
-                coupling-ratio checks, while restoring document-chunk citation
-                traceability and dedicating the full 30-minute classroom
-                schedule to hands-on Action — empowering both our formulation
-                and education teams without disrupting core record management.
+                Extended the workbench via dependency-injected Cordis plugins
+                that hot-swap cleanly without polluting core state — automating
+                baseline-verified adhesive coupling checks and
+                paragraph-traceable 30-minute WEAVE outreach lesson generation.
               </p>
             </li>
             <li>
-              <span>Investigate high-dosing loss to guide recipe</span>
-              <h4>Cycle 5: Bioadhesive Coupling Simulation</h4>
+              <span>Decouple spatial proximity from attack geometry</span>
+              <h4>Cycle 5: Pre-Reaction Orientation Analysis</h4>
               <p>
-                Formulated a conditional pre-reaction hypothesis under the
-                50%-activation main model where reaction-compatible contacts
-                drop from 25.2% at equimolar 1.00 to 5.2% at 1.25 due to
-                shallow-angle side-on association, while 75%-activation
-                sensitivity runs revealed a coupled relationship between
-                carboxyl activation and dopamine dosing — helping our wet-lab
-                team interpret the 1:1 dosing optimum and design next-stage
-                adhesive formulation experiments.
+                Formulated a testable pre-reaction geometric hypothesis in which
+                shallow-angle side-on association (&lt;60°) reduces
+                orientation-compatible contacts from 25.2% (1.00) to 5.2% (1.25)
+                under the 50%-activation baseline, while 75%-activation
+                sensitivity runs revealed coupled ordering reversal (5.25% vs.
+                10.72%).
               </p>
             </li>
           </ol>
