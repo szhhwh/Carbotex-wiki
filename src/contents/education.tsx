@@ -1036,7 +1036,15 @@ const milestones: Array<[string, string, ReactNode]> = [
       </p>
       <p>
         (Resources for Scenario 3 and Scenario 4 can be accessed through our
-        partner’s wiki, Qingdao Academy)
+        partner’s wiki,{" "}
+        <a
+          href="https://2026.igem.wiki/qingdaoacademy/contribution"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Qingdao Academy
+        </a>
+        )
       </p>
       <ResourceLibrary
         groups={milestoneResourceGroups}
