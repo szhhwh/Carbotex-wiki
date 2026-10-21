@@ -503,13 +503,11 @@ export const modelEngineeringSections: ArticleSection[] = [
                     <table>
                       <thead>
                         <tr>
-                          <th scope="col" style={{ whiteSpace: "nowrap" }}>
-                            Candidate Enzyme Group
-                          </th>
-                          <th scope="col" style={{ whiteSpace: "nowrap" }}>
+                          <th scope="col">Candidate Enzyme Group</th>
+                          <th scope="col">
                             FSEOF Slope <MathInline tex={String.raw`\beta_f`} />
                           </th>
-                          <th scope="col" style={{ whiteSpace: "nowrap" }}>
+                          <th scope="col">
                             Knockout PMA Loss{" "}
                             <MathInline tex={String.raw`\Delta Y_f`} />
                           </th>
@@ -520,60 +518,52 @@ export const modelEngineeringSections: ArticleSection[] = [
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            Cytosolic MDH (cyMDH)
+                          <td>
+                            <strong>Cytosolic MDH</strong> (<code>cyMDH</code>)
                           </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            1.013 (Rank 1)
-                          </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            −4.7% (Rank 10)
-                          </td>
+                          <td>1.013 (Rank 1)</td>
+                          <td>−4.7% (Rank 10)</td>
                           <td>
                             Terminal reduction step; bypassed by
                             cross-compartment malate routes upon deletion
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            Upper Glycolysis &amp; PPP (PFK, FBA, G6PDH, PGL,
-                            RPI, RPE)
+                          <td>
+                            <strong>Upper Glycolysis &amp; PPP</strong>
+                            <br />
+                            <small>PFK, FBA, G6PDH, PGL, RPI, RPE</small>
                           </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            Non-monotonic (NA)
-                          </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            −23.8% to −30.2% (Ranks 2–7)
-                          </td>
+                          <td>Non-monotonic (NA)</td>
+                          <td>−23.8% to −30.2% (Ranks 2–7)</td>
                           <td>
                             KO-only upstream supply; essential for carbon entry
                             but non-monotonic under enforced PMA push
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            Lower Glycolytic Backbone (PYK, ENO, PGM, PGK,
-                            GAPDH)
+                          <td>
+                            <strong>Lower Glycolytic Backbone</strong>
+                            <br />
+                            <small>PYK, ENO, PGM, PGK, GAPDH</small>
                           </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            0.479 to 0.553 (Ranks 6–10)
-                          </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            −4.7% to −11.5% (Ranks 8–10)
-                          </td>
+                          <td>0.479 to 0.553 (Ranks 6–10)</td>
+                          <td>−4.7% to −11.5% (Ranks 8–10)</td>
                           <td>
                             Dual-responsive glycolytic trunk; moderate knockout
                             impact due to glycolytic/bypass buffering
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <strong>Cytosolic PYC</strong>
+                          <td>
+                            <strong>
+                              Cytosolic <code>PYC</code>
+                            </strong>
                           </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
+                          <td>
                             <strong>0.687 (Rank 4)</strong>
                           </td>
-                          <td style={{ whiteSpace: "nowrap" }}>
+                          <td>
                             <strong>−58.6% (Rank 1)</strong>
                           </td>
                           <td>
