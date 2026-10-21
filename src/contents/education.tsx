@@ -509,7 +509,6 @@ function WorkflowExplorer({ describedBy }: { describedBy?: string }) {
       >
         <div className={styles.workflowOrbit} aria-hidden="true" />
         <div className={styles.workflowCore} aria-hidden="true">
-          <span>Entry point</span>
           <strong>
             Biomanufacturing
             <br />
