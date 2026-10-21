@@ -52,6 +52,8 @@ interface ArticlePageProps {
   title: string;
   /** Optional id for the page title heading. */
   titleId?: string;
+  /** Optional unheaded introduction shown before the first section. */
+  intro?: ReactNode;
   /** Optional image shown in the header media slot. */
   heroImage?: HeroImage;
   /** Hide the hero media slot while keeping the yellow title band. */
@@ -199,6 +201,7 @@ function BubbleCluster() {
 export function ArticlePage({
   title,
   titleId,
+  intro,
   heroImage,
   showHeroMedia = true,
   sections,
@@ -528,6 +531,11 @@ export function ArticlePage({
         ) : null}
 
         <article className={pageStyles.articleContent}>
+          {intro ? (
+            <div className={`${pageStyles.prose} ${pageStyles.intro}`}>
+              {intro}
+            </div>
+          ) : null}
           {sections.map(
             ({
               id,

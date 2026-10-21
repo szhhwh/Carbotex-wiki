@@ -477,6 +477,10 @@
   line-height: 1.62;
 }
 
+.intro {
+  margin-bottom: var(--article-space-section);
+}
+
 .prose :where(p, ul, ol, blockquote, table) {
   margin: 0 0 1.2rem;
 }

@@ -5,7 +5,7 @@ const templatePages = [
     path: "/contribution",
     title: "Contribution",
     hasHeroMedia: true,
-    heroRatio: 1069 / 400,
+    heroRatio: 1672 / 941,
   },
   {
     path: "/experiments",
@@ -167,7 +167,15 @@ test.describe("template article pages", () => {
     }
 
     await page.goto("/ouc-haide/contribution");
-    await expect(page.locator("#page-contents ul li")).toHaveCount(4);
+    await expect(page.locator("#article-body article > section")).toHaveCount(
+      5,
+    );
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: "1. Wet Lab — Genetic Parts and Experimental Protocols",
+      }),
+    ).toBeVisible();
   });
 
   test("keeps a trusted height that arrives before the iframe load event", async ({

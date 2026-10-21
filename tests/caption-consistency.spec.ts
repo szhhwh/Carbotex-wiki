@@ -14,6 +14,7 @@ const CAPTION_ROUTES = [
   "results",
   "model",
   "hardware",
+  "contribution",
   "human-practices",
   "education",
 ];
