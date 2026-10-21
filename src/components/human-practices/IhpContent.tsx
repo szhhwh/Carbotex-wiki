@@ -236,7 +236,12 @@ export function IhpParts({
             latestLabel = cleanTraceText(part.text);
             if (parts[index + 1]?.kind === "trace") {
               return (
-                <LabelHeading aria-hidden="true" hidden key={`label-${index}`}>
+                <LabelHeading
+                  aria-hidden="true"
+                  hidden
+                  id={part.id}
+                  key={`label-${index}`}
+                >
                   {part.text.replace(/^—\s*/, "")}
                 </LabelHeading>
               );
@@ -245,6 +250,7 @@ export function IhpParts({
               <LabelHeading
                 className={styles.inlineLabel}
                 data-level={labelLevel}
+                id={part.id}
                 key={`label-${index}`}
               >
                 {part.text.replace(/^—\s*/, "")}

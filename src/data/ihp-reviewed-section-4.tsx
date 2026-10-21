@@ -95,8 +95,10 @@ export const ihpReviewedSection4: IhpSectionContent = {
       title: "4.2 Seeing Carbotex Through Other Eyes",
       parts: [
         anchor("section-4-2"),
-        anchor("ihp-ccic"),
-        label("4.2.1 CCiC: Bringing Our Project into a Wider Community"),
+        label(
+          "4.2.1 CCiC: Bringing Our Project into a Wider Community",
+          "ihp-ccic",
+        ),
         rich(
           "As Carbotex's technical strategy took shape, we wanted to share it beyond our own team and hear how other researchers and iGEMers understood our work.\n\nIn 2026, we attended the 13th Conference of China iGEMer Community (CCiC), hosted at Dalian University of Technology, together with the Synbiopunk activities held during the event.\n\nThrough poster discussions, project presentations, and informal conversations, we introduced our approach: using straw-derived carbon for microbial PMA production and developing the resulting polymer into a bio-based adhesive.\n\nThe conference brought us into contact with teams studying a wide range of applications of synthetic biology. Talking with people who did not share our immediate research background helped us recognize which parts of Carbotex's story were clear and which needed a stronger connection between modules.",
         ),
