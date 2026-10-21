@@ -1280,7 +1280,7 @@ const sections: ArticleSection[] = [
     title: "Activities",
     content: (
       <p className={styles.activityLead}>
-        Each activity follows the same thread while adapting its language,
+        Each activity follows the same principle while adapting its language,
         format, and level of participation to a different audience.
       </p>
     ),
