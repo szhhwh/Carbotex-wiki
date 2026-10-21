@@ -130,7 +130,9 @@ export function Chapter07Content() {
         principles intuitive and observable, seeking to{" "}
         <strong>spark children's curiosity</strong> about the ocean and
         encourage them to{" "}
-        <strong>discover the wonders of life science and natural world</strong>.
+        <strong>
+          discover the wonders of life science and the natural world
+        </strong>
       </p>
       <h4>7.3 Action</h4>
       <ChapterGallery

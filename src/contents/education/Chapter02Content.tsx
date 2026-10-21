@@ -47,11 +47,10 @@ export function Chapter02Content() {
       </WonderQuestion>
       <p>
         <strong>
-          Research on cognitive development provides the developmental context
-          <Cite k="piaget1964" />. Research on early childhood systems thinking
-          indicates that young children are at a golden stage for developing
-          'part-connection-whole' cognitive relationships
-          <Cite k="sweeney2012" />.
+          Research on cognitive development
+          <Cite k="piaget1964" /> and early childhood systems thinking
+          <Cite k="sweeney2012" /> indicates that young children are at a golden
+          stage for developing 'part-connection-whole' cognitive relationships.
         </strong>{" "}
         Thus, interpreting the cell as a “coordinated system” not only perfectly
         aligns with the cognitive foundation of this age group, but also
@@ -194,16 +193,18 @@ export function Chapter02Content() {
         <strong>successfully built</strong> accurate plant cell models,
         deliberately adding the unique structures.
       </p>
-      <p>
-        <strong>Summary:</strong> This{" "}
-        <strong>spontaneous verbal feedback</strong> and{" "}
-        <strong>task completion</strong> proved that the children had moved
-        beyond simple memorization and{" "}
-        <strong>
-          genuinely understood the content we delivered and actively applied it
-          to a firsthand task.
-        </strong>
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>Summary:</strong> This{" "}
+          <strong>spontaneous verbal feedback</strong> and{" "}
+          <strong>task completion</strong> proved that the children had moved
+          beyond simple memorization and{" "}
+          <strong>
+            genuinely understood the content we delivered and actively applied
+            it to a firsthand task.
+          </strong>
+        </p>
+      </div>
       <ol start={2} type="1">
         <li>
           <p>
@@ -220,16 +221,18 @@ export function Chapter02Content() {
         continued reasoning along this line: "Without energy, the Packaging
         Station wouldn't be able to work either."
       </p>
-      <p>
-        <strong>Summary:</strong> Rather than simply telling them the complete
-        logic, we co-constructed this causal chain with the children.{" "}
-        <strong>
-          Through this shared process, they successfully transitioned from
-          understanding structures in isolation to grasping their
-          interdependency, realizing how a localized change impacts the entire
-          cellular system
-        </strong>
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>Summary:</strong> Rather than simply telling them the complete
+          logic, we co-constructed this causal chain with the children.{" "}
+          <strong>
+            Through this shared process, they successfully transitioned from
+            understanding structures in isolation to grasping their
+            interdependency, realizing how a localized change impacts the entire
+            cellular system
+          </strong>
+        </p>
+      </div>
       <ol start={3} type="1">
         <li>
           <p>
@@ -245,15 +248,17 @@ export function Chapter02Content() {
         components. Instead of passively receiving information, they began to
         learn through creating, explaining, and interacting.
       </p>
-      <p>
-        <strong>
-          Summary: These observations provided initial support for our iterated
-          child-centered design approach.
-        </strong>{" "}
-        The lecture provides the essential knowledge foundation, while the
-        hands-on activity creates an interactive experience aligned with the
-        learning objectives.
-      </p>
+      <div className={styles.summaryCard}>
+        <p>
+          <strong>
+            Summary: These observations provided initial support for our
+            iterated child-centered design approach.
+          </strong>{" "}
+          The lecture provides the essential knowledge foundation, while the
+          hands-on activity creates an interactive experience aligned with the
+          learning objectives.
+        </p>
+      </div>
       <h6>Art Gallery</h6>
       <ChapterGallery
         images={[

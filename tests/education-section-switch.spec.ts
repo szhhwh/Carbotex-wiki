@@ -257,3 +257,26 @@ test("preserves the active section for a reloaded citation deep link", async ({
   ).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#ref-1")).toBeFocused();
 });
+
+test("shows a clear action label on every education detail collapse", async ({
+  page,
+}) => {
+  await page.goto("/ouc-haide/education#activities");
+  await expect(page.locator("#opening-screen")).toHaveCount(0);
+
+  const titles = [
+    "Scientific Depth details",
+    "Language Style details",
+    "Verification Aids details",
+    "Read our peers' feedback",
+    "Read our members' reflections",
+  ];
+
+  for (const title of titles) {
+    const trigger = page.getByRole("button", { name: title, exact: true });
+    await expect(trigger).toContainText("Show details");
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(trigger).toContainText("Hide details");
+  }
+});

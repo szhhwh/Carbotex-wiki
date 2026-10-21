@@ -7,6 +7,11 @@ import { sdgsWorkshopGuide } from "./EducationFigures";
 import { ObjectiveStatement } from "./ObjectiveStatement";
 import { WonderQuestion } from "./WonderQuestion";
 
+const detailsActionLabel = {
+  closed: "Show details",
+  open: "Hide details",
+};
+
 export function Chapter06SdgsContent() {
   return (
     <>
@@ -152,6 +157,7 @@ export function Chapter06SdgsContent() {
         <strong>socially responsible perspective</strong>.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Read our peers' feedback"
         headerAs="h6"
@@ -195,6 +201,7 @@ export function Chapter06SdgsContent() {
         and social responsibility had evolved.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Read our members' reflections"
         headerAs="h6"
@@ -225,7 +232,7 @@ export function Chapter06SdgsContent() {
       <h6>Art Gallery</h6>
       <ResourceCard
         eyebrow="Verification III · Poster output"
-        title="SDG workshop poster gallery"
+        title="SDGs-based workshop poster gallery"
         href={`${mediaRoot}/6-4-3-art-gallery.pdf`}
       />
       <h4>6.5 Echo</h4>

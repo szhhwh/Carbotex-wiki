@@ -1,4 +1,5 @@
 import styles from "../education.module.css";
+import { ArrowRight } from "lucide-react";
 import { Collapse } from "../../components/ui/Collapse";
 import { ChapterMeta } from "./ChapterMeta";
 import { media, mediaRoot } from "./EducationAssets";
@@ -13,6 +14,11 @@ import { OverflowHint } from "./InteractionHint";
 import { ObjectiveStatement } from "./ObjectiveStatement";
 import { ProseList } from "./ProseList";
 import { WonderQuestion } from "./WonderQuestion";
+
+const detailsActionLabel = {
+  closed: "Show details",
+  open: "Hide details",
+};
 
 const chapter03ResourceGroups = [
   {
@@ -221,7 +227,13 @@ export function Chapter03Content() {
               <td style={{ textAlign: "center" }}>
                 Structures &amp; Functions
               </td>
-              <td style={{ textAlign: "center" }}>→</td>
+              <td style={{ textAlign: "center" }}>
+                <ArrowRight
+                  aria-hidden="true"
+                  className={styles.approachArrow}
+                  strokeWidth={2.5}
+                />
+              </td>
               <td style={{ textAlign: "center" }}>
                 <strong>Underlying Principles &amp; Rules</strong>
               </td>
@@ -234,7 +246,13 @@ export function Chapter03Content() {
               <td style={{ textAlign: "center" }}>
                 Personification &amp; Familiar Analogies Based on Facts
               </td>
-              <td style={{ textAlign: "center" }}>→</td>
+              <td style={{ textAlign: "center" }}>
+                <ArrowRight
+                  aria-hidden="true"
+                  className={styles.approachArrow}
+                  strokeWidth={2.5}
+                />
+              </td>
               <td style={{ textAlign: "center" }}>
                 Engaging language &amp; <strong>Scientific Terminology</strong>
               </td>
@@ -244,7 +262,13 @@ export function Chapter03Content() {
               <td style={{ textAlign: "center" }}>
                 Verbal &amp; Behavioral Responses
               </td>
-              <td style={{ textAlign: "center" }}>→</td>
+              <td style={{ textAlign: "center" }}>
+                <ArrowRight
+                  aria-hidden="true"
+                  className={styles.approachArrow}
+                  strokeWidth={2.5}
+                />
+              </td>
               <td style={{ textAlign: "center" }}>
                 Verbal &amp; Behavioral Responses{" "}
                 <strong>with Written &amp; Design Outputs</strong>
@@ -253,7 +277,13 @@ export function Chapter03Content() {
             <tr>
               <td style={{ textAlign: "center" }}>Interaction</td>
               <td style={{ textAlign: "center" }}>Hands-on Creation</td>
-              <td style={{ textAlign: "center" }}>→</td>
+              <td style={{ textAlign: "center" }}>
+                <ArrowRight
+                  aria-hidden="true"
+                  className={styles.approachArrow}
+                  strokeWidth={2.5}
+                />
+              </td>
               <td style={{ textAlign: "center" }}>
                 Diverse Interactive Formats
               </td>
@@ -270,6 +300,7 @@ export function Chapter03Content() {
         relationships and scientific rules behind these structures.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Scientific Depth details"
         headerAs="h6"
@@ -308,6 +339,7 @@ export function Chapter03Content() {
         while introducing some terminology.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Language Style details"
         headerAs="h6"
@@ -333,6 +365,7 @@ export function Chapter03Content() {
         application of the concepts to become more directly visible.
       </p>
       <Collapse
+        actionLabel={detailsActionLabel}
         className={styles.inlineCollapse}
         header="Verification Aids details"
         headerAs="h6"

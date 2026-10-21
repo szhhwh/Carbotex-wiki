@@ -207,6 +207,22 @@
   margin-block-start: 0.4rem;
 }
 
+.summaryCard {
+  margin-block: var(--article-space-related) var(--article-space-block);
+  padding: clamp(1rem, 2vw, 1.3rem) clamp(1.1rem, 2.4vw, 1.5rem);
+  border: 1px solid color-mix(in srgb, var(--education-yellow) 52%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(
+    in srgb,
+    var(--education-pale-yellow) 58%,
+    var(--education-paper)
+  );
+}
+
+.pageShell .summaryCard > p {
+  margin-block: 0;
+}
+
 .echoCardGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -341,6 +357,14 @@
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.92rem;
+}
+
+.approachArrow {
+  display: inline-block;
+  width: clamp(1.35rem, 1.8vw, 1.65rem);
+  height: auto;
+  color: var(--education-navy);
+  vertical-align: middle;
 }
 
 .pageShell :where(th, td) {
