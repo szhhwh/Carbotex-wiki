@@ -212,7 +212,11 @@ export function Navbar() {
                         </span>
                         <div className={styles.menuGrid}>
                           {item.folder.map((subpage) => {
-                            if (!subpage.path) return null;
+                            if (!subpage.path || subpage.hideInMenu) return null;
+                            const subPath = normalizePath(subpage.path);
+                            const isCurrent =
+                              subPath === currentPath ||
+                              currentPath.startsWith(`${subPath}/`);
 
                             const detail = navigationDetails[subpage.path] ?? {
                               description: subpage.title || "Explore this page",
@@ -224,9 +228,7 @@ export function Navbar() {
                                 className={styles.menuItem}
                                 to={subpage.path}
                                 aria-current={
-                                  normalizePath(subpage.path) === currentPath
-                                    ? "page"
-                                    : undefined
+                                  isCurrent ? "page" : undefined
                                 }
                                 tabIndex={isOpen ? 0 : -1}
                                 onClick={closeNavigation}

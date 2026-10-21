@@ -1,4 +1,4 @@
-import { type ComponentType } from "react";
+import type { ComponentType } from "react";
 import { lazyWithRetry } from "./utils/lazyWithRetry";
 
 export type PageLayout = "fullscreen" | "article";
@@ -41,6 +41,18 @@ const SafetyAndSecurity = lazyWithRetry(
   "SafetyAndSecurity",
 );
 const Model = lazyWithRetry(() => import("./contents/model.tsx"), "Model");
+const ModelGem = lazyWithRetry(
+  () => import("./contents/model-gem.tsx"),
+  "ModelGem",
+);
+const ModelSoftware = lazyWithRetry(
+  () => import("./contents/model-software.tsx"),
+  "ModelSoftware",
+);
+const ModelMd = lazyWithRetry(
+  () => import("./contents/model-md.tsx"),
+  "ModelMd",
+);
 const Hardware = lazyWithRetry(
   () => import("./contents/hardware.tsx"),
   "Hardware",
@@ -81,6 +93,7 @@ class Page implements Base {
    * `article` pages render their own hero via `ArticlePage`.
    */
   layout!: PageLayout;
+  hideInMenu?: boolean;
 }
 
 const Pages: (Page | Folder)[] = [
@@ -180,6 +193,30 @@ const Pages: (Page | Folder)[] = [
         path: "/model",
         component: Model,
         layout: "article",
+      },
+      {
+        name: "Metabolic Model (GEM)",
+        title: "Metabolic Model (GEM)",
+        path: "/model/gem",
+        component: ModelGem,
+        layout: "article",
+        hideInMenu: true,
+      },
+      {
+        name: "WetFlow Workbench",
+        title: "WetFlow Workbench",
+        path: "/model/software",
+        component: ModelSoftware,
+        layout: "article",
+        hideInMenu: true,
+      },
+      {
+        name: "Molecular Dynamics (MD)",
+        title: "Molecular Dynamics (MD)",
+        path: "/model/md",
+        component: ModelMd,
+        layout: "article",
+        hideInMenu: true,
       },
       {
         name: "Hardware",

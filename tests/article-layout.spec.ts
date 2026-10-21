@@ -12,6 +12,9 @@ const articleRoutes = [
   "/results",
   "/safety-and-security",
   "/model",
+  "/model/gem",
+  "/model/software",
+  "/model/md",
   "/hardware",
   "/human-practices",
   "/attributions",
@@ -65,9 +68,6 @@ test("every article page uses the shared reading shell", async ({
           reading: rect(reading),
           article: rect(article),
           expectedWidth,
-          articleMaxWidth: Number.parseFloat(
-            getComputedStyle(article).maxWidth,
-          ),
           insetDelta:
             readingRect.left -
             mainRect.left -
@@ -93,9 +93,9 @@ test("every article page uses the shared reading shell", async ({
       );
       expect(layout.insetDelta, `${route} reading centering`).toBeCloseTo(0, 1);
       expect(
-        layout.article.width,
-        `${route} article width`,
-      ).toBeLessThanOrEqual(layout.articleMaxWidth);
+        layout.article.left + layout.article.width,
+        `${route} article stays within the reading area`,
+      ).toBeLessThanOrEqual(layout.reading.left + layout.reading.width + 1);
       expect(
         layout.article.left,
         `${route} article inset`,

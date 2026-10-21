@@ -1,113 +1,184 @@
-import {
-  ArticleFramework,
-  ArticleNote,
-  ArticlePage,
-  type ArticleSection,
-} from "../components/article/ArticlePage";
-import { Figure } from "../components/media/Figure";
-import { MathBlock, MathInline } from "../components/article/Math";
-import { VideoEmbed } from "../components/media/VideoEmbed";
-
-// Component preview. The example media comes from Heidelberg 2025; it is not
-// OUC-Haide project evidence and should be replaced with team-owned material.
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArticlePage } from "../components/article/ArticlePage";
+import type { ArticleSection } from "../components/article/ArticlePage";
+import { MathInline } from "../components/article/Math";
+import styles from "./model-shared.module.css";
 const sections: ArticleSection[] = [
   {
-    id: "model-overview",
+    id: "ov-en-sec-1",
     title: "Model overview",
-    eyebrow: "The reasoning first",
     content: (
       <>
         <p>
-          Models can help a team describe a system, test assumptions and
-          interpret results. A model page should explain the question, inputs,
-          method and limits in an order that readers can follow.
+          To turn agricultural straw sugars into a dopamine-functionalized
+          poly(β-L-malic acid) (PMLA–DA) underwater bioadhesive, our dry-lab
+          framework resolves three core questions along the biomanufacturing
+          chain: <strong>which gene limits PMLA synthesis in an unannotated fungus</strong>,{" "}
+          <strong>how to prevent protocol and measurement errors across multi-stage experiments</strong>, and{" "}
+          <strong>why excess dopamine dosing lowers polymer grafting efficiency</strong>.
         </p>
-        <ArticleNote label="Template preview">
-          <p>
-            The mathematical expression, figure and video below demonstrate the
-            page components. They are examples, not OUC-Haide findings.
-          </p>
-        </ArticleNote>
+        <ul aria-label="Model sub-pages" className={styles.hubGrid}>
+          <li className={styles.hubItem}>
+            <Link to="/model/gem" className={styles.hubCard}>
+              <div>
+                <span className={styles.hubStage}>01 · UPSTREAM CHASSIS</span>
+                <strong className={styles.hubTitle}>
+                  Metabolic Model (GEM)
+                </strong>
+                <span className={styles.hubDesc}>
+                  De novo <em>A. melanogenum</em> A08 metabolic reconstruction
+                  &amp; dual-metric PYC target prioritization
+                </span>
+              </div>
+              <span className={styles.hubCta}>
+                <span>Open Metabolic Model</span>
+                <ArrowRight size={16} strokeWidth={2.4} aria-hidden="true" />
+              </span>
+            </Link>
+          </li>
+          <li className={styles.hubItem}>
+            <Link to="/model/software" className={styles.hubCard}>
+              <div>
+                <span className={styles.hubStage}>02 · MIDSTREAM WORKBENCH</span>
+                <strong className={styles.hubTitle}>WetFlow Workbench</strong>
+                <span className={styles.hubDesc}>
+                  Researcher-supervised agent workbench enforcing project
+                  isolation, unit checks &amp; stage gates
+                </span>
+              </div>
+              <span className={styles.hubCta}>
+                <span>Open WetFlow Workbench</span>
+                <ArrowRight size={16} strokeWidth={2.4} aria-hidden="true" />
+              </span>
+            </Link>
+          </li>
+          <li className={styles.hubItem}>
+            <Link to="/model/md" className={styles.hubCard}>
+              <div>
+                <span className={styles.hubStage}>03 · DOWNSTREAM COUPLING</span>
+                <strong className={styles.hubTitle}>
+                  Molecular Dynamics (MD)
+                </strong>
+                <span className={styles.hubDesc}>
+                  Explicit-solvent all-atom simulations of pre-reaction
+                  PMLA–dopamine coupling across five ratios
+                </span>
+              </div>
+              <span className={styles.hubCta}>
+                <span>Open Molecular Dynamics</span>
+                <ArrowRight size={16} strokeWidth={2.4} aria-hidden="true" />
+              </span>
+            </Link>
+          </li>
+        </ul>
       </>
     ),
   },
   {
-    id: "model-visuals",
-    title: "Equations & figures",
-    eyebrow: "Show the mechanism",
+    id: "ov-en-sec-2",
+    title: "1. A08 Genome-Scale Metabolic Model & Target Prioritization",
     content: (
       <>
         <p>
-          Inline math such as <MathInline tex="K_d = k_{off}/k_{on}" /> can sit
-          within an explanation. A longer equation can be displayed with a label
-          and number:
+          Starting from the unannotated genome of{" "}
+          <em>Aureobasidium melanogenum</em> A08, we reconstructed its de novo
+          genome-scale metabolic network and calibrated enzyme subcellular
+          localization to restore the native cytosolic malate pathway (raising
+          theoretical PMLA flux from 1.430 to 1.500 mmol·gDW<sup>−1</sup>·h
+          <sup>−1</sup>). Dual-metric screening combining FSEOF overexpression
+          sensitivity with homologous isozyme-group knockouts across 1,102
+          candidate enzyme groups isolated cytosolic{" "}
+          <strong>pyruvate carboxylase (PYC)</strong> as the sole
+          non-compensable bottleneck (overexpression Rank #4, slope{" "}
+          <MathInline tex="0.687" />; knockout Rank #1,{" "}
+          <MathInline tex={String.raw`-58.6\%`} /> flux loss), guiding wet-lab
+          strain construction.
         </p>
-        <MathBlock
-          label="Example transcription dynamics"
-          tex="\frac{d[mRNA]}{dt} = k_{tx}\,[DNA] - \delta_{mRNA}\,[mRNA]"
-          tag="(1)"
-        />
-        <Figure
-          src="https://static.igem.wiki/teams/5775/images/model/plots/free-energy-profile.svg"
-          alt="Example free energy profile along a pulling coordinate"
-          caption="Example free energy profile from Heidelberg 2025; shown here only to preview image and caption layout."
-          captionPrefix="Figure 1."
-          intrinsicWidth={758}
-          intrinsicHeight={519}
-          maxWidth="720px"
-        />
+        <div className={styles.sectionAction}>
+          <Link to="/model/gem" className={styles.actionBtn}>
+            <span>Read Full Metabolic Model (GEM) Documentation</span>
+            <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
+          </Link>
+        </div>
       </>
     ),
   },
   {
-    id: "model-details",
-    title: "Expandable details",
-    eyebrow: "For readers who want more",
+    id: "ov-en-sec-3",
+    title: "2. WetFlow: Modular Agent Workbench for Biological Research",
     content: (
       <>
         <p>
-          Keep the main argument visible and place supporting assumptions,
-          derivations or parameter tables in expandable panels when they would
-          interrupt the reading flow.
+          To prevent cross-project protocol mix-ups and unverified data writes
+          when using general-purpose coding agents, we built{" "}
+          <strong>WetFlow</strong>, a researcher-supervised laboratory workbench
+          on the Cordis modular plugin framework. WetFlow enforces service-layer
+          project retrieval isolation, physical unit validation, and human
+          stage-gate approval across six experimental stages while supporting
+          hot-swappable domain plugins for adhesive recipe verification and
+          WEAVE classroom lesson planning—achieving{" "}
+          <strong>93.3% (28/30)</strong> accuracy on our biological-evidence
+          benchmark versus <strong>70.0% (21/30)</strong> for the OpenCode
+          baseline.
         </p>
-        <ArticleFramework title="Underlying assumptions">
-          <p>
-            Describe each assumption, its source, and its effect on the
-            interpretation of the model.
-          </p>
-        </ArticleFramework>
-        <ArticleFramework title="Parameters and validation">
-          <p>
-            Use this space for verified parameter tables, checks against data,
-            and limitations.
-          </p>
-        </ArticleFramework>
+        <div className={styles.sectionAction}>
+          <Link to="/model/software" className={styles.actionBtn}>
+            <span>Read Full WetFlow Workbench Documentation</span>
+            <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
+          </Link>
+        </div>
       </>
     ),
   },
   {
-    id: "model-motion",
-    title: "Motion & explanation",
-    eyebrow: "A closer look",
+    id: "ov-en-sec-4",
+    title:
+      "3. All-Atom Molecular Dynamics (MD) Simulation of PMLA–Dopamine Coupling",
     content: (
       <>
         <p>
-          Video can support a model explanation when a static image cannot show
-          the change over time. Include a descriptive title and caption.
+          In downstream EDC/NHS coupling of PMLA with dopamine, published
+          grafted dopamine content peaks at an equimolar{" "}
+          <strong>1.00:1 molar ratio (21.3 wt%)</strong> but drops to{" "}
+          <strong>19.2 wt%</strong> at <strong>1.25:1</strong>. Using
+          explicit-solvent all-atom OpenMM simulations across five molar ratios,
+          we decoupled spatial proximity (
+          <MathInline tex={String.raw`d_{\text{N–C}} < 4.0\text{ Å}`} />) from
+          Bürgi–Dunitz nucleophilic attack orientation (
+          <MathInline tex={String.raw`95^\circ\text{–}125^\circ`} />
+          ). Under the <MathInline tex={String.raw`50\%`} />
+          -activation main model, reaction-compatible contacts plunged from{" "}
+          <strong>25.2%</strong> at <MathInline tex="1.00" /> to{" "}
+          <strong>5.2%</strong> at <MathInline tex="1.25" /> as local hydrogen
+          bonding and catechol torque trapped excess dopamine in shallow-angle (
+          <MathInline tex={String.raw`<60^\circ`} />) side-on
+          association—providing a conditional pre-reaction hypothesis for the{" "}
+          <MathInline tex="1:1" /> dosing optimum while identifying carboxyl
+          activation as a coupled variable for next-stage verification.
         </p>
-        <VideoEmbed
-          src="https://video.igem.org/videos/watch/qD5GdhXi3zBT9mVihrsnL7"
-          title="Example coarse-grained molecular dynamics simulation from Heidelberg 2025"
-          caption="Example simulation from Heidelberg 2025; shown only to preview the video layout."
-          captionPrefix="Video 1."
-          maxWidth="720px"
-          embedParams={{ p2p: false, warningTitle: false }}
-        />
+        <div className={styles.sectionAction}>
+          <Link to="/model/md" className={styles.actionBtn}>
+            <span>Read Full Molecular Dynamics (MD) Documentation</span>
+            <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
+          </Link>
+        </div>
       </>
     ),
   },
 ];
 
 export function Model() {
-  return <ArticlePage title="Model" sections={sections} />;
+  return (
+    <ArticlePage
+      title="Model"
+      titleId="pane-overview"
+      intro={<span id="body-overview-en" />}
+      heroImage={{
+        src: "https://static.igem.wiki/teams/6147/wiki/model-header/hero-model-overview.avif",
+        alt: "MODEL",
+      }}
+      sections={sections}
+    />
+  );
 }
