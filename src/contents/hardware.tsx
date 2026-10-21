@@ -593,9 +593,9 @@ const sections: ArticleSection[] = [
         </p>
         <Figure
           id="hardware-figure-2-1"
-          src="https://static.igem.wiki/teams/6147/wiki/figure2-1-fluent-system.avif"
-          intrinsicWidth={3276}
-          intrinsicHeight={870}
+          src="https://static.igem.wiki/teams/6147/wiki/figure2-1-fluent-system-2.avif"
+          intrinsicWidth={608}
+          intrinsicHeight={555}
           alt="Fluid stream"
           captionPrefix="Figure 2-1."
           caption="Fluid stream"
@@ -617,7 +617,7 @@ const sections: ArticleSection[] = [
           </div>
           <Figure
             id="hardware-figure-2-2"
-            src="https://static.igem.wiki/teams/6147/wiki/figure2-2-data-stream-overview.avif"
+            src="https://static.igem.wiki/teams/6147/wiki/figure2-2-data-stream-overview-2.avif"
             intrinsicWidth={1353}
             intrinsicHeight={2217}
             maxHeight="min(75svh, 680px)"
