@@ -2,7 +2,7 @@ import { useId, useRef } from "react";
 import { Art, Frame, Layer } from "./art";
 import { CanvasText } from "./CanvasText";
 import { clamp01, ramp, useFrame } from "./director";
-import { StrawStroke } from "./Straw";
+import { STRAW_WIDTH, StrawStroke } from "./Straw";
 import { P3_LITERATURE, P3_QUESTION, P3_WONDER, P3_WONDER_PILL } from "./texts";
 import s from "./page-three.module.css";
 import c from "./canvas.module.css";
@@ -102,7 +102,7 @@ export function PageThree() {
         <ellipse cx="1204" cy="2790" rx="170" ry="215" fill={`url(#a${id})`} />
         <ellipse cx="905" cy="3170" rx="215" ry="135" fill={`url(#b${id})`} />
       </Layer>
-      <StrawStroke k="p3" width={32} box={[380, 2560, 986, 900]} />
+      <StrawStroke k="p3" width={STRAW_WIDTH} box={[380, 2540, 986, 900]} />
       <Layer box={[600, 3080, 520, 280]}>
         {SUGARS.map(([shape, , , r, fill], i) => (
           <g

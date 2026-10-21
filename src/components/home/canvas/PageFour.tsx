@@ -2,7 +2,7 @@ import { useId, useRef } from "react";
 import { Art, Frame, Layer } from "./art";
 import { CanvasText } from "./CanvasText";
 import { ramp, useFrame } from "./director";
-import { StrawArt, StrawStroke } from "./Straw";
+import { StrawArt, STRAW_WIDTH, StrawStroke } from "./Straw";
 import { P4_BODY, P4_HEADER } from "./texts";
 import s from "./page-four.module.css";
 import c from "./canvas.module.css";
@@ -54,15 +54,15 @@ export function PageFour() {
       <Art k="p4/glucose" />
       <StrawStroke
         k="s3"
-        width={31}
-        box={[180, 3405, 640, 763]}
+        width={STRAW_WIDTH}
+        box={[180, 3360, 660, 808]}
         paint={`url(#s${id})`}
         defs={
           <linearGradient id={`s${id}`} x1="0" y1="0" x2="1366" y2="0" gradientUnits="userSpaceOnUse">
             <stop offset={540 / 1366} stopColor="#ffc647" />
             <stop offset={585 / 1366} stopColor="#d18311" />
-            <stop offset={765 / 1366} stopColor="#d18311" />
-            <stop offset={792 / 1366} stopColor="#ffc647" />
+            <stop offset={735 / 1366} stopColor="#d18311" />
+            <stop offset={785 / 1366} stopColor="#ffc647" />
           </linearGradient>
         }
       />

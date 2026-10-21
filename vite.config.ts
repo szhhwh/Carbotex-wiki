@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, rmSync } from "node:fs";
 // Import the leaf module directly: the barrel (./src/utils) would drag the whole
 // app (via pages.ts) into esbuild's config bundling, which cannot parse CSS Modules.
 import { stringToSlug } from "./src/utils/stringToSlug";
@@ -67,12 +67,39 @@ function references(): Plugin {
   };
 }
 
+// KaTeX's stylesheet references .woff2/.woff/.ttf for the same faces. Every
+// browser that can run the site picks woff2 (woff as the older fallback), so the
+// .ttf copies are dead weight — and the iGEM GitLab instance caps job artifacts
+// at 10 MiB, so the built site must stay lean.
+function dropUnusedFontFormats(): Plugin {
+  let outDir = "dist";
+  return {
+    name: "drop-unused-font-formats",
+    apply: "build",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    closeBundle() {
+      const assets = new URL(`./${outDir}/assets/`, import.meta.url);
+      for (const file of readdirSync(assets)) {
+        if (file.endsWith(".ttf")) rmSync(new URL(file, assets));
+      }
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default () => {
   const env = loadEnv("dev", process.cwd());
   return defineConfig({
     base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
-    plugins: [openingScreen(), react(), svgr(), references()],
+    plugins: [
+      openingScreen(),
+      react(),
+      svgr(),
+      references(),
+      dropUnusedFontFormats(),
+    ],
     build: {
       rollupOptions: {
         input: {

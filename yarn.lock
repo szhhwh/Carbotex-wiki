@@ -796,13 +796,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource-variable/noto-sans-sc@npm:5.3.1":
-  version: 5.3.1
-  resolution: "@fontsource-variable/noto-sans-sc@npm:5.3.1"
-  checksum: 10c0/5911690b2b43187a986783c0666bab074fd92815dc3fe845c99c1bf145d45a240fb8648ac50938750ba84f11795841a7bed15c8f9e66b76a32837c9cb28065ec
-  languageName: node
-  linkType: hard
-
 "@fontsource-variable/noto-serif-sc@npm:5.3.1":
   version: 5.3.1
   resolution: "@fontsource-variable/noto-serif-sc@npm:5.3.1"
@@ -3952,7 +3945,6 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.36.0"
     "@fatso83/retry-dynamic-import": "npm:2.3.0"
-    "@fontsource-variable/noto-sans-sc": "npm:5.3.1"
     "@fontsource-variable/noto-serif-sc": "npm:5.3.1"
     "@playwright/test": "npm:1.64.1"
     "@types/node": "npm:^22.18.0"

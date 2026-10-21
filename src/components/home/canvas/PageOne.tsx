@@ -5,7 +5,7 @@ import { Art, Layer } from "./art";
 import { artUrl, rectStyle } from "./assets";
 import { CanvasText } from "./CanvasText";
 import { useDirector } from "./director";
-import { StrawArt, StrawStroke } from "./Straw";
+import { StrawArt, STRAW_WIDTH, StrawStroke } from "./Straw";
 import { GREEN, P1_COPY } from "./texts";
 import s from "./page-one.module.css";
 import c from "./canvas.module.css";
@@ -175,7 +175,7 @@ export function PageOneBase() {
           <image href={artUrl("p1/burning")} x={burning[0]} y={burning[1]} width={burning[2]} height={burning[3]} />
         </g>
       </Layer>
-      <StrawStroke k="s2a" width={34} />
+      <StrawStroke k="s2a" width={STRAW_WIDTH} />
       <Art k="p1/earth" className={s.earth} />
       <Layer box={[-20, 1480, 1406, 1140]}>
         <path d={SHAPES.bottomWave} fill="#02b186" />

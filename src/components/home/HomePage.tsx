@@ -1,4 +1,3 @@
-import "@fontsource-variable/noto-sans-sc";
 import { useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

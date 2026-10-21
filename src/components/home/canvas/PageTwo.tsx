@@ -5,7 +5,7 @@ import { Art, Layer } from "./art";
 import { artUrl, rectStyle } from "./assets";
 import { CanvasText } from "./CanvasText";
 import { ramp, useDirector, useFrame } from "./director";
-import { StrawStroke } from "./Straw";
+import { STRAW_WIDTH, StrawStroke } from "./Straw";
 import {
   P2_FOOTER,
   P2_HEADING,
@@ -166,7 +166,7 @@ export function PageTwo() {
       </div>
       <StrawStroke
         k="s2c"
-        width={33}
+        width={STRAW_WIDTH}
         paint={`url(#g${gradId})`}
         defs={
           <linearGradient id={`g${gradId}`} x1="452" y1="2004" x2="430" y2="2062" gradientUnits="userSpaceOnUse">
@@ -181,8 +181,9 @@ export function PageTwo() {
         <Art k="p2/straw-bundle" />
         <Art k="p2/china-map" alt="Map of China" />
       </div>
-      <StrawStroke k="s2b" width={33} />
-      <StrawStroke k="s2d" width={33} />
+      {/* s2d leaves from under s2b's lowest bend (the "Y" below the loop). */}
+      <StrawStroke k="s2d" width={STRAW_WIDTH} />
+      <StrawStroke k="s2b" width={STRAW_WIDTH} />
       <Art k="p2/note-box" />
       <CanvasText block={P2_NOTE} />
       <Layer ref={data} box={dt} className={`${c.visible} ${s.data}`} label={`${seg.value} ${seg.label}`}>

@@ -13,6 +13,12 @@ import { useFrame } from "./director";
 import { StrawPenContext, StrawPenController, useStrawPen } from "./straw-pen";
 
 export const STRAW_YELLOW = "#ffc647";
+/**
+ * Width of every code-drawn straw piece (pt). One width everywhere, matched
+ * to the exported straws (front ≈ 30.5, link ≈ 30), so welded joins
+ * (scripts weld.py: shared centre lines) show no step.
+ */
+export const STRAW_WIDTH = 31;
 
 /** Provides the scroll-driven straw pen to every straw piece. */
 export function StrawPen({ children }: { children: ReactNode }) {

@@ -57,7 +57,13 @@
 .text {
   overflow: visible;
   font-family:
-    "Noto Sans SC Variable", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei",
+    "Noto Sans SC",
     sans-serif;
   pointer-events: auto;
   user-select: text;
