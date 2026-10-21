@@ -2096,6 +2096,17 @@
   font-weight: 700;
 }
 
+.milestoneNavIndex {
+  margin-inline-end: 0.4rem;
+  color: var(--education-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.milestoneNavItem[aria-selected="true"] .milestoneNavIndex,
+.milestoneNavItem[aria-selected="true"]:hover .milestoneNavIndex {
+  color: var(--education-yellow);
+}
+
 .milestoneDisplay {
   position: relative;
   min-width: 0;

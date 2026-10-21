@@ -1117,7 +1117,7 @@ function MilestoneExplorer({ describedBy }: { describedBy?: string }) {
         aria-label="Design milestones"
         aria-describedby={describedBy}
       >
-        {milestones.map(([id, title]) => (
+        {milestones.map(([id, title], index) => (
           <button
             aria-controls={panelId}
             aria-selected={active[0] === id}
@@ -1132,6 +1132,7 @@ function MilestoneExplorer({ describedBy }: { describedBy?: string }) {
             tabIndex={active[0] === id ? 0 : -1}
             type="button"
           >
+            <span className={styles.milestoneNavIndex}>{index + 1}.</span>
             <strong>{title}</strong>
           </button>
         ))}
