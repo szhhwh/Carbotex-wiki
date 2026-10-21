@@ -4,6 +4,7 @@ import {
 } from "../components/article/ArticlePage";
 import {
   PartCollection,
+  RegistryCollectionCta,
   type PartRecord,
 } from "../components/parts/PartsSections";
 
@@ -329,16 +330,19 @@ const sections: ArticleSection[] = [
     id: "parts-pentose-regulation",
     title: "Pentose-Regulation Part Collection",
     content: (
-      <p>
-        We developed the Pentose-Regulation Part Collection to connect
-        transcription-factor function with pentose utilization and poly(malic
-        acid) (PMA) production in <em>Aureobasidium melanogenum</em> A08. The
-        collection centres on the native <em>xlnR</em> and <em>araR</em> genes
-        and their corresponding expression constructs. Together with a shared
-        expression backbone and a supporting knockout backbone, these parts
-        provide complementary ways to investigate the two regulators and compare
-        individual and combined engineering strategies.
-      </p>
+      <>
+        <RegistryCollectionCta />
+        <p>
+          We developed the Pentose-Regulation Part Collection to connect
+          transcription-factor function with pentose utilization and poly(malic
+          acid) (PMA) production in <em>Aureobasidium melanogenum</em> A08. The
+          collection centres on the native <em>xlnR</em> and <em>araR</em> genes
+          and their corresponding expression constructs. Together with a shared
+          expression backbone and a supporting knockout backbone, these parts
+          provide complementary ways to investigate the two regulators and
+          compare individual and combined engineering strategies.
+        </p>
+      </>
     ),
     subsections: [
       {
