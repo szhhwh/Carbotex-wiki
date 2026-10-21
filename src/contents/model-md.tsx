@@ -895,8 +895,7 @@ const sections: ArticleSection[] = [
                 <strong>
                   Sensitivity to Assumed Polymer Activation Density
                 </strong>
-                : In the summarized 75%-activation sensitivity comparison (raw
-                per-window count tables pending separate archival), the
+                : In the summarized 75%-activation sensitivity comparison, the
                 orientation-compatible fraction shifts from 5.25% at feed 1.00
                 to 10.72% at feed 1.25, reversing the two-point ordering of the
                 50%-activation main model—underscoring that the high-feed

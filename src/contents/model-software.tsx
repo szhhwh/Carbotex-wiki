@@ -37,10 +37,11 @@ const sections: ArticleSection[] = [
             <strong>Controlled experimental progression</strong>: Wet-lab
             experiments follow physical cycles with high trial-and-error costs;
             completing a code or tool call does not by itself show that a result
-            can be accepted or that an experiment should advance. Measurements
-            that have not been checked for units and format should not be
-            accepted as formal records, and steps that consume samples or record
-            critical measurements must pause for researcher review and approval.
+            can be accepted or that an experiment should advance. Measurement
+            writes must pass numerical and unit validation before being saved as
+            formal records, while experimental stage progression and operations
+            flagged as requiring approval must be reviewed and approved by a
+            researcher.
           </li>
           <li>
             <strong>Decoupled, reusable scientific toolchains</strong>: Sample
@@ -834,16 +835,16 @@ const sections: ArticleSection[] = [
                 quantities (see collapsible card below), and confirmed that 1:1
                 equimolar feed achieves the highest reported product dopamine
                 content (21.3 wt%) in the published series to support our team's
-                1:1 starting formulation; next, calling{" "}
-                <code>md_compare_feeds</code>, it showed that total close
+                1:1 starting formulation. After our MD simulations generated
+                the multi-ratio contact summary report, calling{" "}
+                <code>md_compare_feeds</code> verified that total close
                 contacts are nearly unchanged between feeds 1.00 and 1.25 (485
                 vs. 462) while{" "}
                 <strong>
                   the orientation-compatible fraction plunges from 25.2% to 5.2%
                 </strong>{" "}
-                (Figure 7), focusing the MD module's investigation on why
-                approaching dopamine molecules adopt unfavorable geometries at
-                high feed.
+                (Figure 7), summarizing the pre-reaction geometric contrast
+                established in the MD module.
               </li>
             </ul>
             <figure className={tableStyles.tableFigure}>
@@ -1005,8 +1006,9 @@ const sections: ArticleSection[] = [
                 <strong>WetFlow Execution</strong>: Combining synthesis
                 protocols with mechanical test records, the agent organized the
                 three molecular components and their modeling questions (Table
-                2), reused <code>md_compare_feeds</code> to define three
-                coupling-stage trajectory tasks (radial distance distributions,
+                2), used <code>md_compare_feeds</code> to cross-check the
+                generated coupling-stage trajectory summary alongside three
+                key trajectory observables (radial distance distributions,
                 approach-angle distributions, and hydration shells), and
                 outlined surface models for glass (hydroxylated amorphous{" "}
                 <MathInline tex={String.raw`\text{SiO}_2`} />
@@ -1534,11 +1536,11 @@ const sections: ArticleSection[] = [
                 simulations—our team synthesis uses a 1:1 dopamine-to-carboxyl
                 feed ratio, whereas Tang et al.'s series shows an anomalous drop
                 in product dopamine content when feed increases from 1.00 to
-                1.25. WetFlow organized the protocol and composition evidence to
-                sharpen this question; the{" "}
+                1.25. WetFlow organized the protocol, composition, and
+                generated MD summary evidence around this question; the{" "}
                 <Link to="/model/md">Molecular Dynamics Simulation module</Link>{" "}
-                now examines how excess dopamine behaves around activated PMA at
-                the atomic scale.
+                presents the full all-atom trajectories and geometric analysis
+                of how excess dopamine behaves around activated PMA.
               </li>
             </ul>
           </>
