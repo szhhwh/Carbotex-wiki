@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import type { ActivityDefinition } from "../../contents/activityCatalog";
+import type { ActivityDefinition } from "../../data/activity-catalog.data";
 import styles from "./activity-viewer.module.css";
 
 interface ActivityViewerProps {

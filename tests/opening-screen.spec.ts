@@ -119,7 +119,9 @@ test("navbar navigation replays the full-load opening timeline", async ({
   await expect(page.locator(opening)).toHaveCount(0);
 
   // Warm the chunk so a cached page cannot skip the loading presentation.
-  await page.evaluate(() => import("/ouc-haide/src/contents/engineering.tsx"));
+  await page.evaluate(
+    () => import("/ouc-haide/src/pages/project/EngineeringPage.tsx"),
+  );
   await openEngineeringFromNavbar(page);
 
   await expect(page.locator(opening)).toHaveAttribute("data-state", "playing");
@@ -143,7 +145,7 @@ test("navbar navigation replays the full-load opening timeline", async ({
 test("navbar navigation stays covered while a lazy route is slow", async ({
   page,
 }) => {
-  await page.route("**/contents/engineering.tsx*", async (route) => {
+  await page.route("**/pages/project/EngineeringPage.tsx*", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 3500));
     await route.continue();
   });
@@ -198,7 +200,7 @@ test("cached document visits still complete the opening animation", async ({
 test("a slow route stays covered after the first animation cycle", async ({
   page,
 }) => {
-  await page.route("**/contents/description.tsx*", async (route) => {
+  await page.route("**/pages/project/DescriptionPage.tsx*", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 3500));
     await route.continue();
   });
@@ -245,7 +247,9 @@ test("reduced-motion navigation uses the reduced opening timeline", async ({
   await trackOpeningEvents(page);
   await page.goto(description, { waitUntil: "domcontentloaded" });
   await expect(page.locator(opening)).toHaveCount(0);
-  await page.evaluate(() => import("/ouc-haide/src/contents/engineering.tsx"));
+  await page.evaluate(
+    () => import("/ouc-haide/src/pages/project/EngineeringPage.tsx"),
+  );
   await openEngineeringFromNavbar(page);
   await expect(page.locator(opening)).toHaveAttribute("data-state", "playing");
   await expect(page.locator(opening)).toHaveCount(0);
@@ -271,14 +275,17 @@ test("retries a transient lazy route download before showing an error", async ({
   page,
 }) => {
   let attempts = 0;
-  await page.route("**/src/contents/human-practices.tsx*", async (route) => {
-    attempts += 1;
-    if (attempts === 1) {
-      await route.abort();
-      return;
-    }
-    await route.continue();
-  });
+  await page.route(
+    "**/src/pages/human-practices/HumanPracticesPage.tsx*",
+    async (route) => {
+      attempts += 1;
+      if (attempts === 1) {
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    },
+  );
 
   await page.goto("/ouc-haide/human-practices", {
     waitUntil: "domcontentloaded",

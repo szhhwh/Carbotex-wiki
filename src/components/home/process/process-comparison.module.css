@@ -19,17 +19,16 @@
     "Noto Sans SC",
     sans-serif;
 }
-
 .inner {
   --u: calc(100cqw / 1920);
   position: relative;
   padding: calc(108 * var(--u)) 0 calc(44 * var(--u));
-
-  @container (max-width: 819px) {
+}
+@container (max-width: 819px) {
+  .inner {
     padding: 56px 0 64px;
   }
 }
-
 .lineWave {
   position: absolute;
   top: calc(330 * var(--u));
@@ -41,14 +40,14 @@
   height: auto;
   pointer-events: none;
   user-select: none;
-
-  @container (max-width: 819px) {
+}
+@container (max-width: 819px) {
+  .lineWave {
     top: 34%;
     left: -70%;
     width: 240%;
   }
 }
-
 .intro {
   position: relative;
   z-index: 1;
@@ -59,13 +58,13 @@
   line-height: 1.35;
   text-align: center;
   text-wrap: balance;
-
-  @container (max-width: 819px) {
+}
+@container (max-width: 819px) {
+  .intro {
     width: min(88%, 32rem);
     font-size: 16px;
   }
 }
-
 .cards {
   position: relative;
   z-index: 1;
@@ -75,23 +74,23 @@
   margin: calc(68 * var(--u)) 0 0;
   padding: 0;
   list-style: none;
-
-  @container (max-width: 819px) {
+}
+@container (max-width: 819px) {
+  .cards {
     flex-direction: column;
     gap: 28px;
     align-items: center;
     margin-top: 32px;
   }
 }
-
 .cardSlot {
   width: calc(536.15 * var(--u));
-
-  @container (max-width: 819px) {
+}
+@container (max-width: 819px) {
+  .cardSlot {
     width: min(86%, 360px);
   }
 }
-
 .card {
   position: relative;
   container-type: inline-size;
@@ -103,24 +102,20 @@
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease;
-
-  &:hover {
-    box-shadow: 0 22px 44px rgb(25 69 36 / 0.2);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    &:hover {
-      transform: translateY(-5px);
-    }
+}
+.card:hover {
+  box-shadow: 0 22px 44px rgb(25 69 36 / 0.2);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-5px);
   }
 }
-
 .cardBody {
   --cu: calc(100cqw / 536.15);
   position: absolute;
   inset: 0;
 }
-
 .cardTitle {
   position: absolute;
   top: calc(74 * var(--cu));
@@ -132,7 +127,6 @@
   line-height: 1.1;
   text-align: center;
 }
-
 .points {
   position: absolute;
   top: calc(596 * var(--cu));
@@ -144,16 +138,13 @@
   white-space: nowrap;
   list-style: none;
   transform: translateX(-50%);
-
-  & li::before {
-    content: "• ";
-  }
-
-  & strong {
-    font-weight: 700;
-  }
 }
-
+.points li::before {
+  content: "• ";
+}
+.points strong {
+  font-weight: 700;
+}
 .art {
   position: absolute;
   top: calc(var(--y) * var(--cu));
@@ -164,26 +155,21 @@
   height: auto;
   pointer-events: none;
   user-select: none;
-
-  & img,
-  & svg {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
 }
-
+.art img,
+.art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .drawn {
   overflow: visible;
-}
-
-/* Light band (arrow) / flash (check) clipped to the icon's own silhouette. */
+} /* Light band (arrow) / flash (check) clipped to the icon's own silhouette. */
 .shine {
   position: absolute;
   inset: 0;
   mask: var(--shine-mask) center / 100% 100% no-repeat;
 }
-
 .arrowShine {
   background: linear-gradient(
     to top,
@@ -194,7 +180,6 @@
   background-position: 50% 0%;
   background-size: 100% 300%;
 }
-
 .checkShine {
   background: #e9f9e1;
   opacity: 0;

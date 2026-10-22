@@ -1,4 +1,4 @@
-import pages, { type PageLayout } from "../pages.ts";
+import pages, { type PageLayout } from "../app/routes.ts";
 import type { ComponentType } from "react";
 
 export const getPathMapping = () => {

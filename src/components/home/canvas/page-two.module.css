@@ -3,33 +3,30 @@
   touch-action: none;
   outline: none;
   transition: filter 0.3s ease;
-
-  & img,
-  & svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  &:hover,
-  &:focus-visible {
-    filter: drop-shadow(0 calc(3 * var(--u)) calc(8 * var(--u)) rgb(188 156 117 / 0.55));
-  }
-
-  &:focus-visible {
-    outline: calc(2 * var(--u)) dashed #bc9c75;
-    outline-offset: calc(2 * var(--u));
-    border-radius: calc(20 * var(--u));
-  }
 }
-
+.tag img,
+.tag svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.tag:hover,
+.tag:focus-visible {
+  filter: drop-shadow(
+    0 calc(3 * var(--u)) calc(8 * var(--u)) rgb(188 156 117 / 0.55)
+  );
+}
+.tag:focus-visible {
+  outline: calc(2 * var(--u)) dashed #bc9c75;
+  outline-offset: calc(2 * var(--u));
+  border-radius: calc(20 * var(--u));
+}
 .tagText {
   animation: nudge 2.8s ease-in-out infinite;
 }
-
 @keyframes nudge {
   0%,
   70%,
@@ -45,7 +42,6 @@
     transform: translateY(calc(-1.5 * var(--u)));
   }
 }
-
 .group {
   position: absolute;
   top: 0;
@@ -54,19 +50,15 @@
   height: 0;
   will-change: transform;
 }
-
 .ring {
   will-change: transform;
 }
-
 .data {
   transform-box: fill-box;
-
-  & [data-label] {
-    transform-box: fill-box;
-  }
 }
-
+.data [data-label] {
+  transform-box: fill-box;
+}
 @media (prefers-reduced-motion: reduce) {
   .tagText {
     animation: none;

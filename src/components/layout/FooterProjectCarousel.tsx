@@ -7,7 +7,7 @@ import {
   type FooterCard,
   footerCards,
   getFooterCardIndex,
-} from "./footer-data";
+} from "./footer.data";
 import { useProjectCarousel } from "./useProjectCarousel";
 import styles from "./footer.module.css";
 

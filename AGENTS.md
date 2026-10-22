@@ -1,7 +1,7 @@
 # Notes for AI assistants
 
 Read **[README.md](README.md)** first — it covers the stack, where to edit
-(`src/contents/*`, `src/pages.ts`), the `yarn` commands, and the iGEM asset rules
+(`src/pages/*`, `src/app/routes.ts`), the `yarn` commands, and the iGEM asset rules
 (images via the uploads tool, videos from iGEM servers, no external CDNs).
 
 ## Responsible & honest use
@@ -30,7 +30,7 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
 
 ## Architecture
 
-- `src/pages.ts` — data-driven page registry: **both the Navbar and the routes
+- `src/app/routes.ts` — data-driven page registry: **both the Navbar and the routes
   are generated from it**; adding or adjusting pages only touches this file
   - `Page.layout` is required: `"article"` for content pages (each renders
     its own hero via `ArticlePage`), `"fullscreen"` for Home (`App.tsx`
@@ -40,9 +40,9 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
   routes + Footer. Always read the current path from `useLocation()`, **never
   bare `location.pathname`** (SPA navigation does not re-render the component,
   so the body class and document title would go stale)
-- `src/contents/home.tsx` — declares the `acts` array (id + scrollLength +
+- `src/pages/HomePage.tsx` — declares the `acts` array (id + scrollLength +
   Component) rendered by `HomeStage`; adding or reordering acts only touches
-  this file; the other `src/contents/*` files are content pages
+  this file; route pages are grouped below `src/pages/` by site section
 - `src/components/home/` — the multi-act home stage: one long scroll track +
   a single sticky viewport with all acts stacked; scrolling cross-fades
   neighbouring acts (master timeline in `HomeStage`)
@@ -70,9 +70,10 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
   not add a second animation library or rAF loop. Layout changes that land
   after mount (e.g. the `fullscreen-page` body class, applied in a passive
   effect) need a follow-up `ScrollTrigger.refresh()` — see `HomeStage`
-- **Styling**: CSS Modules (`*.module.css`) + native CSS nesting + custom
-  properties as design tokens; Bootstrap/react-bootstrap is for content-page
-  typography only — the home visual is fully custom
+- **Styling**: CSS Modules (`*.module.css`) + custom properties as design tokens;
+  keep selectors flat and group responsive rules in explicit media/container
+  blocks. Bootstrap/react-bootstrap is for content-page typography only — the
+  home visual is fully custom
 - **Media captions**: All image and video captions must render through
   `src/components/media/Caption.tsx` and use the shared
   `src/components/media/caption.module.css` typography. This includes custom
@@ -94,5 +95,5 @@ Read **[README.md](README.md)** first — it covers the stack, where to edit
   bundled locally and are exempt from this rule
 - **vite.config.ts** may only import zero-dependency leaf modules (e.g.
   `src/utils/stringToSlug`); importing the `src/utils` barrel pulls the whole
-  app (via `getPathMapping → pages.ts → contents`) into esbuild's config
+  app (via `getPathMapping → routes.ts → pages`) into esbuild's config
   bundling, where `.module.css` fails to parse and the build breaks

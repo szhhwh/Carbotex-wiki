@@ -16,7 +16,6 @@
   font-size: 1rem;
   line-height: 1.55;
 }
-
 .widgetTitle {
   margin: 0;
   color: inherit;
@@ -27,7 +26,6 @@
   line-height: 1.12 !important;
   text-wrap: balance;
 }
-
 .eyebrow {
   display: block;
   margin-bottom: 0.35rem;
@@ -38,14 +36,12 @@
   line-height: 1.3;
   text-transform: uppercase;
 }
-
 .route {
   overflow: hidden;
   border-top: 0.6rem solid var(--widget-yellow);
   border-radius: clamp(1.5rem, 3vw, 2.25rem);
   background: var(--widget-card-mint);
 }
-
 .routeHeader {
   display: flex;
   justify-content: space-between;
@@ -53,7 +49,6 @@
   align-items: end;
   padding: clamp(1.25rem, 3vw, 2rem);
 }
-
 .routeHeader p {
   max-width: 33rem;
   margin: 0;
@@ -61,7 +56,6 @@
   font-size: 0.92rem;
   line-height: 1.5;
 }
-
 .questionList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -70,7 +64,6 @@
   padding: 0 clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
   list-style: none;
 }
-
 .questionList li {
   min-width: 0;
   margin: 0;
@@ -78,12 +71,10 @@
   border-radius: 1.15rem;
   background: var(--widget-white);
 }
-
 .questionList li:nth-child(2),
 .questionList li:nth-child(3) {
   background: var(--widget-pale-yellow);
 }
-
 .questionNumber {
   display: block;
   margin-bottom: 0.35rem;
@@ -93,21 +84,18 @@
   font-weight: 400;
   line-height: 0.9;
 }
-
 .questionList strong {
   display: block;
   color: var(--widget-ink);
   font-size: 0.96rem;
   line-height: 1.35;
 }
-
 .questionList p {
   margin: 0.35rem 0 0;
   color: var(--widget-ink);
   font-size: 0.86rem;
   line-height: 1.45;
 }
-
 .moduleRail {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -117,7 +105,6 @@
   background: var(--widget-navy);
   list-style: none;
 }
-
 .moduleRail li {
   min-width: 0;
   margin: 0;
@@ -126,11 +113,9 @@
   border-radius: 0.9rem;
   color: var(--widget-white);
 }
-
 .moduleRail li:nth-child(even) {
   background: color-mix(in srgb, var(--widget-white) 9%, transparent);
 }
-
 .moduleRail span {
   display: block;
   color: var(--widget-yellow);
@@ -139,7 +124,6 @@
   font-weight: 400;
   line-height: 1;
 }
-
 .moduleRail strong {
   display: block;
   margin-top: 0.35rem;
@@ -147,14 +131,12 @@
   font-size: 0.78rem;
   line-height: 1.3;
 }
-
 .protocols {
   padding: clamp(1.1rem, 2.5vw, 1.5rem);
   border: 2px solid color-mix(in srgb, var(--widget-navy) 14%, transparent);
   border-radius: 1.35rem;
   background: var(--widget-pale-yellow);
 }
-
 .protocolList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -163,17 +145,14 @@
   padding: 0;
   list-style: none;
 }
-
 .protocols > h4 {
   margin-bottom: 0.85rem;
 }
-
 .protocolList li {
   min-width: 0;
   margin: 0;
   padding: 0;
 }
-
 .protocolLink {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -186,17 +165,14 @@
   background: var(--widget-white);
   color: var(--widget-ink) !important;
   text-decoration: none !important;
-
-  &:hover {
-    background: var(--widget-card-mint);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--widget-navy);
-    outline-offset: 3px;
-  }
 }
-
+.protocolLink:hover {
+  background: var(--widget-card-mint);
+}
+.protocolLink:focus-visible {
+  outline: 3px solid var(--widget-navy);
+  outline-offset: 3px;
+}
 .protocolNumber {
   display: grid;
   min-width: 2.6rem;
@@ -210,7 +186,6 @@
   font-weight: 400;
   line-height: 1;
 }
-
 .protocolTitle {
   min-width: 0;
   font-size: 0.9rem;
@@ -218,17 +193,14 @@
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
-
 .protocolLink svg {
   color: var(--widget-royal);
 }
-
 .steps {
   padding: 1.15rem 1.25rem 1.15rem 1rem;
   border-radius: 1.35rem;
   background: var(--widget-white);
 }
-
 .stepList {
   display: grid;
   gap: 0;
@@ -236,7 +208,6 @@
   padding: 0;
   list-style: none;
 }
-
 .stepList li {
   position: relative;
   display: grid;
@@ -245,22 +216,19 @@
   min-width: 0;
   margin: 0;
   padding: 0 0 1rem;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child)::before {
-    position: absolute;
-    top: 2rem;
-    bottom: 0;
-    left: 1.08rem;
-    width: 2px;
-    background: var(--widget-mint);
-    content: "";
-  }
 }
-
+.stepList li:last-child {
+  padding-bottom: 0;
+}
+.stepList li:not(:last-child)::before {
+  position: absolute;
+  top: 2rem;
+  bottom: 0;
+  left: 1.08rem;
+  width: 2px;
+  background: var(--widget-mint);
+  content: "";
+}
 .stepNumber {
   position: relative;
   z-index: 1;
@@ -275,32 +243,27 @@
   font-size: 1.05rem;
   line-height: 1;
 }
-
 .stepBody {
   min-width: 0;
   padding-top: 0.28rem;
 }
-
 .stepBody strong {
   display: block;
   color: var(--widget-navy);
   font-size: 0.94rem;
   line-height: 1.35;
 }
-
 .stepBody p {
   margin: 0.2rem 0 0;
   color: var(--widget-ink);
   font-size: 0.86rem;
   line-height: 1.45;
 }
-
 .parameters {
   overflow: hidden;
   border-radius: 1.35rem;
   background: var(--widget-yellow);
 }
-
 .parameterLabel {
   margin: 0;
   padding: 0.8rem 1rem 0.55rem;
@@ -309,7 +272,6 @@
   font-size: 1.12rem;
   line-height: 1.2;
 }
-
 .parameterGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
@@ -317,7 +279,6 @@
   margin: 0;
   padding: 0 0.7rem 0.7rem;
 }
-
 .parameterItem {
   min-width: 0;
   margin: 0;
@@ -325,11 +286,9 @@
   border-radius: 0.95rem;
   background: var(--widget-white);
 }
-
 .parameterItem:nth-child(even) {
   background: var(--widget-card-mint);
 }
-
 .parameterItem dt {
   color: var(--widget-royal);
   font-size: 0.72rem;
@@ -338,7 +297,6 @@
   line-height: 1.3;
   text-transform: uppercase;
 }
-
 .parameterItem dd {
   margin: 0.18rem 0 0;
   color: var(--widget-ink);
@@ -347,7 +305,6 @@
   font-variant-numeric: tabular-nums;
   line-height: 1.35;
 }
-
 .parameterItem small {
   display: block;
   margin-top: 0.18rem;
@@ -356,13 +313,11 @@
   font-weight: 400;
   line-height: 1.35;
 }
-
 .donors {
   padding: clamp(1rem, 2.5vw, 1.4rem);
   border-radius: 1.5rem;
   background: var(--widget-navy);
 }
-
 .donorHeader {
   display: flex;
   justify-content: space-between;
@@ -370,12 +325,10 @@
   align-items: baseline;
   margin-bottom: 0.85rem;
 }
-
 .donorHeader h4 {
   margin: 0;
   color: var(--widget-white);
 }
-
 .donorHeader span {
   color: var(--widget-yellow);
   font-size: 0.76rem;
@@ -383,7 +336,6 @@
   line-height: 1.3;
   text-align: right;
 }
-
 .donorGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -392,7 +344,6 @@
   padding: 0;
   list-style: none;
 }
-
 .donorGrid li {
   min-width: 0;
   margin: 0;
@@ -400,12 +351,10 @@
   border-radius: 1rem;
   background: var(--widget-white);
 }
-
 .donorGrid li:nth-child(2),
 .donorGrid li:nth-child(4) {
   background: var(--widget-card-mint);
 }
-
 .donorCode {
   display: block;
   color: var(--widget-royal);
@@ -414,7 +363,6 @@
   font-weight: 400;
   line-height: 1;
 }
-
 .donorGrid strong {
   display: block;
   margin-top: 0.42rem;
@@ -422,14 +370,12 @@
   font-size: 0.86rem;
   line-height: 1.35;
 }
-
 .donorGrid p {
   margin: 0.25rem 0 0;
   color: var(--widget-ink);
   font-size: 0.78rem;
   line-height: 1.4;
 }
-
 .basis {
   display: grid;
   gap: 0.8rem;
@@ -437,32 +383,27 @@
   border-radius: 1.45rem;
   background: var(--widget-card-mint);
 }
-
 .basisHeader {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   align-items: baseline;
 }
-
 .basisHeader h4 {
   margin: 0;
 }
-
 .basisHeader span {
   color: var(--widget-royal);
   font-size: 0.78rem;
   font-weight: 800;
   line-height: 1.3;
 }
-
 .equation {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.55rem;
   margin: 0;
 }
-
 .equation > div {
   display: grid;
   min-width: 0;
@@ -471,11 +412,9 @@
   border-radius: 1rem;
   background: var(--widget-white);
 }
-
 .equation > div:last-child {
   background: var(--widget-yellow);
 }
-
 .equation dt {
   color: var(--widget-royal);
   font-size: 0.72rem;
@@ -484,7 +423,6 @@
   line-height: 1.3;
   text-transform: uppercase;
 }
-
 .equation dd {
   margin: 0;
   color: var(--widget-navy);
@@ -493,14 +431,12 @@
   font-variant-numeric: tabular-nums;
   line-height: 1.05;
 }
-
 .basis p {
   margin: 0;
   color: var(--widget-ink);
   font-size: 0.84rem;
   line-height: 1.48;
 }
-
 .standards {
   display: grid;
   gap: 0.55rem;
@@ -508,7 +444,6 @@
   padding: 0;
   list-style: none;
 }
-
 .standards li {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -519,7 +454,6 @@
   border-radius: 0.85rem;
   background: var(--widget-white);
 }
-
 .standardTrack {
   position: relative;
   height: 0.55rem;
@@ -527,14 +461,12 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--widget-mint) 52%, var(--widget-white));
 }
-
 .standardTrack span {
   display: block;
   height: 100%;
   border-radius: inherit;
   background: var(--widget-green);
 }
-
 .standards strong {
   color: var(--widget-navy);
   font-family: var(--widget-display);
@@ -543,7 +475,6 @@
   font-weight: 400;
   white-space: nowrap;
 }
-
 .reaction {
   display: grid;
   grid-template-columns: minmax(13rem, 0.78fr) minmax(0, 1.22fr);
@@ -552,23 +483,19 @@
   border-radius: 1.55rem;
   background: var(--widget-pale-yellow);
 }
-
 .feed {
   padding: 1.1rem;
   border-radius: 1.1rem;
   background: var(--widget-yellow);
 }
-
 .feed h4 {
   margin: 0 0 0.8rem;
 }
-
 .feedList {
   display: grid;
   gap: 0.5rem;
   margin: 0;
 }
-
 .feedList > div {
   display: flex;
   justify-content: space-between;
@@ -578,14 +505,12 @@
   border-radius: 0.8rem;
   background: var(--widget-white);
 }
-
 .feedList dt {
   color: var(--widget-ink);
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.35;
 }
-
 .feedList dd {
   margin: 0;
   color: var(--widget-royal);
@@ -596,7 +521,6 @@
   line-height: 1;
   white-space: nowrap;
 }
-
 .reactionSteps {
   margin: 0;
   padding: 1rem 1.1rem;
@@ -604,7 +528,6 @@
   background: var(--widget-white);
   list-style: none;
 }
-
 .reactionSteps li {
   display: grid;
   grid-template-columns: 4.7rem minmax(0, 1fr);
@@ -614,12 +537,10 @@
   padding: 0.55rem 0;
   border-bottom: 1px solid
     color-mix(in srgb, var(--widget-navy) 12%, transparent);
-
-  &:last-child {
-    border-bottom: 0;
-  }
 }
-
+.reactionSteps li:last-child {
+  border-bottom: 0;
+}
 .reactionSteps strong {
   color: var(--widget-royal);
   font-family: var(--widget-display);
@@ -628,13 +549,11 @@
   font-weight: 400;
   line-height: 1.25;
 }
-
 .reactionSteps span {
   color: var(--widget-ink);
   font-size: 0.84rem;
   line-height: 1.4;
 }
-
 @media (max-width: 900px) {
   .routeHeader,
   .donorHeader,
@@ -642,79 +561,62 @@
     align-items: start;
     flex-direction: column;
   }
-
   .questionList,
   .protocolList {
     grid-template-columns: minmax(0, 1fr);
   }
-
   .moduleRail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .donorGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .reaction {
     grid-template-columns: minmax(0, 1fr);
   }
 }
-
 @media (max-width: 520px) {
   .widget {
     margin-block: 1.35rem;
   }
-
   .routeHeader,
   .questionList {
     padding-inline: 1rem;
   }
-
   .routeHeader {
     padding-block: 1rem;
   }
-
   .questionList {
     padding-bottom: 1rem;
   }
-
   .moduleRail {
     padding: 0.65rem;
   }
-
   .protocols,
   .donors,
   .basis,
   .reaction {
     padding: 0.8rem;
   }
-
   .protocolLink {
     grid-template-columns: auto minmax(0, 1fr);
   }
-
   .protocolLink svg {
     display: none;
   }
-
   .parameterGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .donorGrid {
     grid-template-columns: minmax(0, 1fr);
   }
-
   .equation {
     grid-template-columns: minmax(0, 1fr);
   }
-
   .reactionSteps {
     padding-inline: 0.85rem;
   }
 }
-
 @media (forced-colors: active) {
   .route,
   .protocols,

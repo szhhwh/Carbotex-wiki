@@ -5,7 +5,6 @@
  * everything else hidden. Lengths derive from --focus-width so the track also
  * fits narrow screens.
  */
-
 .gallery {
   --focus-width: min(62cqw, 25rem);
   --focus-height: calc(var(--focus-width) * 0.75);
@@ -14,18 +13,15 @@
   min-width: 0;
   margin-block: 2.4rem;
 }
-
 .gallery button:focus-visible {
   outline: 3px solid var(--article-green, #007c60);
   outline-offset: 4px;
 }
-
 .stage {
   position: relative;
   height: calc(var(--focus-height) * 1.15 + 4rem);
   overflow: clip;
 }
-
 .item {
   --focus-scale: 1;
   --focus-opacity: 1;
@@ -38,42 +34,36 @@
     translateX(calc(var(--focus-offset) * var(--focus-step)))
     scale(var(--focus-scale));
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &[data-position="center"] {
-    --focus-scale: 1.15;
-    z-index: 10;
-  }
-
-  &[data-position="left"],
-  &[data-position="right"] {
-    --focus-scale: 0.85;
-    --focus-opacity: 0.5;
-
-    &:hover {
-      --focus-scale: 0.9;
-      --focus-opacity: 0.75;
-    }
-  }
-
-  &[data-position="hidden"] {
-    --focus-scale: 0.7;
-    --focus-opacity: 0;
-    pointer-events: none;
-  }
 }
-
+.item[data-position="center"] {
+  --focus-scale: 1.15;
+  z-index: 10;
+}
+.item[data-position="left"],
+.item[data-position="right"] {
+  --focus-scale: 0.85;
+  --focus-opacity: 0.5;
+}
+.item[data-position="left"]:hover,
+.item[data-position="right"]:hover {
+  --focus-scale: 0.9;
+  --focus-opacity: 0.75;
+}
+.item[data-position="hidden"] {
+  --focus-scale: 0.7;
+  --focus-opacity: 0;
+  pointer-events: none;
+}
 .hit {
   display: block;
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
-
-  .item[data-position="center"] & {
-    cursor: zoom-in;
-  }
 }
-
+.item[data-position="center"] .hit {
+  cursor: zoom-in;
+}
 .image {
   display: block;
   width: min(
@@ -87,12 +77,10 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
   user-select: none;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-
-  .item[data-position="center"] & {
-    box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
-  }
 }
-
+.item[data-position="center"] .image {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+}
 @media (prefers-reduced-motion: reduce) {
   .item,
   .image {

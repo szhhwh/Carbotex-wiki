@@ -2,45 +2,34 @@
  * Collapse / Accordion skeleton — layout + a11y affordances only.
  * Visual tokens (borders, backgrounds, card variants) land with the design pass.
  */
-
 .accordion {
   display: flex;
   flex-direction: column;
 }
-
 .collapse {
   border-block-end: 1px solid var(--border-color, #9cd7ca);
-
-  &:last-child {
-    border-block-end: none;
-  }
 }
-
-/* Built-in variants — the design pass may extend the union in Collapse.tsx. */
+.collapse:last-child {
+  border-block-end: none;
+} /* Built-in variants — the design pass may extend the union in Collapse.tsx. */
 .card {
   border: 1px solid var(--border-color, #9cd7ca);
   border-radius: 1.5rem;
   padding-inline: 1rem;
-
-  &:last-child {
-    border-block-end: 1px solid var(--border-color, #9cd7ca);
-  }
 }
-
+.card:last-child {
+  border-block-end: 1px solid var(--border-color, #9cd7ca);
+}
 .plain {
   border: none;
   padding-inline: 0;
 }
-
 .heading {
-  font: inherit; /* heading level for semantics, not default UA styling */
-}
-
-/* Beat page-level `h1-h6` margins so the header row stays centered. */
+  font: inherit;
+} /* heading level for semantics, not default UA styling */ /* Beat page-level `h1-h6` margins so the header row stays centered. */
 .collapse .heading {
   margin: 0;
 }
-
 .trigger {
   display: flex;
   align-items: center;
@@ -53,29 +42,24 @@
   color: inherit;
   text-align: start;
   cursor: pointer;
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-ring, #007c60);
-    outline-offset: 2px;
-  }
 }
-
+.trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.trigger:focus-visible {
+  outline: 2px solid var(--focus-ring, #007c60);
+  outline-offset: 2px;
+}
 .headerText {
   flex: 1 1 auto;
   min-width: 0;
 }
-
 .indicator {
   flex: 0 0 auto;
   display: inline-flex;
   color: var(--text-muted, #003f34);
 }
-
 .actionAffordance {
   display: inline-flex;
   flex: 0 0 auto;
@@ -91,7 +75,6 @@
     background-color 180ms ease,
     border-color 180ms ease;
 }
-
 .actionLabel {
   font-size: 0.82em;
   font-weight: 700;
@@ -99,7 +82,6 @@
   line-height: 1;
   white-space: nowrap;
 }
-
 .actionAffordance .indicator {
   display: inline-grid;
   width: 1.45rem;
@@ -108,18 +90,15 @@
   border-radius: 50%;
   background: color-mix(in srgb, currentColor 10%, transparent);
 }
-
 .trigger:hover .actionAffordance {
   border-color: color-mix(in srgb, currentColor 34%, transparent);
   background: color-mix(in srgb, currentColor 10%, transparent);
 }
-
 .content {
   height: 0;
   overflow: hidden;
-  display: none; /* GSAP flips display on first effect run */
-}
-
+  display: none;
+} /* GSAP flips display on first effect run */
 .contentInner {
   padding-block: 0 1rem;
   min-width: 0;

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import Pages from "../../pages.ts";
+import Pages from "../../app/routes.ts";
 import {
   NavbarIllustration,
   type NavbarIllustrationVariant,
@@ -212,7 +212,8 @@ export function Navbar() {
                         </span>
                         <div className={styles.menuGrid}>
                           {item.folder.map((subpage) => {
-                            if (!subpage.path || subpage.hideInMenu) return null;
+                            if (!subpage.path || subpage.hideInMenu)
+                              return null;
                             const subPath = normalizePath(subpage.path);
                             const isCurrent =
                               subPath === currentPath ||
@@ -227,9 +228,7 @@ export function Navbar() {
                                 key={subpage.path}
                                 className={styles.menuItem}
                                 to={subpage.path}
-                                aria-current={
-                                  isCurrent ? "page" : undefined
-                                }
+                                aria-current={isCurrent ? "page" : undefined}
                                 tabIndex={isOpen ? 0 : -1}
                                 onClick={closeNavigation}
                               >
