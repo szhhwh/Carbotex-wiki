@@ -27,7 +27,10 @@ export function PageFour() {
   useFrame((f) => {
     const wipe = f.reduced ? 1 : ramp(f.hold, 0.04, 0.92);
     light.current?.style.setProperty("--wipe", wipe.toFixed(4));
-    if (glow.current) glow.current.style.opacity = String(f.reduced ? 1 : ramp(f.hold, 0, 0.12));
+    if (glow.current)
+      glow.current.style.opacity = String(
+        f.reduced ? 1 : ramp(f.hold, 0, 0.12),
+      );
   });
 
   return (
@@ -36,13 +39,27 @@ export function PageFour() {
       <Art k="p4/light" className={s.light} ref={light} />
       <Layer box={[150, 4113, 650, 50]}>
         {SHADOWS.map(([cx, cy, rx, ry], i) => (
-          <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} fill="#8a6a3a" opacity={0.16} />
+          <ellipse
+            key={i}
+            cx={cx}
+            cy={cy}
+            rx={rx}
+            ry={ry}
+            fill="#8a6a3a"
+            opacity={0.16}
+          />
         ))}
       </Layer>
       <Art k="p4/xylose" className={s.xylose} />
       <Layer ref={glow} box={[40, 3463, 200, 180]} className={s.glow}>
         <defs>
-          <radialGradient id={`l${id}`} cx="128" cy="3547" r="70" gradientUnits="userSpaceOnUse">
+          <radialGradient
+            id={`l${id}`}
+            cx="128"
+            cy="3547"
+            r="70"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset="0" stopColor="#fff6c9" stopOpacity="0.95" />
             <stop offset="0.45" stopColor="#ffd86b" stopOpacity="0.45" />
             <stop offset="1" stopColor="#ffd86b" stopOpacity="0" />
@@ -58,7 +75,14 @@ export function PageFour() {
         box={[180, 3360, 660, 808]}
         paint={`url(#s${id})`}
         defs={
-          <linearGradient id={`s${id}`} x1="0" y1="0" x2="1366" y2="0" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id={`s${id}`}
+            x1="0"
+            y1="0"
+            x2="1366"
+            y2="0"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset={540 / 1366} stopColor="#ffc647" />
             <stop offset={585 / 1366} stopColor="#d18311" />
             <stop offset={735 / 1366} stopColor="#d18311" />
@@ -66,7 +90,13 @@ export function PageFour() {
           </linearGradient>
         }
       />
-      <StrawArt k="link" art="p5/straw-link" reveal={42} />
+      {/* Weld the tapered start of the exported straw onto s3. */}
+      <StrawArt
+        k="link"
+        art="p5/straw-link"
+        reveal={42}
+        weld={{ cx: 802.4, cy: 4122, r: 60 }}
+      />
       <Art k="p4/ecoli" className={s.ecoli} />
       <Art k="p4/actinomyces" className={s.actino} />
       <Art k="p4/yeast" className={s.yeast} />

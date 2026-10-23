@@ -21,10 +21,11 @@ type SegmentId = (typeof RING_SEGMENTS)[number]["id"];
 
 /** Segment crossing the ring's horizontal axis on the right at rotation φ. */
 function segmentAt(phi: number): SegmentId {
-  const theta = (((-phi % 360) + 360) % 360);
+  const theta = ((-phi % 360) + 360) % 360;
   for (const seg of RING_SEGMENTS) {
     const [a, b] = RING_SPANS[seg.id];
-    if ((theta >= a && theta < b) || (theta + 360 >= a && theta + 360 < b)) return seg.id;
+    if ((theta >= a && theta < b) || (theta + 360 >= a && theta + 360 < b))
+      return seg.id;
   }
   return "feed";
 }
@@ -49,7 +50,8 @@ export function PageTwo() {
   const applyRing = () => {
     const q = entry.current;
     const phi = user.current.angle - (1 - q) * 210;
-    if (ring.current) ring.current.style.transform = `rotate(${phi.toFixed(2)}deg)`;
+    if (ring.current)
+      ring.current.style.transform = `rotate(${phi.toFixed(2)}deg)`;
     const next = segmentAt(phi);
     if (next !== segRef.current) {
       segRef.current = next;
@@ -120,7 +122,12 @@ export function PageTwo() {
     const tween = gsap.fromTo(
       el,
       { scale: 1.06 },
-      { scale: 1, duration: 0.25, ease: "power2.out", transformOrigin: "50% 50%" },
+      {
+        scale: 1,
+        duration: 0.25,
+        ease: "power2.out",
+        transformOrigin: "50% 50%",
+      },
     );
     return () => {
       tween.kill();
@@ -149,12 +156,26 @@ export function PageTwo() {
           if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
           e.preventDefault();
           const step = e.key === "ArrowDown" ? 15 : -15;
-          gsap.to(user.current, { angle: `+=${step}`, duration: 0.4, onUpdate: applyRing });
+          gsap.to(user.current, {
+            angle: `+=${step}`,
+            duration: 0.4,
+            onUpdate: applyRing,
+          });
         }}
       >
-        <img src={artUrl("p2/scroll-tag")} alt="" aria-hidden draggable={false} />
+        <img
+          src={artUrl("p2/scroll-tag")}
+          alt=""
+          aria-hidden
+          draggable={false}
+        />
         <svg viewBox={tagRect.join(" ")} aria-hidden className={s.tagText}>
-          <text className={c.display} fontSize={18} fill="#BC9C75" textAnchor="middle">
+          <text
+            className={c.display}
+            fontSize={18}
+            fill="#BC9C75"
+            textAnchor="middle"
+          >
             <tspan x={568.4} y={2330.8}>
               Move mouse here
             </tspan>
@@ -169,7 +190,14 @@ export function PageTwo() {
         width={STRAW_WIDTH}
         paint={`url(#g${gradId})`}
         defs={
-          <linearGradient id={`g${gradId}`} x1="452" y1="2004" x2="430" y2="2062" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id={`g${gradId}`}
+            x1="452"
+            y1="2004"
+            x2="430"
+            y2="2062"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset="0" stopColor="#f2a530" />
             <stop offset="0.55" stopColor="#f2a530" />
             <stop offset="1" stopColor="#ffc647" />
@@ -177,17 +205,34 @@ export function PageTwo() {
         }
       />
       <div ref={group} className={s.group}>
-        <Art k="p2/ring" className={s.ring} style={{ transformOrigin: origin }} ref={ring} />
+        <Art
+          k="p2/ring"
+          className={s.ring}
+          style={{ transformOrigin: origin }}
+          ref={ring}
+        />
         <Art k="p2/straw-bundle" />
         <Art k="p2/china-map" alt="Map of China" />
       </div>
       {/* s2d leaves from under s2b's lowest bend (the "Y" below the loop). */}
       <StrawStroke k="s2d" width={STRAW_WIDTH} />
-      <StrawStroke k="s2b" width={STRAW_WIDTH} />
+      {/* Butt cap: s2b's end is the fold into the shaded s2c behind the ring. */}
+      <StrawStroke k="s2b" width={STRAW_WIDTH} cap="butt" />
       <Art k="p2/note-box" />
       <CanvasText block={P2_NOTE} />
-      <Layer ref={data} box={dt} className={`${c.visible} ${s.data}`} label={`${seg.value} ${seg.label}`}>
-        <image href={artUrl("p2/data-tag")} x={dt[0]} y={dt[1]} width={dt[2]} height={dt[3]} />
+      <Layer
+        ref={data}
+        box={dt}
+        className={`${c.visible} ${s.data}`}
+        label={`${seg.value} ${seg.label}`}
+      >
+        <image
+          href={artUrl("p2/data-tag")}
+          x={dt[0]}
+          y={dt[1]}
+          width={dt[2]}
+          height={dt[3]}
+        />
         {seg.raw && (
           <rect
             x={dt[0] + 2.93}
@@ -201,7 +246,13 @@ export function PageTwo() {
           />
         )}
         <g data-label className={c.display}>
-          <text x={624.2} y={2070.8} fontSize={30} fill="#FFFFFF" textAnchor="middle">
+          <text
+            x={624.2}
+            y={2070.8}
+            fontSize={30}
+            fill="#FFFFFF"
+            textAnchor="middle"
+          >
             {seg.value}
           </text>
           <text

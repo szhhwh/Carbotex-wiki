@@ -6,7 +6,13 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import { ART, STRAW_INFO, STRAW_PATHS, type ArtKey, type StrawKey } from "../geometry";
+import {
+  ART,
+  STRAW_INFO,
+  STRAW_PATHS,
+  type ArtKey,
+  type StrawKey,
+} from "../geometry";
 import { artUrl, type Rect } from "./assets";
 import { Layer } from "./art";
 import { useFrame } from "./director";
@@ -25,7 +31,9 @@ export function StrawPen({ children }: { children: ReactNode }) {
   const pen = useMemo(() => new StrawPenController(), []);
   useEffect(() => () => pen.dispose(), [pen]);
   useFrame((frame) => pen.setFrame(frame));
-  return <StrawPenContext.Provider value={pen}>{children}</StrawPenContext.Provider>;
+  return (
+    <StrawPenContext.Provider value={pen}>{children}</StrawPenContext.Provider>
+  );
 }
 
 function useRegister(key: StrawKey, managed: boolean) {
@@ -49,6 +57,12 @@ interface StrokeProps {
   box?: Rect;
   /** Drawn by the scroll pen (default) or driven by its owner. */
   managed?: boolean;
+  /**
+   * Line cap. Round (default) so neighbouring pieces, whose ends meet at
+   * slightly different angles, overlap without a notch or hairline seam.
+   * Use "butt" where an end must stay a crisp fold (s2b → s2c).
+   */
+  cap?: "round" | "butt";
   pathRef?: (el: SVGPathElement | null) => void;
   className?: string;
 }
@@ -61,13 +75,19 @@ export function StrawStroke({
   defs,
   box,
   managed = true,
+  cap = "round",
   pathRef,
   className,
 }: StrokeProps) {
   const ref = useRegister(k, managed);
   const [x0, y0, x1, y1] = STRAW_INFO[k].bbox;
   const pad = width;
-  const rect: Rect = box ?? [x0 - pad, y0 - pad, x1 - x0 + pad * 2, y1 - y0 + pad * 2];
+  const rect: Rect = box ?? [
+    x0 - pad,
+    y0 - pad,
+    x1 - x0 + pad * 2,
+    y1 - y0 + pad * 2,
+  ];
   return (
     <Layer box={rect} className={className}>
       {defs && <defs>{defs}</defs>}
@@ -80,7 +100,7 @@ export function StrawStroke({
         fill="none"
         stroke={paint}
         strokeWidth={width}
-        strokeLinecap="butt"
+        strokeLinecap={cap}
         strokeLinejoin="round"
         pathLength={1}
         strokeDasharray="1 2"
@@ -100,6 +120,13 @@ interface MaskedProps {
   pathRef?: (el: SVGPathElement | null) => void;
   /** Extra mask content (e.g. a wipe rectangle), in artboard pt. */
   extraMask?: ReactNode;
+  /**
+   * Welds a joint with a code-drawn piece: inside this circle (artboard pt)
+   * the exported art, whose end is ragged or flared, is masked out and the
+   * centre line is stroked at STRAW_WIDTH instead, so it meets the
+   * neighbouring stroke piece edge to edge.
+   */
+  weld?: { cx: number; cy: number; r: number };
   className?: string;
 }
 
@@ -111,14 +138,22 @@ export function StrawArt({
   managed = true,
   pathRef,
   extraMask,
+  weld,
   className,
 }: MaskedProps) {
   const ref = useRegister(k, managed);
+  const weldRef = useRegister(k, managed && !!weld);
   const id = useId().replace(/:/g, "");
   const rect = ART[art];
   return (
     <Layer box={rect} className={className}>
       <defs>
+        {weld && (
+          <clipPath id={`w${id}`} clipPathUnits="userSpaceOnUse">
+            {/* Overlaps the masked-out art slightly: no anti-aliased seam. */}
+            <circle cx={weld.cx} cy={weld.cy} r={weld.r + 1.5} />
+          </clipPath>
+        )}
         <mask
           id={`m${id}`}
           maskUnits="userSpaceOnUse"
@@ -136,7 +171,7 @@ export function StrawArt({
             fill="none"
             stroke="#fff"
             strokeWidth={reveal}
-            strokeLinecap="butt"
+            strokeLinecap="round"
             strokeLinejoin="round"
             pathLength={1}
             strokeDasharray="1 2"
@@ -144,6 +179,7 @@ export function StrawArt({
             style={{ visibility: "hidden" }}
           />
           {extraMask}
+          {weld && <circle cx={weld.cx} cy={weld.cy} r={weld.r} fill="#000" />}
         </mask>
       </defs>
       <image
@@ -154,6 +190,22 @@ export function StrawArt({
         height={rect[3]}
         mask={`url(#m${id})`}
       />
+      {weld && (
+        <path
+          ref={weldRef}
+          d={STRAW_PATHS[k]}
+          clipPath={`url(#w${id})`}
+          fill="none"
+          stroke={STRAW_YELLOW}
+          strokeWidth={STRAW_WIDTH}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength={1}
+          strokeDasharray="1 2"
+          strokeDashoffset={1}
+          style={{ visibility: "hidden" }}
+        />
+      )}
     </Layer>
   );
 }
