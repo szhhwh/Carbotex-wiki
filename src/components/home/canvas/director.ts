@@ -11,6 +11,8 @@ export interface CanvasFrame {
   cam: number;
   /** Viewport height in pt. */
   view: number;
+  /** Height of the fixed site navbar over the viewport top, in pt. */
+  nav: number;
   /** CSS px per pt. */
   u: number;
   /** P4 lamp hold: 0 → 1 while the camera rests on P4 (= stops.p4). */
@@ -45,6 +47,7 @@ export class CanvasDirector {
   frame: CanvasFrame = {
     cam: 0,
     view: 900,
+    nav: 72,
     u: 1,
     hold: 0,
     stops: NO_STOPS,

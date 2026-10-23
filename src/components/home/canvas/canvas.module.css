@@ -15,6 +15,17 @@
   background: #fbf0dd;
 }
 
+/* Measures the fixed site navbar, so rest stops frame pages below it. */
+.navProbe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: var(--site-nav-height, 4.5rem);
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .canvas {
   --u: 1px;
   position: absolute;

@@ -15,8 +15,6 @@ interface Props {
   style?: CSSProperties;
 }
 
-const NAV_PT = 64;
-
 /** One text block of the canvas, set as SVG text on artboard baselines. */
 export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
   { block, as = "p", scrollFade = true, className, style },
@@ -27,7 +25,6 @@ export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
   const last = block.lines[block.lines.length - 1].y;
   const top = first - block.size;
   const mid = (top + last) / 2;
-  const bottomLine = last + block.size * 0.3;
 
   useFrame((f) => {
     const el = local.current;
@@ -39,7 +36,9 @@ export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
     }
     const bottom = f.cam + f.view;
     const enter = ramp(bottom - mid, f.view * 0.02, f.view * 0.16);
-    const exit = ramp(bottomLine - f.cam, NAV_PT / f.u - 8, NAV_PT / f.u + f.view * 0.08);
+    // Fully faded before the block's top slides under the fixed navbar;
+    // fully shown at a rest stop (pages keep a 28 pt margin below it).
+    const exit = ramp(top - f.cam, f.nav - 4, f.nav + 24);
     const o = Math.min(enter, exit);
     el.style.opacity = o.toFixed(3);
     const shift = (1 - enter) * 16 - (1 - exit) * 10;
@@ -47,7 +46,9 @@ export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
   });
 
   const text = block.lines
-    .map((line) => line.runs.map((r) => (typeof r === "string" ? r : r.t)).join(""))
+    .map((line) =>
+      line.runs.map((r) => (typeof r === "string" ? r : r.t)).join(""),
+    )
     .join(" ");
 
   return (

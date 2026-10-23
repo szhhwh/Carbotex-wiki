@@ -76,13 +76,25 @@ function Smoke() {
         <filter id={`f${id}`} x="-20%" y="-40%" width="140%" height="180%">
           <feGaussianBlur stdDeviation="16" />
         </filter>
-        <linearGradient id={`g${id}`} x1="600" y1="1330" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id={`g${id}`}
+          x1="600"
+          y1="1330"
+          x2="0"
+          y2="1000"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop offset="0" stopColor="#d9f5e8" stopOpacity="0.13" />
           <stop offset="0.55" stopColor="#bfe9d6" stopOpacity="0.09" />
           <stop offset="1" stopColor="#bfe9d6" stopOpacity="0.035" />
         </linearGradient>
       </defs>
-      <g filter={`url(#f${id})`} fill="none" stroke={`url(#g${id})`} strokeLinecap="round">
+      <g
+        filter={`url(#f${id})`}
+        fill="none"
+        stroke={`url(#g${id})`}
+        strokeLinecap="round"
+      >
         <path d={d} strokeWidth={88} className={s.puffSlow} />
         <path d={d} strokeWidth={54} className={s.puff} />
         <path d={d} strokeWidth={26} className={s.puffFast} />
@@ -93,11 +105,30 @@ function Smoke() {
 
 type Scene = "burning" | "tilling" | "transport";
 const SCENES: { key: Scene; art: ArtKey; label: string; drop: number }[] = [
-  { key: "burning", art: "p1/burning", label: "Straw burning in the field", drop: 640 },
-  { key: "tilling", art: "p1/tilling", label: "Straw tilled back into the soil", drop: 520 },
-  { key: "transport", art: "p1/transport", label: "Straw bales hauled away", drop: 470 },
+  {
+    key: "burning",
+    art: "p1/burning",
+    label: "Straw burning in the field",
+    drop: 640,
+  },
+  {
+    key: "tilling",
+    art: "p1/tilling",
+    label: "Straw tilled back into the soil",
+    drop: 520,
+  },
+  {
+    key: "transport",
+    art: "p1/transport",
+    label: "Straw bales hauled away",
+    drop: 470,
+  },
 ];
-const SCENE_BUTTONS: Record<Scene, number> = { burning: 1, tilling: 2, transport: 3 };
+const SCENE_BUTTONS: Record<Scene, number> = {
+  burning: 1,
+  tilling: 2,
+  transport: 3,
+};
 
 /** Interactive P1 illustrations, rising from the foot of the page. */
 const sceneEvents = new EventTarget();
@@ -111,15 +142,20 @@ export function PageOneBase() {
   const play = useCallback(
     (key: Scene) => {
       const scene = SCENES.find((x) => x.key === key)!;
-      const el = root.current?.querySelector<SVGGElement>(`[data-scene="${key}"]`);
-      const overhang = root.current?.querySelector<SVGRectElement>("[data-overhang]");
+      const el = root.current?.querySelector<SVGGElement>(
+        `[data-scene="${key}"]`,
+      );
+      const overhang =
+        root.current?.querySelector<SVGRectElement>("[data-overhang]");
       if (!el || !overhang) return;
       const reduced = director.frame.reduced;
       const prev = current.current;
       const tl = gsap.timeline({
         onComplete: () => {
           if (current.current?.tl === tl) current.current = null;
-          sceneEvents.dispatchEvent(new CustomEvent("active", { detail: null }));
+          sceneEvents.dispatchEvent(
+            new CustomEvent("active", { detail: null }),
+          );
         },
       });
       if (prev) {
@@ -135,10 +171,21 @@ export function PageOneBase() {
       const hold = reduced ? 2.4 : 1.7;
       tl.set(el, { autoAlpha: 1, y: reduced ? 0 : scene.drop });
       if (!reduced) tl.to(el, { y: 0, duration: 0.95, ease: "back.out(1.15)" });
-      if (key === "tilling") tl.to(overhang, { attr: { height: 150 }, duration: 0.35, ease: "power2.out" }, "-=0.25");
+      if (key === "tilling")
+        tl.to(
+          overhang,
+          { attr: { height: 150 }, duration: 0.35, ease: "power2.out" },
+          "-=0.25",
+        );
       tl.to({}, { duration: hold });
-      if (key === "tilling") tl.to(overhang, { attr: { height: 0 }, duration: 0.15, ease: "power1.in" });
-      if (!reduced) tl.to(el, { y: scene.drop, duration: 0.45, ease: "power3.in" });
+      if (key === "tilling")
+        tl.to(overhang, {
+          attr: { height: 0 },
+          duration: 0.15,
+          ease: "power1.in",
+        });
+      if (!reduced)
+        tl.to(el, { y: scene.drop, duration: 0.45, ease: "power3.in" });
       tl.set(el, { autoAlpha: 0 });
     },
     [director],
@@ -170,9 +217,18 @@ export function PageOneBase() {
         <path d={SHAPES.tealTop} fill="#02b186" />
       </Layer>
       <Smoke />
-      <Layer box={[burning[0], burning[1], burning[2], burning[3] + 700]} className={s.sceneLayer}>
+      <Layer
+        box={[burning[0], burning[1], burning[2], burning[3] + 700]}
+        className={s.sceneLayer}
+      >
         <g data-scene="burning" className={s.fire}>
-          <image href={artUrl("p1/burning")} x={burning[0]} y={burning[1]} width={burning[2]} height={burning[3]} />
+          <image
+            href={artUrl("p1/burning")}
+            x={burning[0]}
+            y={burning[1]}
+            width={burning[2]}
+            height={burning[3]}
+          />
         </g>
       </Layer>
       <StrawStroke k="s2a" width={STRAW_WIDTH} />
@@ -183,17 +239,47 @@ export function PageOneBase() {
       </Layer>
       <Layer box={[250, 1250, 800, 600]} className={s.sceneLayer}>
         <defs>
-          <mask id={`m${maskId}`} maskUnits="userSpaceOnUse" x="250" y="1250" width="800" height="600">
-            <path d={`M-20 700H1386V2620H-20Z ${SHAPES.p2Paper}`} fill="#fff" fillRule="evenodd" />
-            <rect data-overhang x={tilling[0]} y={1660} width={tilling[2]} height={0} fill="#fff" />
+          <mask
+            id={`m${maskId}`}
+            maskUnits="userSpaceOnUse"
+            x="250"
+            y="1250"
+            width="800"
+            height="600"
+          >
+            <path
+              d={`M-20 700H1386V2620H-20Z ${SHAPES.p2Paper}`}
+              fill="#fff"
+              fillRule="evenodd"
+            />
+            <rect
+              data-overhang
+              x={tilling[0]}
+              y={1660}
+              width={tilling[2]}
+              height={0}
+              fill="#fff"
+            />
           </mask>
         </defs>
         <g mask={`url(#m${maskId})`}>
           <g data-scene="transport">
-            <image href={artUrl("p1/transport")} x={transport[0]} y={transport[1]} width={transport[2]} height={transport[3]} />
+            <image
+              href={artUrl("p1/transport")}
+              x={transport[0]}
+              y={transport[1]}
+              width={transport[2]}
+              height={transport[3]}
+            />
           </g>
           <g data-scene="tilling">
-            <image href={artUrl("p1/tilling")} x={tilling[0]} y={tilling[1]} width={tilling[2]} height={tilling[3]} />
+            <image
+              href={artUrl("p1/tilling")}
+              x={tilling[0]}
+              y={tilling[1]}
+              width={tilling[2]}
+              height={tilling[3]}
+            />
           </g>
         </g>
       </Layer>
@@ -212,7 +298,13 @@ export function PageOneTop() {
   return (
     <>
       <Art k="p1/straw-row" className={s.row} />
-      <StrawArt k="front" art="p1/straw-front" reveal={46} />
+      {/* Weld the flared end of the exported straw onto s2a. */}
+      <StrawArt
+        k="front"
+        art="p1/straw-front"
+        reveal={46}
+        weld={{ cx: 995.3, cy: 1576.4, r: 30 }}
+      />
       <CanvasText block={P1_COPY} />
       {SCENES.map((scene, i) => (
         <button
@@ -225,7 +317,11 @@ export function PageOneTop() {
           aria-label={`${SCENE_BUTTONS[scene.key]}: ${scene.label}`}
           aria-pressed={active === scene.key}
           data-active={active === scene.key || undefined}
-          onClick={() => sceneEvents.dispatchEvent(new CustomEvent("play", { detail: scene.key }))}
+          onClick={() =>
+            sceneEvents.dispatchEvent(
+              new CustomEvent("play", { detail: scene.key }),
+            )
+          }
         >
           <span>{SCENE_BUTTONS[scene.key]}</span>
         </button>
