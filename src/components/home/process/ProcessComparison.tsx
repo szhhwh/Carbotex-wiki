@@ -199,7 +199,36 @@ function CardArt({ card }: { card: CardKey }): ReactNode {
 
 export function ProcessComparison() {
   const rootRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const hoverEffects = useRef<Partial<Record<CardKey, () => void>>>({});
+
+  // Rest stop before the footer: the cards stick where they are framed
+  // (centred below the navbar, or bottom-aligned when taller than the
+  // viewport) for the section's hold padding, like the canvas pages.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    const inner = innerRef.current;
+    if (!root || !inner) return;
+    const place = () => {
+      const vh = window.innerHeight;
+      const nav =
+        document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      const h = inner.offsetHeight;
+      const top = h <= vh - nav ? nav + (vh - nav - h) / 2 : vh - h;
+      root.style.setProperty("--hold-top", `${Math.round(top)}px`);
+    };
+    place();
+    const ro = new ResizeObserver(() => {
+      place();
+      ScrollTrigger.refresh();
+    });
+    ro.observe(inner);
+    window.addEventListener("resize", place);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", place);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -371,7 +400,7 @@ export function ProcessComparison() {
 
   return (
     <section ref={rootRef} className={styles.comparison}>
-      <div className={styles.inner}>
+      <div ref={innerRef} className={styles.inner}>
         <img
           className={styles.lineWave}
           src={lineWaveUrl}

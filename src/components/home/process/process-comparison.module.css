@@ -6,7 +6,8 @@
 .comparison {
   position: relative;
   container-type: inline-size;
-  overflow: hidden;
+  /* clip, not hidden: hidden would turn it into the sticky scroll container. */
+  overflow: clip;
   background: #fef0dd;
   color: #194524;
   font-family:
@@ -27,6 +28,21 @@
 @container (max-width: 819px) {
   .inner {
     padding: 56px 0 64px;
+  }
+}
+/* Hold before the footer (see ProcessComparison): 0.7 viewport of scroll.
+   An in-flow spacer, not padding: sticky stays inside the content box. */
+@media (prefers-reduced-motion: no-preference) {
+  .comparison::after {
+    content: "";
+    display: block;
+    height: 70vh;
+    height: 70lvh;
+  }
+
+  .inner {
+    position: sticky;
+    top: var(--hold-top, 0px);
   }
 }
 .lineWave {
