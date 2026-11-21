@@ -121,14 +121,17 @@ interface MaskedProps {
   /** Extra mask content (e.g. a wipe rectangle), in artboard pt. */
   extraMask?: ReactNode;
   /**
-   * Welds a joint with a code-drawn piece: inside this circle (artboard pt)
-   * the exported art, whose end is ragged or flared, is masked out and the
-   * centre line is stroked at STRAW_WIDTH instead, so it meets the
-   * neighbouring stroke piece edge to edge.
+   * Welds a joint with a code-drawn piece (see STRAW_WELDS): the art's
+   * flared or tapered end is masked out by `hide`, and `fill` (revealed
+   * with the art) widens from the art's measured edges to STRAW_WIDTH on
+   * the shared centre line, so both sides meet without a step.
    */
-  weld?: { cx: number; cy: number; r: number };
+  weld?: { readonly fill: string; readonly hide: string };
   className?: string;
 }
+
+/** Margin (pt) around a welded art's box for the weld beyond it. */
+const WELD_PAD = 40;
 
 /** An exported straw revealed along its centre line through a mask. */
 export function StrawArt({
@@ -142,17 +145,38 @@ export function StrawArt({
   className,
 }: MaskedProps) {
   const ref = useRegister(k, managed);
-  const weldRef = useRegister(k, managed && !!weld);
   const id = useId().replace(/:/g, "");
   const rect = ART[art];
+  // The weld runs past the art's own box into the neighbouring piece.
+  const box: Rect = weld
+    ? [
+        rect[0] - WELD_PAD,
+        rect[1] - WELD_PAD,
+        rect[2] + WELD_PAD * 2,
+        rect[3] + WELD_PAD * 2,
+      ]
+    : rect;
   return (
-    <Layer box={rect} className={className}>
+    <Layer box={box} className={className}>
       <defs>
         {weld && (
-          <clipPath id={`w${id}`} clipPathUnits="userSpaceOnUse">
-            {/* Overlaps the masked-out art slightly: no anti-aliased seam. */}
-            <circle cx={weld.cx} cy={weld.cy} r={weld.r + 1.5} />
-          </clipPath>
+          <mask
+            id={`w${id}`}
+            maskUnits="userSpaceOnUse"
+            x={rect[0]}
+            y={rect[1]}
+            width={rect[2]}
+            height={rect[3]}
+          >
+            <rect
+              x={rect[0]}
+              y={rect[1]}
+              width={rect[2]}
+              height={rect[3]}
+              fill="#fff"
+            />
+            <path d={weld.hide} fill="#000" />
+          </mask>
         )}
         <mask
           id={`m${id}`}
@@ -179,33 +203,19 @@ export function StrawArt({
             style={{ visibility: "hidden" }}
           />
           {extraMask}
-          {weld && <circle cx={weld.cx} cy={weld.cy} r={weld.r} fill="#000" />}
         </mask>
       </defs>
-      <image
-        href={artUrl(art)}
-        x={rect[0]}
-        y={rect[1]}
-        width={rect[2]}
-        height={rect[3]}
-        mask={`url(#m${id})`}
-      />
-      {weld && (
-        <path
-          ref={weldRef}
-          d={STRAW_PATHS[k]}
-          clipPath={`url(#w${id})`}
-          fill="none"
-          stroke={STRAW_YELLOW}
-          strokeWidth={STRAW_WIDTH}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          pathLength={1}
-          strokeDasharray="1 2"
-          strokeDashoffset={1}
-          style={{ visibility: "hidden" }}
+      <g mask={`url(#m${id})`}>
+        <image
+          href={artUrl(art)}
+          x={rect[0]}
+          y={rect[1]}
+          width={rect[2]}
+          height={rect[3]}
+          mask={weld && `url(#w${id})`}
         />
-      )}
+        {weld && <path d={weld.fill} fill={STRAW_YELLOW} />}
+      </g>
     </Layer>
   );
 }

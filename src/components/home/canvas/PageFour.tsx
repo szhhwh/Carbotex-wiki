@@ -1,4 +1,5 @@
 import { useId, useRef } from "react";
+import { STRAW_WELDS } from "../geometry";
 import { Art, Frame, Layer } from "./art";
 import { CanvasText } from "./CanvasText";
 import { ramp, useFrame } from "./director";
@@ -95,7 +96,7 @@ export function PageFour() {
         k="link"
         art="p5/straw-link"
         reveal={42}
-        weld={{ cx: 802.4, cy: 4122, r: 60 }}
+        weld={STRAW_WELDS.link}
       />
       <Art k="p4/ecoli" className={s.ecoli} />
       <Art k="p4/actinomyces" className={s.actino} />

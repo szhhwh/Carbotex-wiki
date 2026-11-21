@@ -1,6 +1,6 @@
 import { useCallback, useId, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ART, SHAPES, type ArtKey } from "../geometry";
+import { ART, SHAPES, STRAW_WELDS, type ArtKey } from "../geometry";
 import { Art, Layer } from "./art";
 import { artUrl, rectStyle } from "./assets";
 import { CanvasText } from "./CanvasText";
@@ -303,7 +303,7 @@ export function PageOneTop() {
         k="front"
         art="p1/straw-front"
         reveal={46}
-        weld={{ cx: 995.3, cy: 1576.4, r: 30 }}
+        weld={STRAW_WELDS.front}
       />
       <CanvasText block={P1_COPY} />
       {SCENES.map((scene, i) => (
