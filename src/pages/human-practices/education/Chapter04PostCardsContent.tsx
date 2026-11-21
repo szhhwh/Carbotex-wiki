@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { mediaRoot } from "./education-assets.data";
 import { ResourceCard } from "./EducationMedia";
+import { sitePath } from "../../../utils/sitePath";
 
 export function Chapter04PostCardsContent({
   actionGallery,
@@ -158,7 +159,7 @@ export function Chapter04PostCardsContent({
         eyebrow="Interactive extension"
         title="The Atlas of Chinese Fermented Gastronomy"
         description="Explore fermented foods across China in the interactive fermentation map."
-        href="/ouc-haide/education?activity=fermentation"
+        href={sitePath("/education?activity=fermentation")}
       />
     </>
   );

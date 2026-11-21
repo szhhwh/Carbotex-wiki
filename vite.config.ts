@@ -89,8 +89,15 @@ function dropUnusedFontFormats(): Plugin {
 // https://vitejs.dev/config/
 export default () => {
   const env = loadEnv("dev", process.cwd());
+  // `VITE_BASE` overrides the deploy path; `/` builds for a root deployment.
+  const override = env.VITE_BASE?.replace(/^\/+|\/+$/g, "");
+  const base = env.VITE_BASE
+    ? override
+      ? `/${override}/`
+      : "/"
+    : `/${stringToSlug(env.VITE_TEAM_NAME)}/`;
   return defineConfig({
-    base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
+    base,
     plugins: [
       openingScreen(),
       react(),

@@ -1,6 +1,7 @@
 import { type ArticleSection } from "../../components/article/ArticlePage";
 import { Cite } from "../../components/article/References";
 import { Figure } from "../../components/media/Figure";
+import { sitePath } from "../../utils/sitePath";
 import styles from "./description.module.css";
 
 export const referenceOrder = [
@@ -283,7 +284,7 @@ export const sections: ArticleSection[] = [
               greater detail.
             </p>
             <p>
-              <a href="/ouc-haide/results">
+              <a href={sitePath("/results")}>
                 <strong>Explore Wet Lab Experiments and Results →</strong>
               </a>
             </p>
@@ -391,7 +392,7 @@ export const sections: ArticleSection[] = [
               fallback={<p>Image unavailable.</p>}
             />
             <p>
-              <a href="/ouc-haide/model#model-overview">
+              <a href={sitePath("/model#model-overview")}>
                 <strong>Explore Our Model Work →</strong>
               </a>
             </p>
@@ -468,7 +469,7 @@ export const sections: ArticleSection[] = [
               remaining a distinct prototype-development effort.
             </p>
             <p>
-              <a href="/ouc-haide/hardware">
+              <a href={sitePath("/hardware")}>
                 <strong>Explore Hardware Design and Testing →</strong>
               </a>
             </p>
@@ -563,7 +564,7 @@ export const sections: ArticleSection[] = [
               fallback={<p>Image unavailable.</p>}
             />
             <p>
-              <a href="/ouc-haide/human-practices">
+              <a href={sitePath("/human-practices")}>
                 <strong>Explore Our Integrated Human Practices →</strong>
               </a>
             </p>
@@ -648,7 +649,7 @@ export const sections: ArticleSection[] = [
               fallback={<p>Image unavailable.</p>}
             />
             <p>
-              <a href="/ouc-haide/education">
+              <a href={sitePath("/education")}>
                 <strong>Explore Our Education Activities →</strong>
               </a>
             </p>

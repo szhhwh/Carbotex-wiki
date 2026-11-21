@@ -6,6 +6,7 @@ import { ChapterGallery, ResourceCard, ResourceGrid } from "./EducationMedia";
 import { sdgsWorkshopGuide } from "./education-figures.data";
 import { ObjectiveStatement } from "./ObjectiveStatement";
 import { WonderQuestion } from "./WonderQuestion";
+import { sitePath } from "../../../utils/sitePath";
 
 const detailsActionLabel = {
   closed: "Show details",
@@ -86,7 +87,7 @@ export function Chapter06SdgsContent() {
         We designed the workshop to begin with an{" "}
         <strong>introductory session</strong> led by an{" "}
         <strong>
-          <a href="/ouc-haide/human-practices#ihp-eva">
+          <a href={sitePath("/human-practices#ihp-eva")}>
             <u>invited educator</u>
           </a>
         </strong>
@@ -279,7 +280,7 @@ export function Chapter06SdgsContent() {
           eyebrow="Interactive activity"
           title="The Commons · Online strategy game"
           description="Play the embedded round-based game about shared resources and collective decisions."
-          href="/ouc-haide/education?activity=esg"
+          href={sitePath("/education?activity=esg")}
         />
       </ResourceGrid>
     </>

@@ -10,6 +10,7 @@ import {
   type EducationResourceGroup,
 } from "./EducationMedia";
 import { chapter03Figure5 } from "./education-figures.data";
+import { sitePath } from "../../../utils/sitePath";
 import { OverflowHint } from "./InteractionHint";
 import { ObjectiveStatement } from "./ObjectiveStatement";
 import { ProseList } from "./ProseList";
@@ -38,7 +39,7 @@ const chapter03ResourceGroups = [
       {
         id: "dna-model",
         title: "3D DNA Model",
-        href: "/ouc-haide/education?activity=dna",
+        href: sitePath("/education?activity=dna"),
       },
     ],
   },

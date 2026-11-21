@@ -19,6 +19,7 @@ import {
 } from "../../components/experiments/index";
 import { Figure } from "../../components/media/Figure";
 import { FigurePair } from "../../components/media/FigurePair";
+import { sitePath } from "../../utils/sitePath";
 
 // Content supplied in processed/experiment/Experiments_final.md.
 
@@ -246,10 +247,11 @@ const sections: ArticleSection[] = [
         </p>
         <p>
           This page explains the experimental comparisons and measurements. The{" "}
-          <a href="/ouc-haide/protocols">linked protocols</a> provide operating
-          procedures; the <a href="/ouc-haide/notebook">Notebook</a> records the
-          progression of the work, and <a href="/ouc-haide/results">Results</a>{" "}
-          presents the observations and quantitative outcomes.
+          <a href={sitePath("/protocols")}>linked protocols</a> provide
+          operating procedures; the <a href={sitePath("/notebook")}>Notebook</a>{" "}
+          records the progression of the work, and{" "}
+          <a href={sitePath("/results")}>Results</a> presents the observations
+          and quantitative outcomes.
         </p>
         <ExperimentRoute
           questions={[
