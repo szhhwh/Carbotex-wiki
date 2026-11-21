@@ -301,8 +301,7 @@ img.art,
   transform-origin: 50% 100%;
   visibility: hidden;
 }
-.bottleRibbon,
-.bagRibbon {
+.bottleRibbon {
   z-index: 5;
   visibility: hidden;
 }
@@ -310,11 +309,6 @@ img.art,
   top: 86.75%;
   left: 45.39%;
   width: 16.98%;
-}
-.bagRibbon {
-  top: 85.04%;
-  left: 51.23%;
-  width: 14.27%;
 }
 .bubbles {
   top: 40%;
@@ -344,7 +338,6 @@ img.art,
     visibility: hidden;
   }
   .bag,
-  .bagRibbon,
   .bubbles {
     visibility: visible;
   }

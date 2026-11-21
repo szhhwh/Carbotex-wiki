@@ -11,7 +11,9 @@ import {
   HAYSTACK_CLUSTERS,
   YEAST_COUNT,
 } from "./process-field";
-import { StrokeRevealImage, type RevealStroke } from "./StrokeRevealImage";
+import { RIBBON_SWEEPS } from "./ribbon-sweeps";
+import { SweepRevealImage } from "./SweepRevealImage";
+import { sweepPath, sweepY, type Sweep } from "./sweep";
 import styles from "./process-stage.module.css";
 
 /** Uploaded artwork: flat files in the wiki's home/ upload folder. */
@@ -24,7 +26,6 @@ const bubbles2Url = staticHomeAsset("bubbles-2.svg");
 const bubbles3Url = staticHomeAsset("bubbles-3.svg");
 const bubbles4Url = staticHomeAsset("bubbles-4.svg");
 const bubbles5Url = staticHomeAsset("bubbles-5.svg");
-const glueBagRibbonUrl = staticHomeAsset("glue-bag-ribbon.svg");
 const glueBagUrl = staticHomeAsset("glue-bag.svg");
 const glueBottleRibbonUrl = staticHomeAsset("glue-bottle-ribbon.svg");
 const glueBottleUrl = staticHomeAsset("glue-bottle.svg");
@@ -50,11 +51,21 @@ const TIME = {
   fall: 3,
   yeastHold: 4.35,
   painter: 5.6,
-  ribbon: 6.05,
-  bottle: 7.5,
-  bag: 9.1,
-  end: 10.5,
+  ribbon: 6.1,
+  bottle: 8.1,
+  bag: 10.3,
+  end: 11.7,
 } as const;
+/**
+ * Scroll the ribbon takes to unfold from the brush to its tail. The camera
+ * holds on the painter while the fan opens, then follows the tip down.
+ */
+const RIBBON_SPAN = 3.4;
+/** Ribbon progress over which its tail crosses in front of the bottle. */
+const BOTTLE_CROSSING = [0.84, 0.91] as const;
+/** The camera keeps the ribbon tip this far down the viewport. */
+const RIBBON_TIP_VIEW = 0.62;
+const RIBBON_HEIGHT = 2102.57;
 
 /** Keeps framed content clear of the fixed site navbar (4.5rem + margin). */
 const NAV_SAFE_TOP = 88;
@@ -70,27 +81,37 @@ const YEAST_POSES = [
 const YEAST_INITIAL_POSE = [0, 1, 2, 3, 0] as const;
 const YEAST_BEATS = [3.55, 3.95, 4.5, 4.85, 5.2] as const;
 
-/** Mask centre lines of malic-ribbon.svg: brush tip, fan, body, tail. */
-const RIBBON_STROKES: readonly RevealStroke[] = [
-  {
-    d: "M1280,512 C1370,500 1450,470 1510,420",
-    width: 110,
-  },
-  {
-    d: "M1510,420 C1600,340 1600,260 1560,250 C1520,140 1400,85 1250,70",
-    width: 390,
-  },
-  {
-    d: "M1250,70 C1060,60 900,90 780,190 C640,310 560,380 380,450 C220,510 60,560 70,720 C80,840 230,860 360,880 C480,900 600,940 640,1060 C680,1170 690,1250 760,1360",
-    width: 250,
-  },
-  {
-    d: "M760,1360 C830,1480 1000,1570 1150,1660 C1290,1745 1200,1790 1050,1850 C900,1910 720,1930 740,1975 C770,2030 950,2080 1040,2105",
-    width: 140,
-  },
-];
-/** Share of the timeline each ribbon stroke takes (tip, fan, body, tail). */
-const RIBBON_DURATIONS = [0.18, 0.38, 0.98, 0.66] as const;
+const BOTTLE_RIBBON_SWEEPS = [
+  RIBBON_SWEEPS.bottleBack,
+  RIBBON_SWEEPS.bottleFront,
+] as const;
+
+/** Running max of the malic ribbon tip's artwork y, sampled 0 → 1. */
+const RIBBON_REACH = (() => {
+  const out: number[] = [];
+  let max = -Infinity;
+  for (let i = 0; i <= 200; i++) {
+    max = Math.max(max, sweepY(RIBBON_SWEEPS.malic, i / 200));
+    out.push(max);
+  }
+  return out;
+})();
+
+/** Sets every mask path of a sweep image, pieces revealed one after another. */
+function revealSweeps(
+  paths: readonly SVGPathElement[],
+  sweeps: readonly Sweep[],
+  progress: number,
+) {
+  const total = sweeps.reduce((sum, sweep) => sum + sweep.length, 0);
+  let start = 0;
+  sweeps.forEach((sweep, index) => {
+    const share = sweep.length / total;
+    const p = gsap.utils.clamp(0, 1, (progress - start) / share);
+    paths[index]?.setAttribute("d", sweepPath(sweep, p));
+    start += share;
+  });
+}
 
 const BUBBLE_GROUPS = [
   { src: bubbles1Url, width: 73.61, height: 231.75, left: 4, top: 30 },
@@ -160,17 +181,14 @@ export function ProcessStage() {
       const slots = queryAll(track, "[data-yeast-slot]");
       const ribbonGroup = q("[data-ribbon-group]");
       const ribbon = q("[data-ribbon]");
-      const ribbonStrokes = queryAll<SVGPathElement>(
-        ribbon,
-        "[data-reveal-stroke]",
-      );
+      const sweepPaths = (el: HTMLElement) =>
+        queryAll<SVGPathElement>(el, "[data-sweep]");
       const painter = q("[data-painter]");
       const painterBrush = q("[data-painter-brush]");
       const shadow = q("[data-shadow]");
       const bottle = q("[data-bottle]");
       const bottleRibbon = q("[data-bottle-ribbon]");
       const bag = q("[data-bag]");
-      const bagRibbon = q("[data-bag-ribbon]");
       const bubbles = q("[data-bubbles]");
       const finalCopy = q("[data-final-copy]");
       const haystacks = queryAll(track, "[data-haystack]");
@@ -206,6 +224,35 @@ export function ProcessStage() {
       const cameraPainter = () =>
         frame(top(ribbonGroup), bottom(painter), secondStage);
       const cameraEnd = () => -maxCamera();
+      /** World y that keeps the unfolding ribbon tip in view (cached per refresh). */
+      let follow: {
+        from: number;
+        to: number;
+        top: number;
+        scale: number;
+      } | null = null;
+      const resetFollow = () => {
+        follow = null;
+      };
+      ScrollTrigger.addEventListener("refreshInit", resetFollow);
+      const cameraRibbon = (progress: number) => {
+        follow ??= {
+          from: cameraPainter(),
+          to: cameraEnd(),
+          top: top(ribbon),
+          scale: ribbon.offsetHeight / RIBBON_HEIGHT,
+        };
+        const k = progress * (RIBBON_REACH.length - 1);
+        const i = Math.min(Math.floor(k), RIBBON_REACH.length - 2);
+        const reach =
+          RIBBON_REACH[i] + (RIBBON_REACH[i + 1] - RIBBON_REACH[i]) * (k - i);
+        const tip = follow.top + reach * follow.scale;
+        return gsap.utils.clamp(
+          follow.to,
+          follow.from,
+          stage.clientHeight * RIBBON_TIP_VIEW - tip,
+        );
+      };
 
       // ---- sugar geometry ----
       const sugarData = (el: HTMLElement) =>
@@ -243,8 +290,11 @@ export function ProcessStage() {
       gsap.set(sugars, { autoAlpha: 0, scale: 0 });
       gsap.set([secondCopy, finalCopy], { autoAlpha: 0, y: 30 });
       gsap.set([painter, bottle, bag, shadow, bubbles], { autoAlpha: 0 });
-      gsap.set([ribbon, bottleRibbon, bagRibbon], { autoAlpha: 0 });
-      gsap.set(ribbonStrokes, { strokeDashoffset: 1 });
+      gsap.set([ribbon, bottleRibbon], { autoAlpha: 0 });
+      const ribbonPaths = sweepPaths(ribbon);
+      const bottleRibbonPaths = sweepPaths(bottleRibbon);
+      revealSweeps(ribbonPaths, [RIBBON_SWEEPS.malic], 0);
+      revealSweeps(bottleRibbonPaths, BOTTLE_RIBBON_SWEEPS, 0);
 
       const tl = gsap.timeline({
         defaults: { ease: "none", immediateRender: false },
@@ -501,7 +551,7 @@ export function ProcessStage() {
           TIME.painter,
         );
 
-      // ---- ribbon (t 6.05 → 8.25): paint starts at the brush and sweeps down ----
+      // ---- ribbon (t 6.1 → 9.5): paint leaves the brush and unfolds along its course ----
       tl.fromTo(
         ribbon,
         { autoAlpha: 0 },
@@ -524,36 +574,32 @@ export function ProcessStage() {
           ribbon,
           {
             keyframes: [
-              { rotation: 1.1, skewX: 1.1, duration: 0.45 },
-              { rotation: -0.8, skewX: -0.8, duration: 0.55 },
-              { rotation: 0, skewX: 0, duration: 0.55 },
+              { rotation: 1.1, skewX: 1.1, duration: 0.6 },
+              { rotation: -0.8, skewX: -0.8, duration: 0.8 },
+              { rotation: 0, skewX: 0, duration: 0.8 },
             ],
             ease: "sine.inOut",
           },
           TIME.ribbon + 0.08,
         );
-      let strokeAt = TIME.ribbon;
-      ribbonStrokes.forEach((stroke, index) => {
-        tl.fromTo(
-          stroke,
-          { strokeDashoffset: 1 },
-          {
-            strokeDashoffset: 0,
-            duration: RIBBON_DURATIONS[index],
-            ease: index < 2 ? "power1.inOut" : "none",
-          },
-          strokeAt,
-        );
-        strokeAt += RIBBON_DURATIONS[index];
-      });
+      const unfold = { p: 0 };
       tl.fromTo(
-        world,
-        { y: cameraPainter },
-        { y: cameraEnd, duration: 1.85, ease: "power1.inOut" },
-        TIME.ribbon + 0.55,
+        unfold,
+        { p: 0 },
+        {
+          p: 1,
+          duration: RIBBON_SPAN,
+          onUpdate: () => {
+            revealSweeps(ribbonPaths, [RIBBON_SWEEPS.malic], unfold.p);
+            gsap.set(world, { y: cameraRibbon(unfold.p) });
+          },
+        },
+        TIME.ribbon,
       );
 
-      // ---- bottle (t 7.5): the back ribbon reaches the bottle, then the front crosses it ----
+      // ---- bottle (t 8.1): the ribbon reaches the bottle, then its tail crosses in front ----
+      const crossing = TIME.ribbon + RIBBON_SPAN * BOTTLE_CROSSING[0];
+      const bottleSweep = { p: 0 };
       tl.fromTo(
         shadow,
         { autoAlpha: 0, scaleX: 0.4 },
@@ -572,16 +618,21 @@ export function ProcessStage() {
           },
           TIME.bottle,
         )
+        .set(bottleRibbon, { autoAlpha: 1 }, crossing)
         .fromTo(
-          bottleRibbon,
-          { autoAlpha: 0, clipPath: "inset(0% 0% 0% 100%)" },
+          bottleSweep,
+          { p: 0 },
           {
-            autoAlpha: 1,
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 0.32,
-            ease: "power1.inOut",
+            p: 1,
+            duration: RIBBON_SPAN * (BOTTLE_CROSSING[1] - BOTTLE_CROSSING[0]),
+            onUpdate: () =>
+              revealSweeps(
+                bottleRibbonPaths,
+                BOTTLE_RIBBON_SWEEPS,
+                bottleSweep.p,
+              ),
           },
-          TIME.bottle + 0.46,
+          crossing,
         )
         .fromTo(
           bubbles,
@@ -596,7 +647,7 @@ export function ProcessStage() {
           TIME.bottle + 0.72,
         );
 
-      // ---- bag (t 9.1): keep the back ribbon continuous while the package changes ----
+      // ---- bag (t 10.3): keep the back ribbon continuous while the package changes ----
       tl.fromTo(
         bottle,
         { autoAlpha: 1, scaleX: 1, scaleY: 1 },
@@ -632,17 +683,6 @@ export function ProcessStage() {
             ease: "back.out(1.5)",
           },
           TIME.bag + 0.16,
-        )
-        .fromTo(
-          bagRibbon,
-          { autoAlpha: 0, clipPath: "inset(0% 0% 0% 100%)" },
-          {
-            autoAlpha: 1,
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 0.3,
-            ease: "power1.inOut",
-          },
-          TIME.bag + 0.58,
         )
         .set({}, {}, TIME.end);
 
@@ -703,7 +743,13 @@ export function ProcessStage() {
         onRefresh: (self) => (self.isActive ? loops.resume() : loops.pause()),
       });
 
-      return () => loops.kill();
+      return () => {
+        loops.kill();
+        ScrollTrigger.removeEventListener("refreshInit", resetFollow);
+        // Mask outlines are attributes GSAP does not revert: show the art whole.
+        revealSweeps(ribbonPaths, [RIBBON_SWEEPS.malic], 1);
+        revealSweeps(bottleRibbonPaths, BOTTLE_RIBBON_SWEEPS, 1);
+      };
     });
 
     return () => media.revert();
@@ -868,12 +914,12 @@ function SecondStage() {
         </div>
         <div className={styles.ribbonGroup} data-ribbon-group="">
           <div className={styles.ribbon} data-ribbon="">
-            <StrokeRevealImage
+            <SweepRevealImage
               className={styles.ribbonArt}
               src={malicRibbonUrl}
               width={1747.1}
-              height={2102.57}
-              strokes={RIBBON_STROKES}
+              height={RIBBON_HEIGHT}
+              sweeps={[RIBBON_SWEEPS.malic]}
             />
           </div>
           <div className={styles.painter} data-painter="">
@@ -916,23 +962,13 @@ function SecondStage() {
             draggable={false}
             data-bag=""
           />
-          <img
+          <SweepRevealImage
             className={clsx(styles.art, styles.bottleRibbon)}
             src={glueBottleRibbonUrl}
             width={296.68}
             height={104.6}
-            alt=""
-            draggable={false}
+            sweeps={BOTTLE_RIBBON_SWEEPS}
             data-bottle-ribbon=""
-          />
-          <img
-            className={clsx(styles.art, styles.bagRibbon)}
-            src={glueBagRibbonUrl}
-            width={249.28}
-            height={112.73}
-            alt=""
-            draggable={false}
-            data-bag-ribbon=""
           />
           <div className={styles.bubbles} data-bubbles="">
             {BUBBLE_GROUPS.map((group) => (
