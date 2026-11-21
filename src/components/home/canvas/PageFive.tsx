@@ -136,7 +136,6 @@ export function PageFive() {
 
     // 2 · "Carbotex" is written left → right; the bubble grows with it.
     const path = pen.current;
-    const total = path?.getTotalLength() ?? 1;
     const write = { p: reduced ? 1 : 0 };
     const draw = () => {
       if (!path) return;
@@ -149,10 +148,12 @@ export function PageFive() {
         (CARBOTEX_WIPE[i + 1] - CARBOTEX_WIPE[i]) * (k - i) -
         14;
       wipe.current?.setAttribute("width", String(Math.max(0, edge - 300)));
-      const tip = path.getPointAtLength(total * write.p);
-      const b = ART["p5/carbotex-bubble"];
-      const reach = write.p >= 1 ? 120 : ((tip.x + 70 - b[0]) / b[2]) * 100;
-      bubble.current?.style.setProperty("--reach", `${Math.max(0, reach)}%`);
+      // The bubble's soft edge (reach −6 % … +4 %) sweeps from fully hidden
+      // to fully shown with the writing progress. Not tied to the pen tip:
+      // the tip doubles back (lead-in stroke, the "x"), which made the
+      // bubble pop in, recede and snap to full at the end.
+      const reach = -4 + 114 * write.p;
+      bubble.current?.style.setProperty("--reach", `${reach}%`);
     };
     gsap.set(bubble.current, { autoAlpha: 1 });
     draw();
