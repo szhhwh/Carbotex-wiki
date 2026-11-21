@@ -32,8 +32,38 @@ function segmentAt(phi: number): SegmentId {
 
 /** Ring slides in from the left while P2 enters (camera bottom, pt). */
 const ENTER: [number, number] = [1870, 2170];
-/** Degrees of ring rotation per wheel pixel. */
-const WHEEL_DEG = 0.12;
+/** Wheel distance (px) that steps the ring on by one segment. */
+const WHEEL_STEP = 50;
+/** Drag distance (px) that steps the ring on by one segment. */
+const DRAG_STEP = 40;
+/** After a step, further wheel input is ignored for this long (ms), so one
+ * flick (or a trackpad's inertia) cannot skip past the thin segments. */
+const STEP_LOCK = 320;
+
+/** Angle (θ, as in segmentAt) at the middle of every segment. */
+const MIDS = RING_SEGMENTS.map(({ id }) => {
+  const [a, b] = RING_SPANS[id];
+  return { id, theta: ((a + b) / 2) % 360 };
+});
+
+/**
+ * Rotation (deg, sign = direction) from ring angle `angle` to the middle of
+ * the neighbouring segment: +1 steps on (θ decreasing), −1 steps back.
+ * Every segment gets one stop, however thin it is.
+ */
+function stepDelta(angle: number, dir: 1 | -1) {
+  const theta = ((-angle % 360) + 360) % 360;
+  const current = segmentAt(angle);
+  let best = Infinity;
+  for (const mid of MIDS) {
+    if (mid.id === current) continue;
+    // Distance travelled in `dir` (θ falls as the angle grows).
+    const d =
+      (((dir === 1 ? theta - mid.theta : mid.theta - theta) % 360) + 360) % 360;
+    if (d < best) best = d;
+  }
+  return dir * best;
+}
 
 export function PageTwo() {
   const gradId = useId().replace(/:/g, "");
@@ -46,6 +76,8 @@ export function PageTwo() {
   const entry = useRef(0);
   const [segment, setSegment] = useState<SegmentId>(() => segmentAt(0));
   const segRef = useRef(segment);
+  /** Steps the ring one segment on (+1) or back (−1); set by the effect. */
+  const stepRef = useRef<(dir: 1 | -1) => void>(() => {});
 
   const applyRing = () => {
     const q = entry.current;
@@ -77,26 +109,40 @@ export function PageTwo() {
     if (!el) return;
     const target = { angle: user.current.angle };
     const spin = gsap.quickTo(user.current, "angle", {
-      duration: director.frame.reduced ? 0.01 : 0.55,
+      duration: director.frame.reduced ? 0.01 : 0.6,
       ease: "power3.out",
       onUpdate: applyRing,
     });
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const dy = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
-      target.angle += Math.max(-40, Math.min(40, dy * WHEEL_DEG));
+    const step = (dir: 1 | -1) => {
+      target.angle += stepDelta(target.angle, dir);
       spin(target.angle);
     };
+    stepRef.current = step;
+    let wheel = 0;
+    let lockedUntil = 0;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (e.timeStamp < lockedUntil) return;
+      wheel += e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
+      if (Math.abs(wheel) < WHEEL_STEP) return;
+      step(wheel > 0 ? 1 : -1);
+      wheel = 0;
+      lockedUntil = e.timeStamp + STEP_LOCK;
+    };
     let lastY: number | null = null;
+    let drag = 0;
     const onDown = (e: PointerEvent) => {
       lastY = e.clientY;
+      drag = 0;
       el.setPointerCapture(e.pointerId);
     };
     const onMove = (e: PointerEvent) => {
       if (lastY === null) return;
-      target.angle += (e.clientY - lastY) * 0.6;
+      drag += e.clientY - lastY;
       lastY = e.clientY;
-      spin(target.angle);
+      if (Math.abs(drag) < DRAG_STEP) return;
+      step(drag > 0 ? 1 : -1);
+      drag = 0;
     };
     const onUp = () => {
       lastY = null;
@@ -155,12 +201,7 @@ export function PageTwo() {
         onKeyDown={(e) => {
           if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
           e.preventDefault();
-          const step = e.key === "ArrowDown" ? 15 : -15;
-          gsap.to(user.current, {
-            angle: `+=${step}`,
-            duration: 0.4,
-            onUpdate: applyRing,
-          });
+          stepRef.current(e.key === "ArrowDown" ? 1 : -1);
         }}
       >
         <img
