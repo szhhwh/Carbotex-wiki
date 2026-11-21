@@ -148,7 +148,7 @@ export function ArticleHero({
         <h1 id={headingId} tabIndex={-1}>
           {displayTitle === "Hardware" ? (
             <>
-              <span className={styles.srOnly}>{displayTitle}</span>
+              <span className="visually-hidden">{displayTitle}</span>
               <span className={styles.heroWordmark} aria-hidden="true">
                 <HardwareWordmark />
               </span>

@@ -1,18 +1,4 @@
 :global(body:has(main[data-article-theme="hardware"])) {
-  --hardware-display:
-    Impact, Haettenschweiler, "Fira Sans Extra Condensed", "Arial Narrow",
-    sans-serif;
-  --hardware-body: "Trebuchet MS", "Fira Sans", sans-serif;
-  --hardware-ink: #003f34;
-  --hardware-green: #007c60;
-  --hardware-emerald: #007c60;
-  --hardware-paper: #fbf0dd;
-  --hardware-mint: #9cd7ca;
-  --hardware-card-mint: #b8e3da;
-  --hardware-yellow: #ffc647;
-  --hardware-pale-yellow: #ffe7b6;
-  --hardware-brown: #86530c;
-  --page-paper: var(--hardware-paper);
   background: var(--hardware-paper);
 }
 

@@ -228,7 +228,6 @@ export function HomeCanvas() {
         view: layout.vh / layout.u,
         nav: layout.nav / layout.u,
         u: layout.u,
-        hold: stops.p4,
         stops,
         tip,
         compact: layout.compact,

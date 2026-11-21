@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { stringToSlug } from "../../utils";
+import { stringToSlug } from "../../utils/stringToSlug";
 import {
   FOOTER_CARD_OFFSETS,
   type FooterCard,
@@ -175,7 +175,7 @@ export function FooterProjectCarousel() {
         </div>
       </div>
       <span
-        className={styles.srOnly}
+        className="visually-hidden"
         role="status"
         aria-live={autoRunning ? "off" : "polite"}
       >

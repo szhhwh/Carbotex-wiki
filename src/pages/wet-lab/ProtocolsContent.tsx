@@ -344,7 +344,9 @@ export const protocolSections: ArticleSection[] = [
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className={styles.srOnly}>Protocol {number}: </span>
+                      <span className="visually-hidden">
+                        Protocol {number}:{" "}
+                      </span>
                       {title}
                     </a>
                   </h4>

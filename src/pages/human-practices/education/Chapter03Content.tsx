@@ -216,7 +216,7 @@ export function Chapter03Content() {
               <th style={{ textAlign: "center" }}>Dimension</th>
               <th style={{ textAlign: "center" }}>Kindergarten</th>
               <th style={{ textAlign: "center" }}>
-                <span className={styles.srOnly}>Change</span>
+                <span className="visually-hidden">Change</span>
               </th>
               <th style={{ textAlign: "center" }}>Primary School</th>
             </tr>

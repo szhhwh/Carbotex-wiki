@@ -47,36 +47,8 @@ import {
 } from "./education/EducationSectionSwitch";
 import { OverviewIntro, OverviewTapestry } from "./education/OverviewContent";
 import { ObjectiveStatement } from "./education/ObjectiveStatement";
+import { moveTabFocus } from "./education/moveTabFocus";
 import styles from "./education.module.css";
-
-function moveTabFocus(
-  event: KeyboardEvent<HTMLButtonElement>,
-  setActiveIndex: (index: number) => void,
-) {
-  const tabs = Array.from(
-    event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
-      '[role="tab"]',
-    ) ?? [],
-  );
-  const currentIndex = tabs.indexOf(event.currentTarget);
-  if (currentIndex < 0 || tabs.length === 0) return;
-
-  let nextIndex: number | undefined;
-  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-    nextIndex = (currentIndex + 1) % tabs.length;
-  } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-    nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-  } else if (event.key === "Home") {
-    nextIndex = 0;
-  } else if (event.key === "End") {
-    nextIndex = tabs.length - 1;
-  }
-
-  if (nextIndex === undefined) return;
-  event.preventDefault();
-  setActiveIndex(nextIndex);
-  tabs[nextIndex]?.focus();
-}
 
 function trapDialogFocus(event: KeyboardEvent<HTMLDialogElement>) {
   if (event.key !== "Tab") return;

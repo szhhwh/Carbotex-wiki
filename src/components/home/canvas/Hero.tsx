@@ -142,7 +142,7 @@ export function Hero() {
           <Art k="hero/title" className={s.titleArt} data-title-reveal />
         </div>
       </div>
-      <h1 className={c.srOnly}>Carbotex</h1>
+      <h1 className="visually-hidden">Carbotex</h1>
     </div>
   );
 }

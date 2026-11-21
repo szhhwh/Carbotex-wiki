@@ -1,17 +1,9 @@
-/*
- * Collapse / Accordion skeleton — layout + a11y affordances only.
- * Visual tokens (borders, backgrounds, card variants) land with the design pass.
- */
-.accordion {
-  display: flex;
-  flex-direction: column;
-}
 .collapse {
   border-block-end: 1px solid var(--border-color, #9cd7ca);
 }
 .collapse:last-child {
   border-block-end: none;
-} /* Built-in variants — the design pass may extend the union in Collapse.tsx. */
+}
 .card {
   border: 1px solid var(--border-color, #9cd7ca);
   border-radius: 1.5rem;

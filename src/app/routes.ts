@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import { lazyWithRetry } from "../utils/lazyWithRetry";
 
-export type PageLayout = "fullscreen" | "article";
+type PageLayout = "fullscreen" | "article";
 
 // Keep route metadata immediately available to the Navbar. Each page module is
 // fetched only when its route is rendered.
@@ -86,25 +86,21 @@ const AttributionsPage = lazyWithRetry(
   "AttributionsPage",
 );
 
-interface Base {
-  name: string | undefined;
+interface Folder {
+  name: string;
+  folder: Page[];
 }
 
-class Folder implements Base {
-  name: string | undefined;
-  folder: Page[] | undefined;
-}
-
-class Page implements Base {
-  name: string | undefined;
-  title: string | undefined;
-  path: string | undefined;
-  component: ComponentType | undefined;
+interface Page {
+  name: string;
+  title: string;
+  path: string;
+  component: ComponentType;
   /**
    * Required: `fullscreen` drops the fixed-navbar body offset (Home);
    * `article` pages render their own hero via `ArticlePage`.
    */
-  layout!: PageLayout;
+  layout: PageLayout;
   hideInMenu?: boolean;
 }
 
@@ -278,5 +274,9 @@ const Pages: (Page | Folder)[] = [
     ],
   },
 ];
+
+export const routePages = Pages.flatMap((entry) =>
+  "folder" in entry ? entry.folder : [entry],
+);
 
 export default Pages;

@@ -25,11 +25,11 @@ export function PageFour() {
   // The lamp light is wiped in (top-left → bottom-right) while the camera
   // rests on P4, and wiped out again when scrolling back.
   useFrame((f) => {
-    const wipe = f.reduced ? 1 : ramp(f.hold, 0.04, 0.92);
+    const wipe = f.reduced ? 1 : ramp(f.stops.p4, 0.04, 0.92);
     light.current?.style.setProperty("--wipe", wipe.toFixed(4));
     if (glow.current)
       glow.current.style.opacity = String(
-        f.reduced ? 1 : ramp(f.hold, 0, 0.12),
+        f.reduced ? 1 : ramp(f.stops.p4, 0, 0.12),
       );
   });
 

@@ -377,7 +377,7 @@ export function References({ intro }: { intro?: ReactNode }) {
                 className={styles.entry}
               >
                 <span className={styles.entryIndex}>
-                  <span className={styles.srOnly}>Reference {index + 1}</span>
+                  <span className="visually-hidden">Reference {index + 1}</span>
                   <span aria-hidden="true">[{index + 1}]</span>
                 </span>
                 {entry ? (

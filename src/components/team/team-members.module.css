@@ -25,18 +25,6 @@
   text-wrap: balance;
 }
 
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px; /* taste-skill-ignore: screen-reader-only utility */
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  border: 0;
-  white-space: nowrap;
-}
-
 .intro {
   width: var(--site-shell-width);
   margin-inline: auto;

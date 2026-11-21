@@ -15,8 +15,6 @@ export interface CanvasFrame {
   nav: number;
   /** CSS px per pt. */
   u: number;
-  /** P4 lamp hold: 0 → 1 while the camera rests on P4 (= stops.p4). */
-  hold: number;
   /** Progress 0 → 1 of every page's rest stop (see HomeCanvas STOPS). */
   stops: Readonly<Record<StopId, number>>;
   /**
@@ -41,7 +39,7 @@ export const NO_STOPS: Readonly<Record<StopId, number>> = {
   p5: 0,
 };
 
-export type FrameListener = (frame: CanvasFrame) => void;
+type FrameListener = (frame: CanvasFrame) => void;
 
 export class CanvasDirector {
   frame: CanvasFrame = {
@@ -49,7 +47,6 @@ export class CanvasDirector {
     view: 900,
     nav: 72,
     u: 1,
-    hold: 0,
     stops: NO_STOPS,
     tip: 0,
     compact: false,

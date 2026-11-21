@@ -11,7 +11,6 @@ import {
   Cloud,
   Cpu,
   Droplets,
-  FileSearch,
   FlaskConical,
   Gauge,
   Radio,
@@ -20,13 +19,11 @@ import {
   Thermometer,
   Timer,
   TriangleAlert,
-  VideoOff,
   Waves,
   Wifi,
   Wallet,
   type LucideIcon,
 } from "lucide-react";
-import { Caption } from "../media/Caption";
 import styles from "./hardware-sections.module.css";
 
 type TakeawayIcon = "exchange" | "cost" | "iot" | "validation";
@@ -95,67 +92,7 @@ export function HardwareTakeaways({ items }: { items: HardwareTakeaway[] }) {
   );
 }
 
-export interface FlowLane {
-  id: "fluid" | "data";
-  title: string;
-  steps: string[];
-}
-
-const laneIcons: Record<FlowLane["id"], LucideIcon> = {
-  fluid: Droplets,
-  data: Cpu,
-};
-
-export function SystemFlowMap({ lanes }: { lanes: FlowLane[] }) {
-  const headingId = useId();
-
-  return (
-    <section
-      className={clsx(styles.scope, styles.flowMap)}
-      aria-labelledby={headingId}
-    >
-      <div className={styles.flowMapHeader}>
-        <h3 id={headingId}>System map</h3>
-      </div>
-      <div className={styles.lanes}>
-        {lanes.map((lane) => {
-          const Icon = laneIcons[lane.id];
-          return (
-            <div
-              className={clsx(styles.lane, styles[`lane_${lane.id}`])}
-              key={lane.id}
-            >
-              <div className={styles.laneHeading}>
-                <span className={styles.laneIcon} aria-hidden="true">
-                  <Icon size={20} strokeWidth={1.7} />
-                </span>
-                <div>
-                  <strong>{lane.title}</strong>
-                </div>
-              </div>
-              <ol className={styles.flowSteps}>
-                {lane.steps.map((step, index) => (
-                  <li key={step}>
-                    <span>{step}</span>
-                    {index < lane.steps.length - 1 && (
-                      <ArrowRight
-                        className={styles.flowArrow}
-                        size={16}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-export interface CatalogPart {
+interface CatalogPart {
   name: string;
   specification: string;
   function: string;
@@ -712,63 +649,4 @@ export function BudgetExplorer({ items }: { items: BudgetItem[] }) {
 
 export function MediaPair({ children }: { children: ReactNode }) {
   return <div className={clsx(styles.scope, styles.mediaPair)}>{children}</div>;
-}
-
-export function PendingMedia({
-  label,
-  file,
-  captionPrefix,
-  caption,
-}: {
-  label: string;
-  file: string;
-  captionPrefix: string;
-  caption: string;
-}) {
-  return (
-    <figure className={clsx(styles.scope, styles.pendingMedia)}>
-      <div className={styles.pendingFrame}>
-        <div className={styles.pendingContent}>
-          <FileSearch size={30} strokeWidth={1.6} aria-hidden="true" />
-          <strong>{label}</strong>
-          <span>{file}</span>
-          <small>Source asset awaiting a working upload</small>
-        </div>
-      </div>
-      <Caption prefix={captionPrefix}>{caption}</Caption>
-    </figure>
-  );
-}
-
-export function UnavailableVideo({
-  label,
-  source,
-  captionPrefix,
-  caption,
-}: {
-  label: string;
-  source: string;
-  captionPrefix: string;
-  caption: string;
-}) {
-  return (
-    <figure
-      className={clsx(
-        styles.scope,
-        styles.pendingMedia,
-        styles.videoUnavailable,
-      )}
-      data-video-state="unavailable"
-    >
-      <div className={styles.pendingFrame}>
-        <div className={styles.pendingContent}>
-          <VideoOff size={30} strokeWidth={1.6} aria-hidden="true" />
-          <strong>{label}</strong>
-          <span>{source}</span>
-          <small>Public playback is unavailable from the iGEM media host</small>
-        </div>
-      </div>
-      <Caption prefix={captionPrefix}>{caption}</Caption>
-    </figure>
-  );
 }

@@ -167,7 +167,7 @@ function Rating({
 }) {
   return (
     <span className={styles.rating} data-dimension={dimension.key}>
-      <span className={styles.srOnly}>{dimension.label}: </span>
+      <span className="visually-hidden">{dimension.label}: </span>
       <span className={styles.mobileLabel} aria-hidden="true">
         {dimension.label}
       </span>

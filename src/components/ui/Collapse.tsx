@@ -1,6 +1,5 @@
 /**
  * Collapse — single expandable panel (header + hidden content).
- * Accordion  — group of <Collapse> panels sharing open-state.
  *
  * Motion policy (project convention): all animation goes through GSAP; when
  * `prefers-reduced-motion: reduce` is set every toggle lands instantly on its
@@ -10,21 +9,14 @@
  * element, and the panel is a labelled region. Closed panels are
  * `display: none`, so collapsed content is fully removed from the a11y tree
  * and tab order.
- *
- * Accordion note: children must be direct <Collapse> elements — the group
- * injects `open` / `onToggle` into them via cloneElement.
  */
 import {
-  Children,
-  cloneElement,
-  isValidElement,
   useEffect,
   useId,
   useRef,
   useState,
   type CSSProperties,
   type ElementType,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import gsap from "gsap";
@@ -35,9 +27,9 @@ import styles from "./collapse.module.css";
 // Keep both directions on the same temporal curve so toggling reads smoothly.
 const COLLAPSE_EASE = "power2.inOut";
 
-export type CollapseVariant = "card" | "plain";
+type CollapseVariant = "card" | "plain";
 
-export interface CollapseProps {
+interface CollapseProps {
   /** Header row content: plain text or arbitrary ReactNode. */
   header: ReactNode;
   /** Collapsible body. */
@@ -228,87 +220,6 @@ export function Collapse({
       >
         <div className={styles.contentInner}>{children}</div>
       </div>
-    </div>
-  );
-}
-
-export interface AccordionProps {
-  /**
-   * Direct <Collapse> children only — typed so anything else fails to
-   * compile. The group injects `open` / `onToggle` into them via cloneElement
-   * (per-child `defaultOpen` is ignored inside a group).
-   */
-  children: ReactElement<CollapseProps> | ReactElement<CollapseProps>[];
-  /** Only one panel open at a time (default false). */
-  exclusive?: boolean;
-  /** Initially open panel index(es); uncontrolled after first render. */
-  defaultOpen?: number | number[];
-  /** Fired whenever the set of open indices changes. */
-  onChange?: (openIndices: number[]) => void;
-  className?: string;
-  style?: CSSProperties;
-}
-
-export function Accordion({
-  children,
-  exclusive = false,
-  defaultOpen = [],
-  onChange,
-  className,
-  style,
-}: AccordionProps) {
-  const [openIndices, setOpenIndices] = useState<number[]>(() => {
-    const initial = Array.isArray(defaultOpen) ? defaultOpen : [defaultOpen];
-    // Exclusive groups can only start with one panel open.
-    return exclusive ? initial.slice(0, 1) : initial;
-  });
-
-  // Mirror the latest set so batched toggles ("close all", programmatic
-  // composition) never read a stale closure — and onChange stays out of the
-  // state updater (updaters must stay pure for StrictMode double-invoke).
-  const openRef = useRef(openIndices);
-
-  const toggle = (index: number, next: boolean) => {
-    const prev = openRef.current;
-    const nextSet =
-      exclusive && next
-        ? [index]
-        : next
-          ? [...new Set([...prev, index])]
-          : prev.filter((i) => i !== index);
-    openRef.current = nextSet;
-    setOpenIndices(nextSet);
-    onChange?.(nextSet);
-  };
-
-  const collapses = Children.toArray(children).filter(isValidElement);
-
-  // Runtime backstop for the imperfect compile-time narrowing (JSX.Element
-  // props are `any`, so a stray <div>/<Fragment> can still slip through).
-  if (import.meta.env.DEV) {
-    for (const child of collapses) {
-      if (child.type !== Collapse) {
-        console.warn(
-          "<Accordion>: children must be direct <Collapse> elements; this child will not be group-driven:",
-          child.type,
-        );
-      }
-    }
-  }
-
-  return (
-    <div className={clsx(styles.accordion, className)} style={style}>
-      {collapses.map((child, index) => {
-        const collapse = child as ReactElement<CollapseProps>;
-        return cloneElement(collapse, {
-          key: child.key ?? index,
-          open: openIndices.includes(index),
-          onToggle: (next: boolean) => {
-            collapse.props.onToggle?.(next);
-            toggle(index, next);
-          },
-        });
-      })}
     </div>
   );
 }

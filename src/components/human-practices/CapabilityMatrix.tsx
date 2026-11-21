@@ -31,7 +31,7 @@ export function CapabilityMatrix() {
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>
-        <caption className={styles.srOnly}>
+        <caption className="visually-hidden">
           Carbotex work explored to date and questions for future development
         </caption>
         <thead>

@@ -21,7 +21,7 @@ export function ChapterMeta({
       <span className={styles.chapterMetaLabel}>
         {kind === "audience" ? "Audience" : "Activity"}
       </span>
-      <span className={styles.srOnly}>: </span>
+      <span className="visually-hidden">: </span>
       <span
         className={`${styles.chapterMetaValue} ${
           emphasizeValue ? styles.chapterMetaValueEmphasized : ""

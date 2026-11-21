@@ -4,7 +4,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type KeyboardEvent,
   type ReactNode,
 } from "react";
 import { MousePointerClick } from "lucide-react";
@@ -15,6 +14,7 @@ import styles from "../education.module.css";
 import { PrincipleDisc } from "./PrincipleDisc";
 import { PrincipleIntroContent } from "./PrincipleIntroContent";
 import { WeaveFramework } from "./WeaveFramework";
+import { moveTabFocus } from "./moveTabFocus";
 
 /** Uploaded puzzle discs: flat files in the wiki's home/ upload folder. */
 const inclusiveAccessImage = staticHomeAsset("inclusive-access.svg");
@@ -347,35 +347,6 @@ const puzzlePieces: PuzzlePiece[] = [
   },
 ];
 
-function movePuzzleFocus(
-  event: KeyboardEvent<HTMLButtonElement>,
-  selectPiece: (id: PuzzlePieceId) => void,
-) {
-  const tabs = Array.from(
-    event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
-      '[role="tab"]',
-    ) ?? [],
-  );
-  const currentIndex = tabs.indexOf(event.currentTarget);
-  if (currentIndex < 0 || tabs.length === 0) return;
-
-  let nextIndex: number | undefined;
-  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-    nextIndex = (currentIndex + 1) % tabs.length;
-  } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-    nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-  } else if (event.key === "Home") {
-    nextIndex = 0;
-  } else if (event.key === "End") {
-    nextIndex = tabs.length - 1;
-  }
-
-  if (nextIndex === undefined) return;
-  event.preventDefault();
-  selectPiece(puzzlePieces[nextIndex].id);
-  tabs[nextIndex]?.focus();
-}
-
 export function OverviewTapestry() {
   const [activeId, setActiveId] = useState<PuzzlePieceId>("translating");
   const [liftedId, setLiftedId] = useState<PuzzlePieceId | null>(null);
@@ -436,7 +407,11 @@ export function OverviewTapestry() {
                   id={getTabId(piece.id)}
                   key={piece.id}
                   onClick={() => selectAndRevealPiece(piece.id)}
-                  onKeyDown={(event) => movePuzzleFocus(event, selectPiece)}
+                  onKeyDown={(event) =>
+                    moveTabFocus(event, (index) =>
+                      selectPiece(puzzlePieces[index].id),
+                    )
+                  }
                   role="tab"
                   style={
                     {
@@ -459,7 +434,7 @@ export function OverviewTapestry() {
                       width="223"
                     />
                   )}
-                  <span className={styles.srOnly}>{piece.label}</span>
+                  <span className="visually-hidden">{piece.label}</span>
                 </button>
               );
             })}
