@@ -2,7 +2,7 @@ import { useId, useRef } from "react";
 import { STRAW_WELDS } from "../geometry";
 import { Art, Frame, Layer } from "./art";
 import { CanvasText } from "./CanvasText";
-import { ramp, useFrame } from "./director";
+import { ramp, useCanvasIdle, useCanvasProgress } from "./director";
 import { StrawArt, STRAW_WIDTH, StrawStroke } from "./Straw";
 import { P4_BODY, P4_HEADER } from "./texts";
 import s from "./page-four.module.css";
@@ -22,20 +22,23 @@ export function PageFour() {
   const id = useId().replace(/:/g, "");
   const light = useRef<HTMLImageElement>(null);
   const glow = useRef<SVGSVGElement>(null);
+  const root = useCanvasIdle(3363, 4170);
 
   // The lamp light is wiped in (top-left → bottom-right) while the camera
   // rests on P4, and wiped out again when scrolling back.
-  useFrame((f) => {
-    const wipe = f.reduced ? 1 : ramp(f.stops.p4, 0.04, 0.92);
-    light.current?.style.setProperty("--wipe", wipe.toFixed(4));
-    if (glow.current)
-      glow.current.style.opacity = String(
-        f.reduced ? 1 : ramp(f.stops.p4, 0, 0.12),
-      );
-  });
+  useCanvasProgress(
+    (frame) => [
+      (frame.reduced ? 1 : ramp(frame.stops.p4, 0.04, 0.92)).toFixed(4),
+      (frame.reduced ? 1 : ramp(frame.stops.p4, 0, 0.12)).toFixed(4),
+    ],
+    ([wipe, opacity]) => {
+      light.current?.style.setProperty("--wipe", wipe);
+      if (glow.current) glow.current.style.opacity = opacity;
+    },
+  );
 
   return (
-    <>
+    <div ref={root} className={c.scene} data-idle-paused="">
       <Frame box={[0, 3429, 1366, 1640]} className={c.paper} />
       <Art k="p4/light" className={s.light} ref={light} />
       <Layer box={[150, 4113, 650, 50]}>
@@ -105,6 +108,6 @@ export function PageFour() {
       <Art k="p4/header-box" />
       <CanvasText block={P4_HEADER} />
       <CanvasText block={P4_BODY} />
-    </>
+    </div>
   );
 }

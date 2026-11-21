@@ -1,6 +1,3 @@
-.page {
-  display: contents;
-}
 .band {
   overflow: visible;
 }
@@ -34,7 +31,7 @@
 .sceneLayer {
   overflow: visible;
 }
-.fire image {
+:where(.fire) image {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: flicker 1.8s ease-in-out infinite alternate;
@@ -54,7 +51,6 @@
 }
 .earth {
   animation: earth-spin 110s linear infinite;
-  will-change: transform;
 }
 @keyframes earth-spin {
   to {

@@ -187,14 +187,18 @@
   mask: var(--shine-mask) center / 100% 100% no-repeat;
 }
 .arrowShine {
+  overflow: hidden;
+}
+.arrowLight {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 300%;
   background: linear-gradient(
     to top,
     transparent 0 38%,
     rgb(214 245 205 / 0.95) 50%,
     transparent 62% 100%
   );
-  background-position: 50% 0%;
-  background-size: 100% 300%;
 }
 .checkShine {
   background: #e9f9e1;

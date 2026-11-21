@@ -8,6 +8,12 @@ import clsx from "clsx";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { staticHomeAsset } from "../../../utils/staticAsset";
+import {
+  MotionClock,
+  observeVisibility,
+  syncAmbientPlayback,
+  useHomeMotion,
+} from "../motion";
 import { StrokeRevealImage, type RevealStroke } from "./StrokeRevealImage";
 import styles from "./process-comparison.module.css";
 
@@ -21,8 +27,6 @@ const lineWaveUrl = staticHomeAsset("line-wave.svg");
 const pentagonLargeUrl = staticHomeAsset("pentagon-large.svg");
 const pentagonSmallUrl = staticHomeAsset("pentagon-small.svg");
 const shieldUrl = staticHomeAsset("shield.svg");
-
-gsap.registerPlugin(ScrollTrigger);
 
 type CardKey = "higher" | "greener" | "safer";
 
@@ -140,8 +144,9 @@ function CardArt({ card }: { card: CardKey }): ReactNode {
           <span
             className={clsx(styles.shine, styles.arrowShine)}
             style={{ "--shine-mask": `url("${arrowUrl}")` } as CSSProperties}
-            data-arrow-shine=""
-          />
+          >
+            <span className={styles.arrowLight} data-arrow-shine="" />
+          </span>
         </span>
       </>
     );
@@ -200,6 +205,7 @@ function CardArt({ card }: { card: CardKey }): ReactNode {
 export function ProcessComparison() {
   const rootRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const motion = useHomeMotion();
   const hoverEffects = useRef<Partial<Record<CardKey, () => void>>>({});
 
   // Rest stop before the footer: the cards stick where they are framed
@@ -209,26 +215,21 @@ export function ProcessComparison() {
     const root = rootRef.current;
     const inner = innerRef.current;
     if (!root || !inner) return;
-    const place = () => {
+    const navbar = document.querySelector("header");
+    const unsubscribe = motion.subscribe(({ layoutChanged }) => {
+      if (!layoutChanged) return;
       const vh = window.innerHeight;
-      const nav =
-        document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      const nav = navbar?.offsetHeight ?? 0;
       const h = inner.offsetHeight;
       const top = h <= vh - nav ? nav + (vh - nav - h) / 2 : vh - h;
       root.style.setProperty("--hold-top", `${Math.round(top)}px`);
-    };
-    place();
-    const ro = new ResizeObserver(() => {
-      place();
-      ScrollTrigger.refresh();
     });
-    ro.observe(inner);
-    window.addEventListener("resize", place);
+    const stopObserving = motion.observeLayout(inner);
     return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", place);
+      stopObserving();
+      unsubscribe();
     };
-  }, []);
+  }, [motion]);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -247,56 +248,64 @@ export function ProcessComparison() {
       const check = q("[data-check]");
       const checkStroke = q("[data-check] [data-reveal-stroke]");
       const checkShine = q("[data-check-shine]");
+      const higher = q("[data-card='higher']");
+      const greener = q("[data-card='greener']");
+      const safer = q("[data-card='safer']");
 
       gsap.set(slots, { autoAlpha: 0, y: 20 });
       gsap.set(shield, { autoAlpha: 0, scale: 0.92 });
       gsap.set([arrowStroke, checkStroke], { strokeDashoffset: 1 });
 
-      const shimmer = () =>
-        gsap.fromTo(
-          arrowShine,
-          { backgroundPosition: "50% 0%" },
+      const flash = gsap
+        .timeline({ paused: true })
+        .fromTo(
+          checkShine,
+          { opacity: 0 },
+          { opacity: 0.9, duration: 0.14, ease: "power1.out" },
+        )
+        .to(checkShine, { opacity: 0, duration: 0.4, ease: "power1.in" })
+        .fromTo(
+          check,
+          { scale: 1 },
           {
-            backgroundPosition: "50% 100%",
-            duration: 0.9,
-            ease: "power1.inOut",
-            overwrite: true,
+            scale: 1.1,
+            duration: 0.14,
+            repeat: 1,
+            yoyo: true,
+            ease: "power1.out",
           },
+          0,
         );
-      const flash = () =>
-        gsap
-          .timeline()
-          .fromTo(
-            checkShine,
-            { opacity: 0 },
-            { opacity: 0.9, duration: 0.14, ease: "power1.out" },
-          )
-          .to(checkShine, { opacity: 0, duration: 0.4, ease: "power1.in" })
-          .fromTo(
-            check,
-            { scale: 1 },
-            {
-              scale: 1.1,
-              duration: 0.14,
-              repeat: 1,
-              yoyo: true,
-              ease: "power1.out",
-            },
-            0,
-          );
 
-      // Periodic shimmer on the arrow, started once it has been drawn.
       const arrowLoop = gsap
         .timeline({ paused: true, repeat: -1, repeatDelay: 2.6 })
         .fromTo(
           arrowShine,
-          { backgroundPosition: "50% 0%" },
+          { yPercent: 0 },
           {
-            backgroundPosition: "50% 100%",
+            yPercent: -200 / 3,
             duration: 1.1,
             ease: "power1.inOut",
           },
         );
+      const hoverShine = gsap.fromTo(
+        arrowShine,
+        { yPercent: 0 },
+        {
+          yPercent: -200 / 3,
+          duration: 0.9,
+          ease: "power1.inOut",
+          paused: true,
+        },
+      );
+      const cardClock = new MotionClock();
+      const arrowClock = new MotionClock();
+      let sectionActive = false;
+      let entranceDone = false;
+      let arrowHovered = false;
+      let higherVisible = false;
+      let greenerVisible = false;
+      let saferVisible = false;
 
       gsap
         .timeline({
@@ -306,7 +315,8 @@ export function ProcessComparison() {
             toggleActions: "play none none none",
           },
           onComplete: () => {
-            arrowLoop.play();
+            entranceDone = true;
+            syncLoops();
           },
         })
         .to(slots, {
@@ -331,14 +341,11 @@ export function ProcessComparison() {
           { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" },
           0.95,
         )
-        .add(() => {
-          flash();
-        }, 1.5);
+        .add(() => flash.restart(), 1.5);
 
-      // Idle loops, paused while the section is off screen.
-      const loops = gsap.timeline({ paused: true });
+      const higherLoop = gsap.timeline({ paused: true });
       all("[data-art='float']").forEach((shape, index) => {
-        loops.fromTo(
+        higherLoop.fromTo(
           shape,
           { y: 0, rotation: 0 },
           {
@@ -352,7 +359,8 @@ export function ProcessComparison() {
           index * 0.4,
         );
       });
-      loops
+      const greenerLoop = gsap.timeline({ paused: true });
+      greenerLoop
         .to(
           q("[data-art='cycle']"),
           { rotation: 360, duration: 10, ease: "none", repeat: -1 },
@@ -370,28 +378,76 @@ export function ProcessComparison() {
           },
           0,
         );
-      const syncLoops = (active: boolean) => {
-        if (active) {
-          loops.resume();
-          if (arrowLoop.progress() > 0) arrowLoop.resume();
-        } else {
-          loops.pause();
-          arrowLoop.pause();
-        }
+      const syncLoops = () => {
+        cardClock.setActive(sectionActive);
+        const arrowActive = sectionActive && entranceDone && !arrowHovered;
+        arrowClock.setActive(arrowActive);
+        syncAmbientPlayback(
+          higherLoop,
+          sectionActive && higherVisible,
+          cardClock,
+        );
+        syncAmbientPlayback(
+          greenerLoop,
+          sectionActive && greenerVisible,
+          cardClock,
+        );
+        syncAmbientPlayback(
+          arrowLoop,
+          arrowActive && higherVisible,
+          arrowClock,
+        );
+      };
+      const updateSection = (trigger: ScrollTrigger) => {
+        sectionActive = Boolean(trigger.isActive);
+        syncLoops();
       };
       ScrollTrigger.create({
         trigger: root,
         start: "top bottom",
         end: "bottom top",
-        onToggle: (self) => syncLoops(self.isActive),
-        onRefresh: (self) => syncLoops(self.isActive),
+        onToggle: updateSection,
+        onRefresh: updateSection,
       });
+      const stopObserving = observeVisibility(
+        new Map<Element, (visible: boolean) => void>([
+          [
+            higher,
+            (visible) => {
+              higherVisible = visible;
+              syncLoops();
+            },
+          ],
+          [
+            greener,
+            (visible) => {
+              greenerVisible = visible;
+              syncLoops();
+            },
+          ],
+          [
+            safer,
+            (visible) => {
+              saferVisible = visible;
+            },
+          ],
+        ]),
+      );
 
-      hoverEffects.current = { higher: shimmer, safer: flash };
+      hoverEffects.current = {
+        higher: () => {
+          if (!higherVisible) return;
+          arrowHovered = true;
+          syncLoops();
+          hoverShine.restart();
+        },
+        safer: () => {
+          if (saferVisible) flash.restart();
+        },
+      };
       return () => {
+        stopObserving();
         hoverEffects.current = {};
-        loops.kill();
-        arrowLoop.kill();
       };
     });
 

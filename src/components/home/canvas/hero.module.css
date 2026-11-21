@@ -1,23 +1,9 @@
-.hero {
-  display: contents;
-}
-
 .layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 0;
-  will-change: transform;
-}
-
-.depth0,
-.depth1,
-.depth2,
-.depth3,
-.depth4,
-.depth5 {
-  composes: layer;
 }
 
 .float {
@@ -27,20 +13,18 @@
   animation: title-float 6.5s ease-in-out infinite;
 }
 
-.blob,
-.titleArt {
-  will-change: transform;
-}
-
 .blob {
   transform-origin: 50% 45%;
 }
 
 .drop {
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  translate: calc(var(--dx, 0) * var(--u)) calc(var(--dy, 0) * var(--u));
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 0 0 calc(0.6 * var(--u)) rgb(255 255 255 / 0.35);
-  will-change: transform, opacity;
 }
 
 @keyframes title-float {

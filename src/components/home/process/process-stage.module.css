@@ -149,7 +149,6 @@ img.art,
 .sugar {
   position: absolute;
   visibility: hidden;
-  will-change: transform;
 }
 .thermo {
   position: absolute;

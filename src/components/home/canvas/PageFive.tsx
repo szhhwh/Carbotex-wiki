@@ -4,7 +4,8 @@ import { ART, CARBOTEX_WIPE, type ArtKey } from "../geometry";
 import { Art } from "./art";
 import { artUrl, rectStyle } from "./assets";
 import { CanvasText } from "./CanvasText";
-import { useDirector } from "./director";
+import { captureIdleAnimations, useCanvasIdle, useDirector } from "./director";
+import { useHomeMotion } from "../motion";
 import { StrawArt, StrawStroke } from "./Straw";
 import { P5_CAPTION, P5_TITLE } from "./texts";
 import s from "./page-five.module.css";
@@ -40,8 +41,11 @@ function rotationOf(el: Element) {
 export function PageFive() {
   const id = useId().replace(/:/g, "");
   const director = useDirector();
-  const root = useRef<HTMLDivElement>(null);
+  const { preference } = useHomeMotion();
+  const animation = useRef<gsap.core.Timeline | null>(null);
+  const root = useCanvasIdle(4250, 5010);
   const taiji = useRef<HTMLImageElement>(null);
+  const button = useRef<HTMLButtonElement>(null);
   const halves = useRef<Record<string, HTMLImageElement | null>>({});
   const pen = useRef<SVGPathElement | null>(null);
   const tail = useRef<SVGPathElement | null>(null);
@@ -57,18 +61,37 @@ export function PageFive() {
         autoAlpha: 0,
       });
     }, root);
-    return () => ctx.revert();
-  }, []);
+    const onPreference = () => {
+      if (preference.matches) animation.current?.progress(1);
+    };
+    preference.addEventListener("change", onPreference);
+    return () => {
+      preference.removeEventListener("change", onPreference);
+      animation.current?.pause().kill();
+      animation.current = null;
+      ctx.revert();
+    };
+  }, [preference, root]);
 
   const open = useCallback(() => {
     if (opened) return;
     setOpened(true);
-    const reduced = director.frame.reduced;
+    const reduced = preference.matches;
     const tj = ART["p5/taiji"];
     const centre: [number, number] = [tj[0] + tj[2] / 2, tj[1] + tj[3] / 2];
     const phi = taiji.current ? rotationOf(taiji.current) : 0;
     const rad = (phi * Math.PI) / 180;
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+      onComplete: () => {
+        const scene = root.current;
+        if (scene) {
+          scene.setAttribute("data-open", "");
+          captureIdleAnimations(scene);
+        }
+        animation.current = null;
+      },
+    });
+    animation.current = tl;
 
     // 1 · The taiji turns, grows and opens into its two halves.
     (["yeast", "thermo"] as const).forEach((half, i) => {
@@ -128,11 +151,17 @@ export function PageFive() {
       );
     });
     if (taiji.current) tl.set(taiji.current, { autoAlpha: 0 }, 0);
-    tl.to(
-      `.${s.click}`,
-      { scale: 0.6, autoAlpha: 0, duration: 0.35, ease: "back.in(2)" },
-      0,
-    );
+    if (button.current) {
+      tl.to(
+        button.current,
+        {
+          autoAlpha: 0,
+          duration: reduced ? 0 : 0.35,
+          ease: "back.in(2)",
+        },
+        0,
+      );
+    }
 
     // 2 · "Carbotex" is written left → right; the bubble grows with it.
     const path = pen.current;
@@ -199,12 +228,11 @@ export function PageFive() {
       },
       reduced ? 0 : 2.75,
     );
-    tl.add(() => root.current?.setAttribute("data-open", ""));
-  }, [director, opened]);
+  }, [director, opened, preference, root]);
 
   const click = ART["p5/click-box"];
   return (
-    <div ref={root} className={s.page}>
+    <div ref={root} className={c.scene} data-idle-paused="">
       <Art k="p5/carbotex-bubble" ref={bubble} className={s.bubble} />
       <div ref={caption} className={s.caption}>
         <Art k="p5/caption-box" />
@@ -265,29 +293,36 @@ export function PageFive() {
       <div ref={captionText} className={s.caption}>
         <CanvasText block={P5_CAPTION} scrollFade={false} />
       </div>
-      <Art k="p5/taiji" ref={taiji} className={s.taiji} />
+      <Art k="p5/taiji" ref={taiji} className={opened ? undefined : s.taiji} />
       <button
+        ref={button}
         type="button"
         className={`${c.box} ${c.interactive} ${s.click}`}
-        style={rectStyle(click, {
-          backgroundImage: `url(${JSON.stringify(artUrl("p5/click-box"))})`,
-        })}
+        style={rectStyle(click)}
         onClick={open}
         disabled={opened}
         aria-label="Click to open: reveal Carbotex"
       >
-        <svg viewBox={click.join(" ")} className={s.clickText} aria-hidden>
-          <text
-            className={c.display}
-            x={684.6}
-            y={4582}
-            fontSize={48.2}
-            fill="#D1967C"
-            textAnchor="middle"
-          >
-            Click !
-          </text>
-        </svg>
+        <span
+          className={s.clickArt}
+          style={{
+            backgroundImage: `url(${JSON.stringify(artUrl("p5/click-box"))})`,
+          }}
+          aria-hidden
+        >
+          <svg viewBox={click.join(" ")} className={s.clickText}>
+            <text
+              className={c.display}
+              x={684.6}
+              y={4582}
+              fontSize={48.2}
+              fill="#D1967C"
+              textAnchor="middle"
+            >
+              Click !
+            </text>
+          </svg>
+        </span>
       </button>
       <CanvasText block={P5_TITLE} as="h2" />
     </div>

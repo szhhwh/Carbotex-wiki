@@ -37,6 +37,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.scene {
+  display: contents;
+}
+
+.scene[data-idle-paused] * {
+  animation-play-state: paused;
+}
+
 /* Every artwork, layer and text sits on the artboard by its pt rectangle. */
 .box {
   position: absolute;

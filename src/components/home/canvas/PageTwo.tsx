@@ -1,10 +1,18 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import { ART } from "../geometry";
 import { Art, Layer } from "./art";
 import { artUrl, rectStyle } from "./assets";
 import { CanvasText } from "./CanvasText";
-import { ramp, useDirector, useFrame } from "./director";
+import { ramp, useCanvasIdle, useCanvasProgress } from "./director";
+import { useHomeMotion } from "../motion";
 import { STRAW_WIDTH, StrawStroke } from "./Straw";
 import {
   P2_FOOTER,
@@ -67,7 +75,8 @@ function stepDelta(angle: number, dir: 1 | -1) {
 
 export function PageTwo() {
   const gradId = useId().replace(/:/g, "");
-  const director = useDirector();
+  const { preference } = useHomeMotion();
+  const root = useCanvasIdle(2290, 2380);
   const group = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLImageElement>(null);
   const tag = useRef<HTMLDivElement>(null);
@@ -79,7 +88,7 @@ export function PageTwo() {
   /** Steps the ring one segment on (+1) or back (−1); set by the effect. */
   const stepRef = useRef<(dir: 1 | -1) => void>(() => {});
 
-  const applyRing = () => {
+  const applyRing = useCallback(() => {
     const q = entry.current;
     const phi = user.current.angle - (1 - q) * 210;
     if (ring.current)
@@ -89,19 +98,26 @@ export function PageTwo() {
       segRef.current = next;
       setSegment(next);
     }
-  };
+  }, []);
 
-  useFrame((f) => {
-    const q = f.reduced ? 1 : ramp(f.cam + f.view, ENTER[0], ENTER[1]);
-    entry.current = q;
-    if (group.current) {
-      group.current.style.transform = `translate3d(${(-(1 - q) * 620 * f.u).toFixed(2)}px, 0, 0)`;
-    }
-    const reveal = f.reduced ? 1 : ramp(q, 0.78, 1);
-    if (tag.current) tag.current.style.opacity = String(reveal);
-    if (data.current) data.current.style.opacity = String(reveal);
-    applyRing();
-  });
+  useCanvasProgress(
+    (frame) => {
+      const q = frame.reduced
+        ? 1
+        : ramp(frame.cam + frame.view, ENTER[0], ENTER[1]);
+      return [q, (-(1 - q) * 620 * frame.u).toFixed(2)] as const;
+    },
+    ([q, slide]) => {
+      entry.current = q;
+      if (group.current) {
+        group.current.style.transform = `translate3d(${slide}px, 0, 0)`;
+      }
+      const reveal = ramp(q, 0.78, 1);
+      if (tag.current) tag.current.style.opacity = String(reveal);
+      if (data.current) data.current.style.opacity = String(reveal);
+      applyRing();
+    },
+  );
 
   // Wheel (and drag on touch screens) over the tag spins the ring.
   useEffect(() => {
@@ -109,13 +125,22 @@ export function PageTwo() {
     if (!el) return;
     const target = { angle: user.current.angle };
     const spin = gsap.quickTo(user.current, "angle", {
-      duration: director.frame.reduced ? 0.01 : 0.6,
+      duration: 0.6,
       ease: "power3.out",
       onUpdate: applyRing,
     });
+    const settle = () => {
+      spin.tween.pause();
+      user.current.angle = target.angle;
+      applyRing();
+    };
+    const onPreference = () => {
+      if (preference.matches) settle();
+    };
     const step = (dir: 1 | -1) => {
       target.angle += stepDelta(target.angle, dir);
-      spin(target.angle);
+      if (preference.matches) settle();
+      else spin(target.angle);
     };
     stepRef.current = step;
     let wheel = 0;
@@ -152,33 +177,37 @@ export function PageTwo() {
     el.addEventListener("pointermove", onMove);
     el.addEventListener("pointerup", onUp);
     el.addEventListener("pointercancel", onUp);
+    preference.addEventListener("change", onPreference);
     return () => {
+      spin.tween.kill();
+      preference.removeEventListener("change", onPreference);
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("pointerdown", onDown);
       el.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerup", onUp);
       el.removeEventListener("pointercancel", onUp);
     };
-  }, [director]);
+  }, [applyRing, preference]);
 
   // The data label swaps instantly, with a tiny pop.
   useLayoutEffect(() => {
     const el = data.current?.querySelector("[data-label]");
-    if (!el || director.frame.reduced) return;
-    const tween = gsap.fromTo(
-      el,
-      { scale: 1.06 },
-      {
-        scale: 1,
-        duration: 0.25,
-        ease: "power2.out",
-        transformOrigin: "50% 50%",
-      },
-    );
-    return () => {
-      tween.kill();
-    };
-  }, [segment, director]);
+    if (!el) return;
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.fromTo(
+        el,
+        { scale: 1.06 },
+        {
+          scale: 1,
+          duration: 0.25,
+          ease: "power2.out",
+          transformOrigin: "50% 50%",
+        },
+      );
+    });
+    return () => media.revert();
+  }, [segment]);
 
   const seg = RING_SEGMENTS.find((x) => x.id === segment)!;
   const ringRect = ART["p2/ring"];
@@ -187,7 +216,7 @@ export function PageTwo() {
   const dt = ART["p2/data-tag"];
 
   return (
-    <>
+    <div ref={root} className={c.scene} data-idle-paused="">
       <div
         ref={tag}
         className={`${c.box} ${c.interactive} ${s.tag}`}
@@ -309,6 +338,6 @@ export function PageTwo() {
       </Layer>
       <CanvasText block={P2_HEADING} />
       <CanvasText block={P2_FOOTER} />
-    </>
+    </div>
   );
 }

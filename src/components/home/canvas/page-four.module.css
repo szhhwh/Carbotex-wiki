@@ -13,15 +13,6 @@
   mix-blend-mode: screen;
 }
 
-.lamp,
-.ecoli,
-.actino,
-.yeast,
-.thermo,
-.xylose {
-  will-change: transform;
-}
-
 .lamp {
   transform-origin: 20% 0;
   animation: lamp-sway 7s ease-in-out infinite;

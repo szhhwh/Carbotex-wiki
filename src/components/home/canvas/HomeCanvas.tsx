@@ -1,5 +1,4 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ARTBOARD, STRAW_INFO } from "../geometry";
 import {
   CanvasDirector,
@@ -8,9 +7,9 @@ import {
   ramp,
   type StopId,
 } from "./director";
-import { useLenis } from "../lenis";
+import { useHomeMotion } from "../motion";
 import { Hero } from "./Hero";
-import { PageOneBase, PageOneTop } from "./PageOne";
+import { PageOne } from "./PageOne";
 import { PageTwo } from "./PageTwo";
 import { PageThree } from "./PageThree";
 import { PageFour } from "./PageFour";
@@ -85,6 +84,8 @@ interface Layout {
   stops: Stop[];
   compact: boolean;
   reduced: boolean;
+  top: number;
+  viewportHeight: number;
 }
 
 interface Shot {
@@ -182,22 +183,26 @@ export function HomeCanvas() {
   const canvas = useRef<HTMLDivElement>(null);
   const navProbe = useRef<HTMLDivElement>(null);
   const director = useMemo(() => new CanvasDirector(), []);
-  const lenis = useLenis();
+  const motion = useHomeMotion();
 
   useLayoutEffect(() => {
     const wrap = wrapper.current!;
     const view = stage.current!;
     const board = canvas.current!;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const stopClock = director.startAmbientClock(board);
     let layout: Layout;
-    let lastY = -1;
+    let lastY = NaN;
+    let lastCamera = NaN;
+    let lastVisible = false;
+    let lastHidden = false;
+    let lastStageTop = 0;
+    let trackEnd = 0;
 
-    const measure = () => {
+    const measure = (reduced: boolean) => {
       const w = view.clientWidth;
       const vh = view.clientHeight;
       const nav = navProbe.current?.offsetHeight ?? 0;
-      const u = w / ARTBOARD.width;
-      const reduced = motion.matches;
+      const u = Math.max(w, 1) / ARTBOARD.width;
       const travel = Math.max(0, ARTBOARD.height * u - vh);
       const r = reduced ? 0 : HOLD_RAMP * vh;
       const stops = reduced ? [] : planStops(u, vh, nav, travel, r);
@@ -210,19 +215,39 @@ export function HomeCanvas() {
         stops,
         compact: w < 760,
         reduced,
+        top: wrap.getBoundingClientRect().top + window.scrollY,
+        viewportHeight: window.innerHeight,
       };
       const rest = stops.reduce((sum, stop) => sum + stop.L + r, 0);
+      trackEnd = travel + rest;
       board.style.setProperty("--u", `${u}px`);
-      wrap.style.height = `${travel + rest + vh}px`;
-      lastY = -1;
+      wrap.style.height = `${trackEnd + vh}px`;
     };
 
-    const update = () => {
-      const y = window.scrollY - wrap.offsetTop;
-      if (y === lastY) return;
+    const unsubscribe = motion.subscribe((frame) => {
+      if (frame.layoutChanged) measure(frame.reduced);
+      const scroll = frame.scroll - layout.top;
+      const y = Math.min(Math.max(scroll, 0), trackEnd);
+      const visible =
+        scroll > -layout.viewportHeight && scroll < trackEnd + layout.vh;
+      const stageTop = visible ? y - scroll : 0;
+      if (
+        !frame.layoutChanged &&
+        y === lastY &&
+        visible === lastVisible &&
+        stageTop === lastStageTop &&
+        frame.hidden === lastHidden
+      )
+        return;
       lastY = y;
+      lastVisible = visible;
+      lastHidden = frame.hidden;
+      lastStageTop = stageTop;
       const { cam, stops, tip } = camera(y, layout);
-      board.style.transform = `translate3d(0, ${-cam}px, 0)`;
+      if (cam !== lastCamera) {
+        board.style.transform = `translate3d(0, ${-cam}px, 0)`;
+        lastCamera = cam;
+      }
       director.publish({
         cam: cam / layout.u,
         view: layout.vh / layout.u,
@@ -232,29 +257,20 @@ export function HomeCanvas() {
         tip,
         compact: layout.compact,
         reduced: layout.reduced,
+        visible: visible && !frame.hidden,
+        viewportTop: Math.max(0, layout.nav - stageTop) / layout.u,
+        viewportBottom:
+          Math.min(layout.vh, layout.viewportHeight - stageTop) / layout.u,
       });
-    };
+    });
 
-    const relayout = () => {
-      measure();
-      update();
-      ScrollTrigger.refresh();
-    };
-
-    measure();
-    update();
-    const ro = new ResizeObserver(relayout);
-    ro.observe(view);
-    motion.addEventListener("change", relayout);
-    window.addEventListener("scroll", update, { passive: true });
-    const off = lenis?.on("scroll", update);
+    const stopObserving = motion.observeLayout(view, navProbe.current!);
     return () => {
-      ro.disconnect();
-      motion.removeEventListener("change", relayout);
-      window.removeEventListener("scroll", update);
-      off?.();
+      stopClock();
+      stopObserving();
+      unsubscribe();
     };
-  }, [director, lenis]);
+  }, [director, motion]);
 
   return (
     <DirectorContext.Provider value={director}>
@@ -269,9 +285,9 @@ export function HomeCanvas() {
           <div ref={canvas} className={s.canvas}>
             <StrawPen>
               <Hero />
-              <PageOneBase />
-              <PageTwo />
-              <PageOneTop />
+              <PageOne>
+                <PageTwo />
+              </PageOne>
               <PageThree />
               <PageFour />
               <PageFive />
