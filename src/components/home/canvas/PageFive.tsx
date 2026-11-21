@@ -15,7 +15,10 @@ import c from "./canvas.module.css";
  * the closed taiji: p_taiji = t + scale · R(rot) · p_half. Measured by
  * feature-matching the exported halves against the closed artwork.
  */
-const CLOSED: Record<"yeast" | "thermo", { scale: number; rot: number; t: [number, number] }> = {
+const CLOSED: Record<
+  "yeast" | "thermo",
+  { scale: number; rot: number; t: [number, number] }
+> = {
   yeast: { scale: 0.5871, rot: -69.42, t: [-53.97, 334.11] },
   thermo: { scale: 0.5495, rot: -87.1, t: [15.05, 253.91] },
 };
@@ -50,7 +53,9 @@ export function PageFive() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set([`.${s.half}`, `.${s.bubble}`, `.${s.caption}`], { autoAlpha: 0 });
+      gsap.set([`.${s.half}`, `.${s.bubble}`, `.${s.caption}`], {
+        autoAlpha: 0,
+      });
     }, root);
     return () => ctx.revert();
   }, []);
@@ -79,8 +84,20 @@ export function PageFive() {
       const cx = box[2] / 2;
       const cy = box[3] / 2;
       const state = {
-        x: centre[0] + px * Math.cos(rad) - py * Math.sin(rad) - box[0] - cx + scale * (cx * Math.cos(r0) - cy * Math.sin(r0)),
-        y: centre[1] + px * Math.sin(rad) + py * Math.cos(rad) - box[1] - cy + scale * (cx * Math.sin(r0) + cy * Math.cos(r0)),
+        x:
+          centre[0] +
+          px * Math.cos(rad) -
+          py * Math.sin(rad) -
+          box[0] -
+          cx +
+          scale * (cx * Math.cos(r0) - cy * Math.sin(r0)),
+        y:
+          centre[1] +
+          px * Math.sin(rad) +
+          py * Math.cos(rad) -
+          box[1] -
+          cy +
+          scale * (cx * Math.sin(r0) + cy * Math.cos(r0)),
         rot: phi + rot,
         scale,
       };
@@ -96,10 +113,26 @@ export function PageFive() {
         apply();
         return;
       }
-      tl.to(state, { x: 0, y: 0, rot: end, scale: 1, duration: 2.7, ease: "power2.inOut", onUpdate: apply }, 0);
+      tl.to(
+        state,
+        {
+          x: 0,
+          y: 0,
+          rot: end,
+          scale: 1,
+          duration: 2.7,
+          ease: "power2.inOut",
+          onUpdate: apply,
+        },
+        0,
+      );
     });
     if (taiji.current) tl.set(taiji.current, { autoAlpha: 0 }, 0);
-    tl.to(`.${s.click}`, { scale: 0.6, autoAlpha: 0, duration: 0.35, ease: "back.in(2)" }, 0);
+    tl.to(
+      `.${s.click}`,
+      { scale: 0.6, autoAlpha: 0, duration: 0.35, ease: "back.in(2)" },
+      0,
+    );
 
     // 2 · "Carbotex" is written left → right; the bubble grows with it.
     const path = pen.current;
@@ -111,7 +144,10 @@ export function PageFive() {
       path.style.visibility = write.p > 0 ? "visible" : "hidden";
       const k = write.p * (CARBOTEX_WIPE.length - 1);
       const i = Math.min(Math.floor(k), CARBOTEX_WIPE.length - 2);
-      const edge = CARBOTEX_WIPE[i] + (CARBOTEX_WIPE[i + 1] - CARBOTEX_WIPE[i]) * (k - i) - 14;
+      const edge =
+        CARBOTEX_WIPE[i] +
+        (CARBOTEX_WIPE[i + 1] - CARBOTEX_WIPE[i]) * (k - i) -
+        14;
       wipe.current?.setAttribute("width", String(Math.max(0, edge - 300)));
       const tip = path.getPointAtLength(total * write.p);
       const b = ART["p5/carbotex-bubble"];
@@ -121,8 +157,17 @@ export function PageFive() {
     gsap.set(bubble.current, { autoAlpha: 1 });
     draw();
     if (!reduced) {
-      tl.fromTo(bubble.current, { scale: 0.92 }, { scale: 1, duration: 2.4, ease: "elastic.out(1, 0.6)" }, 0.15);
-      tl.to(write, { p: 1, duration: 2.1, ease: "sine.inOut", onUpdate: draw }, 0.15);
+      tl.fromTo(
+        bubble.current,
+        { scale: 0.92 },
+        { scale: 1, duration: 2.4, ease: "elastic.out(1, 0.6)" },
+        0.15,
+      );
+      tl.to(
+        write,
+        { p: 1, duration: 2.1, ease: "sine.inOut", onUpdate: draw },
+        0.15,
+      );
     }
 
     // 3 · The straw runs on to the foot of the page as the halves land.
@@ -133,13 +178,24 @@ export function PageFive() {
       tail.current.style.visibility = run.p > 0 ? "visible" : "hidden";
     };
     drawTail();
-    if (!reduced) tl.to(run, { p: 1, duration: 0.6, ease: "power1.out", onUpdate: drawTail }, 2.1);
+    if (!reduced)
+      tl.to(
+        run,
+        { p: 1, duration: 0.6, ease: "power1.out", onUpdate: drawTail },
+        2.1,
+      );
 
     // 4 · The caption settles under the word.
     tl.fromTo(
       [caption.current, captionText.current],
       { autoAlpha: 0, y: reduced ? 0 : 24 * director.frame.u },
-      { autoAlpha: 1, y: 0, duration: reduced ? 0 : 0.7, ease: "power3.out", stagger: 0.12 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: reduced ? 0 : 0.7,
+        ease: "power3.out",
+        stagger: 0.12,
+      },
       reduced ? 0 : 2.75,
     );
     tl.add(() => root.current?.setAttribute("data-open", ""));
@@ -171,7 +227,16 @@ export function PageFive() {
         pathRef={(el) => {
           pen.current = el;
         }}
-        extraMask={<rect ref={wipe} x={300} y={4323} width={0} height={500} fill="#fff" />}
+        extraMask={
+          <rect
+            ref={wipe}
+            x={300}
+            y={4323}
+            width={0}
+            height={500}
+            fill="#fff"
+          />
+        }
       />
       <StrawStroke
         k="s5"
@@ -180,7 +245,14 @@ export function PageFive() {
         box={[660, 4763, 340, 300]}
         paint={`url(#t${id})`}
         defs={
-          <linearGradient id={`t${id}`} x1="0" y1="4973" x2="0" y2="5063" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id={`t${id}`}
+            x1="0"
+            y1="4973"
+            x2="0"
+            y2="5063"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop offset="0" stopColor="#ffc647" />
             <stop offset="1" stopColor="#ffc647" stopOpacity="0.15" />
           </linearGradient>
@@ -196,13 +268,22 @@ export function PageFive() {
       <button
         type="button"
         className={`${c.box} ${c.interactive} ${s.click}`}
-        style={rectStyle(click, { backgroundImage: `url(${JSON.stringify(artUrl("p5/click-box"))})` })}
+        style={rectStyle(click, {
+          backgroundImage: `url(${JSON.stringify(artUrl("p5/click-box"))})`,
+        })}
         onClick={open}
         disabled={opened}
         aria-label="Click to open: reveal Carbotex"
       >
         <svg viewBox={click.join(" ")} className={s.clickText} aria-hidden>
-          <text className={c.display} x={684.6} y={4582} fontSize={48.2} fill="#D1967C" textAnchor="middle">
+          <text
+            className={c.display}
+            x={684.6}
+            y={4582}
+            fontSize={48.2}
+            fill="#D1967C"
+            textAnchor="middle"
+          >
             Click !
           </text>
         </svg>

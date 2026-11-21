@@ -104,7 +104,8 @@ export class StrawPenController {
     let start = 0;
     for (const key of PEN_ORDER) {
       const len = this.lengths.get(key) ?? 0;
-      const p = len > 0 ? Math.min(Math.max((this.shown - start) / len, 0), 1) : 0;
+      const p =
+        len > 0 ? Math.min(Math.max((this.shown - start) / len, 0), 1) : 0;
       start += len;
       const prev = this.applied.get(key);
       if (!force && prev !== undefined && Math.abs(prev - p) < 1e-4) continue;

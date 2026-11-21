@@ -137,13 +137,19 @@ export const P3_LITERATURE: TextBlock = {
     {
       y: 2778.4,
       runs: [
-        { t: "phenolic hydroxyl and hydroxyl groups", bold: true, color: ORANGE },
+        {
+          t: "phenolic hydroxyl and hydroxyl groups",
+          bold: true,
+          color: ORANGE,
+        },
         ", naturally possess",
       ],
     },
     {
       y: 2809,
-      runs: [{ t: "intermolecular interaction and adhesive potential.", bold: true }],
+      runs: [
+        { t: "intermolecular interaction and adhesive potential.", bold: true },
+      ],
     },
   ],
 };
@@ -170,7 +176,11 @@ export const P3_QUESTION: TextBlock = {
   lines: [
     {
       y: 3023.6,
-      runs: ["Can ", { t: "biomanufacturing", bold: true }, " unlock new applications"],
+      runs: [
+        "Can ",
+        { t: "biomanufacturing", bold: true },
+        " unlock new applications",
+      ],
     },
     { y: 3053.6, runs: ["of straw in adhesives, broadening its raw-material"] },
     {
@@ -276,7 +286,10 @@ export const RING_SEGMENTS = [
  * Angular span of each segment at rest (degrees, 0° = east, clockwise),
  * measured from the exported ring.
  */
-export const RING_SPANS: Record<(typeof RING_SEGMENTS)[number]["id"], [number, number]> = {
+export const RING_SPANS: Record<
+  (typeof RING_SEGMENTS)[number]["id"],
+  [number, number]
+> = {
   energy: [18, 51.1],
   substrate: [51.1, 54.1],
   raw: [54.1, 57.25],
