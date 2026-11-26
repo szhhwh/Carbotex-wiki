@@ -1,0 +1,3282 @@
+.pageShell {
+  --article-controls-gap: clamp(1.15rem, 2.2vw, 1.65rem);
+  --education-ink: var(--hardware-ink, #003f34);
+  --education-muted: var(--hardware-ink, #003f34);
+  --education-green: var(--hardware-green, #007c60);
+  --education-heading: var(--hardware-card-heading, #1e4fbc);
+  --education-royal: var(--hardware-royal, #2f52a1);
+  --education-navy: var(--hardware-navy, #1f315f);
+  --education-paper: var(--hardware-paper, #fbf0dd);
+  --education-mint: var(--hardware-mint, #9cd7ca);
+  --education-card-mint: var(--hardware-card-mint, #b8e3da);
+  --education-yellow: var(--hardware-yellow, #ffc647);
+  --education-pale-yellow: var(--hardware-pale-yellow, #ffe7b6);
+  --education-link-strong: #005c47;
+  --education-line: var(--hardware-mint, #9cd7ca);
+  --education-radius: 2rem;
+  --education-h3-size: clamp(1.55rem, 2.63vw, 2.4rem);
+  --education-h4-size: clamp(1.35rem, 1.9vw, 1.6rem);
+  --education-h5-size: clamp(1.2rem, 1.5vw, 1.35rem);
+  --education-h6-size: clamp(1.12rem, 1.5vw, 1.28rem);
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--education-paper);
+  color: var(--education-ink);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  line-height: 1.55;
+}
+
+.pageShell article :where(a, button):focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: 4px;
+}
+
+.pageShell h3,
+.pageShell h4,
+.pageShell h5,
+.pageShell h6 {
+  scroll-margin-top: 7rem;
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.pageShell h3 {
+  margin-block: var(--article-space-chapter) var(--article-space-related);
+  color: var(--education-green);
+  font-size: var(--education-h3-size);
+  line-height: 1.12;
+}
+
+.pageShell h4 {
+  margin-block: var(--article-space-feature) var(--article-space-related);
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.55rem 1rem 0.62rem;
+  border-radius: 0.85rem;
+  background: var(--education-yellow);
+  color: var(--education-navy);
+  font-size: var(--education-h4-size);
+  line-height: 1.12;
+}
+
+/* ArticlePage's prose rule is more specific, so restore the band text color. */
+.pageShell article[class] h4 {
+  color: var(--education-navy);
+}
+
+.pageShell h5 {
+  margin-block: var(--article-space-block) var(--article-space-related);
+  color: var(--education-royal);
+  font-size: var(--education-h5-size);
+  line-height: 1.18;
+}
+
+.pageShell .objectiveStatement {
+  margin-block: var(--article-space-block) var(--article-space-related);
+  color: var(--education-ink);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: var(--article-text);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.62;
+  overflow-wrap: anywhere;
+  text-wrap: wrap;
+}
+
+.pageShell .objectiveStatement :where(strong, b) {
+  color: var(--education-royal);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h5-size);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.18;
+}
+
+.pageShell h6 {
+  margin-block: var(--article-space-topic) var(--article-space-label);
+  color: var(--education-heading);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+/* Hardware's shared prose rule wins on specificity, so keep the Education
+   hierarchy explicit without changing the shared article component. */
+.pageShell :global(#article-body) article h3 {
+  font-size: var(--education-h3-size);
+}
+
+.pageShell :global(#article-body) article h4 {
+  font-size: var(--education-h4-size);
+}
+
+.pageShell :is(h3, h4, h5, h6):first-child {
+  margin-block-start: 0;
+}
+
+.pageShell :where(article) :where(p, ul, ol, blockquote) {
+  margin-block: 0 var(--article-space-flow);
+}
+
+.pageShell :where(article) :where(p, ul, ol, blockquote):last-child {
+  margin-block-end: 0;
+}
+
+.pageShell :where(article) :where(ul, ol) {
+  padding-inline-start: 1.4rem;
+}
+
+.pageShell :where(article) li {
+  margin-block: 0;
+}
+
+.pageShell :where(article) li + li {
+  margin-block-start: 0.35rem;
+}
+
+.pageShell .proseList {
+  margin-block: var(--article-space-related) var(--article-space-block);
+  padding-inline-start: 1.35rem;
+  list-style: disc;
+}
+
+.pageShell .proseList > li {
+  padding-inline-start: 0.15rem;
+  margin-block: 0;
+}
+
+.pageShell .proseList > li + li {
+  margin-block-start: 0.7rem;
+}
+
+.pageShell .proseList > li > p {
+  margin-block: 0;
+}
+
+.pageShell .proseList > li > p + p {
+  margin-block-start: var(--article-space-label);
+}
+
+.pageShell .proseList > li::marker {
+  color: var(--education-green);
+}
+
+.numberedFindings {
+  display: grid;
+  gap: 0.9rem;
+  margin-block: var(--article-space-related) var(--article-space-block);
+  padding-inline-start: 0 !important;
+  list-style: none !important;
+  counter-reset: education-finding;
+}
+
+.numberedFindings > li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  column-gap: 0.4rem;
+  margin-block: 0;
+  counter-increment: education-finding;
+}
+
+.numberedFindings > li::before {
+  grid-row: 1;
+  align-self: start;
+  color: var(--education-ink);
+  content: "(" counter(education-finding) ")";
+  font-weight: 700;
+}
+
+.numberedFindings > li > p {
+  grid-column: 2;
+  margin-block: 0;
+}
+
+.numberedFindings > li > p:first-child {
+  line-height: 1.5;
+}
+
+.numberedFindings > li > p + p {
+  margin-block-start: 0.4rem;
+}
+
+.summaryCard {
+  margin-block: var(--article-space-related) var(--article-space-block);
+  padding: clamp(1rem, 2vw, 1.3rem) clamp(1.1rem, 2.4vw, 1.5rem);
+  border: 1px solid color-mix(in srgb, var(--education-yellow) 52%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(
+    in srgb,
+    var(--education-pale-yellow) 58%,
+    var(--education-paper)
+  );
+}
+
+.pageShell .summaryCard > p {
+  margin-block: 0;
+}
+
+.echoCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+  margin-block: var(--article-space-related) var(--article-space-block);
+}
+
+.echoCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--education-green) 16%, transparent);
+  border-radius: 1.5rem;
+  background: color-mix(
+    in srgb,
+    var(--education-card-mint) 42%,
+    var(--education-paper)
+  );
+  color: var(--education-ink);
+}
+
+.echoCardNumber {
+  display: inline-grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: none;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--education-navy);
+  color: var(--hardware-white, #fff);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.echoCardBody {
+  min-width: 0;
+}
+
+.echoCardBody p {
+  margin-block: 0;
+  color: var(--education-ink);
+  font-size: 0.96rem;
+  line-height: 1.58;
+}
+
+.echoCardSection + .echoCardSection {
+  margin-block-start: 1rem;
+  padding-block-start: 1rem;
+  border-block-start: 1px solid
+    color-mix(in srgb, var(--education-green) 13%, transparent);
+}
+
+.echoCardLabel {
+  margin-block-end: 0.35rem !important;
+}
+
+.echoCardLabel > strong {
+  color: var(--education-navy);
+}
+
+.echoCardBody .evolutionLink {
+  color: var(--education-link-strong) !important;
+}
+
+.pageShell figure {
+  margin-block: var(--article-space-media);
+  margin-inline: auto;
+}
+
+.pageShell section[id^="chapter-"] {
+  margin-block-start: var(--article-space-chapter);
+}
+
+.pageShell section[id^="chapter-"] > h3 {
+  margin-block-start: 0;
+}
+
+.pageShell :where(strong, b) {
+  color: var(--education-ink);
+}
+
+.pageShell :where(em, i) {
+  color: inherit;
+}
+
+.pageShell article a {
+  color: var(--education-green);
+  overflow-wrap: anywhere;
+  text-decoration-color: var(--education-yellow);
+  text-decoration-thickness: 0.1em;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 0.28em;
+}
+
+.pageShell table p {
+  margin-block-end: var(--article-space-label);
+}
+
+.pageShell table p:last-child {
+  margin-block-end: 0;
+}
+
+.tableScroller {
+  max-width: 100%;
+  margin-block: var(--article-space-block);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  border: 2px solid var(--education-mint);
+  border-radius: var(--education-radius);
+  background: var(--hardware-white, #fff);
+  scrollbar-color: var(--education-green) transparent;
+  scrollbar-width: thin;
+}
+
+.tableScroller:focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: 3px;
+}
+
+.tableScroller table {
+  min-width: 42rem;
+  margin: 0;
+}
+
+.pageShell table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.92rem;
+}
+
+.approachArrow {
+  display: inline-block;
+  width: clamp(1.35rem, 1.8vw, 1.65rem);
+  height: auto;
+  color: var(--education-navy);
+  vertical-align: middle;
+}
+
+.pageShell :where(th, td) {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--education-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.pageShell .tableScroller th {
+  background: var(--education-card-mint);
+  color: var(--education-navy);
+  font-weight: 700;
+}
+
+.tableScroller :where(th, td):first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--hardware-white, #fff);
+}
+
+.pageShell .tableScroller th:first-child {
+  z-index: 2;
+  background: var(--education-card-mint);
+}
+
+@media (max-width: 1279px) {
+  .tableScroller table {
+    width: 100%;
+    min-width: 34rem;
+    table-layout: fixed;
+    font-size: 0.875rem;
+  }
+
+  .pageShell :where(th, td) {
+    padding: 0.7rem 0.65rem;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 900px) {
+  .pageShell :is(h2, h3, h4, h5, h6)[id],
+  .pageShell [id^="chapter-"] {
+    scroll-margin-top: 10rem;
+  }
+}
+
+.pageShell tbody tr:last-child :where(th, td) {
+  border-bottom: 0;
+}
+
+.pageShell blockquote {
+  margin-inline: 0;
+  padding: 1.25rem 1.4rem;
+  border: 0;
+  border-radius: 1.5rem;
+  background: var(--education-pale-yellow);
+  color: var(--education-ink);
+}
+
+.pageShell .chapterMeta {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: stretch;
+  margin: 0 0.55rem 0.55rem 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1rem;
+  background: var(--education-card-mint);
+  color: var(--education-ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  vertical-align: top;
+}
+
+.chapterMetaAudience {
+  background: var(--education-card-mint);
+}
+
+.chapterMetaActivity {
+  background: var(--education-pale-yellow);
+}
+
+.chapterMetaLabel {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  padding: 0.37rem 0.58rem 0.37rem 0.68rem;
+  border-right: 0;
+  background: var(--education-navy);
+  color: var(--hardware-white, #fff);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.chapterMetaActivity .chapterMetaLabel {
+  background: var(--education-yellow);
+  color: var(--education-navy);
+}
+
+.chapterMetaValue {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  padding: 0.37rem 0.78rem 0.37rem 0.62rem;
+  overflow-wrap: anywhere;
+}
+
+.chapterMetaValueEmphasized {
+  font-weight: 700;
+}
+
+.evolutionLink {
+  color: var(--education-green) !important;
+  text-decoration-color: var(--education-yellow) !important;
+  text-decoration-thickness: 0.1em !important;
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 0.28em !important;
+}
+
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1rem;
+  margin-block: var(--article-space-block);
+}
+
+.resourceCard {
+  display: grid;
+  min-height: 9rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: start;
+  padding: 1.35rem;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-card-mint);
+  color: var(--education-ink) !important;
+  text-decoration: none !important;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.resourceCard:nth-child(3n + 2) {
+  background: var(--education-pale-yellow);
+}
+
+.resourceCard:nth-child(3n) {
+  background: var(--education-yellow);
+}
+
+.resourceCard:hover {
+  background: var(--education-yellow);
+  transform: translateY(-0.2rem);
+}
+
+.resourceCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.resourceCopy small {
+  color: var(--education-navy);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.resourceCopy strong {
+  color: var(--education-ink);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.resourceCopy > span {
+  color: var(--education-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.resourceAction {
+  align-self: end;
+  color: var(--education-navy);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.resourceLibrary {
+  margin-block: var(--article-space-block);
+}
+
+.resourceLibraryToolbar {
+  padding-block: 0.9rem 1rem;
+  border-block: 1px solid
+    color-mix(in srgb, var(--education-green) 20%, transparent);
+}
+
+.resourceAudienceFilter {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.resourceFilterLabel {
+  color: var(--education-navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.resourceFilterButtons {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+  padding-block-end: 0.25rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: color-mix(in srgb, var(--education-green) 32%, transparent)
+    transparent;
+  scrollbar-width: thin;
+}
+
+.resourceFilterButtons::-webkit-scrollbar {
+  height: 0.25rem;
+}
+
+.resourceFilterButtons::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--education-green) 32%, transparent);
+}
+
+.resourceFilterButton {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.42rem 0.35rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--education-green) 28%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--education-navy);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.resourceFilterButton > span {
+  display: inline-grid;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  padding-inline: 0.28rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--education-green) 12%, transparent);
+  color: var(--education-green);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.resourceFilterButton:hover {
+  border-color: var(--education-green);
+  background: color-mix(in srgb, var(--education-card-mint) 45%, transparent);
+}
+
+.resourceFilterButton[aria-pressed="true"] {
+  border-color: var(--education-navy);
+  background: var(--education-navy);
+  color: var(--hardware-white, #fff);
+}
+
+.resourceFilterButton[aria-pressed="true"] > span {
+  background: color-mix(in srgb, var(--hardware-white, #fff) 18%, transparent);
+  color: var(--hardware-white, #fff);
+}
+
+.resourceGroups {
+  display: grid;
+  gap: 1.75rem;
+  margin-block-start: 1.25rem;
+}
+
+.resourceLibrary > .resourceGroups:first-child {
+  margin-block-start: 0;
+}
+
+.resourceGroup {
+  min-width: 0;
+}
+
+.resourceGroupHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding-block-end: 0.55rem;
+  border-block-end: 1px solid
+    color-mix(in srgb, var(--education-green) 18%, transparent);
+}
+
+.pageShell .resourceGroupHeader h6 {
+  margin: 0;
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.resourceGroupIndex {
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.resourceGroupCount {
+  color: var(--education-muted);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.resourceEntries {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.resourceEntries > li + li {
+  border-block-start: 1px solid
+    color-mix(in srgb, var(--education-green) 12%, transparent);
+}
+
+.resourceEntry {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  margin-inline: -0.65rem;
+  padding: 1rem 0.65rem;
+  border-radius: 1rem;
+  color: var(--education-ink) !important;
+  text-decoration: none !important;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.resourceEntryWithAudiences {
+  grid-template-columns: minmax(12.75rem, 0.34fr) minmax(0, 1fr) auto;
+}
+
+.resourceEntryWithoutAudiences {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.resourceEntry:hover {
+  background: color-mix(in srgb, var(--education-card-mint) 44%, transparent);
+}
+
+.resourceAudiences {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+
+.resourceAudience {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.3rem 0.62rem;
+  border-radius: 999px;
+  background: var(--education-card-mint);
+  color: var(--education-navy);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.resourceEntryCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.resourceEntryCopy strong {
+  color: var(--education-ink);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.resourceEntryCopy > span {
+  color: var(--education-muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.resourceEntryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  color: var(--education-green);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.resourceEntryAction svg {
+  transition: transform 160ms ease;
+}
+
+.resourceEntry:hover .resourceEntryAction svg {
+  transform: translate(0.12rem, -0.12rem);
+}
+
+.resourceEmpty {
+  margin: 0 !important;
+  padding: 1rem 0;
+  color: var(--education-muted);
+}
+
+@media (max-width: 780px) {
+  .resourceEntry {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .resourceAudiences {
+    grid-column: 1 / -1;
+  }
+}
+
+.inlineCollapse {
+  margin-block: var(--article-space-block);
+  padding: 0.35rem 1.25rem;
+  border: 0 !important;
+  border-radius: var(--education-radius);
+  background: var(--education-card-mint);
+  color: var(--education-ink);
+}
+
+.pageShell .activityLead {
+  max-width: 48rem;
+  margin-block: 0 var(--article-space-block);
+  padding: 1.35rem 1.5rem;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-yellow);
+  color: var(--education-ink);
+  font-size: 1.05em;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.pageShell .wonderQuestion {
+  max-width: 48rem;
+  margin-block: var(--article-space-topic) var(--article-space-block);
+  padding-inline-start: 1rem;
+  border-inline-start: 0.35rem solid var(--education-yellow);
+  color: var(--education-green);
+  font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.pageShell .wonderQuestion :where(strong, b) {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.designIntro {
+  max-width: 52rem;
+  margin-block: var(--article-space-block);
+  padding: 1.5rem;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-pale-yellow);
+  color: var(--education-ink);
+}
+
+.designIntro > span {
+  display: block;
+  margin-block-end: var(--article-space-related);
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.15rem;
+}
+
+.designIntro p {
+  margin-block: 0 var(--article-space-related);
+  line-height: 1.7;
+}
+
+.designIntro p:last-child {
+  margin-block-end: 0;
+}
+
+.retainedGrid span,
+.milestoneChoice > span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pageShell .interactionHint {
+  display: flex;
+  width: fit-content;
+  max-width: min(100%, 48rem);
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-block: var(--article-space-topic) var(--article-space-related);
+  padding: 0.58rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--education-green) 14%, transparent);
+  border-radius: 0.78rem;
+  background: color-mix(in srgb, var(--education-card-mint) 24%, transparent);
+  font-size: 0.925rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.interactionHint svg {
+  flex: none;
+  margin-block-start: 0.13em;
+  color: var(--education-green);
+}
+
+.puzzleExplorer {
+  margin-block: var(--article-space-related) 0;
+}
+
+.pageShell .puzzleTagline {
+  margin-block: 0 var(--article-space-label);
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.22rem, 2vw, 1.62rem);
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.pageShell .puzzleTagline strong {
+  color: inherit;
+  font: inherit;
+}
+
+.pageShell .puzzleInstruction {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.48rem;
+  margin-block: 0 var(--article-space-block);
+  padding: 0.48rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--education-green) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(
+    in srgb,
+    var(--education-yellow) 28%,
+    var(--education-paper)
+  );
+  color: var(--education-green);
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.puzzleInstruction svg {
+  flex: none;
+}
+
+.puzzleLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.35rem, 2.6vw, 2.25rem);
+  justify-items: center;
+  align-items: start;
+}
+
+.puzzleBoardColumn {
+  position: relative;
+  top: auto;
+  width: min(100%, 58rem);
+  margin-inline: auto;
+  min-width: 0;
+  padding: clamp(0.4rem, 1vw, 0.6rem);
+  isolation: isolate;
+}
+
+.puzzleBoardColumn::before {
+  position: absolute;
+  z-index: -1;
+  inset: 8% 0;
+  border-radius: 52% 48% 54% 46% / 46% 55% 45% 54%;
+  background:
+    radial-gradient(
+      circle at 52% 48%,
+      color-mix(in srgb, var(--education-card-mint) 58%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      circle at 12% 82%,
+      color-mix(in srgb, var(--education-pale-yellow) 58%, transparent),
+      transparent 42%
+    );
+  content: "";
+  filter: blur(0.35rem);
+}
+
+.puzzleBoard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  touch-action: manipulation;
+}
+
+.puzzlePiece {
+  --selected-x: 0%;
+  --selected-y: 0%;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transform-origin: center;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.72, 0.25, 1),
+    filter 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.puzzlePieceImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  animation: puzzle-piece-assemble 620ms cubic-bezier(0.18, 0.82, 0.24, 1)
+    var(--puzzle-delay, 0ms) both;
+}
+
+/* Map every export onto the overall SVG's coordinates at one shared scale.
+   The 446-unit square starts at (95.98, 0) in the original viewBox. */
+.puzzlePieceTopLeft {
+  --selected-x: -1.2%;
+  --selected-y: -1.2%;
+  top: calc(100% * 4.8 / 446);
+  left: calc(100% * 30 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceTopRight {
+  --selected-x: 1.2%;
+  --selected-y: -1.2%;
+  top: calc(100% * 29.8 / 446);
+  left: calc(100% * 218 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceBottomLeft {
+  --selected-x: -1.2%;
+  --selected-y: 1.2%;
+  top: calc(100% * 192.8 / 446);
+  left: calc(100% * 4.56 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceBottomRight {
+  --selected-x: 1.2%;
+  --selected-y: 1.2%;
+  top: calc(100% * 217.8 / 446);
+  left: calc(100% * 193 / 446);
+  z-index: 1;
+}
+
+.puzzlePieceCenter {
+  /* Keep the circle clickable above the transparent corners of lifted pieces. */
+  z-index: 10;
+  top: calc(100% * 121 / 446);
+  left: calc(100% * 121.52 / 446);
+  width: calc(100% * 204 / 446);
+  height: calc(100% * 204 / 446);
+  border-radius: 50%;
+}
+
+.puzzlePieceCenter .puzzlePieceImage {
+  animation-name: puzzle-center-assemble;
+}
+
+.puzzlePiece[data-lifted="true"] {
+  z-index: 8;
+  transform: translate(var(--selected-x), var(--selected-y));
+  filter: drop-shadow(0 0.55rem 0.55rem rgb(0 63 52 / 13%));
+}
+
+.puzzlePieceCenter[data-lifted="true"] {
+  z-index: 10;
+  transform: scale(1.015);
+  filter: drop-shadow(0 0.7rem 0.6rem rgb(0 63 52 / 16%));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .puzzlePiece:hover {
+    z-index: 8;
+    transform: translate(var(--selected-x), var(--selected-y));
+    filter: drop-shadow(0 0.55rem 0.55rem rgb(0 63 52 / 13%));
+  }
+
+  .puzzlePieceCenter:hover {
+    z-index: 10;
+    transform: scale(1.015);
+  }
+}
+
+.puzzlePiece:focus-visible {
+  z-index: 9;
+  outline: 3px dashed var(--education-green);
+  outline-offset: -3px;
+}
+
+.puzzlePieceCenter:focus-visible {
+  z-index: 11;
+  outline-offset: 0.2rem;
+}
+
+.puzzlePanel {
+  width: 100%;
+  max-width: 54rem;
+  min-width: 0;
+  justify-self: center;
+  padding: clamp(1.1rem, 2.5vw, 1.5rem) 0 0;
+  scroll-margin-top: calc(var(--site-nav-height, 4.5rem) + 1.5rem);
+  border-block-start: 2px solid
+    color-mix(in srgb, var(--education-mint) 72%, transparent);
+  border-inline-start: 0;
+}
+
+.puzzlePanel:focus-visible {
+  border-radius: 0.3rem;
+  outline: 3px solid var(--education-green);
+  outline-offset: 0.35rem;
+}
+
+.puzzlePanelInner {
+  animation: puzzle-panel-reveal 320ms cubic-bezier(0.18, 0.75, 0.25, 1) both;
+}
+
+.pageShell :global(#article-body) article .puzzlePanelTitle {
+  position: relative;
+  width: 100%;
+  margin-block: 0 var(--article-space-related);
+  padding: 0.82rem 0 0;
+  background: transparent;
+  color: var(--education-navy);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: clamp(1.32rem, 1.8vw, 1.62rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.28;
+  text-wrap: balance;
+}
+
+.pageShell :global(#article-body) article .puzzlePanelTitlePrinciple {
+  margin-block: 0 var(--article-space-related);
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(2rem, 3.45vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.puzzlePanelTitle::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.4rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--education-yellow),
+    var(--education-green)
+  );
+  content: "";
+}
+
+.puzzlePanelTitlePrinciple::before {
+  content: none;
+}
+
+.puzzlePanelBody {
+  min-width: 0;
+}
+
+.puzzlePanelBody > :first-child {
+  margin-block-start: 0;
+}
+
+.puzzlePanelAnchor {
+  scroll-margin-top: calc(var(--site-nav-height, 6rem) + 1.5rem);
+}
+
+.overviewTimeline {
+  --timeline-marker: 2.35rem;
+  position: relative;
+  display: grid;
+  margin-block: var(--article-space-related) 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  counter-reset: overview-timeline;
+}
+
+.overviewTimeline::before {
+  position: absolute;
+  top: 1.18rem;
+  bottom: 1.18rem;
+  left: calc(var(--timeline-marker) / 2 - 1px);
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    var(--education-yellow),
+    var(--education-mint) 48%,
+    var(--education-green)
+  );
+  content: "";
+}
+
+.overviewTimeline > li {
+  position: relative;
+  margin: 0;
+  padding: 0.95rem 0 0.95rem calc(var(--timeline-marker) + 1.15rem);
+  counter-increment: overview-timeline;
+}
+
+.overviewTimeline > li:first-child {
+  padding-block-start: 0;
+}
+
+.overviewTimeline > li:last-child {
+  padding-block-end: 0;
+}
+
+.overviewTimeline > li::before {
+  position: absolute;
+  top: 0.78rem;
+  left: 0;
+  display: grid;
+  width: var(--timeline-marker);
+  height: var(--timeline-marker);
+  border: 4px solid var(--education-paper);
+  border-radius: 50%;
+  background: var(--education-pale-yellow);
+  color: var(--education-navy);
+  content: counter(overview-timeline);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.08rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.overviewTimeline > li:first-child::before {
+  top: -0.18rem;
+}
+
+.overviewTimeline > li:nth-child(4n + 1)::before {
+  background: var(--education-yellow);
+}
+
+.overviewTimeline > li:nth-child(4n + 2)::before {
+  background: var(--education-card-mint);
+}
+
+.overviewTimeline > li:nth-child(4n + 3)::before {
+  background: var(--education-pale-yellow);
+}
+
+.overviewTimeline > li:nth-child(4n)::before {
+  background: color-mix(
+    in srgb,
+    var(--education-card-mint) 68%,
+    var(--hardware-white, #fff)
+  );
+}
+
+.overviewTimeline p {
+  margin-block: 0;
+}
+
+.overviewTimeline p + p {
+  margin-block-start: var(--article-space-label);
+}
+
+@keyframes puzzle-piece-assemble {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes puzzle-center-assemble {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes puzzle-panel-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.weaveLayout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: center;
+  margin-block: var(--article-space-feature) 0;
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  border: 0;
+  border-radius: var(--education-radius);
+  background: transparent;
+}
+
+.weaveFigure {
+  width: 100%;
+  max-width: 34rem;
+  margin: 0;
+  justify-self: center;
+}
+
+.weaveShape {
+  width: 100%;
+  aspect-ratio: 1667 / 1693;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--education-paper);
+}
+
+.weaveImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.weaveControls {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 0.32fr) minmax(0, 1fr);
+  gap: clamp(0.75rem, 1.5vw, 1.1rem);
+  align-items: stretch;
+  min-width: 0;
+}
+
+.weaveTabs {
+  display: grid;
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.weaveTab {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border: 0;
+  border-radius: 1rem;
+  background: var(--hardware-white, #fff);
+  color: var(--education-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.92rem;
+  text-align: left;
+  transition:
+    background 220ms ease,
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.weaveTab span {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--education-card-mint);
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-style: normal;
+  font-size: 1rem;
+  place-items: center;
+}
+
+.weaveTab:hover {
+  background: var(--education-pale-yellow);
+  color: var(--education-ink);
+  transform: translateX(0.1rem);
+}
+
+.weaveTab[aria-selected="true"],
+.weaveTab[aria-selected="true"]:hover {
+  background: var(--education-yellow);
+  color: var(--education-ink);
+  font-weight: 700;
+  transform: none;
+}
+
+.weaveTab[aria-selected="true"] span {
+  background: var(--hardware-white, #fff);
+  color: var(--education-navy);
+}
+
+.weavePanel {
+  display: block;
+  box-sizing: border-box;
+  height: 23.5rem;
+  padding: clamp(1.15rem, 2.4vw, 1.55rem);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  border: 0;
+  border-radius: 1.5rem;
+  background: var(--hardware-white, #fff);
+}
+
+.weavePanel[hidden] {
+  display: none;
+}
+
+.weavePanel[data-active="true"],
+.milestoneBody,
+.iterationColumns {
+  animation: panel-reveal 320ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.weavePanelBody {
+  min-width: 0;
+}
+
+@keyframes panel-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pageShell :global(#article-body) article .weavePanel h4 {
+  margin-block: 0 var(--article-space-related);
+  width: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--education-royal);
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: clamp(1.25rem, 1.7vw, 1.45rem);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: none;
+}
+
+.workflowLabel {
+  margin-block: var(--article-space-topic) var(--article-space-label);
+  color: var(--education-navy);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.weavePanel p {
+  margin-block: 0;
+  color: var(--education-ink);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.magicSection {
+  margin-block: var(--article-space-feature);
+}
+
+.magicGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem;
+  perspective: 1000px;
+}
+
+.magicCard {
+  min-height: 21rem;
+  color: var(--education-ink);
+  perspective: 1000px;
+  transition: min-height 320ms ease;
+}
+
+.magicCardInner {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 21rem;
+  transition:
+    transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    min-height 320ms ease;
+  transform-style: preserve-3d;
+}
+
+.magicCardFlipped .magicCardInner {
+  transform: rotateY(180deg);
+}
+
+.magicCardFlipped,
+.magicCardFlipped .magicCardInner {
+  min-height: 43rem;
+}
+
+.magicFace {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-pale-yellow);
+  backface-visibility: hidden;
+}
+
+.magicCard:nth-child(2) .magicFace {
+  background: var(--education-card-mint);
+}
+
+.magicCard:nth-child(3) .magicFace {
+  background: var(--education-yellow);
+}
+
+.magicFace[aria-hidden="true"] {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.magicFace::before {
+  position: absolute;
+  top: 1.3rem;
+  left: 1.3rem;
+  width: clamp(7rem, 60%, 10rem);
+  aspect-ratio: 1;
+  border: clamp(0.7rem, 2vw, 1rem) solid
+    color-mix(in srgb, var(--hardware-white) 45%, transparent);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.magicFlipTarget {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.magicFlipTarget:focus-visible {
+  outline-offset: -5px;
+}
+
+.magicFace strong {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  margin-top: auto;
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.85rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.flipHint {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-block-start: var(--article-space-related);
+  color: var(--education-royal);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.magicBack {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--education-card-mint);
+  color: var(--education-ink);
+  transform: rotateY(180deg);
+}
+
+.magicBack::before {
+  content: none;
+}
+
+.magicBackTitle {
+  flex: none;
+  max-width: none;
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.magicBackScroll {
+  min-height: 0;
+  flex: 1;
+  margin-block-start: var(--article-space-related);
+  padding-right: 0.25rem;
+  padding-bottom: 0.4rem;
+  overflow: auto;
+  mask-image: none;
+  scrollbar-color: var(--education-green) transparent;
+  scrollbar-width: thin;
+}
+
+.magicBackScroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.magicBackScroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--education-green);
+}
+
+.magicBackContent {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.backHint {
+  width: 100%;
+  min-height: 2.75rem;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-block-start: var(--article-space-related);
+  padding: 0.65rem 0.8rem;
+  border-top: 0;
+  background: transparent;
+  color: var(--education-navy);
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+}
+
+.magicBack p {
+  margin-block: 0 var(--article-space-related);
+}
+
+.magicBack p:last-child {
+  margin-block-end: 0;
+}
+
+.magicBack ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.magicBack li {
+  margin-block: 0;
+}
+
+.workflow {
+  margin-block: var(--article-space-feature);
+}
+
+.workflowRing {
+  position: relative;
+  width: min(100%, 42rem);
+  aspect-ratio: 1.12;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+.workflowRing::before,
+.workflowRing::after {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.workflowRing::before {
+  inset: 7% 4%;
+  border: 1px dashed color-mix(in srgb, var(--education-green) 34%, transparent);
+}
+
+.workflowRing::after {
+  inset: 19% 15%;
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      color-mix(in srgb, var(--education-yellow) 72%, transparent) 0 0.18rem,
+      transparent 0.22rem
+    ),
+    radial-gradient(
+      circle at 100% 50%,
+      color-mix(in srgb, var(--education-mint) 85%, transparent) 0 0.18rem,
+      transparent 0.22rem
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      color-mix(in srgb, var(--education-yellow) 72%, transparent) 0 0.18rem,
+      transparent 0.22rem
+    ),
+    radial-gradient(
+      circle at 0 50%,
+      color-mix(in srgb, var(--education-mint) 85%, transparent) 0 0.18rem,
+      transparent 0.22rem
+    );
+}
+
+.workflowOrbit {
+  position: absolute;
+  inset: 13% 9%;
+  border: 3px solid var(--education-green);
+  border-radius: 50%;
+  opacity: 0.82;
+}
+
+.workflowOrbit::before {
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px dashed color-mix(in srgb, var(--education-green) 35%, transparent);
+  border-radius: inherit;
+  content: "";
+}
+
+.workflowCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: clamp(9rem, 29%, 13rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  place-items: center;
+  align-content: center;
+  gap: 0.5rem;
+  border: 2px solid var(--education-mint);
+  border-radius: 50%;
+  background: color-mix(
+    in srgb,
+    var(--education-card-mint) 32%,
+    var(--education-paper)
+  );
+  color: var(--education-ink);
+  text-align: center;
+}
+
+.workflowDialogEyebrow {
+  color: var(--education-green);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.workflowCore strong {
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.1rem, 2.3vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.workflowNodes {
+  position: absolute;
+  inset: 0;
+}
+
+.workflowNode {
+  position: absolute;
+  display: grid;
+  z-index: 1;
+  width: 27%;
+  min-height: 5.15rem;
+  padding: 0.85rem 1.05rem;
+  transform: translate(-50%, -50%);
+  place-items: center;
+  border: 2px solid var(--education-green);
+  border-radius: 1rem;
+  background: var(--hardware-white, #fff);
+  color: var(--education-ink);
+  cursor: pointer;
+  font: 700 clamp(0.9rem, 1.4vw, 1.08rem) / 1.2
+    var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  text-align: center;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.workflowNode:nth-child(1) {
+  top: 13%;
+  left: 50%;
+}
+
+.workflowNode:nth-child(2) {
+  top: 31%;
+  left: 87%;
+}
+
+.workflowNode:nth-child(3) {
+  top: 85%;
+  left: 75%;
+}
+
+.workflowNode:nth-child(4) {
+  top: 85%;
+  left: 25%;
+}
+
+.workflowNode:nth-child(5) {
+  top: 31%;
+  left: 13%;
+}
+
+.workflowNode:hover {
+  border-color: var(--education-navy);
+  background: var(--education-yellow);
+  color: var(--education-navy);
+  transform: translate(-50%, -50%) translateY(-0.2rem);
+}
+
+.workflowNode:focus-visible {
+  z-index: 2;
+  outline: 3px solid var(--education-navy);
+  outline-offset: 4px;
+}
+
+.workflowDialog {
+  width: min(48rem, calc(100vw - 2rem));
+  max-height: min(84svh, 48rem);
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid var(--education-mint);
+  border-radius: 1.5rem;
+  background: var(--education-paper);
+  color: var(--education-ink);
+  box-shadow: 0 1.5rem 4rem rgb(0 63 52 / 24%);
+  animation: workflow-dialog-in 220ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.workflowDialog::backdrop {
+  background: rgb(0 63 52 / 48%);
+  animation: workflow-backdrop-in 220ms ease-out;
+}
+
+.workflowDialogInner {
+  display: flex;
+  max-height: inherit;
+  flex-direction: column;
+}
+
+.workflowDialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem 1rem;
+  border-block-end: 1px solid
+    color-mix(in srgb, var(--education-green) 16%, transparent);
+  background: var(--hardware-white, #fff);
+}
+
+.workflowDialogHeader h2 {
+  max-width: 28rem;
+  margin: 0.35rem 0 0;
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.workflowDialogClose {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--education-yellow);
+  color: var(--education-navy);
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.workflowDialogClose:hover {
+  background: var(--education-pale-yellow);
+  transform: rotate(4deg);
+}
+
+.workflowDialogClose:focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: 3px;
+}
+
+.workflowDialogDetail {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.15rem 1.35rem 1.4rem;
+  scrollbar-color: var(--education-green) transparent;
+  scrollbar-width: thin;
+}
+
+.workflowDialogDetail :where(p, ul, ol) {
+  margin-block: 0 var(--article-space-related);
+}
+
+.workflowDialogDetail :where(p, ul, ol):last-child {
+  margin-block-end: 0;
+}
+
+.workflowDialogDetail ul,
+.workflowDialogDetail ol {
+  padding-inline-start: 1.25rem;
+}
+
+.workflowDialogDetail strong {
+  color: var(--education-ink);
+}
+
+.pageShell .workflowDialogFigure {
+  margin-block: 0 var(--article-space-related);
+}
+
+.workflowDialogFigure :global([class*="media"]) {
+  overflow: hidden;
+  border: 0.35rem solid var(--education-mint);
+  border-radius: 1rem;
+  background: var(--hardware-white, #fff);
+}
+
+@keyframes workflow-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem) scale(0.985);
+  }
+}
+
+@keyframes workflow-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.milestoneExplorer {
+  display: block;
+  margin-block: var(--article-space-feature);
+}
+
+.milestoneNav {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-block: 0.9rem;
+  border-block: 1px solid
+    color-mix(in srgb, var(--education-ink) 18%, transparent);
+}
+
+.milestoneNavItem {
+  flex: 1 1 10rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--education-ink) 20%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--education-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.pageShell .milestoneNavItem:focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: 3px;
+}
+
+.milestoneNavItem[aria-selected="true"] {
+  border-color: var(--education-navy);
+  background: var(--education-navy);
+  color: var(--hardware-white, #fff);
+}
+
+.milestoneNavItem:hover {
+  border-color: var(--education-green);
+  background: color-mix(in srgb, var(--education-card-mint) 46%, transparent);
+}
+
+.milestoneNavItem[aria-selected="true"]:hover {
+  border-color: var(--education-navy);
+  background: var(--education-navy);
+  color: var(--hardware-white, #fff);
+}
+
+.pageShell .milestoneNavItem strong {
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+}
+
+.milestoneNavIndex {
+  margin-inline-end: 0.4rem;
+  color: var(--education-green);
+  font-variant-numeric: tabular-nums;
+}
+
+.milestoneNavItem[aria-selected="true"] .milestoneNavIndex,
+.milestoneNavItem[aria-selected="true"]:hover .milestoneNavIndex {
+  color: var(--education-yellow);
+}
+
+.milestoneDisplay {
+  position: relative;
+  min-width: 0;
+  padding-block: clamp(1.2rem, 2.5vw, 1.75rem) 0;
+  background: transparent;
+}
+
+.milestoneHeading {
+  display: block;
+  margin-block-end: var(--article-space-related);
+  padding-block-end: 0.9rem;
+  border-block-end: 1px solid
+    color-mix(in srgb, var(--education-ink) 18%, transparent);
+}
+
+.milestoneHeading h6 {
+  margin: 0;
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.08;
+  text-transform: none;
+}
+
+.milestoneBody {
+  display: grid;
+  gap: var(--article-space-block);
+}
+
+.pageShell .milestoneBody > * {
+  margin-block: 0;
+}
+
+.milestoneCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.4vw, 1.1rem);
+}
+
+.milestoneCardsTwo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.milestoneCardsHorizontal {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.milestoneCardsHorizontal > .milestoneStaticCard {
+  display: grid;
+  grid-template-areas:
+    "step detail"
+    "title detail";
+  grid-template-columns: minmax(12.5rem, 0.8fr) minmax(0, 2fr);
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  column-gap: 1.25rem;
+  padding-block: 1.1rem;
+  border: 0;
+  border-block-start: 1px solid
+    color-mix(in srgb, var(--education-ink) 18%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.milestoneCardsHorizontal .milestoneStep {
+  grid-area: step;
+  margin: 0.1rem 0 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--education-green);
+  font-size: 0.84rem;
+  letter-spacing: 0.05em;
+}
+
+.milestoneCardsHorizontal .milestoneStaticCard > h6 {
+  grid-area: title;
+  min-height: 0;
+  padding: 0.45rem 0 0;
+  color: var(--education-heading);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.milestoneCardsHorizontal .milestoneStaticCard .milestoneDetail {
+  grid-area: detail;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.milestoneCard {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.25rem;
+  background: var(--education-card-mint);
+  isolation: isolate;
+}
+
+.milestoneCard::after {
+  content: none;
+}
+
+.milestoneCards > :nth-child(3n + 2) {
+  background: var(--education-pale-yellow);
+}
+
+.milestoneCards > :nth-child(3n) {
+  background: var(--education-yellow);
+}
+
+.milestoneCard > button {
+  display: flex;
+  width: 100%;
+  min-height: 7rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--education-ink);
+  cursor: pointer;
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.milestoneCard > button svg {
+  flex: none;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--education-green);
+  transition: transform 220ms ease;
+}
+
+.milestoneCard > button:hover {
+  background: color-mix(in srgb, var(--hardware-white) 35%, transparent);
+}
+
+.milestoneCard:hover > button svg {
+  transform: translate(0.08rem, 0.08rem);
+}
+
+.milestoneCard > button:focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: -4px;
+}
+
+.milestoneDialog {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: min(82vh, 42rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-paper);
+  color: var(--education-ink);
+  box-shadow: 0 30px 80px rgba(31, 49, 95, 0.28); /* taste-skill-ignore: modal overlay */
+  animation: milestone-dialog-in 220ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.milestoneDialog::backdrop {
+  background: rgba(31, 49, 95, 0.55);
+  animation: milestone-backdrop-in 220ms ease-out;
+}
+
+.milestoneDialog[data-closing="true"] {
+  animation: milestone-dialog-out 180ms ease-in both;
+  pointer-events: none;
+}
+
+.milestoneDialog[data-closing="true"]::backdrop {
+  animation: milestone-backdrop-out 180ms ease-in both;
+}
+
+@keyframes milestone-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem) scale(0.985);
+  }
+}
+
+@keyframes milestone-dialog-out {
+  to {
+    opacity: 0;
+    transform: translateY(0.4rem) scale(0.99);
+  }
+}
+
+@keyframes milestone-backdrop-in {
+  from {
+    background: rgba(31, 49, 95, 0);
+  }
+}
+
+@keyframes milestone-backdrop-out {
+  to {
+    background: rgba(31, 49, 95, 0);
+  }
+}
+
+.milestoneDialogInner {
+  display: flex;
+  max-height: inherit;
+  flex-direction: column;
+}
+
+.milestoneDialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.5rem 0.9rem;
+  background: var(--education-yellow);
+}
+
+.milestoneDialogHeader h6 {
+  margin: 0;
+  color: var(--education-navy);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: none;
+}
+
+.milestoneDialogClose {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--hardware-white, #fff);
+  color: var(--education-green);
+  cursor: pointer;
+}
+
+.milestoneDialogClose:hover {
+  background: var(--education-card-mint);
+}
+
+.milestoneDialog .milestoneDetail {
+  overflow: auto;
+  padding: 1.2rem 1.5rem 1.5rem;
+  font-size: 0.98rem;
+}
+
+.milestoneDetail {
+  padding: 0 1rem 1rem;
+  color: var(--education-ink);
+  font-size: 0.91rem;
+  line-height: 1.6;
+}
+
+.milestoneDetail :where(p, ul, ol) {
+  margin-block: 0 var(--article-space-related);
+}
+
+.milestoneDetail :where(p, ul, ol):last-child {
+  margin-block-end: 0;
+}
+
+.milestoneDetail ul,
+.milestoneDetail ol {
+  padding-left: 1.25rem;
+}
+
+.milestoneDetail strong {
+  color: var(--education-ink);
+}
+
+.milestoneDetail a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--education-green);
+  font-size: 0.92rem;
+  text-decoration-color: var(--education-yellow);
+  text-underline-offset: 0.2em;
+}
+
+.milestoneDetail .dialogResourceAction {
+  margin-block-start: var(--article-space-related);
+  padding: 0.68rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--education-yellow);
+  color: var(--education-navy);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-decoration: none;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.milestoneDetail .dialogResourceAction:hover {
+  background: var(--education-card-mint);
+  transform: translateY(-0.1rem);
+}
+
+.milestoneStaticCard {
+  min-width: 0;
+}
+
+.milestoneStep {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--education-green);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+}
+
+.milestoneStaticCard > h6 {
+  min-height: 0;
+  margin: 0;
+  padding: 0.55rem 0 0.75rem;
+  color: var(--education-heading);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.milestoneStaticCard .milestoneDetail {
+  padding: 0;
+}
+
+.milestoneChoice {
+  margin-block: 0;
+  padding: clamp(1.15rem, 2.4vw, 1.6rem);
+  border: 0;
+  border-inline-start: 0.45rem solid var(--education-yellow);
+  border-radius: 0 var(--education-radius) var(--education-radius) 0;
+  background: color-mix(
+    in srgb,
+    var(--education-pale-yellow) 64%,
+    var(--education-paper)
+  );
+}
+
+.pageShell .milestoneBody > .choiceConnector {
+  display: block;
+  width: 100%;
+  height: calc(3.8rem + 2 * var(--article-space-block));
+  margin-block: calc(-1 * var(--article-space-block));
+  overflow: visible;
+  opacity: 0.9;
+}
+
+.choiceLine {
+  fill: none;
+  stroke: var(--education-green);
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  animation: draw-choice-line 650ms ease forwards;
+}
+
+.choiceLine:nth-of-type(2) {
+  animation-delay: 90ms;
+}
+
+.choiceNode {
+  fill: var(--education-green);
+  opacity: 0;
+  transform: scale(0.3);
+  transform-origin: 300px 74px;
+  animation: pop-choice-node 300ms ease 620ms forwards;
+}
+
+@keyframes draw-choice-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pop-choice-node {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.milestoneChoice > span {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--education-navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+
+.milestoneChoice h6 {
+  margin-block: 0.75rem 0.65rem;
+  color: var(--education-heading);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.milestoneChoice p {
+  margin: 0;
+  color: var(--education-ink);
+  line-height: 1.66;
+}
+
+.milestoneChoice ol {
+  display: grid;
+  gap: 0.62rem;
+  margin-block: 1rem 0;
+  padding-inline-start: 1.45rem;
+  color: var(--education-ink);
+}
+
+.milestoneChoice li {
+  padding-inline-start: 0.18rem;
+}
+
+.milestoneChoice li::marker {
+  color: var(--education-green);
+  font-weight: 700;
+}
+
+.retainedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.4vw, 1.1rem);
+  margin-block-start: 0;
+}
+
+.retainedGrid > div {
+  width: 100%;
+  min-height: 0;
+  padding: 1rem 1.15rem;
+  border: 0;
+  border-inline-start: 0.3rem solid var(--education-green);
+  border-radius: 0;
+  background: transparent;
+}
+
+.retainedGrid > div:nth-child(2) {
+  border-inline-start-color: var(--education-yellow);
+}
+
+.retainedGrid > div:nth-child(3) {
+  border-inline-start-color: var(--education-navy);
+}
+
+.retainedGrid span {
+  color: var(--education-navy);
+}
+
+.retainedGrid p {
+  margin-block: var(--article-space-label) 0;
+  color: var(--education-ink);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.iterationExplorer {
+  margin-block: var(--article-space-feature);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.iterationNodes {
+  display: flex;
+  gap: 0.45rem;
+  margin-block: 0 var(--article-space-topic);
+  padding-block: 0.9rem;
+  border-block: 1px solid
+    color-mix(in srgb, var(--education-ink) 18%, transparent);
+}
+
+.iterationNode {
+  position: relative;
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--education-navy) 18%, transparent);
+  border-radius: 0.95rem;
+  background: color-mix(
+    in srgb,
+    var(--hardware-white, #fff) 90%,
+    var(--education-paper)
+  );
+  color: var(--education-ink);
+  cursor: pointer;
+  font-family: var(--hardware-body, "Trebuchet MS", "Fira Sans", sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  box-shadow: 0 0.16rem 0.55rem
+    color-mix(in srgb, var(--education-navy) 6%, transparent);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.iterationNode:hover {
+  border-color: var(--education-green);
+  background: color-mix(
+    in srgb,
+    var(--education-pale-yellow) 62%,
+    var(--hardware-white, #fff)
+  );
+  transform: translateY(-1px);
+}
+
+.iterationNode:focus-visible {
+  outline: 3px solid var(--education-green);
+  outline-offset: 3px;
+}
+
+.pageShell .iterationNode strong {
+  color: inherit;
+  font: inherit;
+}
+
+.iterationNode span {
+  width: 0.82rem;
+  height: 0.82rem;
+  flex: none;
+  border: 2px solid var(--education-green);
+  border-radius: 50%;
+  background: var(--hardware-white, #fff);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--education-card-mint) 26%, transparent);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.iterationNode[aria-selected="true"] {
+  border-color: var(--education-navy);
+  background: linear-gradient(
+    135deg,
+    var(--education-navy),
+    color-mix(in srgb, var(--education-navy) 84%, var(--education-green))
+  );
+  color: var(--hardware-white, #fff);
+  font-weight: 700;
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(in srgb, var(--hardware-white, #fff) 16%, transparent),
+    0 0.2rem 0 var(--education-yellow),
+    0 0.5rem 1rem color-mix(in srgb, var(--education-navy) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+.iterationNode[aria-selected="true"] span {
+  border-color: var(--education-yellow);
+  background: var(--education-yellow);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--hardware-white, #fff) 28%, transparent);
+  transform: scale(1.06);
+}
+
+.iterationNode[aria-selected="true"]:hover {
+  border-color: var(--education-navy);
+  color: var(--hardware-white, #fff);
+}
+
+.iterationNode:active {
+  transform: translateY(1px);
+}
+
+.iterationNode[aria-selected="true"]:active {
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(in srgb, var(--hardware-white, #fff) 16%, transparent),
+    0 0.08rem 0 var(--education-yellow),
+    0 0.3rem 0.7rem color-mix(in srgb, var(--education-navy) 14%, transparent);
+  transform: translateY(1px);
+}
+
+.iterationColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  background: transparent;
+}
+
+.iterationColumns article {
+  --iteration-accent: var(--education-green);
+
+  position: relative;
+  display: grid;
+  grid-template-areas: "label body";
+  grid-template-columns: minmax(12.5rem, 0.8fr) minmax(0, 2fr);
+  align-items: start;
+  column-gap: clamp(1rem, 2vw, 1.75rem);
+  min-height: 0;
+  padding: 1.25rem 0 1.4rem;
+  border: 0;
+  border-block-start: 1px solid
+    color-mix(in srgb, var(--education-ink) 18%, transparent);
+  border-radius: 0;
+  background: transparent;
+}
+
+.iterationColumns article:nth-child(2) {
+  --iteration-accent: var(--education-yellow);
+}
+
+.iterationColumns article:nth-child(3) {
+  --iteration-accent: var(--education-royal);
+}
+
+.iterationCardHeader {
+  grid-area: label;
+  min-width: 0;
+  padding-inline-start: 0.85rem;
+  border-inline-start: 0.32rem solid var(--iteration-accent);
+}
+
+.iterationCardHeader h6 {
+  margin: 0;
+  color: var(--education-heading);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: var(--education-h6-size);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.iterationCardHeader h6::before {
+  content: none;
+}
+
+.iterationBody {
+  grid-area: body;
+  min-width: 0;
+  color: var(--education-ink);
+  font-size: var(--article-text);
+  line-height: 1.62;
+}
+
+.iterationColumns .iterationBody > :first-child {
+  margin-block-start: 0;
+}
+
+.iterationColumns p {
+  margin-block: var(--article-space-related) 0;
+  color: var(--education-ink);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.iterationColumns :where(ol, ul) {
+  margin-block: var(--article-space-related) 0;
+  padding-left: 1.2rem;
+  color: var(--education-ink);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.iterationColumns li + li {
+  margin-block-start: var(--article-space-label);
+}
+
+.compositeFigure {
+  margin-block: var(--article-space-media);
+}
+
+.actionGallery {
+  margin-block: var(--article-space-media);
+}
+
+.actionRecord {
+  margin-block: var(--article-space-block);
+  padding: 1.4rem 1.5rem;
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-pale-yellow);
+  color: var(--education-ink);
+}
+
+.actionRecord p {
+  margin-block: 0 var(--article-space-related);
+  line-height: 1.6;
+}
+
+.actionRecord p:last-child {
+  margin-block-end: 0;
+}
+
+.pageShell .resourceListHeading {
+  margin-block: var(--article-space-block) var(--article-space-related);
+  color: var(--education-green);
+  font-family: var(--hardware-display, Impact, "Arial Narrow", sans-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.conclusion {
+  display: block;
+  padding: clamp(1.35rem, 3vw, 2.25rem);
+  border: 0;
+  border-radius: var(--education-radius);
+  background: var(--education-pale-yellow);
+  background: color-mix(
+    in srgb,
+    var(--education-yellow) 24%,
+    var(--education-paper)
+  );
+}
+
+.conclusion h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--education-navy);
+  font-size: clamp(1.9rem, 3vw, 2.65rem);
+}
+
+@media (max-width: 1099px) {
+  .echoCardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .weaveLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .weavePanel {
+    height: 20rem;
+  }
+
+  .magicGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .magicCard,
+  .magicCardInner {
+    min-height: 22rem;
+  }
+
+  .magicCardFlipped,
+  .magicCardFlipped .magicCardInner {
+    min-height: 34rem;
+  }
+
+  .milestoneCards,
+  .retainedGrid,
+  .iterationColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1279px) {
+  .magicCardFlipped,
+  .magicCardFlipped .magicCardInner {
+    min-height: 32rem;
+  }
+}
+
+@media (max-width: 1279px) {
+  .milestoneNavItem {
+    flex: 1 1 calc(50% - 0.225rem);
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1279px) {
+  .milestoneCards,
+  .milestoneCardsTwo,
+  .milestoneCardsHorizontal,
+  .retainedGrid,
+  .magicGrid {
+    justify-items: center;
+  }
+
+  .milestoneCardsHorizontal {
+    justify-items: stretch;
+  }
+
+  .magicCard {
+    width: min(100%, 26rem);
+    min-height: 26rem;
+  }
+
+  .magicCardInner {
+    min-height: 26rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .magicCard,
+  .magicCardInner {
+    min-height: 18rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .magicCardFlipped,
+  .magicCardFlipped .magicCardInner {
+    min-height: 26rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .milestoneCardsHorizontal > .milestoneStaticCard {
+    grid-template-areas:
+      "step"
+      "title"
+      "detail";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .milestoneCardsHorizontal .milestoneStep {
+    margin: 0;
+    padding: 0;
+  }
+
+  .milestoneCardsHorizontal .milestoneStaticCard > h6 {
+    padding: 0.45rem 0 0.7rem;
+  }
+
+  .milestoneCardsHorizontal .milestoneStaticCard .milestoneDetail {
+    padding: 0;
+    border: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .iterationColumns article {
+    grid-template-areas:
+      "label"
+      "body";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .iterationCardHeader {
+    margin-block-end: 0.85rem;
+    padding-inline-end: 0.85rem;
+    padding-block-end: 0.7rem;
+    border-inline-end: 0;
+  }
+
+  .iterationColumns .iterationBody > :first-child {
+    margin-block-start: var(--article-space-related);
+  }
+}
+
+@media (max-width: 600px) {
+  .pageShell {
+    --education-h3-size: 1.25rem;
+    --education-h4-size: 1.18rem;
+    --education-h5-size: 1.12rem;
+    --education-h6-size: 1.06rem;
+  }
+
+  .puzzleExplorer {
+    margin-block-start: var(--article-space-topic);
+  }
+
+  .pageShell .puzzleTagline {
+    font-size: 1.12rem;
+  }
+
+  .pageShell .puzzleInstruction {
+    align-items: flex-start;
+    border-radius: 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .puzzleBoardColumn {
+    padding: 0.4rem;
+  }
+
+  .pageShell :global(#article-body) article .puzzlePanelTitle {
+    font-size: 1.24rem;
+    line-height: 1.32;
+  }
+
+  .pageShell :global(#article-body) article .puzzlePanelTitlePrinciple {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  .overviewTimeline {
+    --timeline-marker: 2.05rem;
+  }
+
+  .overviewTimeline > li {
+    padding-inline-start: calc(var(--timeline-marker) + 0.85rem);
+  }
+
+  .overviewTimeline > li::before {
+    border-width: 3px;
+    font-size: 0.98rem;
+  }
+
+  .magicCardFlipped,
+  .magicCardFlipped .magicCardInner {
+    min-height: 36rem;
+  }
+
+  .echoCard {
+    padding: 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .milestoneNav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .milestoneNavItem {
+    flex: 1 1 auto;
+    min-height: 2.75rem;
+    padding: 0.62rem 0.8rem;
+    border-radius: 0.85rem;
+  }
+
+  .pageShell .milestoneNavItem strong {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+
+  .milestoneDisplay {
+    padding-block-start: 1rem;
+  }
+
+  .milestoneHeading {
+    padding-block-end: 0.8rem;
+  }
+
+  .milestoneBody {
+    gap: var(--article-space-block);
+  }
+
+  .milestoneCard {
+    border-radius: 1.3rem;
+  }
+
+  .milestoneCard > button {
+    min-height: 7.4rem;
+    gap: 0.75rem;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .milestoneCard > button svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    padding: 0;
+  }
+
+  .milestoneChoice {
+    padding: 1.1rem 1rem;
+    border-radius: 0 var(--education-radius) var(--education-radius) 0;
+  }
+
+  .milestoneChoice h6 {
+    font-size: var(--education-h6-size);
+  }
+
+  .milestoneChoice ol {
+    gap: 0.5rem;
+    padding-inline-start: 1.25rem;
+  }
+
+  .retainedGrid > div {
+    min-height: 0;
+    padding: 0.9rem 1rem;
+    border-radius: 0;
+  }
+
+  .milestoneDialog {
+    width: calc(100vw - 1.25rem);
+    max-height: 86vh;
+  }
+
+  .milestoneDialogHeader,
+  .milestoneDialog .milestoneDetail {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .workflowRing {
+    width: min(100%, 30rem);
+    aspect-ratio: 1.08;
+  }
+
+  .workflowOrbit {
+    inset: 13% 4%;
+    border-width: 2px;
+  }
+
+  .workflowCore {
+    width: 30%;
+    gap: 0.35rem;
+  }
+
+  .workflowCore span,
+  .workflowDialogEyebrow {
+    font-size: 0.68rem;
+  }
+
+  .workflowCore strong {
+    font-size: clamp(0.9rem, 4vw, 1.25rem);
+  }
+
+  .workflowNode {
+    width: 29%;
+    min-height: 4rem;
+    padding: 0.55rem 0.6rem;
+    border-width: 1.5px;
+    border-radius: 0.78rem;
+    font-size: clamp(0.76rem, 3vw, 0.92rem);
+  }
+
+  .workflowNode:nth-child(2) {
+    top: 31%;
+    left: 86%;
+  }
+
+  .workflowNode:nth-child(3) {
+    top: 85%;
+    left: 75%;
+  }
+
+  .workflowNode:nth-child(4) {
+    top: 85%;
+    left: 25%;
+  }
+
+  .workflowNode:nth-child(5) {
+    top: 31%;
+    left: 14%;
+  }
+
+  .workflowDialog {
+    width: calc(100vw - 1.25rem);
+    max-height: 86svh;
+    border-radius: 1.15rem;
+  }
+
+  .workflowDialogHeader,
+  .workflowDialogDetail {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .pageShell :where(th, td) {
+    padding: 0.55rem 0.45rem;
+  }
+
+  .weaveFigure {
+    max-width: 26rem;
+  }
+
+  .weaveControls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weaveTabs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 0.35rem;
+  }
+
+  .weaveTab {
+    display: flex;
+    min-height: 4.7rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.76rem;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .weaveTab span {
+    width: 1.9rem;
+    height: 1.9rem;
+    flex: none;
+  }
+
+  .weavePanel {
+    height: 26rem;
+    padding: 1rem;
+  }
+
+  .milestoneHeading h6 {
+    margin-block-start: 0;
+  }
+
+  .iterationNodes {
+    justify-content: flex-start;
+    gap: 0.45rem;
+  }
+
+  .resourceEntry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  .resourceAudiences {
+    grid-column: auto;
+  }
+
+  .resourceEntryAction {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 360px) {
+  .iterationNode {
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 330px) {
+  .milestoneNav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .milestoneNavItem {
+    min-height: 0;
+    text-align: center;
+  }
+
+  .puzzleBoardColumn {
+    padding: 0;
+  }
+
+  .pageShell .puzzleInstruction {
+    padding: 0.48rem 0.62rem;
+    font-size: 0.82rem;
+  }
+
+  .weavePanel {
+    height: 28rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageShell *,
+  .pageShell *::before,
+  .pageShell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .choiceLine,
+  .choiceNode {
+    animation: none !important;
+  }
+
+  .choiceLine {
+    stroke-dashoffset: 0;
+  }
+
+  .choiceNode {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .milestoneDialog::backdrop {
+    animation: none !important;
+  }
+
+  .workflowDialog::backdrop {
+    animation: none !important;
+  }
+}

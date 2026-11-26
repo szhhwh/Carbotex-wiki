@@ -1,0 +1,34 @@
+:global(body:has(main[data-article-theme="hardware"])) {
+  background: var(--hardware-paper);
+}
+
+.dataStream {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 3rem;
+}
+
+.dataStream > div > h3 {
+  margin-top: 0;
+}
+
+.dataStream > figure {
+  width: 100%;
+  margin-block: 1.6rem 0;
+}
+
+@media (max-width: 600px) {
+  .dataStream {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+
+  .dataStream > figure {
+    width: min(100%, 24rem);
+    margin-top: 0;
+    margin-inline: auto;
+  }
+}

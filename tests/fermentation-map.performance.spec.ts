@@ -82,81 +82,89 @@ async function stopFrameProbe(map: Locator): Promise<FrameMetrics> {
   });
 }
 
-test("pan, wheel and dialog stay within the frame and long-task budget", {
-  tag: "@performance",
-}, async ({ page }, testInfo) => {
-  const errors = collectPageErrors(page);
-  const map = await openStandalone(page);
-  const renderer = await page.evaluate(() => {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl2");
-    const extension = gl?.getExtension("WEBGL_debug_renderer_info");
-    return extension
-      ? String(gl?.getParameter(extension.UNMASKED_RENDERER_WEBGL))
-      : "unknown";
-  });
-  const softwareRenderer = /SwiftShader|llvmpipe|Software/i.test(renderer);
-  await map.scrollIntoViewIfNeeded();
-  const box = await map.boundingBox();
-  if (!box) throw new Error("Map has no bounding box");
-  const center = {
-    x: box.x + box.width * 0.5,
-    y: box.y + box.height * 0.5,
-  };
+test(
+  "pan, wheel and dialog stay within the frame and long-task budget",
+  {
+    tag: "@performance",
+  },
+  async ({ page }, testInfo) => {
+    const errors = collectPageErrors(page);
+    const map = await openStandalone(page);
+    const renderer = await page.evaluate(() => {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl2");
+      const extension = gl?.getExtension("WEBGL_debug_renderer_info");
+      return extension
+        ? String(gl?.getParameter(extension.UNMASKED_RENDERER_WEBGL))
+        : "unknown";
+    });
+    const softwareRenderer = /SwiftShader|llvmpipe|Software/i.test(renderer);
+    await map.scrollIntoViewIfNeeded();
+    const box = await map.boundingBox();
+    if (!box) throw new Error("Map has no bounding box");
+    const center = {
+      x: box.x + box.width * 0.5,
+      y: box.y + box.height * 0.5,
+    };
 
-  await startFrameProbe(map);
-  await page.mouse.move(center.x, center.y);
-  await page.mouse.down();
-  await page.mouse.move(center.x + 150, center.y + 70, { steps: 20 });
-  await page.mouse.up();
-  await page.waitForTimeout(450);
-  const pan = await stopFrameProbe(map);
-  const panState = await stateOf(map);
-  expect(panState.center).not.toBeNull();
+    await startFrameProbe(map);
+    await page.mouse.move(center.x, center.y);
+    await page.mouse.down();
+    await page.mouse.move(center.x + 150, center.y + 70, { steps: 20 });
+    await page.mouse.up();
+    await page.waitForTimeout(450);
+    const pan = await stopFrameProbe(map);
+    const panState = await stateOf(map);
+    expect(panState.center).not.toBeNull();
 
-  await startFrameProbe(map);
-  await page.mouse.move(center.x, center.y);
-  await page.mouse.wheel(0, -500);
-  await page.waitForTimeout(450);
-  const wheel = await stopFrameProbe(map);
+    await startFrameProbe(map);
+    await page.mouse.move(center.x, center.y);
+    await page.mouse.wheel(0, -500);
+    await page.waitForTimeout(450);
+    const wheel = await stopFrameProbe(map);
 
-  if (testInfo.project.name === "mobile") {
-    await page.locator("#atlasPanelToggle").click();
-  }
-  await startFrameProbe(map);
-  await page.locator("#provinceSearch").fill("Sichuan");
-  await page.locator(".atlas-region").first().click();
-  await expect(page.locator("#detailPanel")).toHaveJSProperty("open", true);
-  await page.waitForTimeout(350);
-  const dialog = await stopFrameProbe(map);
+    if (testInfo.project.name === "mobile") {
+      await page.locator("#atlasPanelToggle").click();
+    }
+    await startFrameProbe(map);
+    await page.locator("#provinceSearch").fill("Sichuan");
+    await page.locator(".atlas-region").first().click();
+    await expect(page.locator("#detailPanel")).toHaveJSProperty("open", true);
+    await page.waitForTimeout(350);
+    const dialog = await stopFrameProbe(map);
 
-  const metrics = { renderer, softwareRenderer, pan, wheel, dialog };
-  await testInfo.attach("frame-metrics.json", {
-    body: JSON.stringify(metrics, null, 2),
-    contentType: "application/json",
-  });
-  const steadyBudget = softwareRenderer
-    ? { average: 70, p95: 160, longestTask: 200 }
-    : { average: 34, p95: 50, longestTask: 100 };
-  // Opening the detail drawer is a one-off layout and map-fit transition,
-  // rather than a steady gesture, so it gets a wider software-render budget.
-  const dialogBudget = softwareRenderer
-    ? { average: 100, p95: 260, longestTask: 300 }
-    : steadyBudget;
-  for (const [name, metricsForFlow] of Object.entries({ pan, wheel, dialog })) {
-    const budget = name === "dialog" ? dialogBudget : steadyBudget;
-    expect(metricsForFlow.frames, `${name}: frame count`).toBeGreaterThan(8);
-    expect(
-      metricsForFlow.averageInterval,
-      `${name}: average frame interval`,
-    ).toBeLessThan(budget.average);
-    expect(
-      metricsForFlow.p95Interval,
-      `${name}: p95 frame interval`,
-    ).toBeLessThan(budget.p95);
-    expect(metricsForFlow.longestTask, `${name}: longest task`).toBeLessThan(
-      budget.longestTask,
-    );
-  }
-  expect(errors).toEqual([]);
-});
+    const metrics = { renderer, softwareRenderer, pan, wheel, dialog };
+    await testInfo.attach("frame-metrics.json", {
+      body: JSON.stringify(metrics, null, 2),
+      contentType: "application/json",
+    });
+    const steadyBudget = softwareRenderer
+      ? { average: 70, p95: 160, longestTask: 200 }
+      : { average: 34, p95: 50, longestTask: 100 };
+    // Opening the detail drawer is a one-off layout and map-fit transition,
+    // rather than a steady gesture, so it gets a wider software-render budget.
+    const dialogBudget = softwareRenderer
+      ? { average: 100, p95: 260, longestTask: 300 }
+      : steadyBudget;
+    for (const [name, metricsForFlow] of Object.entries({
+      pan,
+      wheel,
+      dialog,
+    })) {
+      const budget = name === "dialog" ? dialogBudget : steadyBudget;
+      expect(metricsForFlow.frames, `${name}: frame count`).toBeGreaterThan(8);
+      expect(
+        metricsForFlow.averageInterval,
+        `${name}: average frame interval`,
+      ).toBeLessThan(budget.average);
+      expect(
+        metricsForFlow.p95Interval,
+        `${name}: p95 frame interval`,
+      ).toBeLessThan(budget.p95);
+      expect(metricsForFlow.longestTask, `${name}: longest task`).toBeLessThan(
+        budget.longestTask,
+      );
+    }
+    expect(errors).toEqual([]);
+  },
+);

@@ -2,8 +2,6 @@ import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { readdirSync, readFileSync, rmSync } from "node:fs";
-// Import the leaf module directly: the barrel (./src/utils) would drag the whole
-// app (via pages.ts) into esbuild's config bundling, which cannot parse CSS Modules.
 import { stringToSlug } from "./src/utils/stringToSlug";
 import { generateReferences } from "./scripts/generate-references.mjs";
 
@@ -91,8 +89,15 @@ function dropUnusedFontFormats(): Plugin {
 // https://vitejs.dev/config/
 export default () => {
   const env = loadEnv("dev", process.cwd());
+  // `VITE_BASE` overrides the deploy path; `/` builds for a root deployment.
+  const override = env.VITE_BASE?.replace(/^\/+|\/+$/g, "");
+  const base = env.VITE_BASE
+    ? override
+      ? `/${override}/`
+      : "/"
+    : `/${stringToSlug(env.VITE_TEAM_NAME)}/`;
   return defineConfig({
-    base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
+    base,
     plugins: [
       openingScreen(),
       react(),

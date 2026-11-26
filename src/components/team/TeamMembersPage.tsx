@@ -424,7 +424,7 @@ export function TeamMembersPage({ members, groupPhoto }: TeamMembersPageProps) {
       />
 
       <section className={styles.intro} aria-labelledby="team-intro-heading">
-        <h2 id="team-intro-heading" className={styles.srOnly}>
+        <h2 id="team-intro-heading" className="visually-hidden">
           About OUC-Haide
         </h2>
         <div className={styles.introContent}>

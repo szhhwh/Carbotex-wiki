@@ -18,23 +18,19 @@
   overscroll-behavior: contain;
   opacity: 1;
   transition: opacity 200ms ease;
-
-  &[data-closing] {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &::backdrop {
-    width: 100vw;
-    background-color: rgb(0 0 0 / 78%);
-    transition: background-color 200ms ease;
-  }
-
-  &[data-closing]::backdrop {
-    background-color: transparent;
-  }
 }
-
+.dialog[data-closing] {
+  opacity: 0;
+  pointer-events: none;
+}
+.dialog::backdrop {
+  width: 100vw;
+  background-color: rgb(0 0 0 / 78%);
+  transition: background-color 200ms ease;
+}
+.dialog[data-closing]::backdrop {
+  background-color: transparent;
+}
 .panel {
   position: relative;
   display: grid;
@@ -46,7 +42,6 @@
   border: 0;
   background: transparent;
 }
-
 .stage {
   position: relative;
   display: flex;
@@ -60,15 +55,13 @@
   cursor: zoom-in;
   touch-action: none;
   user-select: none;
-
-  &[data-zoomed] {
-    cursor: grab;
-  }
-  &[data-zoomed][data-interacting] {
-    cursor: grabbing;
-  }
 }
-
+.stage[data-zoomed] {
+  cursor: grab;
+}
+.stage[data-zoomed][data-interacting] {
+  cursor: grabbing;
+}
 .image {
   display: block;
   width: auto;
@@ -79,15 +72,13 @@
   object-fit: contain;
   background: #fff;
   transition: transform 160ms ease-out;
-
-  &[hidden] {
-    display: none;
-  }
-  .stage[data-interacting] & {
-    transition: none;
-  }
 }
-
+.image[hidden] {
+  display: none;
+}
+.stage[data-interacting] .image {
+  transition: none;
+}
 .footer {
   display: flex;
   align-items: center;
@@ -96,7 +87,6 @@
   color: var(--viewer-paper);
   background: transparent;
 }
-
 .toolbar {
   display: flex;
   flex: 0 0 auto;
@@ -110,7 +100,6 @@
   box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 28%);
   backdrop-filter: blur(10px);
 }
-
 .control {
   display: inline-flex;
   width: 2.75rem;
@@ -127,24 +116,22 @@
     background 160ms ease,
     color 160ms ease,
     transform 160ms ease;
-
-  &:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--viewer-paper) 12%, transparent);
-    color: var(--viewer-paper);
-  }
-  &:active:not(:disabled) {
-    transform: scale(0.94);
-  }
-  &:focus-visible {
-    outline: 3px solid var(--viewer-focus);
-    outline-offset: 3px;
-  }
-  &:disabled {
-    opacity: 0.4;
-    cursor: default;
-  }
 }
-
+.control:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--viewer-paper) 12%, transparent);
+  color: var(--viewer-paper);
+}
+.control:active:not(:disabled) {
+  transform: scale(0.94);
+}
+.control:focus-visible {
+  outline: 3px solid var(--viewer-focus);
+  outline-offset: 3px;
+}
+.control:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 .scale {
   min-width: 3.25rem;
   text-align: center;
@@ -152,31 +139,27 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
-
 .error {
   max-width: 26rem;
   margin: 1.5rem;
   text-align: center;
   color: var(--viewer-paper);
-  text-shadow: 0 1px 3px rgb(0 0 0 / 80%); /* taste-skill-ignore: legibility scrim over the image */
+  text-shadow: 0 1px 3px rgb(0 0 0 / 80%);
 }
-
+/* taste-skill-ignore: legibility scrim over the image */
 @starting-style {
   .dialog[open] {
     opacity: 0;
   }
-
   .dialog[open]::backdrop {
     background-color: transparent;
   }
 }
-
 @media (max-width: 640px) {
   .footer {
     padding-inline: 0.6rem;
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .dialog,
   .dialog::backdrop,

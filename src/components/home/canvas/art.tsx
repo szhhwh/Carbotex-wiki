@@ -74,7 +74,11 @@ export const Frame = forwardRef<
   }
 >(function Frame({ box, className, style, children }, ref) {
   return (
-    <div ref={ref} className={clsx(s.box, className)} style={rectStyle(box, style)}>
+    <div
+      ref={ref}
+      className={clsx(s.box, className)}
+      style={rectStyle(box, style)}
+    >
       {children}
     </div>
   );

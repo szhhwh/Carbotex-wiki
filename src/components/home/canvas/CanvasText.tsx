@@ -1,7 +1,7 @@
 import { forwardRef, useRef, type CSSProperties } from "react";
 import clsx from "clsx";
 import { Layer } from "./art";
-import { ramp, useFrame } from "./director";
+import { ramp, useCanvasProgress } from "./director";
 import type { TextBlock } from "./texts";
 import s from "./canvas.module.css";
 
@@ -15,8 +15,6 @@ interface Props {
   style?: CSSProperties;
 }
 
-const NAV_PT = 64;
-
 /** One text block of the canvas, set as SVG text on artboard baselines. */
 export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
   { block, as = "p", scrollFade = true, className, style },
@@ -27,27 +25,33 @@ export const CanvasText = forwardRef<SVGSVGElement, Props>(function CanvasText(
   const last = block.lines[block.lines.length - 1].y;
   const top = first - block.size;
   const mid = (top + last) / 2;
-  const bottomLine = last + block.size * 0.3;
 
-  useFrame((f) => {
-    const el = local.current;
-    if (!el || !scrollFade) return;
-    if (f.reduced) {
-      el.style.opacity = "";
-      el.style.transform = "";
-      return;
-    }
-    const bottom = f.cam + f.view;
-    const enter = ramp(bottom - mid, f.view * 0.02, f.view * 0.16);
-    const exit = ramp(bottomLine - f.cam, NAV_PT / f.u - 8, NAV_PT / f.u + f.view * 0.08);
-    const o = Math.min(enter, exit);
-    el.style.opacity = o.toFixed(3);
-    const shift = (1 - enter) * 16 - (1 - exit) * 10;
-    el.style.transform = `translate3d(0, ${(shift * f.u).toFixed(2)}px, 0)`;
-  });
+  useCanvasProgress(
+    (frame) => {
+      if (!scrollFade || frame.reduced) return ["", ""] as const;
+      const enter = ramp(
+        frame.cam + frame.view - mid,
+        frame.view * 0.02,
+        frame.view * 0.16,
+      );
+      const exit = ramp(top - frame.cam, frame.nav - 4, frame.nav + 24);
+      const shift = ((1 - enter) * 16 - (1 - exit) * 10) * frame.u;
+      return [
+        Math.min(enter, exit).toFixed(3),
+        `translate3d(0, ${shift.toFixed(2)}px, 0)`,
+      ] as const;
+    },
+    ([opacity, transform]) => {
+      if (!local.current || !scrollFade) return;
+      local.current.style.opacity = opacity;
+      local.current.style.transform = transform;
+    },
+  );
 
   const text = block.lines
-    .map((line) => line.runs.map((r) => (typeof r === "string" ? r : r.t)).join(""))
+    .map((line) =>
+      line.runs.map((r) => (typeof r === "string" ? r : r.t)).join(""),
+    )
     .join(" ");
 
   return (

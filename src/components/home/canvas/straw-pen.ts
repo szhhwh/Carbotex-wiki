@@ -23,11 +23,15 @@ function reach(key: StrawKey, y: number) {
   const t = STRAW_INFO[key].ymax;
   if (y < t[0]) return 0;
   if (y >= t[t.length - 1]) return 1;
-  let i = 0;
-  while (i < t.length - 1 && t[i + 1] <= y) i++;
-  const span = t[i + 1] - t[i];
-  const f = span > 0 ? (y - t[i]) / span : 1;
-  return (i + f) / (t.length - 1);
+  let low = 0;
+  let high = t.length - 1;
+  while (low + 1 < high) {
+    const middle = Math.floor((low + high) / 2);
+    if (t[middle] <= y) low = middle;
+    else high = middle;
+  }
+  const span = t[high] - t[low];
+  return (low + (y - t[low]) / span) / (t.length - 1);
 }
 
 /**
@@ -43,6 +47,7 @@ export class StrawPenController {
   private shown = 0;
   private applied = new Map<StrawKey, number>();
   private running = false;
+  private visible = true;
 
   register(key: StrawKey, path: SVGPathElement) {
     let set = this.paths.get(key);
@@ -63,9 +68,12 @@ export class StrawPenController {
   }
 
   setFrame(frame: CanvasFrame) {
+    const entered = frame.visible && !this.visible;
+    this.visible = frame.visible;
     if (frame.reduced) {
+      this.dispose();
       this.target = this.shown = this.total();
-      this.apply(true);
+      this.apply(false);
       return;
     }
     const tip = Math.max(frame.cam + frame.view * LEAD, frame.tip);
@@ -77,6 +85,7 @@ export class StrawPenController {
       if (p < 1) break;
     }
     this.target = sum;
+    if (entered) this.apply(false);
     if (!this.running && Math.abs(this.target - this.shown) > 0.1) {
       this.running = true;
       gsap.ticker.add(this.tick);
@@ -91,10 +100,10 @@ export class StrawPenController {
       Math.max(Math.abs(diff) * dt * 4.5, 520 * dt),
     );
     this.shown += Math.sign(diff) * step;
-    this.apply(false);
+    if (this.visible) this.apply(false);
     if (Math.abs(this.target - this.shown) <= 0.1) {
       this.shown = this.target;
-      this.apply(false);
+      if (this.visible) this.apply(false);
       gsap.ticker.remove(this.tick);
       this.running = false;
     }
@@ -104,7 +113,8 @@ export class StrawPenController {
     let start = 0;
     for (const key of PEN_ORDER) {
       const len = this.lengths.get(key) ?? 0;
-      const p = len > 0 ? Math.min(Math.max((this.shown - start) / len, 0), 1) : 0;
+      const p =
+        len > 0 ? Math.min(Math.max((this.shown - start) / len, 0), 1) : 0;
       start += len;
       const prev = this.applied.get(key);
       if (!force && prev !== undefined && Math.abs(prev - p) < 1e-4) continue;

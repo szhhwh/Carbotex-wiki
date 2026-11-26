@@ -16,9 +16,9 @@ import Cite from "citation-js";
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const BIB_PATH = join(ROOT, "src", "data", "references.bib");
 const OUT_PATH = join(ROOT, "src", "data", "references.generated.ts");
-const CONTENTS_DIR = join(ROOT, "src", "contents");
+const PAGES_DIR = join(ROOT, "src", "pages");
 
-/** Collects every citation key used via <Cite k="..." /> under src/contents. */
+/** Collects every citation key used via <Cite k="..." /> under src/pages. */
 function collectCiteKeys() {
   const keys = new Set();
 
@@ -44,7 +44,7 @@ function collectCiteKeys() {
     }
   };
 
-  visit(CONTENTS_DIR);
+  visit(PAGES_DIR);
   return keys;
 }
 

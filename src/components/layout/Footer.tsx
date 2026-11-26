@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { stringToSlug } from "../../utils";
+import { stringToSlug } from "../../utils/stringToSlug";
 import { SocialIcon } from "./SocialIcon";
 import { FooterProjectCarousel } from "./FooterProjectCarousel";
 import { FooterLogoLockup } from "./FooterLogoLockup";

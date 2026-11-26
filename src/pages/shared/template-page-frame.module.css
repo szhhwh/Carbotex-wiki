@@ -1,0 +1,135 @@
+.attributionForm {
+  position: relative;
+  padding: clamp(0.8rem, 1.5vw, 1rem) clamp(0.55rem, 1vw, 0.75rem)
+    clamp(0.55rem, 1vw, 0.75rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hardware-green) 22%, transparent);
+  border-radius: clamp(1.15rem, 2.4vw, 1.65rem);
+  background: var(--hardware-white);
+}
+
+/* Keep the title-card accent, but let the embedded white form own the surface. */
+.attributionForm::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: clamp(0.28rem, 0.58vw, 0.38rem);
+  background: var(--hardware-yellow);
+  content: "";
+  pointer-events: none;
+}
+
+.attributionFrame {
+  display: block;
+  min-height: 13.5rem;
+  border: 0;
+  background: var(--hardware-white);
+  color-scheme: light;
+}
+
+.attributionViewport[data-frame-focused="true"] {
+  outline: 3px solid var(--hardware-green);
+  outline-offset: -3px;
+}
+
+.attributionViewport {
+  position: relative;
+  min-height: 13.5rem;
+  overflow: hidden;
+  border-radius: clamp(0.75rem, 1.4vw, 0.95rem);
+}
+
+.attributionLoading,
+.attributionError {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 1.5rem;
+  place-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  border-radius: inherit;
+  color: var(--hardware-ink);
+  font-family: var(--hardware-body);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.attributionLoading {
+  background: var(--hardware-white);
+}
+
+.attributionError {
+  background: var(--hardware-pale-yellow);
+}
+
+.attributionSpinner {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0.2rem solid
+    color-mix(in srgb, var(--hardware-green) 24%, transparent);
+  border-top-color: var(--hardware-green);
+  border-radius: 50%;
+  animation: attribution-spin 800ms linear infinite;
+}
+
+.attributionFallback {
+  margin: 1rem 0 0;
+  color: var(--hardware-ink);
+  font-family: var(--hardware-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.attributionFallback a {
+  color: var(--hardware-navy);
+  font-weight: 700;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+}
+
+@keyframes attribution-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.attributionFallback a:focus-visible {
+  outline: 3px solid var(--hardware-navy);
+  outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .attributionFrame,
+  .attributionViewport {
+    min-height: 16rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .attributionForm {
+    border-radius: 1.15rem;
+  }
+
+  .attributionFrame,
+  .attributionViewport {
+    min-height: 16.75rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .attributionForm {
+    border: 1px solid CanvasText; /* taste-skill-ignore */
+  }
+
+  .attributionViewport[data-frame-focused="true"],
+  .attributionFallback a:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attributionSpinner {
+    animation: none;
+  }
+}

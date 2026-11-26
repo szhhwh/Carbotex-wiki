@@ -1,5 +1,5 @@
 import { Children, Fragment, isValidElement, type ReactNode } from "react";
-import { ihpImageDimensions } from "../../data/ihp-image-dimensions";
+import { ihpImageDimensions } from "../../data/ihp-image-dimensions.data";
 import { Caption } from "../media/Caption";
 import { Figure } from "../media/Figure";
 import { ImageGallery } from "../media/ImageGallery";

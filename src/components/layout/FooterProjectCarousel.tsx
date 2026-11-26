@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { stringToSlug } from "../../utils";
 import {
   FOOTER_CARD_OFFSETS,
   type FooterCard,
   footerCards,
   getFooterCardIndex,
-} from "./footer-data";
+} from "./footer.data";
 import { useProjectCarousel } from "./useProjectCarousel";
 import styles from "./footer.module.css";
 
@@ -71,11 +70,8 @@ export function FooterProjectCarousel() {
   } = useProjectCarousel(footerCards.length);
   const visibleCount = useVisibleCardCount();
   const { pathname } = useLocation();
-  const basePath = `/${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`;
-  const routePath = pathname.startsWith(basePath)
-    ? pathname.slice(basePath.length) || "/"
-    : pathname;
-  const isHome = routePath === "/";
+  // The router has already stripped the deployment base from `pathname`.
+  const isHome = pathname === "/";
 
   // A pause chosen on an inner page must not alter the home carousel.
   useEffect(() => {
@@ -175,7 +171,7 @@ export function FooterProjectCarousel() {
         </div>
       </div>
       <span
-        className={styles.srOnly}
+        className="visually-hidden"
         role="status"
         aria-live={autoRunning ? "off" : "polite"}
       >

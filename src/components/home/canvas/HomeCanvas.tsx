@@ -1,10 +1,15 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ARTBOARD, STRAW_INFO } from "../geometry";
-import { CanvasDirector, DirectorContext, NO_STOPS, ramp, type StopId } from "./director";
-import { useLenis } from "../lenis";
+import {
+  CanvasDirector,
+  DirectorContext,
+  NO_STOPS,
+  ramp,
+  type StopId,
+} from "./director";
+import { useHomeMotion } from "../motion";
 import { Hero } from "./Hero";
-import { PageOneBase, PageOneTop } from "./PageOne";
+import { PageOne } from "./PageOne";
 import { PageTwo } from "./PageTwo";
 import { PageThree } from "./PageThree";
 import { PageFour } from "./PageFour";
@@ -17,10 +22,17 @@ const HOLD_RAMP = 0.35;
 /** Pen lead: the straw tip runs this far down the viewport (see straw-pen). */
 const LEAD = 0.74;
 
+/** Breathing room kept between a framed page and the navbar / viewport edge (pt). */
+const FRAME_MARGIN = 28;
+
 interface StopDef {
   id: StopId;
-  /** Artboard y the camera centres on; "top"/"end" pin to the canvas ends. */
-  centre: number | "top" | "end";
+  /**
+   * Artboard y range [top, bottom] of the page's content. The camera centres
+   * it in the viewport area below the fixed navbar; when it does not fit,
+   * its top sits FRAME_MARGIN below the navbar. "top" pins the canvas top.
+   */
+  frame: readonly [number, number] | "top";
   /** Scroll spent resting, in viewport heights. */
   hold: number;
   /** Artboard y the straw pen reaches by the end of the rest. */
@@ -33,12 +45,22 @@ interface StopDef {
  * camera eases on to the next page.
  */
 const STOPS: readonly StopDef[] = [
-  { id: "hero", centre: "top", hold: 0.45, end: 0 },
-  { id: "p1", centre: 1395, hold: 0.9, end: 1605 },
-  { id: "p2", centre: 2215, hold: 0.9, end: 2632 },
-  { id: "p3", centre: 3018, hold: 1.1, end: 3425 },
-  { id: "p4", centre: 3766, hold: 1.1, end: 4120 },
-  { id: "p5", centre: "end", hold: 0.8, end: STRAW_INFO.link.bbox[3] + 1 },
+  { id: "hero", frame: "top", hold: 0.45, end: 0 },
+  // Copy + scene buttons down to the earth on the wave.
+  { id: "p1", frame: [1068, 1680], hold: 0.9, end: 1605 },
+  // Heading, ring and note down to the footer line.
+  { id: "p2", frame: [1812, 2520], hold: 0.9, end: 2632 },
+  // Literature copy, the yeast's idea and the sugars.
+  { id: "p3", frame: [2715, 3370], hold: 1.1, end: 3425 },
+  // Header bar, lamp light and the microbes on the glucose.
+  { id: "p4", frame: [3490, 4165], hold: 1.1, end: 4120 },
+  // Title, taiji / Carbotex bubble and the caption below it.
+  {
+    id: "p5",
+    frame: [4292, 4855],
+    hold: 0.8,
+    end: STRAW_INFO.link.bbox[3] + 1,
+  },
 ];
 
 interface Stop {
@@ -56,11 +78,14 @@ interface Stop {
 interface Layout {
   u: number;
   vh: number;
+  nav: number;
   travel: number;
   ramp: number;
   stops: Stop[];
   compact: boolean;
   reduced: boolean;
+  top: number;
+  viewportHeight: number;
 }
 
 interface Shot {
@@ -82,11 +107,17 @@ function camera(y: number, l: Layout): Shot {
   for (const stop of l.stops) {
     const yl = y - stop.off;
     const a = stop.c + r / 2;
-    const h = Math.min(Math.max((yl - (a - r * 0.5)) / (stop.L + r * 0.5), 0), 1);
+    const h = Math.min(
+      Math.max((yl - (a - r * 0.5)) / (stop.L + r * 0.5), 0),
+      1,
+    );
     for (const id of stop.ids) stops[id] = h;
     if (h > 0) {
       const from = (stop.c + l.vh * LEAD) / l.u;
-      tip = Math.max(tip, from + (Math.max(stop.end, from) - from) * ramp(h, 0.04, 0.82));
+      tip = Math.max(
+        tip,
+        from + (Math.max(stop.end, from) - from) * ramp(h, 0.04, 0.82),
+      );
     }
     if (resolved) continue;
     if (yl < a - r) cam = yl;
@@ -106,16 +137,28 @@ function camera(y: number, l: Layout): Shot {
   return { cam: Math.min(Math.max(cam, 0), l.travel), stops, tip };
 }
 
+/** Camera position (px) framing `def` below a navbar `nav` px tall. */
+function frameCamera(def: StopDef, u: number, vh: number, nav: number) {
+  if (def.frame === "top") return 0;
+  const [top, bottom] = def.frame;
+  const room = vh - nav;
+  const need = (bottom - top + FRAME_MARGIN * 2) * u;
+  return need <= room
+    ? ((top + bottom) / 2) * u - nav - room / 2
+    : (top - FRAME_MARGIN) * u - nav;
+}
+
 /** Lays the stops out for the current viewport, merging any that crowd. */
-function planStops(u: number, vh: number, travel: number, r: number): Stop[] {
+function planStops(
+  u: number,
+  vh: number,
+  nav: number,
+  travel: number,
+  r: number,
+): Stop[] {
   const out: Stop[] = [];
   for (const def of STOPS) {
-    const c =
-      def.centre === "top"
-        ? 0
-        : def.centre === "end"
-          ? travel
-          : Math.min(Math.max(def.centre * u - vh / 2, 0), travel);
+    const c = Math.min(Math.max(frameCamera(def, u, vh, nav), 0), travel);
     const L = def.hold * vh;
     const prev = out[out.length - 1];
     if (prev && c < prev.c + r) {
@@ -138,70 +181,96 @@ export function HomeCanvas() {
   const wrapper = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLDivElement>(null);
+  const navProbe = useRef<HTMLDivElement>(null);
   const director = useMemo(() => new CanvasDirector(), []);
-  const lenis = useLenis();
+  const motion = useHomeMotion();
 
   useLayoutEffect(() => {
     const wrap = wrapper.current!;
     const view = stage.current!;
     const board = canvas.current!;
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const stopClock = director.startAmbientClock(board);
     let layout: Layout;
-    let lastY = -1;
+    let lastY = NaN;
+    let lastCamera = NaN;
+    let lastVisible = false;
+    let lastHidden = false;
+    let lastStageTop = 0;
+    let trackEnd = 0;
 
-    const measure = () => {
+    const measure = (reduced: boolean) => {
       const w = view.clientWidth;
       const vh = view.clientHeight;
-      const u = w / ARTBOARD.width;
-      const reduced = motion.matches;
+      const nav = navProbe.current?.offsetHeight ?? 0;
+      const u = Math.max(w, 1) / ARTBOARD.width;
       const travel = Math.max(0, ARTBOARD.height * u - vh);
       const r = reduced ? 0 : HOLD_RAMP * vh;
-      const stops = reduced ? [] : planStops(u, vh, travel, r);
-      layout = { u, vh, travel, ramp: r, stops, compact: w < 760, reduced };
+      const stops = reduced ? [] : planStops(u, vh, nav, travel, r);
+      layout = {
+        u,
+        vh,
+        nav,
+        travel,
+        ramp: r,
+        stops,
+        compact: w < 760,
+        reduced,
+        top: wrap.getBoundingClientRect().top + window.scrollY,
+        viewportHeight: window.innerHeight,
+      };
       const rest = stops.reduce((sum, stop) => sum + stop.L + r, 0);
+      trackEnd = travel + rest;
       board.style.setProperty("--u", `${u}px`);
-      wrap.style.height = `${travel + rest + vh}px`;
-      lastY = -1;
+      wrap.style.height = `${trackEnd + vh}px`;
     };
 
-    const update = () => {
-      const y = window.scrollY - wrap.offsetTop;
-      if (y === lastY) return;
+    const unsubscribe = motion.subscribe((frame) => {
+      if (frame.layoutChanged) measure(frame.reduced);
+      const scroll = frame.scroll - layout.top;
+      const y = Math.min(Math.max(scroll, 0), trackEnd);
+      const visible =
+        scroll > -layout.viewportHeight && scroll < trackEnd + layout.vh;
+      const stageTop = visible ? y - scroll : 0;
+      if (
+        !frame.layoutChanged &&
+        y === lastY &&
+        visible === lastVisible &&
+        stageTop === lastStageTop &&
+        frame.hidden === lastHidden
+      )
+        return;
       lastY = y;
+      lastVisible = visible;
+      lastHidden = frame.hidden;
+      lastStageTop = stageTop;
       const { cam, stops, tip } = camera(y, layout);
-      board.style.transform = `translate3d(0, ${-cam}px, 0)`;
+      if (cam !== lastCamera) {
+        board.style.transform = `translate3d(0, ${-cam}px, 0)`;
+        lastCamera = cam;
+      }
       director.publish({
         cam: cam / layout.u,
         view: layout.vh / layout.u,
+        nav: layout.nav / layout.u,
         u: layout.u,
-        hold: stops.p4,
         stops,
         tip,
         compact: layout.compact,
         reduced: layout.reduced,
+        visible: visible && !frame.hidden,
+        viewportTop: Math.max(0, layout.nav - stageTop) / layout.u,
+        viewportBottom:
+          Math.min(layout.vh, layout.viewportHeight - stageTop) / layout.u,
       });
-    };
+    });
 
-    const relayout = () => {
-      measure();
-      update();
-      ScrollTrigger.refresh();
-    };
-
-    measure();
-    update();
-    const ro = new ResizeObserver(relayout);
-    ro.observe(view);
-    motion.addEventListener("change", relayout);
-    window.addEventListener("scroll", update, { passive: true });
-    const off = lenis?.on("scroll", update);
+    const stopObserving = motion.observeLayout(view, navProbe.current!);
     return () => {
-      ro.disconnect();
-      motion.removeEventListener("change", relayout);
-      window.removeEventListener("scroll", update);
-      off?.();
+      stopClock();
+      stopObserving();
+      unsubscribe();
     };
-  }, [director, lenis]);
+  }, [director, motion]);
 
   return (
     <DirectorContext.Provider value={director}>
@@ -212,12 +281,13 @@ export function HomeCanvas() {
         data-home-canvas
       >
         <div ref={stage} className={s.stage}>
+          <div ref={navProbe} className={s.navProbe} aria-hidden />
           <div ref={canvas} className={s.canvas}>
             <StrawPen>
               <Hero />
-              <PageOneBase />
-              <PageTwo />
-              <PageOneTop />
+              <PageOne>
+                <PageTwo />
+              </PageOne>
               <PageThree />
               <PageFour />
               <PageFive />

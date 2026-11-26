@@ -161,7 +161,7 @@ function StakeholderCard({
         aria-controls={detailsId}
         onClick={onToggle}
       >
-        <span className={styles.srOnly}>
+        <span className="visually-hidden">
           {open ? "Hide details" : "View details"} for {stakeholder.name}
         </span>
       </button>

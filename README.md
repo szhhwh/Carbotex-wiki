@@ -51,8 +51,8 @@ for web development.
 4. Navigate to the files you wish to edit:
    - The main App component can be found under `src/containers/App`
    - Pre-built components are located under `src/components`
-   - Individual pages can be modified in the `src/pages.ts`
-   - Content pages can be updated in the `src/contents`
+   - The data-driven route registry is `src/app/routes.ts`
+   - Individual pages are grouped under `src/pages` by site section
 5. Once you are done, save the changes by **committing** them to the _main branch_ of the repository
 6. An automated script will build, test and deploy your wiki to the iGEM server
 
@@ -60,7 +60,8 @@ for web development.
 
 The Model overview is at `/model`, with dedicated `/model/gem`,
 `/model/software`, and `/model/md` pages. Their content lives in
-`src/contents/model*.tsx` and uses the shared article, figure, caption,
+`src/pages/dry-lab/ModelPage.tsx` plus the related `Model*Content.tsx` modules,
+and uses the shared article, figure, caption,
 math, and citation components.
 
 Model DBTL cycles are available in the existing Engineering page via
@@ -83,10 +84,10 @@ Below is the structure of important files and directories in this project:
     │   ├── components/      -> Pre-built components(like Navbar, Footer, etc.)
     │   ├── containers/
     │   │   └── App/         -> Main React application container
-    │   ├── contents/
-    │   │   └── *.tsx        -> Page components for the wiki
+    │   ├── app/
+    │   │   └── routes.ts    -> Data-driven route and navigation registry
+    │   ├── pages/           -> Route pages grouped by site section
     │   ├── main.tsx         -> Entry point of the wiki application
-    │   ├── pages.ts         -> Page definition and path mapping
     │   ├── utils/           -> Utility functions
     │   └── vite-env.d.ts    -> TypeScript definitions for Vite
     ├── tsconfig.json        -> Configures TypeScript options

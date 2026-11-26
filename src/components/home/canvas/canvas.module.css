@@ -15,6 +15,17 @@
   background: #fbf0dd;
 }
 
+/* Measures the fixed site navbar, so rest stops frame pages below it. */
+.navProbe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: var(--site-nav-height, 4.5rem);
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .canvas {
   --u: 1px;
   position: absolute;
@@ -24,6 +35,14 @@
   will-change: transform;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.scene {
+  display: contents;
+}
+
+.scene[data-idle-paused] * {
+  animation-play-state: paused;
 }
 
 /* Every artwork, layer and text sits on the artboard by its pt rectangle. */
@@ -71,16 +90,6 @@
 
 .display {
   font-family: var(--hardware-display);
-}
-
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

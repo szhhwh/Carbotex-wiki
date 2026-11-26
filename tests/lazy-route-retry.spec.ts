@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const ihpModule =
-  /\/(?:assets\/human-practices-[^/]+\.js|src\/contents\/human-practices\.tsx)(?:\?.*)?$/;
+  /\/(?:assets\/human-practices-[^/]+\.js|src\/pages\/human-practices\/HumanPracticesPage\.tsx)(?:\?.*)?$/;
 const ihpPath = "/ouc-haide/human-practices";
 
 test("all page exports render from production chunks", async ({ page }) => {

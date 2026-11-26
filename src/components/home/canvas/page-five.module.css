@@ -1,7 +1,3 @@
-.page {
-  display: contents;
-}
-
 .bubble {
   --reach: 0%;
   transform-origin: 30% 50%;
@@ -10,9 +6,7 @@
     #000 calc(var(--reach) - 6%),
     transparent calc(var(--reach) + 4%)
   );
-  will-change: transform, mask-image;
 }
-
 .caption {
   position: absolute;
   top: 0;
@@ -20,7 +14,6 @@
   width: 100%;
   height: 0;
 }
-
 .float {
   position: absolute;
   top: 0;
@@ -28,50 +21,49 @@
   width: 100%;
   height: 0;
 }
-
-.page[data-open] .yeast {
+:where([data-open]) .yeast {
   animation: float-a 5.6s ease-in-out infinite;
 }
-
-.page[data-open] .thermo {
+:where([data-open]) .thermo {
   animation: float-b 6.4s ease-in-out -2s infinite;
 }
-
 .half {
   transform-origin: 50% 50%;
-  will-change: transform;
 }
-
 .taiji {
   animation: taiji-spin 28s linear infinite;
-  will-change: transform;
 }
-
 .click {
   display: block;
   padding: 0;
   border: 0;
-  background: center / 100% 100% no-repeat;
+  background: transparent;
   cursor: pointer;
-  animation: beckon 2.4s ease-in-out infinite;
-  transition: filter 0.25s ease;
-
-  &:hover {
-    animation-play-state: paused;
-    filter: drop-shadow(0 calc(4 * var(--u)) calc(10 * var(--u)) rgb(105 228 170 / 0.6));
-  }
-
-  &:focus-visible {
-    outline: calc(3 * var(--u)) solid #69e4aa;
-    outline-offset: calc(4 * var(--u));
-    border-radius: calc(20 * var(--u));
-  }
-
-  &:disabled {
-    cursor: default;
-  }
 }
-
+.clickArt {
+  position: absolute;
+  inset: 0;
+  background: center / 100% 100% no-repeat;
+  pointer-events: none;
+  transition: filter 0.25s ease;
+}
+.clickArt {
+  animation: beckon 2.4s ease-in-out infinite;
+}
+.click:hover .clickArt {
+  animation-play-state: paused;
+  filter: drop-shadow(
+    0 calc(4 * var(--u)) calc(10 * var(--u)) rgb(105 228 170 / 0.6)
+  );
+}
+.click:focus-visible {
+  outline: calc(3 * var(--u)) solid #69e4aa;
+  outline-offset: calc(4 * var(--u));
+  border-radius: calc(20 * var(--u));
+}
+.click:disabled {
+  cursor: default;
+}
 .clickText {
   position: absolute;
   inset: 0;
@@ -79,13 +71,11 @@
   height: 100%;
   overflow: visible;
 }
-
 @keyframes taiji-spin {
   to {
     transform: rotate(360deg);
   }
 }
-
 @keyframes beckon {
   0%,
   100% {
@@ -96,7 +86,6 @@
     transform: scale(1.05);
   }
 }
-
 @keyframes float-a {
   0%,
   100% {
@@ -107,7 +96,6 @@
     translate: calc(3 * var(--u)) calc(9 * var(--u));
   }
 }
-
 @keyframes float-b {
   0%,
   100% {
@@ -118,12 +106,11 @@
     translate: calc(-4 * var(--u)) calc(-8 * var(--u));
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .taiji,
-  .click,
-  .page[data-open] .yeast,
-  .page[data-open] .thermo {
+  .clickArt,
+  :where([data-open]) .yeast,
+  :where([data-open]) .thermo {
     animation: none;
   }
 }
