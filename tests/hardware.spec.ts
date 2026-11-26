@@ -203,7 +203,9 @@ test.describe("hardware page", () => {
       }),
     ).toHaveAttribute("rel", "noopener noreferrer");
     await expect(
-      references.getByRole("link", { name: "https://engineering.igem.org" }),
+      references.getByRole("link", {
+        name: "https://static.igem.org/websites/competition/2025/judging/2025judgehandbook.pdf",
+      }),
     ).toHaveAttribute("target", "_blank");
   });
 
@@ -245,10 +247,14 @@ test.describe("hardware page", () => {
     await expect(
       page.locator("#hardware-iot sup.cite-ref a").first(),
     ).toHaveAttribute("href", "#ref-3");
+    await expect(
+      page.locator('#hardware-iot sup.cite-ref a[href="#ref-4"]'),
+    ).toBeVisible();
     await page.getByRole("button", { name: /References$/ }).click();
     await expect(page.locator("#ref-1")).toContainText("Zhang");
     await expect(page.locator("#ref-2")).toContainText("Versteeg");
     await expect(page.locator("#ref-3")).toContainText("Gargalo");
+    await expect(page.locator("#ref-4")).toContainText("2025 Judge Handbook");
   });
 
   test("page remains inside the viewport", async ({ page }) => {

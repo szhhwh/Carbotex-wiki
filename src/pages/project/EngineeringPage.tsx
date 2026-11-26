@@ -146,7 +146,8 @@ const wetEngineeringCycles: WetEngineeringCycleData[] = [
         >
           RT-qPCR
         </a>
-        .
+        , with relative expression calculated using the 2<sup>−ΔΔCt</sup> method{" "}
+        <Cite k="livak2001relative" />.
       </p>
     ),
   },

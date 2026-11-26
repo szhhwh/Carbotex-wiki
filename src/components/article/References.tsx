@@ -233,8 +233,8 @@ export function ReferenceOrder({ keys }: { keys: string[] }) {
 }
 
 /**
- * In-text citation, e.g. `<Cite k="jinek2012" />` for a single source or
- * `<Cite k={["doudna2014", "jinek2012"]} />` for several at once. Renders as
+ * In-text citation, e.g. `<Cite k="piaget1964" />` for a single source or
+ * `<Cite k={["piaget1964", "sweeney2012"]} />` for several at once. Renders as
  * a superscript bracketed number — [1] for one source, [1,3,5-7] for several
  * (ascending, consecutive numbers collapsed into a range) — linking to the
  * matching entry of the page's `<References />` list. Keys are BibTeX keys

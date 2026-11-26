@@ -32,6 +32,8 @@ export function ModelMdPage() {
         "Eastman2017OpenMM",
         "Jakalian2002AM1BCC",
         "Rodriguez2023Approach",
+        "ambergaff2",
+        "jorgensen1983tip3p",
       ]}
     />
   );

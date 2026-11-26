@@ -367,7 +367,7 @@ export const sections: ArticleSection[] = [
           Ocean University of China implements the relevant requirements of the
           Biosecurity Law of the People's Republic of China concerning risk
           prevention and classified management in biotechnology research,
-          development, and application <Cite k="chinabiosecuritylaw2020" />. We
+          development, and application <Cite k="chinabiosecuritylaw2024" />. We
           fulfill our biosecurity responsibilities to ensure that our activities
           are safe, compliant, and controlled.
         </p>

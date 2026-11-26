@@ -79,7 +79,7 @@ export const sections: ArticleSection[] = [
                 870 million tonnes of crop straw generated in 2024
               </strong>
               , with about <strong>730 million tonnes collectable</strong> and
-              an overall utilization rate above <strong>88%</strong>{" "}
+              more than <strong>88%</strong> of the collectable straw utilized{" "}
               <Cite k="MOA2025StrawUtilization" />. Industrial feedstock use
               represented a relatively small share of that reported utilization.
             </p>

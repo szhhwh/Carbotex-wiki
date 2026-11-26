@@ -2,7 +2,7 @@
 %
 % Add every paper you want to cite as a BibTeX entry below. Export entries
 % from PubMed, Google Scholar ("Cite -> BibTeX") or Zotero and paste them here.
-% Each entry's key (e.g. "jinek2012") is what you pass to <Cite k="jinek2012" />
+% Each entry's key (e.g. "piaget1964") is what you pass to <Cite k="piaget1964" />
 % in src/pages/**/*.tsx. The reference list on every page is generated from
 % this file automatically — never hand-write the bibliography again.
 %
@@ -15,35 +15,15 @@
 % The file is re-read by `yarn dev` (live) and by `yarn build` (deploy), so
 % just save and the wiki updates.
 
-@article{jinek2012,
-  author  = {Jinek, Martin and Chylinski, Krzysztof and Fonfara, Ines and Hauer, Michael and Doudna, Jennifer A. and Charpentier, Emmanuelle},
-  title   = {A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity},
-  journal = {Science},
-  year    = {2012},
-  volume  = {337},
-  number  = {6096},
-  pages   = {816--821},
-  doi     = {10.1126/science.1225829}
-}
-@article{mali2013,
-  author  = {Mali, Prashant and Yang, Luhan and Esvelt, Kevin M. and Aach, John and Guell, Marc and DiCarlo, James E. and Norville, Julie E. and Church, George M.},
-  title   = {{RNA}-guided human genome engineering via {Cas9}},
-  journal = {Science},
-  year    = {2013},
-  volume  = {339},
-  number  = {6121},
-  pages   = {823--826},
-  doi     = {10.1126/science.1232033}
-}
-
 @article{sweeney2012,
-  author  = {Sweeney, Linda Booth},
+  author  = {Booth Sweeney, Linda},
   title   = {Learning to connect the dots: Developing children’s systems literacy},
   journal = {Solutions},
   year    = {2012},
   volume  = {3},
   number  = {5},
-  pages   = {55--62}
+  pages   = {55--62},
+  url     = {https://ask-nature.sfo3.digitaloceanspaces.com/wp-content/uploads/2016/10/31143904/Solutions_Booth-Sweeney_v3-i5.pdf}
 }
 
 @article{piaget1964,
@@ -60,12 +40,13 @@
 % Hardware page references
 
 @article{zhang2021ammonium,
-  author  = {Zhang, X. and Liu, Y.},
+  author  = {Zhang, Xiaoyuan and Liu, Yu},
   title   = {Circular economy-driven ammonium recovery from municipal wastewater: State of the art, challenges and solutions forward},
   journal = {Bioresource Technology},
   year    = {2021},
   volume  = {334},
-  pages   = {125231}
+  pages   = {125231},
+  doi     = {10.1016/j.biortech.2021.125231}
 }
 
 @book{versteeg2007cfd,
@@ -89,19 +70,10 @@
 
 @online{igem2024engineering,
   author  = {{iGEM Foundation}},
-  title   = {iGEM 2025 Judging Handbook: Engineering Success (DBTL)},
+  title   = {2025 Judge Handbook},
   year    = {2025},
   url     = {https://static.igem.org/websites/competition/2025/judging/2025judgehandbook.pdf},
   urldate = {2026-10-21}
-}
-
-@misc{MARA2025Straw,
-  author = {{Ministry of Agriculture and Rural Affairs of the People's Republic of China}},
-  title = {秸秆去哪里，“五化”告诉你 [Where does crop straw go? The “five utilizations” explain]},
-  year = {2025},
-  month = {10},
-  day = {17},
-  url = {https://kjs.moa.gov.cn/hbny/202510/t20251017_6478240.htm}
 }
 
 @article{Smerald2023CerealResidues,
@@ -110,20 +82,19 @@
   journal = {Scientific Data},
   year = {2023},
   volume = {10},
+  number = {1},
   pages = {685},
   doi = {10.1038/s41597-023-02587-0},
   url = {https://doi.org/10.1038/s41597-023-02587-0}
 }
 
 @misc{MOA2025StrawUtilization,
-  author = {{Ministry of Agriculture and Rural Affairs of China}},
-  title = {{秸秆去哪里，“五化”告诉你} [Where Does Straw Go? The Five Utilization Pathways]},
+  author = {{Department of Science and Technology, Ministry of Agriculture and Rural Affairs of China}},
+  title = {{秸秆去哪里，“五化”告诉你} [Where does straw go? The five utilization pathways]},
   year = {2025},
   month = {10},
   day = {17},
-  howpublished = {Science and Technology Department, Ministry of Agriculture and Rural Affairs (reporting 2024 straw utilization figures)},
-  url = {https://kjs.moa.gov.cn/hbny/202510/t20251017_6478240.htm},
-  note = {In Chinese}
+  url = {https://kjs.moa.gov.cn/hbny/202510/t20251017_6478240.htm}
 }
 
 @article{Li2024NatureInspiredAdhesives,
@@ -132,6 +103,7 @@
   journal = {Chemical Society Reviews},
   year = {2024},
   volume = {53},
+  number = {16},
   pages = {8240--8305},
   doi = {10.1039/D3CS00764B},
   url = {https://doi.org/10.1039/D3CS00764B}
@@ -143,6 +115,7 @@
   journal = {Journal of Nanobiotechnology},
   year = {2022},
   volume = {20},
+  number = {1},
   pages = {295},
   doi = {10.1186/s12951-022-01497-4},
   url = {https://doi.org/10.1186/s12951-022-01497-4}
@@ -165,6 +138,7 @@
   journal = {Biotechnology for Biofuels},
   year = {2020},
   volume = {13},
+  number = {1},
   pages = {118},
   doi = {10.1186/s13068-020-01744-6}
 }
@@ -203,10 +177,11 @@
 
 @article{Qiao2023PMLA,
   author = {Qiao, Changsheng and Sun, Guohang and Li, Hongbao and Cao, Weifeng and Shen, Fei and Fan, Rong and Wan, Yinhua},
-  title = {Fractionation and characterization of poly(beta-L-malic acid) produced by Aureobasidium melanogenum ipe-1},
+  title = {Fractionation and characterization of poly(β-L-malic acid) produced by {Aureobasidium melanogenum} ipe-1},
   journal = {International Journal of Biological Macromolecules},
   year = {2023},
   volume = {242},
+  number = {Part 2},
   pages = {124720},
   doi = {10.1016/j.ijbiomac.2023.124720}
 }
@@ -224,7 +199,7 @@
 
 @article{Tang2020PMLADA,
   author = {Tang, You-hong and Sun, Yan and He, Xin and Yu, Zhe and Wu, Hong},
-  title = {Preparation and properties of mussel-inspired adhesive based on poly(beta-malic acid)},
+  title = {Preparation and properties of mussel-inspired adhesive based on poly(β-malic acid)},
   journal = {Progress in Modern Biomedicine},
   year = {2020},
   volume = {20},
@@ -265,7 +240,7 @@
   doi = {10.1038/s41579-021-00534-7}
 }
 
-% Safety page references. Public Markdown uses \cite{key}.
+% Safety page references.
 % Reference 16 in the supplied manuscript covered two official resources;
 % they are merged into one entry below (oucchemicalsds).
 
@@ -344,6 +319,7 @@
   journal = {BMC Infectious Diseases},
   year = {2022},
   volume = {22},
+  number = {1},
   pages = {335},
   doi = {10.1186/s12879-022-07310-9},
   url = {https://pmc.ncbi.nlm.nih.gov/articles/PMC8981616/},
@@ -372,11 +348,13 @@
   url = {https://doi.org/10.1016/j.synbio.2026.02.007},
 }
 
-@misc{ouchazardouswaste,
+@report{ouchazardouswaste,
   author = {{Ocean University of China}},
-  title = {Administrative measures for the disposal of hazardous laboratory waste (revised draft)},
-  year = {2020},
-  url = {https://esel.ouc.edu.cn/2020/0613/c29607a290315/page.htm},
+  title = {中国海洋大学实验室危险废物处置管理办法 [Administrative measures for the disposal of laboratory hazardous waste]},
+  institution = {Ocean University of China},
+  number = {海大国资字〔2022〕6号},
+  date = {2022-06-17},
+  url = {https://gzc.ouc.edu.cn/2022/0727/c29825a374686/page.htm}
 }
 
 @article{zhang2021pmananoplatform,
@@ -422,7 +400,7 @@
 
 @misc{oucchemicalsds,
   author = {{Ocean University of China}},
-  title = {Laboratory chemical safety data sheets (MSDS) and safety management resources},
+  title = {实验室化学品安全技术说明书（MSDS） [Laboratory chemical safety data sheets]},
   year = {2024},
   url = {https://esel.ouc.edu.cn/2024/0904/c29536a483081/page.htm},
   howpublished = {Safety management resources: https://mlsec.ouc.edu.cn/aqgl_29773/list.htm},
@@ -434,10 +412,12 @@
   url = {https://responsibility.igem.org/guidance/working-safely},
 }
 
-@misc{chinabiosecuritylaw2020,
+@misc{chinabiosecuritylaw2024,
   author = {{Standing Committee of the National People's Congress of the People's Republic of China}},
-  title = {Biosecurity Law of the People's Republic of China},
-  year = {2020},
+  title = {Biosecurity Law of the People's Republic of China (as amended)},
+  year = {2024},
+  month = {4},
+  day = {26},
   url = {https://flk.npc.gov.cn/detail?id=ff8081818d6a424b01905e5e6b702e66},
 }
 
@@ -747,91 +727,6 @@
   urldate = {2026-10-18}
 }
 
-@article{Ahn2015,
-  author = {Ahn, B. Kollbe and Das, Saurabh and Linstadt, Roscoe and Kaufman, Yair and Martinez-Rodriguez, Nadine R. and Mirshafian, Razieh and Kesselman, Ellina and Talmon, Yeshayahu and Lipshutz, Bruce H. and Israelachvili, Jacob N. and Waite, J. Herbert},
-  title = {High-performance mussel-inspired adhesives of reduced complexity},
-  journal = {Nature Communications},
-  year = {2015},
-  volume = {6},
-  number = {1},
-  pages = {8663},
-  doi = {10.1038/ncomms9663}
-}
-
-@misc{ASTM2019,
-  author = {{ASTM International}},
-  title = {Standard test method for apparent shear strength of single-lap-joint adhesively bonded metal specimens by tension loading (metal-to-metal) ({ASTM} {D1002-10(2019)})},
-  year = {2019},
-  doi = {10.1520/D1002-10R19}
-}
-
-@article{Barrett2013,
-  author = {Barrett, Devin G. and Bushnell, Grace G. and Messersmith, Phillip B.},
-  title = {Mechanically robust, negative-swelling, mussel-inspired tissue adhesives},
-  journal = {Advanced Healthcare Materials},
-  year = {2013},
-  volume = {2},
-  number = {5},
-  pages = {745--755},
-  doi = {10.1002/adhm.201200316}
-}
-
-@article{Chen2020,
-  author = {Chen, Xiaoyu and Yuk, Hyunwoo and Wu, Jingjing and Nabzdyk, Christoph S. and Zhao, Xuanhe},
-  title = {Instant tough bioadhesive with triggerable benign detachment},
-  journal = {Proceedings of the National Academy of Sciences of the United States of America},
-  year = {2020},
-  volume = {117},
-  number = {27},
-  pages = {15497--15503},
-  doi = {10.1073/pnas.2006389117}
-}
-
-@misc{GraphPad_nd,
-  author = {{GraphPad Software}},
-  title = {Finding the best-fit slope and intercept},
-  howpublished = {GraphPad Prism curve fitting guide},
-  url = {https://www.graphpad.com/guides/prism/latest/curve-fitting/reg_finding_the_best-fit_slope_and.htm},
-  urldate = {2026-10-17}
-}
-
-@misc{ISO2009,
-  author = {{International Organization for Standardization}},
-  title = {Biological evaluation of medical devices --- {Part} 5: {Tests} for in vitro cytotoxicity ({ISO} Standard No. 10993-5:2009)},
-  year = {2009},
-  url = {https://www.iso.org/standard/36406.html}
-}
-
-@article{Ji2016,
-  author = {Ji, Y. and Ji, T. and Liang, K. and Zhu, L.},
-  title = {Mussel-inspired soft-tissue adhesive based on poly(diol citrate) with catechol functionality},
-  journal = {Journal of Materials Science: Materials in Medicine},
-  year = {2016},
-  volume = {27},
-  number = {2},
-  pages = {30},
-  doi = {10.1007/s10856-015-5649-2}
-}
-
-@misc{NumPy2025,
-  author = {{NumPy Developers}},
-  title = {numpy.trapezoid},
-  howpublished = {NumPy v2.3 manual},
-  year = {2025},
-  url = {https://numpy.org/doc/2.3/reference/generated/numpy.trapezoid.html}
-}
-
-@article{Yu2020,
-  author = {Yu, Jinhong and Cheng, Bohan and Ejima, Hirotaka},
-  title = {Effect of molecular weight and polymer composition on gallol-functionalized underwater adhesive},
-  journal = {Journal of Materials Chemistry B},
-  year = {2020},
-  volume = {8},
-  number = {31},
-  pages = {6798--6801},
-  doi = {10.1039/D0TB00706D}
-}
-
 % Wet Lab Results references migrated from processed/wetlab_result/references.bib.
 
 @article{ahn2015musseladhesives,
@@ -840,12 +735,13 @@
   journal = {Nature Communications},
   year = {2015},
   volume = {6},
+  number = {1},
   pages = {8663},
   doi = {10.1038/ncomms9663},
   url = {https://doi.org/10.1038/ncomms9663}
 }
 
-@techreport{astm2019d1002,
+@report{astm2019d1002,
   author = {{ASTM International}},
   title = {Standard test method for apparent shear strength of single-lap-joint adhesively bonded metal specimens by tension loading (metal-to-metal)},
   institution = {ASTM International},
@@ -887,7 +783,7 @@
   urldate = {2026-10-17}
 }
 
-@techreport{iso2009cytotoxicity,
+@report{iso2009cytotoxicity,
   author = {{International Organization for Standardization}},
   title = {Biological evaluation of medical devices --- Part 5: Tests for in vitro cytotoxicity},
   institution = {International Organization for Standardization},
@@ -902,6 +798,7 @@
   journal = {Journal of Materials Science: Materials in Medicine},
   year = {2016},
   volume = {27},
+  number = {2},
   pages = {30},
   doi = {10.1007/s10856-015-5649-2},
   url = {https://doi.org/10.1007/s10856-015-5649-2}
@@ -914,18 +811,6 @@
   organization = {NumPy},
   note = {NumPy v2.3 manual},
   url = {https://numpy.org/doc/2.3/reference/generated/numpy.trapezoid.html}
-}
-
-@article{tang2020pmadaadhesive,
-  author = {Tang, Y. and Sun, Y. and He, X. and Yu, Z. and Wu, H.},
-  title = {Jiyu ju pingguosuan de yibei fangsheng nianheji de zhibei ji xingneng yanjiu [Preparation and properties of mussel-inspired adhesive based on poly(β-malic acid)]},
-  journal = {Xiandai Shengwu Yixue Jinzhan},
-  year = {2020},
-  volume = {20},
-  number = {5},
-  pages = {818--821},
-  doi = {10.13241/j.cnki.pmb.2020.05.004},
-  url = {https://doi.org/10.13241/j.cnki.pmb.2020.05.004}
 }
 
 @article{yu2020gallol,
@@ -1049,6 +934,17 @@
   pages   = {4647--4654},
   year    = {2021},
   doi     = {10.1093/molbev/msab199}
+}
+
+@article{kriventseva2019orthodb,
+  author  = {Kriventseva, Evgenia V. and Kuznetsov, Dmitry and Tegenfeldt, Fredrik and Manni, Mosè and Dias, Renata and Simão, Felipe A. and Zdobnov, Evgeny M.},
+  title   = {{OrthoDB} v10: Sampling the diversity of animal, plant, fungal, protist, bacterial and viral genomes for evolutionary and functional annotations of orthologs},
+  journal = {Nucleic Acids Research},
+  year    = {2019},
+  volume  = {47},
+  number  = {D1},
+  pages   = {D807--D811},
+  doi     = {10.1093/nar/gky1053}
 }
 
 @article{han2026alphagem,
@@ -1195,7 +1091,7 @@
 }
 
 @article{Lieven2020MEMOTE,
-  author  = {Lieven, Christian and Beber, Moritz E. and Olivier, Brett G. and Bergmann, Frank T. and Ataman, M. and Babaei, P. and Bartell, J. A. and Blank, L. M. and Chauhan, S. and Correia, K. and Diener, C. and Dr{\"a}ger, A. and Ebert, B. E. and Edirisinghe, J. N. and Faria, J. P. and Feist, A. M. and Fengos, G. and Fleming, R. M. T. and Garc{\'i}a-Jim{\'e}nez, B. and others},
+  author  = {Lieven, Christian and Beber, Moritz E. and Olivier, Brett G. and Bergmann, Frank T. and Ataman, Meric and Babaei, Parizad and Bartell, Jennifer A. and Blank, Lars M. and Chauhan, Siddharth and Correia, Kevin and Diener, Christian and Dräger, Andreas and Ebert, Birgitta E. and Edirisinghe, Janaka N. and Faria, José P. and Feist, Adam M. and Fengos, Georgios and Fleming, Ronan M. T. and García-Jiménez, Beatriz and Hatzimanikatis, Vassily and van Helvoirt, Wout and Henry, Christopher S. and Hermjakob, Henning and Herrgård, Markus J. and Kaafarani, Ali and Kim, Hyun Uk and King, Zachary and Klamt, Steffen and Klipp, Edda and Koehorst, Jasper J. and König, Matthias and Lakshmanan, Meiyappan and Lee, Dong-Yup and Lee, Sang Yup and Lee, Sunjae and Lewis, Nathan E. and Liu, Filipe and Ma, Hongwu and Machado, Daniel and Mahadevan, Radhakrishnan and Maia, Paulo and Mardinoglu, Adil and Medlock, Gregory L. and Monk, Jonathan M. and Nielsen, Jens and Nielsen, Lars Keld and Nogales, Juan and Nookaew, Intawat and Palsson, Bernhard O. and Papin, Jason A. and Patil, Kiran R. and Poolman, Mark and Price, Nathan D. and Resendis-Antonio, Osbaldo and Richelle, Anne and Rocha, Isabel and Sánchez, Benjamín J. and Schaap, Peter J. and Malik Sheriff, Rahuman S. and Shoaie, Saeed and Sonnenschein, Nikolaus and Teusink, Bas and Vilaça, Paulo and Vik, Jon Olav and Wodke, Judith A. H. and Xavier, Joana C. and Yuan, Qianqian and Zakhartsev, Maksim and Zhang, Cheng},
   title   = {MEMOTE for standardized genome-scale metabolic model testing},
   journal = {Nature Biotechnology},
   year    = {2020},
@@ -1206,7 +1102,7 @@
 }
 
 @article{Kim2010Spombe,
-  author  = {Kim, Dong-Uk and Hayles, Jacqueline and Kim, Dongsup and Wood, Valerie and Park, H.-O. and Won, M. and Yoo, H.-S. and Duhig, T. and Nam, M. and Palmer, G. and Han, S. and Jeffery, L. and Baek, S.-T. and Lee, H. and Shim, Y. S. and Lee, M. and Kim, L. and Heo, K.-S. and Noh, E. J. and others},
+  author  = {Kim, Dong-Uk and Hayles, Jacqueline and Kim, Dongsup and Wood, Valerie and Park, Han-Oh and Won, Misun and Yoo, Hyang-Sook and Duhig, Trevor and Nam, Miyoung and Palmer, Georgia and Han, Sangjo and Jeffery, Linda and Baek, Seung-Tae and Lee, Hyemi and Shim, Young Sam and Lee, Minho and Kim, Lila and Heo, Kyung-Sun and Noh, Eun Joo and Lee, Ah-Reum and Jang, Young-Joo and Chung, Kyung-Sook and Choi, Shin-Jung and Park, Jo-Young and Park, Youngwoo and Kim, Hwan Mook and Park, Song-Kyu and Park, Hae-Joon and Kang, Eun-Jung and Kim, Hyong Bai and Kang, Hyun-Sam and Park, Hee-Moon and Kim, Kyunghoon and Song, Kiwon and Song, Kyung Bin and Nurse, Paul and Hoe, Kwang-Lae},
   title   = {Analysis of a genome-wide set of gene deletions in the fission yeast Schizosaccharomyces pombe},
   journal = {Nature Biotechnology},
   year    = {2010},
@@ -1254,6 +1150,7 @@
   title   = {Omic data from evolved E. coli are consistent with computed optimal growth from genome-scale models},
   journal = {Molecular Systems Biology},
   volume  = {6},
+  number  = {1},
   pages   = {390},
   year    = {2010},
   doi     = {10.1038/msb.2010.47}
@@ -1302,6 +1199,23 @@
   doi = {10.1002/jcc.10128}
 }
 
+@online{ambergaff2,
+  author = {{Amber Project}},
+  title  = {Ligand force fields},
+  url    = {https://ambermd.org/AmberModels_organic.php}
+}
+
+@article{jorgensen1983tip3p,
+  author  = {Jorgensen, William L. and Chandrasekhar, Jayaraman and Madura, Jeffry D. and Impey, Roger W. and Klein, Michael L.},
+  title   = {Comparison of simple potential functions for simulating liquid water},
+  journal = {The Journal of Chemical Physics},
+  year    = {1983},
+  volume  = {79},
+  number  = {2},
+  pages   = {926--935},
+  doi     = {10.1063/1.445869}
+}
+
 @article{Rodriguez2023Approach,
   author = {Rodríguez, Humberto A. and Bickelhaupt, F. Matthias and Fernández, Israel},
   title = {Origin of the Bürgi–Dunitz Angle},
@@ -1322,6 +1236,7 @@
   primaryClass = {cs.PL},
   doi = {10.48550/arXiv.2608.25512},
   url = {https://arxiv.org/abs/2608.25512},
-  note = {Preprint.},
+  type = {Preprint},
+  howpublished = {arXiv},
   urldate = {2026-10-19}
 }

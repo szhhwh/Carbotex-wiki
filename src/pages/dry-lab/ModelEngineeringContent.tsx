@@ -49,6 +49,9 @@ export const modelEngineeringReferenceOrder = [
   "Rodriguez2023Approach",
   "Eastman2017OpenMM",
   "Jakalian2002AM1BCC",
+  "kriventseva2019orthodb",
+  "ambergaff2",
+  "jorgensen1983tip3p",
 ];
 
 const modelCycleSummaries: CycleSummaryItem[] = [
@@ -225,10 +228,16 @@ export const modelEngineeringSections: ArticleSection[] = [
                         <Cite k="gabriel2024tiberius" /> in accuracy at nearly
                         10-fold higher speed while outperforming Helixer{" "}
                         <Cite k={["stiehler2020helixer", "holst2025helixer"]} />
-                        , predicting 20,089 A08 proteins (99.82% Dothideomycetes
-                        completeness{" "}
-                        <Cite k={["huang2023compleasm", "manni2021busco"]} />)
-                        while retaining all multi-copy homologs.
+                        , predicting 20,089 A08 proteins (99.82% completeness
+                        against OrthoDB v10 Dothideomycetes benchmarks{" "}
+                        <Cite
+                          k={[
+                            "huang2023compleasm",
+                            "manni2021busco",
+                            "kriventseva2019orthodb",
+                          ]}
+                        />
+                        ) while retaining all multi-copy homologs.
                       </p>
                     </div>
                   </li>
@@ -1157,12 +1166,14 @@ export const modelEngineeringSections: ArticleSection[] = [
                         boxes
                       </strong>
                       <p>
-                        Using OpenMM <Cite k="Eastman2017OpenMM" /> with GAFF2
-                        and AM1-BCC charges <Cite k="Jakalian2002AM1BCC" />, we
-                        constructed explicit TIP3P water boxes across all five
-                        experimental dopamine-to-carboxyl molar ratios (0.25 to
-                        1.25) at a shared 50% NHS-ester activation baseline,
-                        paired with 25% and 75% activation sensitivity runs.
+                        Using OpenMM <Cite k="Eastman2017OpenMM" /> with GAFF2{" "}
+                        <Cite k="ambergaff2" /> and AM1-BCC charges{" "}
+                        <Cite k="Jakalian2002AM1BCC" />, we constructed explicit
+                        TIP3P water boxes <Cite k="jorgensen1983tip3p" /> across
+                        all five experimental dopamine-to-carboxyl molar ratios
+                        (0.25 to 1.25) at a shared 50% NHS-ester activation
+                        baseline, paired with 25% and 75% activation sensitivity
+                        runs.
                       </p>
                     </div>
                   </li>

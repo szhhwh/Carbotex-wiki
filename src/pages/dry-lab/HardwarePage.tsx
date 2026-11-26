@@ -980,6 +980,11 @@ const sections: ArticleSection[] = [
           following reliability measures:
         </p>
         <SafeguardGrid items={safeguards} />
+        <p>
+          The Engineering page documents the hardware iterations using the
+          design–build–test–learn cycle described in the iGEM judging handbook{" "}
+          <Cite k="igem2024engineering" />.
+        </p>
       </>
     ),
   },

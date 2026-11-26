@@ -42,6 +42,7 @@ export const referenceOrder = [
   "lewis2010pfba",
   "choi2010fseof",
   "feng2018pycmodel",
+  "kriventseva2019orthodb",
 ];
 
 export const sections: ArticleSection[] = [
@@ -162,8 +163,8 @@ export const sections: ArticleSection[] = [
               <li>
                 <strong>BUSCO Completeness</strong>: Complete detection rate
                 using BUSCO <Cite k="manni2021busco" /> against the 758
-                conserved single-copy fungal benchmark genes in OrthoDB (
-                <code>fungi_odb10</code>).
+                conserved single-copy fungal benchmark genes in OrthoDB v10{" "}
+                <Cite k="kriventseva2019orthodb" /> (<code>fungi_odb10</code>).
               </li>
             </ul>
             <ArticleFramework title="Architectures of the Three Deep-Learning Gene Predictors & Definitions of the Five Evaluation Metrics">
@@ -829,7 +830,8 @@ export const sections: ArticleSection[] = [
                 <strong>Multi-Lineage OrthoDB Completeness</strong>: Evaluated
                 via compleasm v0.2.9 <Cite k="huang2023compleasm" /> using
                 BUSCO-standard single-copy completeness categories{" "}
-                <Cite k="manni2021busco" /> against OrthoDB v10 benchmark sets
+                <Cite k="manni2021busco" /> against OrthoDB v10 benchmark sets{" "}
+                <Cite k="kriventseva2019orthodb" />
                 across three taxonomic levels (Figure 5, left), the predicted
                 A08 proteome achieved <strong>99.61%</strong> completeness in
                 Eukaryota (255 markers), <strong>96.70%</strong> in Fungi (758
@@ -2423,7 +2425,8 @@ export const sections: ArticleSection[] = [
                         <td>compleasm / BUSCO / OrthoDB</td>
                         <td>
                           compleasm v0.2.9 <Cite k="huang2023compleasm" />;
-                          BUSCO v5.8.0 <Cite k="manni2021busco" />; OrthoDB v10
+                          BUSCO v5.8.0 <Cite k="manni2021busco" />; OrthoDB v10{" "}
+                          <Cite k="kriventseva2019orthodb" />
                         </td>
                         <td>
                           Multi-lineage conserved single-copy core gene

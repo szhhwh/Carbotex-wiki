@@ -51,9 +51,9 @@ export function Chapter02Content() {
       <p>
         <strong>
           Research on cognitive development provides the developmental context
-          <Cite k="piaget1964" />. Research on early childhood systems thinking
-          shows that young children can already begin grasping
-          'part-connection-whole' relationships <Cite k="sweeney2012" />.
+          <Cite k="piaget1964" />. Booth Sweeney describes how young children
+          can explore parts, connections, and wholes through familiar examples{" "}
+          <Cite k="sweeney2012" />.
         </strong>{" "}
         Thus, interpreting the cell as a “coordinated system” aligns well with
         the cognitive foundation of this age group and provides an opportunity

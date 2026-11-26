@@ -306,14 +306,15 @@ export const sections: ArticleSection[] = [
                 : Simulations were run in CUDA-accelerated{" "}
                 <strong>OpenMM 8.3.1</strong> <Cite k="Eastman2017OpenMM" />.
                 Small molecules and PMA oligomer templates were parameterized
-                with <strong>GAFF2</strong> and{" "}
+                with <strong>GAFF2</strong> <Cite k="ambergaff2" /> and{" "}
                 <strong>AM1-BCC partial charges</strong>{" "}
-                <Cite k="Jakalian2002AM1BCC" /> in <strong>TIP3P water</strong>.
-                After energy minimization, NVT equilibration, and NPT
-                equilibration, each of the five 50%-activation main-model
-                systems underwent a <MathInline tex={String.raw`5\text{ ns}`} />{" "}
-                production run saved every{" "}
-                <MathInline tex={String.raw`1\text{ ps}`} />, with the{" "}
+                <Cite k="Jakalian2002AM1BCC" /> in <strong>TIP3P water</strong>{" "}
+                <Cite k="jorgensen1983tip3p" />. After energy minimization, NVT
+                equilibration, and NPT equilibration, each of the five
+                50%-activation main-model systems underwent a{" "}
+                <MathInline tex={String.raw`5\text{ ns}`} /> production run
+                saved every <MathInline tex={String.raw`1\text{ ps}`} />, with
+                the{" "}
                 <strong>
                   <MathInline tex={String.raw`3\text{–}5\text{ ns}`} /> window
                 </strong>{" "}

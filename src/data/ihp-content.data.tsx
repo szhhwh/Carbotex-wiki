@@ -803,7 +803,7 @@ export const ihpSections: IhpSectionContent[] = [
                   {
                     "We then investigated straw management from both global and Chinese perspectives. Gradually, we realized that straw was not simply a form of agricultural waste waiting to be utilized. Instead, it already served multiple purposes, including field retention, livestock feed, and other off-field uses, with the trade-offs among these pathways varying across local contexts. In China, official data for 2024 showed that more than 88% of collectable crop straw was comprehensively utilized, while the industrial raw-material utilization rate was only 0.7% "
                   }
-                  <Cite k={["MARA2025Straw"]} />
+                  <Cite k={["MOA2025StrawUtilization"]} />
                   {"."}
                 </p>
                 <p>
@@ -849,7 +849,7 @@ export const ihpSections: IhpSectionContent[] = [
                 {
                   "Our preliminary research showed that crop straw is already widely used for purposes such as field return and animal feed, while raw-material utilization remains a small share of the national utilization structure "
                 }
-                <Cite k={["MARA2025Straw"]} />
+                <Cite k={["MOA2025StrawUtilization"]} />
                 {
                   ". Rather than replacing these existing uses, Carbotex aims to connect suitable agricultural carbon streams with biomanufacturing, offering a renewable feedstock perspective for sustainable production."
                 }

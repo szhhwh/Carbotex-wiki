@@ -544,7 +544,7 @@ export const sections: ArticleSection[] = [
               The PMA used to prepare the adhesive had a molecular weight of 390
               kDa, a high-molecular-weight polymer above the chemically
               synthesised PMA (about 12 kDa) used by Tang et al.{" "}
-              <Cite k="tang2020pmadaadhesive" />, with Mw/Mn = 1.0 and a narrow
+              <Cite k="Tang2020PMLADA" />, with Mw/Mn = 1.0 and a narrow
               molecular-weight distribution. After EDC/NHS-mediated dopamine
               conjugation, dialysis, casting and freeze-drying, PMA–DA was
               obtained as a grey, fluffy, sponge-like solid (Figure 18) that
@@ -746,7 +746,7 @@ export const sections: ArticleSection[] = [
               apoptosis; in PMA–DA, dopamine is amide-linked to the PMA backbone
               and is no longer free, which we hypothesized would support good
               cytocompatibility. Following the L929 MTT assay precedent of Tang
-              et al. <Cite k="tang2020pmadaadhesive" />, we evaluated the
+              et al. <Cite k="Tang2020PMLADA" />, we evaluated the
               cytocompatibility of PMA–DA prepared at DA:COOH feed ratios of
               25%–125% with L929 mouse fibroblasts. At 24, 48 and 72 h, relative
               viability of all treatment groups remained within approximately
