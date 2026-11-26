@@ -95,16 +95,9 @@ function Art({
   height: number;
 }) {
   return (
-    <img
-      className={styles.art}
-      src={src}
-      width={width}
-      height={height}
-      alt=""
-      draggable={false}
-      style={style}
-      data-art={hook}
-    />
+    <span className={styles.art} style={style} data-art={hook}>
+      <img src={src} width={width} height={height} alt="" draggable={false} />
+    </span>
   );
 }
 
@@ -242,8 +235,11 @@ export function ProcessComparison() {
       const all = (selector: string) =>
         Array.from(root.querySelectorAll<HTMLElement>(selector));
       const slots = all("[data-card-slot]");
+      const shapes = all("[data-art='float']");
       const arrowStroke = q("[data-card='higher'] [data-reveal-stroke]");
       const arrowShine = q("[data-arrow-shine]");
+      const cycle = q("[data-art='cycle']");
+      const leaf = q("[data-art='leaf']");
       const shield = q("[data-art='shield']");
       const check = q("[data-check]");
       const checkStroke = q("[data-check] [data-reveal-stroke]");
@@ -253,6 +249,9 @@ export function ProcessComparison() {
       const safer = q("[data-card='safer']");
 
       gsap.set(slots, { autoAlpha: 0, y: 20 });
+      gsap.set(shapes, { autoAlpha: 0, yPercent: 14, scale: 0.78 });
+      gsap.set(cycle, { autoAlpha: 0, rotation: -42, scale: 0.86 });
+      gsap.set(leaf, { autoAlpha: 0, yPercent: 12, scale: 0.72 });
       gsap.set(shield, { autoAlpha: 0, scale: 0.92 });
       gsap.set([arrowStroke, checkStroke], { strokeDashoffset: 1 });
 
@@ -298,10 +297,13 @@ export function ProcessComparison() {
           paused: true,
         },
       );
-      const cardClock = new MotionClock();
+      const higherClock = new MotionClock();
+      const greenerClock = new MotionClock();
       const arrowClock = new MotionClock();
       let sectionActive = false;
       let entranceDone = false;
+      let higherArtEntered = false;
+      let greenerArtEntered = false;
       let arrowHovered = false;
       let higherVisible = false;
       let greenerVisible = false;
@@ -344,7 +346,7 @@ export function ProcessComparison() {
         .add(() => flash.restart(), 1.5);
 
       const higherLoop = gsap.timeline({ paused: true });
-      all("[data-art='float']").forEach((shape, index) => {
+      all("[data-art='float'] img").forEach((shape, index) => {
         higherLoop.fromTo(
           shape,
           { y: 0, rotation: 0 },
@@ -362,12 +364,12 @@ export function ProcessComparison() {
       const greenerLoop = gsap.timeline({ paused: true });
       greenerLoop
         .to(
-          q("[data-art='cycle']"),
+          q("[data-art='cycle'] img"),
           { rotation: 360, duration: 10, ease: "none", repeat: -1 },
           0,
         )
         .fromTo(
-          q("[data-art='leaf']"),
+          q("[data-art='leaf'] img"),
           { scale: 1 },
           {
             scale: 1.12,
@@ -379,18 +381,21 @@ export function ProcessComparison() {
           0,
         );
       const syncLoops = () => {
-        cardClock.setActive(sectionActive);
+        const higherActive = sectionActive && higherArtEntered;
+        const greenerActive = sectionActive && greenerArtEntered;
         const arrowActive = sectionActive && entranceDone && !arrowHovered;
+        higherClock.setActive(higherActive);
+        greenerClock.setActive(greenerActive);
         arrowClock.setActive(arrowActive);
         syncAmbientPlayback(
           higherLoop,
-          sectionActive && higherVisible,
-          cardClock,
+          higherActive && higherVisible,
+          higherClock,
         );
         syncAmbientPlayback(
           greenerLoop,
-          sectionActive && greenerVisible,
-          cardClock,
+          greenerActive && greenerVisible,
+          greenerClock,
         );
         syncAmbientPlayback(
           arrowLoop,
@@ -398,6 +403,59 @@ export function ProcessComparison() {
           arrowClock,
         );
       };
+
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: higher, start: "top 80%", once: true },
+          onComplete: () => {
+            higherArtEntered = true;
+            syncLoops();
+          },
+        })
+        .to(
+          shapes,
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            scale: 1,
+            duration: 0.5,
+            stagger: 0.09,
+            ease: "back.out(1.4)",
+          },
+          0.16,
+        );
+
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: greener, start: "top 80%", once: true },
+          onComplete: () => {
+            greenerArtEntered = true;
+            syncLoops();
+          },
+        })
+        .to(
+          cycle,
+          {
+            autoAlpha: 1,
+            rotation: 0,
+            scale: 1,
+            duration: 0.7,
+            ease: "power2.out",
+          },
+          0.22,
+        )
+        .to(
+          leaf,
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: "back.out(1.5)",
+          },
+          0.39,
+        );
+
       const updateSection = (trigger: ScrollTrigger) => {
         sectionActive = Boolean(trigger.isActive);
         syncLoops();

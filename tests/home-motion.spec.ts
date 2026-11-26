@@ -24,6 +24,15 @@ async function scrollToProcessTime(page: Page, time: number) {
   }, time);
 }
 
+async function scrollToCanvasEnd(canvas: Locator) {
+  await canvas.evaluate((section) =>
+    window.scrollTo({
+      top: section.getBoundingClientRect().bottom + scrollY - innerHeight,
+      behavior: "instant",
+    }),
+  );
+}
+
 function styleChanges(locator: Locator, selector: string) {
   return locator.evaluate(
     (root, selector) =>
@@ -142,18 +151,96 @@ test("restores complete and empty ribbon masks when scrubbing in either directio
   await expect(ribbon).toHaveAttribute("d", complete);
 });
 
+test("reveals comparison artwork when each card comes into view", async ({
+  page,
+}) => {
+  await openHome(page);
+  const cards = page.locator("[data-cards]");
+  const higher = cards.locator("[data-card='higher']");
+  const greener = cards.locator("[data-card='greener']");
+  const stacked = await cards.evaluate(
+    (element) => getComputedStyle(element).flexDirection === "column",
+  );
+  const opacities = (card: Locator) =>
+    card
+      .locator("[data-art]")
+      .evaluateAll((art) =>
+        art.map((item) => Number(getComputedStyle(item).opacity)),
+      );
+  const scrollToCard = (card: Locator) =>
+    card.evaluate((element) =>
+      window.scrollTo({
+        top: scrollY + element.getBoundingClientRect().top - innerHeight * 0.55,
+        behavior: "instant",
+      }),
+    );
+
+  expect(await opacities(higher)).toEqual([0, 0, 0]);
+  expect(await opacities(greener)).toEqual([0, 0]);
+
+  await scrollToCard(higher);
+  await expect.poll(() => opacities(higher)).toEqual([1, 1, 1]);
+  await expect
+    .poll(() => styleChanges(higher, "[data-art] img"))
+    .toBeGreaterThan(0);
+  if (stacked) {
+    expect(await opacities(greener)).toEqual([0, 0]);
+    await scrollToCard(greener);
+  }
+  await expect.poll(() => opacities(greener)).toEqual([1, 1]);
+  await expect
+    .poll(() => styleChanges(greener, "[data-art] img"))
+    .toBeGreaterThan(0);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(greener.locator("[data-art='cycle'] img")).toHaveCSS(
+    "transform",
+    "none",
+  );
+  expect(await opacities(higher)).toEqual([1, 1, 1]);
+  expect(await opacities(greener)).toEqual([1, 1]);
+});
+
+test("starts both P5 floats from their landed positions", async ({ page }) => {
+  await openHome(page);
+  const canvas = page.locator(CANVAS);
+  await scrollToCanvasEnd(canvas);
+  const button = canvas.getByRole("button", { name: /Click to open/ });
+  await expect(button).toBeInViewport();
+  await button.click();
+
+  const halves = canvas
+    .locator("[data-open]")
+    .locator('img[src$="/taiji-yeast.svg"], img[src$="/taiji-thermo.svg"]');
+  await expect(halves).toHaveCount(2);
+  for (const half of await halves.all()) {
+    const { startOffset, floatOffset } = await half.evaluate((image) => {
+      const animation = image.parentElement!.getAnimations()[0];
+      animation.pause();
+      animation.currentTime = 0;
+      const start = image.getBoundingClientRect();
+      animation.currentTime =
+        Number(animation.effect!.getTiming().duration) / 4;
+      const floating = image.getBoundingClientRect();
+      animation.cancel();
+      const landed = image.getBoundingClientRect();
+      return {
+        startOffset: Math.hypot(start.x - landed.x, start.y - landed.y),
+        floatOffset: Math.hypot(floating.x - landed.x, floating.y - landed.y),
+      };
+    });
+    expect(startOffset).toBeCloseTo(0, 1);
+    expect(floatOffset).toBeGreaterThan(1);
+  }
+});
+
 test("settles an in-progress P5 reveal when reduced motion is enabled", async ({
   page,
 }) => {
   await openHome(page);
   const canvas = page.locator(CANVAS);
   const title = await titleFloatPhase(page);
-  await canvas.evaluate((section) =>
-    window.scrollTo({
-      top: section.getBoundingClientRect().bottom + scrollY - innerHeight,
-      behavior: "instant",
-    }),
-  );
+  await scrollToCanvasEnd(canvas);
   const button = canvas.getByRole("button", { name: /Click to open/ });
   await expect(button).toBeInViewport();
   const taijiStart = await canvas
